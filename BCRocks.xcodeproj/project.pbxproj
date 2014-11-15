@@ -1,0 +1,371 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		6299F80D1A17B28200123F56 /* BCRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* BCRocks.h */; };
+		6299F80F1A17B28200123F56 /* BCRocks.m in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* BCRocks.m */; };
+		6299F8151A17B28200123F56 /* libBCRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libBCRocks.a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6299F8161A17B28200123F56 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6299F8011A17B28200123F56 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6299F8081A17B28200123F56;
+			remoteInfo = BCRocks;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6299F8071A17B28200123F56 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+				6299F80D1A17B28200123F56 /* BCRocks.h in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		6299F80C1A17B28200123F56 /* BCRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCRocks.h; sourceTree = "<group>"; };
+		6299F80E1A17B28200123F56 /* BCRocks.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BCRocks.m; sourceTree = "<group>"; };
+		6299F8141A17B28200123F56 /* BCRocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCRocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		6299F81A1A17B28200123F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		6299F8061A17B28200123F56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6299F8111A17B28200123F56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6299F8151A17B28200123F56 /* libBCRocks.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6299F8001A17B28200123F56 = {
+			isa = PBXGroup;
+			children = (
+				6299F80B1A17B28200123F56 /* BCRocks */,
+				6299F8181A17B28200123F56 /* BCRocksTests */,
+				6299F80A1A17B28200123F56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		6299F80A1A17B28200123F56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				6299F8091A17B28200123F56 /* libBCRocks.a */,
+				6299F8141A17B28200123F56 /* BCRocksTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		6299F80B1A17B28200123F56 /* BCRocks */ = {
+			isa = PBXGroup;
+			children = (
+				6299F80C1A17B28200123F56 /* BCRocks.h */,
+				6299F80E1A17B28200123F56 /* BCRocks.m */,
+			);
+			path = BCRocks;
+			sourceTree = "<group>";
+		};
+		6299F8181A17B28200123F56 /* BCRocksTests */ = {
+			isa = PBXGroup;
+			children = (
+				6299F8191A17B28200123F56 /* Supporting Files */,
+			);
+			path = BCRocksTests;
+			sourceTree = "<group>";
+		};
+		6299F8191A17B28200123F56 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				6299F81A1A17B28200123F56 /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		6299F8081A17B28200123F56 /* BCRocks */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6299F81D1A17B28200123F56 /* Build configuration list for PBXNativeTarget "BCRocks" */;
+			buildPhases = (
+				6299F8051A17B28200123F56 /* Sources */,
+				6299F8061A17B28200123F56 /* Frameworks */,
+				6299F8071A17B28200123F56 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BCRocks;
+			productName = BCRocks;
+			productReference = 6299F8091A17B28200123F56 /* libBCRocks.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+		6299F8131A17B28200123F56 /* BCRocksTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6299F8201A17B28200123F56 /* Build configuration list for PBXNativeTarget "BCRocksTests" */;
+			buildPhases = (
+				6299F8101A17B28200123F56 /* Sources */,
+				6299F8111A17B28200123F56 /* Frameworks */,
+				6299F8121A17B28200123F56 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				6299F8171A17B28200123F56 /* PBXTargetDependency */,
+			);
+			name = BCRocksTests;
+			productName = BCRocksTests;
+			productReference = 6299F8141A17B28200123F56 /* BCRocksTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		6299F8011A17B28200123F56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0610;
+				ORGANIZATIONNAME = BrainCookie;
+				TargetAttributes = {
+					6299F8081A17B28200123F56 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+					6299F8131A17B28200123F56 = {
+						CreatedOnToolsVersion = 6.1;
+					};
+				};
+			};
+			buildConfigurationList = 6299F8041A17B28200123F56 /* Build configuration list for PBXProject "BCRocks" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 6299F8001A17B28200123F56;
+			productRefGroup = 6299F80A1A17B28200123F56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				6299F8081A17B28200123F56 /* BCRocks */,
+				6299F8131A17B28200123F56 /* BCRocksTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		6299F8121A17B28200123F56 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		6299F8051A17B28200123F56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6299F80F1A17B28200123F56 /* BCRocks.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6299F8101A17B28200123F56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		6299F8171A17B28200123F56 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6299F8081A17B28200123F56 /* BCRocks */;
+			targetProxy = 6299F8161A17B28200123F56 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		6299F81B1A17B28200123F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		6299F81C1A17B28200123F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		6299F81E1A17B28200123F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		6299F81F1A17B28200123F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		6299F8211A17B28200123F56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BCRocksTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		6299F8221A17B28200123F56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = BCRocksTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		6299F8041A17B28200123F56 /* Build configuration list for PBXProject "BCRocks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6299F81B1A17B28200123F56 /* Debug */,
+				6299F81C1A17B28200123F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		6299F81D1A17B28200123F56 /* Build configuration list for PBXNativeTarget "BCRocks" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6299F81E1A17B28200123F56 /* Debug */,
+				6299F81F1A17B28200123F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		6299F8201A17B28200123F56 /* Build configuration list for PBXNativeTarget "BCRocksTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6299F8211A17B28200123F56 /* Debug */,
+				6299F8221A17B28200123F56 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 6299F8011A17B28200123F56 /* Project object */;
+}
