@@ -10,4 +10,6 @@
 
 @interface BCRocks : NSObject
 
+- (int)doStuff;
+
 @end
