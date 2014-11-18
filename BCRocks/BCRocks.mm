@@ -12,29 +12,44 @@
 #include <rocksdb/slice.h>
 #include <rocksdb/options.h>
 
+@interface BCRocks ()
+{
+	rocksdb::DB *_db;
+}
+@end
+
 @implementation BCRocks
 
-- (int)doStuff
+#pragma mark - Lifecycle
+
+- (instancetype)initWithPath:(NSString *)path
 {
-	rocksdb::DB* db;
-	rocksdb::Options options;
+	self = [super init];
+	if (self) {
+		rocksdb::Options options;
+		rocksdb::Status status = rocksdb::DB::Open(options, path.UTF8String, &_db);
+		if (!status.ok()) {
+			NSLog(@"Error creating database: [%s]", status.ToString().c_str());
+			[self close];
+			return nil;
+		}
+	}
+	return self;
+}
 
-	options.create_if_missing = true;
+- (void)dealloc
+{
+	[self close];
+}
 
-	rocksdb::Status s = rocksdb::DB::Open(options, "/tmp/on-the-rocks", &db);
-	assert(s.ok());
-
-	s = db->Put(rocksdb::WriteOptions(), "key", "value");
-	assert(s.ok());
-	std::string value;
-
-	s = db->Get(rocksdb::ReadOptions(), "key", &value);
-	assert(s.ok());
-	assert(value == "value");
-
-	delete db;
-
-	return 0;
+- (void)close
+{
+	@synchronized(self) {
+		if (_db != NULL) {
+			delete _db;
+			_db = NULL;
+		}
+	}
 }
 
 @end

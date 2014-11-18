@@ -31,7 +31,6 @@
 - (void)testCompile
 {
 	BCRocks *rocks = [BCRocks new];
-	[rocks doStuff];
 
     XCTAssert(YES, @"Pass");
 }

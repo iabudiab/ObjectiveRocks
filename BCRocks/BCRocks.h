@@ -10,6 +10,7 @@
 
 @interface BCRocks : NSObject
 
-- (int)doStuff;
+- (instancetype)initWithPath:(NSString *)path;
+- (void)close;
 
 @end
