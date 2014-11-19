@@ -6,20 +6,20 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import "BCRocks.h"
+#import "RocksDB.h"
 #import "BCRocksError.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
 #include <rocksdb/options.h>
 
-@interface BCRocks ()
+@interface RocksDB ()
 {
 	rocksdb::DB *_db;
 }
 @end
 
-@implementation BCRocks
+@implementation RocksDB
 
 #pragma mark - Lifecycle
 

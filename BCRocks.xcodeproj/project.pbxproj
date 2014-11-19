@@ -8,8 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* BCRocksError.mm */; };
-		6299F80D1A17B28200123F56 /* BCRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* BCRocks.h */; };
-		6299F80F1A17B28200123F56 /* BCRocks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* BCRocks.mm */; };
+		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
+		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		6299F8151A17B28200123F56 /* libBCRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libBCRocks.a */; };
 		6299F8561A17B7AD00123F56 /* BCRocksTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* BCRocksTests.mm */; };
 		62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29141A1ABA1F00486C31 /* builder.cc */; };
@@ -157,7 +157,7 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
-				6299F80D1A17B28200123F56 /* BCRocks.h in CopyFiles */,
+				6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -167,8 +167,8 @@
 		628B0CE81A1C104D0099C39B /* BCRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCRocksError.h; sourceTree = "<group>"; };
 		628B0CE91A1C104D0099C39B /* BCRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksError.mm; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		6299F80C1A17B28200123F56 /* BCRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCRocks.h; sourceTree = "<group>"; };
-		6299F80E1A17B28200123F56 /* BCRocks.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocks.mm; sourceTree = "<group>"; };
+		6299F80C1A17B28200123F56 /* RocksDB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RocksDB.h; sourceTree = "<group>"; };
+		6299F80E1A17B28200123F56 /* RocksDB.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDB.mm; sourceTree = "<group>"; };
 		6299F8141A17B28200123F56 /* BCRocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BCRocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6299F81A1A17B28200123F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6299F8551A17B7AD00123F56 /* BCRocksTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksTests.mm; sourceTree = "<group>"; };
@@ -901,8 +901,8 @@
 		6299F80B1A17B28200123F56 /* BCRocks */ = {
 			isa = PBXGroup;
 			children = (
-				6299F80C1A17B28200123F56 /* BCRocks.h */,
-				6299F80E1A17B28200123F56 /* BCRocks.mm */,
+				6299F80C1A17B28200123F56 /* RocksDB.h */,
+				6299F80E1A17B28200123F56 /* RocksDB.mm */,
 				628B0CE81A1C104D0099C39B /* BCRocksError.h */,
 				628B0CE91A1C104D0099C39B /* BCRocksError.mm */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
@@ -2070,7 +2070,7 @@
 				62EE2D071A1ABA2000486C31 /* ldb.cc in Sources */,
 				62EE2CBF1A1ABA2000486C31 /* stack_trace.cc in Sources */,
 				62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */,
-				6299F80F1A17B28200123F56 /* BCRocks.mm in Sources */,
+				6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */,
 				62EE2BEC1A1ABA2000486C31 /* db_filesnapshot.cc in Sources */,
 				62EE2CE21A1ABA2000486C31 /* flush_block_policy.cc in Sources */,
 				62EE2CCA1A1ABA2000486C31 /* block_based_table_builder.cc in Sources */,

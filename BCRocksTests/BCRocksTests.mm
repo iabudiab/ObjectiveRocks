@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "BCRocks.h"
+#import "RocksDB.h"
 
 @interface BCRocksTests : XCTestCase
 
@@ -30,7 +30,7 @@
 
 - (void)testCompile
 {
-	BCRocks *rocks = [BCRocks new];
+	RocksDB *rocks = [RocksDB new];
 
     XCTAssert(YES, @"Pass");
 }
