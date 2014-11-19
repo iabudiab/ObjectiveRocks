@@ -13,4 +13,6 @@
 - (instancetype)initWithPath:(NSString *)path;
 - (void)close;
 
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
 @end

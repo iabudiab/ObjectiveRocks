@@ -53,4 +53,26 @@
 	}
 }
 
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
+{
+	rocksdb::Status status = _db->Put(rocksdb::WriteOptions(),
+									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
+									  rocksdb::Slice((char *)data.bytes, data.length));
+	return status.ok();
+}
+
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
+{
+	rocksdb::Status status = _db->Put(rocksdb::WriteOptions(),
+									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
+									  rocksdb::Slice((char *)data.bytes, data.length));
+
+	if (!status.ok()) {
+		*error = [BCRocksError errorWithRocksStatus:status];
+		return NO;
+	}
+
+	return YES;
+}
+
 @end
