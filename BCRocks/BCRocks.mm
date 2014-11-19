@@ -7,6 +7,7 @@
 //
 
 #import "BCRocks.h"
+#import "BCRocksError.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
@@ -29,7 +30,7 @@
 		rocksdb::Options options;
 		rocksdb::Status status = rocksdb::DB::Open(options, path.UTF8String, &_db);
 		if (!status.ok()) {
-			NSLog(@"Error creating database: [%s]", status.ToString().c_str());
+			NSLog(@"Error creating database: %@", [BCRocksError errorWithRocksStatus:status]);
 			[self close];
 			return nil;
 		}

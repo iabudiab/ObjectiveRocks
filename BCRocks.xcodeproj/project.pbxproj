@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* BCRocksError.mm */; };
 		6299F80D1A17B28200123F56 /* BCRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* BCRocks.h */; };
 		6299F80F1A17B28200123F56 /* BCRocks.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* BCRocks.mm */; };
 		6299F8151A17B28200123F56 /* libBCRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libBCRocks.a */; };
@@ -163,6 +164,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		628B0CE81A1C104D0099C39B /* BCRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCRocksError.h; sourceTree = "<group>"; };
+		628B0CE91A1C104D0099C39B /* BCRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksError.mm; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6299F80C1A17B28200123F56 /* BCRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCRocks.h; sourceTree = "<group>"; };
 		6299F80E1A17B28200123F56 /* BCRocks.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocks.mm; sourceTree = "<group>"; };
@@ -900,6 +903,8 @@
 			children = (
 				6299F80C1A17B28200123F56 /* BCRocks.h */,
 				6299F80E1A17B28200123F56 /* BCRocks.mm */,
+				628B0CE81A1C104D0099C39B /* BCRocksError.h */,
+				628B0CE91A1C104D0099C39B /* BCRocksError.mm */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
 			);
 			path = BCRocks;
@@ -2099,6 +2104,7 @@
 				62EE2D291A1ABA2100486C31 /* dynamic_bloom.cc in Sources */,
 				62EE2D811A1ABA2100486C31 /* json_document.cc in Sources */,
 				62EE2C411A1ABA2000486C31 /* memenv.cc in Sources */,
+				628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */,
 				62EE2D711A1ABA2100486C31 /* testutil.cc in Sources */,
 				62EE2D8E1A1ABA2100486C31 /* uint64add.cc in Sources */,
 				62EE2D771A1ABA2100486C31 /* xxhash.cc in Sources */,
