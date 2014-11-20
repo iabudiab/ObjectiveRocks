@@ -10,4 +10,9 @@
 
 @interface RocksDBWriteOptions : NSObject
 
+@property (nonatomic, assign) BOOL syncWrites;
+@property (nonatomic, assign) BOOL disableWriteAheadLog;
+@property (nonatomic, assign) uint64_t timeoutHint;
+@property (nonatomic, assign) BOOL ignoreMissingColumnFamilies;
+
 @end
