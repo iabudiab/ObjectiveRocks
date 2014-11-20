@@ -7,8 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDB1A1FF27A005A58D3 /* checkpoint.cc */; };
+		62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */; };
 		6232B7351A1E80F900B14535 /* RocksDBWriteOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */; };
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
+		6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */; };
 		628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* BCRocksError.mm */; };
 		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
@@ -167,10 +170,20 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		62269ED91A1FF266005A58D3 /* checkpoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = checkpoint.h; path = utilities/checkpoint.h; sourceTree = "<group>"; };
+		62269EDB1A1FF27A005A58D3 /* checkpoint.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkpoint.cc; sourceTree = "<group>"; };
+		62269EDD1A1FF2B2005A58D3 /* leveldb_options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = leveldb_options.h; sourceTree = "<group>"; };
+		62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = leveldb_options.cc; sourceTree = "<group>"; };
+		62269EE11A1FF5AD005A58D3 /* BackupableDBOptionsTest.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = BackupableDBOptionsTest.java; sourceTree = "<group>"; };
 		6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBWriteOptions.h; sourceTree = "<group>"; };
 		6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBWriteOptions.mm; sourceTree = "<group>"; };
 		6232B7361A1E860700B14535 /* RocksDBReadOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBReadOptions.h; sourceTree = "<group>"; };
 		6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBReadOptions.mm; sourceTree = "<group>"; };
+		6232B7391A1EB2B900B14535 /* thread_status.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status.h; sourceTree = "<group>"; };
+		6232B73A1A1EB2FD00B14535 /* thread_list_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_list_test.cc; sourceTree = "<group>"; };
+		6232B73B1A1EB30900B14535 /* thread_status_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status_impl.h; sourceTree = "<group>"; };
+		6232B73C1A1EB31000B14535 /* thread_status_impl_debug.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl_debug.cc; sourceTree = "<group>"; };
+		6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl.cc; sourceTree = "<group>"; };
 		628B0CE81A1C104D0099C39B /* BCRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCRocksError.h; sourceTree = "<group>"; };
 		628B0CE91A1C104D0099C39B /* BCRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksError.mm; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -890,6 +903,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		62269EDA1A1FF27A005A58D3 /* checkpoint */ = {
+			isa = PBXGroup;
+			children = (
+				62269EDB1A1FF27A005A58D3 /* checkpoint.cc */,
+			);
+			name = checkpoint;
+			path = rocksdb/utilities/checkpoint;
+			sourceTree = SOURCE_ROOT;
+		};
+		62269EDE1A1FF2DC005A58D3 /* leveldb_options */ = {
+			isa = PBXGroup;
+			children = (
+				62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */,
+			);
+			path = leveldb_options;
+			sourceTree = "<group>";
+		};
 		6299F8001A17B28200123F56 = {
 			isa = PBXGroup;
 			children = (
@@ -1217,6 +1247,7 @@
 			children = (
 				62EE29B31A1ABA1F00486C31 /* c.h */,
 				62EE29B41A1ABA1F00486C31 /* cache.h */,
+				62269ED91A1FF266005A58D3 /* checkpoint.h */,
 				62EE29B51A1ABA1F00486C31 /* compaction_filter.h */,
 				62EE29B61A1ABA1F00486C31 /* comparator.h */,
 				62EE29B71A1ABA1F00486C31 /* db.h */,
@@ -1241,6 +1272,7 @@
 				62EE29CA1A1ABA1F00486C31 /* status.h */,
 				62EE29CB1A1ABA1F00486C31 /* table.h */,
 				62EE29CC1A1ABA1F00486C31 /* table_properties.h */,
+				6232B7391A1EB2B900B14535 /* thread_status.h */,
 				62EE29CD1A1ABA1F00486C31 /* transaction_log.h */,
 				62EE29CE1A1ABA1F00486C31 /* types.h */,
 				62EE29CF1A1ABA1F00486C31 /* universal_compaction.h */,
@@ -1260,6 +1292,7 @@
 				62EE29D41A1ABA1F00486C31 /* document_db.h */,
 				62EE29D51A1ABA1F00486C31 /* geo_db.h */,
 				62EE29D61A1ABA1F00486C31 /* json_document.h */,
+				62269EDD1A1FF2B2005A58D3 /* leveldb_options.h */,
 				62EE29D71A1ABA1F00486C31 /* spatial_db.h */,
 				62EE29D81A1ABA1F00486C31 /* stackable_db.h */,
 				62EE29D91A1ABA1F00486C31 /* utility_db.h */,
@@ -1397,6 +1430,7 @@
 			isa = PBXGroup;
 			children = (
 				62EE2A291A1ABA1F00486C31 /* AbstractComparatorTest.java */,
+				62269EE11A1FF5AD005A58D3 /* BackupableDBOptionsTest.java */,
 				62EE2A2A1A1ABA1F00486C31 /* BackupableDBTest.java */,
 				62EE2A2B1A1ABA1F00486C31 /* BlockBasedTableConfigTest.java */,
 				62EE2A2C1A1ABA1F00486C31 /* ColumnFamilyOptionsTest.java */,
@@ -1829,10 +1863,14 @@
 				62EE2B911A1ABA2000486C31 /* testharness.h */,
 				62EE2B921A1ABA2000486C31 /* testutil.cc */,
 				62EE2B931A1ABA2000486C31 /* testutil.h */,
+				6232B73A1A1EB2FD00B14535 /* thread_list_test.cc */,
 				62EE2B941A1ABA2000486C31 /* thread_local.cc */,
 				62EE2B951A1ABA2000486C31 /* thread_local.h */,
 				62EE2B961A1ABA2000486C31 /* thread_local.o */,
 				62EE2B971A1ABA2000486C31 /* thread_local_test.cc */,
+				6232B73C1A1EB31000B14535 /* thread_status_impl_debug.cc */,
+				6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */,
+				6232B73B1A1EB30900B14535 /* thread_status_impl.h */,
 				62EE2B981A1ABA2000486C31 /* vectorrep.cc */,
 				62EE2B991A1ABA2000486C31 /* vectorrep.o */,
 				62EE2B9A1A1ABA2000486C31 /* xxhash.cc */,
@@ -1846,9 +1884,11 @@
 			isa = PBXGroup;
 			children = (
 				62EE2B9E1A1ABA2000486C31 /* backupable */,
+				62269EDA1A1FF27A005A58D3 /* checkpoint */,
 				62EE2BA21A1ABA2000486C31 /* compacted_db */,
 				62EE2BA61A1ABA2000486C31 /* document */,
 				62EE2BAD1A1ABA2000486C31 /* geodb */,
+				62269EDE1A1FF2DC005A58D3 /* leveldb_options */,
 				62EE2BB21A1ABA2000486C31 /* merge_operators */,
 				62EE2BBF1A1ABA2000486C31 /* merge_operators.h */,
 				62EE2BC01A1ABA2000486C31 /* redis */,
@@ -2120,11 +2160,13 @@
 				62EE2D191A1ABA2100486C31 /* build_version.cc in Sources */,
 				62EE2CF01A1ABA2000486C31 /* meta_blocks.cc in Sources */,
 				62EE2CD01A1ABA2000486C31 /* block_builder.cc in Sources */,
+				6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */,
 				62EE2D291A1ABA2100486C31 /* dynamic_bloom.cc in Sources */,
 				62EE2D811A1ABA2100486C31 /* json_document.cc in Sources */,
 				62EE2C411A1ABA2000486C31 /* memenv.cc in Sources */,
 				628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */,
 				62EE2D711A1ABA2100486C31 /* testutil.cc in Sources */,
+				62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */,
 				62EE2D8E1A1ABA2100486C31 /* uint64add.cc in Sources */,
 				62EE2D771A1ABA2100486C31 /* xxhash.cc in Sources */,
 				62EE2CE41A1ABA2000486C31 /* format.cc in Sources */,
@@ -2182,6 +2224,7 @@
 				62EE2D681A1ABA2100486C31 /* statistics.cc in Sources */,
 				62EE2D5E1A1ABA2100486C31 /* rate_limiter.cc in Sources */,
 				62EE2C181A1ABA2000486C31 /* merge_operator.cc in Sources */,
+				62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */,
 				62EE2D901A1ABA2100486C31 /* redis_lists.cc in Sources */,
 				62EE2D271A1ABA2100486C31 /* db_info_dumper.cc in Sources */,
 				62EE2D571A1ABA2100486C31 /* options_builder.cc in Sources */,
@@ -2302,6 +2345,7 @@
 					"ROCKSDB_PLATFORM_POSIX=1",
 					"ROCKSDB_LITE=1",
 					"IOS_CROSS_COMPILE=1",
+					"NROCKSDB_THREAD_STATUS=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
