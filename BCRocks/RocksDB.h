@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBOptions.h"
 
 @interface RocksDB : NSObject
 
 - (instancetype)initWithPath:(NSString *)path;
+- (instancetype)initWithPath:(NSString *)path andOptions:(void (^)(RocksDBOptions *options))options;
+
 - (void)close;
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;

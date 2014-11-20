@@ -8,14 +8,22 @@
 
 #import "RocksDB.h"
 #import "BCRocksError.h"
+#import "RocksDBOptions.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
 #include <rocksdb/options.h>
 
+#pragma mark - 
+
+@interface RocksDBOptions (Private)
+@property (nonatomic, readonly) rocksdb::Options options;
+@end
+
 @interface RocksDB ()
 {
 	rocksdb::DB *_db;
+	RocksDBOptions *_options;
 }
 @end
 
@@ -25,10 +33,19 @@
 
 - (instancetype)initWithPath:(NSString *)path
 {
+	return [self initWithPath:path andOptions:nil];
+}
+
+- (instancetype)initWithPath:(NSString *)path andOptions:(void (^)(RocksDBOptions *))optionsBlock
+{
 	self = [super init];
 	if (self) {
-		rocksdb::Options options;
-		rocksdb::Status status = rocksdb::DB::Open(options, path.UTF8String, &_db);
+		_options = [RocksDBOptions new];
+		if (optionsBlock) {
+			optionsBlock(_options);
+		}
+
+		rocksdb::Status status = rocksdb::DB::Open(_options.options, path.UTF8String, &_db);
 		if (!status.ok()) {
 			NSLog(@"Error creating database: %@", [BCRocksError errorWithRocksStatus:status]);
 			[self close];
