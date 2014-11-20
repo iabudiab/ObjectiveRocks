@@ -10,4 +10,7 @@
 
 @interface RocksDBReadOptions : NSObject
 
+@property (nonatomic, assign) BOOL verifyChecksums;
+@property (nonatomic, assign) BOOL fillCache;
+
 @end
