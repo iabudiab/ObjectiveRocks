@@ -14,7 +14,7 @@
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		6299F8151A17B28200123F56 /* libBCRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libBCRocks.a */; };
 		6299F8561A17B7AD00123F56 /* BCRocksTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* BCRocksTests.mm */; };
-		62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.m in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.m */; };
+		62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */; };
 		62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29141A1ABA1F00486C31 /* builder.cc */; };
 		62EE2BDA1A1ABA2000486C31 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29171A1ABA1F00486C31 /* c.cc */; };
 		62EE2BDD1A1ABA2000486C31 /* column_family.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE291A1A1ABA1F00486C31 /* column_family.cc */; };
@@ -181,7 +181,7 @@
 		6299F8551A17B7AD00123F56 /* BCRocksTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksTests.mm; sourceTree = "<group>"; };
 		62AEF9B81A1D5CF000E63E89 /* BCRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BCRocks.h; sourceTree = "<group>"; };
 		62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBOptions.h; sourceTree = "<group>"; };
-		62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBOptions.m; sourceTree = "<group>"; };
+		62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBOptions.mm; sourceTree = "<group>"; };
 		62EE28FE1A1ABA1F00486C31 /* .arcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .arcconfig; sourceTree = "<group>"; };
 		62EE28FF1A1ABA1F00486C31 /* .clang-format */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ".clang-format"; sourceTree = "<group>"; };
 		62EE29001A1ABA1F00486C31 /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
@@ -915,7 +915,7 @@
 				6299F80C1A17B28200123F56 /* RocksDB.h */,
 				6299F80E1A17B28200123F56 /* RocksDB.mm */,
 				62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */,
-				62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.m */,
+				62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */,
 				6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */,
 				6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */,
 				6232B7361A1E860700B14535 /* RocksDBReadOptions.h */,
@@ -2078,7 +2078,7 @@
 				62EE2CD51A1ABA2000486C31 /* block_prefix_index.cc in Sources */,
 				62EE2CC31A1ABA2000486C31 /* adaptive_table_factory.cc in Sources */,
 				62EE2CF91A1ABA2000486C31 /* plain_table_key_coding.cc in Sources */,
-				62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.m in Sources */,
+				62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */,
 				62EE2CBD1A1ABA2000486C31 /* port_posix.cc in Sources */,
 				62EE2D221A1ABA2100486C31 /* comparator.cc in Sources */,
 				62EE2D621A1ABA2100486C31 /* skiplistrep.cc in Sources */,
