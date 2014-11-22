@@ -920,6 +920,19 @@
 			path = leveldb_options;
 			sourceTree = "<group>";
 		};
+		62269EE21A200CD9005A58D3 /* Options */ = {
+			isa = PBXGroup;
+			children = (
+				62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */,
+				62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */,
+				6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */,
+				6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */,
+				6232B7361A1E860700B14535 /* RocksDBReadOptions.h */,
+				6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */,
+			);
+			name = Options;
+			sourceTree = "<group>";
+		};
 		6299F8001A17B28200123F56 = {
 			isa = PBXGroup;
 			children = (
@@ -944,12 +957,7 @@
 				62AEF9B81A1D5CF000E63E89 /* BCRocks.h */,
 				6299F80C1A17B28200123F56 /* RocksDB.h */,
 				6299F80E1A17B28200123F56 /* RocksDB.mm */,
-				62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */,
-				62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */,
-				6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */,
-				6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */,
-				6232B7361A1E860700B14535 /* RocksDBReadOptions.h */,
-				6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */,
+				62269EE21A200CD9005A58D3 /* Options */,
 				628B0CE81A1C104D0099C39B /* BCRocksError.h */,
 				628B0CE91A1C104D0099C39B /* BCRocksError.mm */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
