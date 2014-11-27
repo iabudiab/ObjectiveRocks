@@ -9,9 +9,11 @@
 /* Begin PBXBuildFile section */
 		62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDB1A1FF27A005A58D3 /* checkpoint.cc */; };
 		62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */; };
+		623224AC1A2116A400FB6625 /* RocksDBComparator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623224AB1A2116A400FB6625 /* RocksDBComparator.mm */; };
 		6232B7351A1E80F900B14535 /* RocksDBWriteOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */; };
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
 		6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */; };
+		62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */; };
 		628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* BCRocksError.mm */; };
 		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
@@ -175,6 +177,8 @@
 		62269EDD1A1FF2B2005A58D3 /* leveldb_options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = leveldb_options.h; sourceTree = "<group>"; };
 		62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = leveldb_options.cc; sourceTree = "<group>"; };
 		62269EE11A1FF5AD005A58D3 /* BackupableDBOptionsTest.java */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.java; path = BackupableDBOptionsTest.java; sourceTree = "<group>"; };
+		623224AA1A2116A400FB6625 /* RocksDBComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBComparator.h; sourceTree = "<group>"; };
+		623224AB1A2116A400FB6625 /* RocksDBComparator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBComparator.mm; sourceTree = "<group>"; };
 		6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBWriteOptions.h; sourceTree = "<group>"; };
 		6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBWriteOptions.mm; sourceTree = "<group>"; };
 		6232B7361A1E860700B14535 /* RocksDBReadOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBReadOptions.h; sourceTree = "<group>"; };
@@ -184,6 +188,8 @@
 		6232B73B1A1EB30900B14535 /* thread_status_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status_impl.h; sourceTree = "<group>"; };
 		6232B73C1A1EB31000B14535 /* thread_status_impl_debug.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl_debug.cc; sourceTree = "<group>"; };
 		6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl.cc; sourceTree = "<group>"; };
+		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
+		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
 		628B0CE81A1C104D0099C39B /* BCRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCRocksError.h; sourceTree = "<group>"; };
 		628B0CE91A1C104D0099C39B /* BCRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksError.mm; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -933,6 +939,15 @@
 			name = Options;
 			sourceTree = "<group>";
 		};
+		62376BBC1A20EA4B00C85DFB /* Internal */ = {
+			isa = PBXGroup;
+			children = (
+				62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */,
+				62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */,
+			);
+			name = Internal;
+			sourceTree = "<group>";
+		};
 		6299F8001A17B28200123F56 = {
 			isa = PBXGroup;
 			children = (
@@ -960,6 +975,9 @@
 				62269EE21A200CD9005A58D3 /* Options */,
 				628B0CE81A1C104D0099C39B /* BCRocksError.h */,
 				628B0CE91A1C104D0099C39B /* BCRocksError.mm */,
+				623224AA1A2116A400FB6625 /* RocksDBComparator.h */,
+				623224AB1A2116A400FB6625 /* RocksDBComparator.mm */,
+				62376BBC1A20EA4B00C85DFB /* Internal */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
 			);
 			path = BCRocks;
@@ -2183,6 +2201,7 @@
 				62EE2D0A1A1ABA2000486C31 /* arena.cc in Sources */,
 				62EE2C341A1ABA2000486C31 /* write_batch.cc in Sources */,
 				62EE2BF01A1ABA2000486C31 /* db_impl_debug.cc in Sources */,
+				62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */,
 				62EE2CE61A1ABA2000486C31 /* full_filter_block.cc in Sources */,
 				62EE2D6A1A1ABA2100486C31 /* status.cc in Sources */,
 				62EE2BDA1A1ABA2000486C31 /* c.cc in Sources */,
@@ -2212,6 +2231,7 @@
 				62EE2C101A1ABA2000486C31 /* log_writer.cc in Sources */,
 				62EE2D241A1ABA2100486C31 /* crc32c.cc in Sources */,
 				62EE2CF71A1ABA2000486C31 /* plain_table_index.cc in Sources */,
+				623224AC1A2116A400FB6625 /* RocksDBComparator.mm in Sources */,
 				62EE2D6C1A1ABA2100486C31 /* string_util.cc in Sources */,
 				62EE2C2E1A1ABA2000486C31 /* version_set.cc in Sources */,
 				62EE2BEE1A1ABA2000486C31 /* db_impl.cc in Sources */,
