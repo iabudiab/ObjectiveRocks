@@ -8,31 +8,55 @@
 
 #import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
-#import "RocksDB.h"
+#import "BCRocks.h"
 
 @interface BCRocksTests : XCTestCase
-
+{
+	RocksDB *_rocks;
+}
 @end
 
 @implementation BCRocksTests
 
 - (void)setUp
 {
-    [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+	[super setUp];
+
+	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
+	path = [path stringByAppendingPathComponent:@"BCRocks"];
+	_rocks = [[RocksDB alloc] initWithPath:path andOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
 }
 
 - (void)tearDown
 {
-    // Put teardown code here. This method is called after the invocation of each test method in the class.
-    [super tearDown];
+	[_rocks close];
+
+	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
+	path = [path stringByAppendingPathComponent:@"BCRocks"];
+
+	NSError *error = nil;
+	[[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+	if (error) {
+		NSLog(@"Error test teardown: %@", [error debugDescription]);
+	}
+	[super tearDown];
 }
 
-- (void)testCompile
+- (void)testDB_Init
 {
-	RocksDB *rocks = [RocksDB new];
+	NSString *key = @"key";
+	NSString *value = @"value";
 
-    XCTAssert(YES, @"Pass");
+	BOOL ok = [_rocks setData:[value dataUsingEncoding:NSUTF8StringEncoding] forKey:[key dataUsingEncoding:NSUTF8StringEncoding]];
+    XCTAssert(ok, @"Put Data");
+
+	NSData *data = [_rocks dataForKey:[key dataUsingEncoding:NSUTF8StringEncoding]];
+	XCTAssertNotNil(data);
+
+	NSString *roundtrip = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	XCTAssertEqualObjects(roundtrip, value);
 }
 
 @end
