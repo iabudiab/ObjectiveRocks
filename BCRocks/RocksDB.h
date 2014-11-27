@@ -19,6 +19,9 @@
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
 
+- (NSData *)dataForKey:(NSData *)aKey;
+- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error;
+
 - (BOOL)setObject:(id)anObject forKey:(id)aKey;
 - (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error;
 

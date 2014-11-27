@@ -72,10 +72,7 @@
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
 {
-	rocksdb::Status status = _db->Put(rocksdb::WriteOptions(),
-									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
-									  rocksdb::Slice((char *)data.bytes, data.length));
-	return status.ok();
+	return [self setData:data forKey:aKey error:nil];
 }
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
@@ -90,6 +87,24 @@
 	}
 
 	return YES;
+}
+
+- (NSData *)dataForKey:(NSData *)aKey
+{
+	return [self dataForKey:aKey error:nil];
+}
+
+- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error
+{
+	std::string value;
+	rocksdb::Status status = _db->Get(rocksdb::ReadOptions(),
+									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
+									  &value);
+	if (!status.ok()) {
+		*error = [BCRocksError errorWithRocksStatus:status];
+		return nil;
+	}
+	return [NSData dataWithBytes:value.c_str() length:value.length()];
 }
 
 @end
