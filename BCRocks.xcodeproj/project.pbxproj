@@ -190,6 +190,15 @@
 		6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl.cc; sourceTree = "<group>"; };
 		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
 		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
+		626A7D4C1A27EC570098A979 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		626A7D4D1A27EC570098A979 /* API.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = API.md; sourceTree = "<group>"; };
+		626A7D4E1A27EC570098A979 /* binding.gyp */ = {isa = PBXFileReference; lastKnownFileType = text; path = binding.gyp; sourceTree = "<group>"; };
+		626A7D4F1A27EC570098A979 /* db_wrapper.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = db_wrapper.cc; sourceTree = "<group>"; };
+		626A7D501A27EC570098A979 /* db_wrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = db_wrapper.h; sourceTree = "<group>"; };
+		626A7D511A27EC570098A979 /* rdb */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = rdb; sourceTree = "<group>"; };
+		626A7D521A27EC570098A979 /* rdb.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = rdb.cc; sourceTree = "<group>"; };
+		626A7D531A27EC570098A979 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		626A7D541A27EC570098A979 /* unit_test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = unit_test.js; sourceTree = "<group>"; };
 		628B0CE81A1C104D0099C39B /* BCRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BCRocksError.h; sourceTree = "<group>"; };
 		628B0CE91A1C104D0099C39B /* BCRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BCRocksError.mm; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libBCRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libBCRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -946,6 +955,22 @@
 				62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */,
 			);
 			name = Internal;
+			sourceTree = "<group>";
+		};
+		626A7D4B1A27EC570098A979 /* rdb */ = {
+			isa = PBXGroup;
+			children = (
+				626A7D4C1A27EC570098A979 /* .gitignore */,
+				626A7D4D1A27EC570098A979 /* API.md */,
+				626A7D4E1A27EC570098A979 /* binding.gyp */,
+				626A7D4F1A27EC570098A979 /* db_wrapper.cc */,
+				626A7D501A27EC570098A979 /* db_wrapper.h */,
+				626A7D511A27EC570098A979 /* rdb */,
+				626A7D521A27EC570098A979 /* rdb.cc */,
+				626A7D531A27EC570098A979 /* README.md */,
+				626A7D541A27EC570098A979 /* unit_test.js */,
+			);
+			path = rdb;
 			sourceTree = "<group>";
 		};
 		6299F8001A17B28200123F56 = {
@@ -1727,6 +1752,7 @@
 		62EE2AF71A1ABA2000486C31 /* tools */ = {
 			isa = PBXGroup;
 			children = (
+				626A7D4B1A27EC570098A979 /* rdb */,
 				62EE2AF81A1ABA2000486C31 /* auto_sanity_test.sh */,
 				62EE2AF91A1ABA2000486C31 /* benchmark.sh */,
 				62EE2AFA1A1ABA2000486C31 /* blob_store_bench.cc */,
