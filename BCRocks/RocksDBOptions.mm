@@ -7,12 +7,14 @@
 //
 
 #import "RocksDBOptions.h"
+#import "RocksDBComparator.h"
 
 #import <rocksdb/options.h>
 
 @interface RocksDBOptions ()
 {
 	rocksdb::Options _options;
+	RocksDBComparator *_wrapper;
 }
 @property (nonatomic, readonly) rocksdb::Options options;
 @end
@@ -165,10 +167,10 @@
 
 #pragma mark - Column Family Options
 
-- (id)comparator
+- (void)setComparator:(int (^)(NSData *, NSData *))block
 {
-#warning implement comparators
-	return nil;
+	_wrapper = [[RocksDBComparator alloc] initWithBlock:block];
+	_options.comparator = _wrapper.comparator;
 }
 
 - (size_t)writeBufferSize

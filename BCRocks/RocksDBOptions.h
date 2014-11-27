@@ -47,7 +47,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
 @interface RocksDBOptions (ColumnFamilyOptions)
 
-@property (nonatomic, strong) id comparator;
+@property (nonatomic) int (^comparator)(NSData *data1, NSData *data2);
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
