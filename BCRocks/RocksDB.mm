@@ -98,7 +98,7 @@
 	}
 }
 
-#pragma mark - Read/Write Operations
+#pragma mark - Write Operations
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
 {
@@ -135,6 +135,8 @@
 	return YES;
 }
 
+#pragma mark - Read Operations
+
 - (NSData *)dataForKey:(NSData *)aKey
 {
 	return [self dataForKey:aKey error:nil];
@@ -168,6 +170,42 @@
 	}
 
 	return [NSData dataWithBytes:value.c_str() length:value.length()];
+}
+
+#pragma mark - Delete Operations
+
+- (BOOL)deleteDataForKey:(NSData *)aKey
+{
+	return [self deleteDataForKey:aKey error:nil];
+}
+
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error
+{
+	return [self deleteDataForKey:aKey error:error withWriteOptions:nil];
+}
+
+- (BOOL)deleteDataForKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self deleteDataForKey:aKey error:nil withWriteOptions:writeOptionsBlock];
+}
+
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	RocksDBWriteOptions *writeOptions = _writeOptions;
+	if (writeOptionsBlock) {
+		writeOptions = [RocksDBWriteOptions new];
+		writeOptionsBlock(writeOptions);
+	}
+
+	rocksdb::Status status = _db->Delete(writeOptions.options,
+									  rocksdb::Slice((char *)aKey.bytes, aKey.length));
+	
+	if (!status.ok()) {
+		*error = [BCRocksError errorWithRocksStatus:status];
+		return NO;
+	}
+
+	return YES;
 }
 
 @end

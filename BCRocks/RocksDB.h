@@ -29,6 +29,12 @@
 - (NSData *)dataForKey:(NSData *)aKey withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 - (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 
+- (BOOL)deleteDataForKey:(NSData *)aKey;
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error;
+- (BOOL)deleteDataForKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+
+
 
 - (void)close;
 
