@@ -14,6 +14,7 @@
 {
 	rocksdb::ReadOptions _readOptions;
 }
+@property (nonatomic, readonly) rocksdb::ReadOptions options;
 @end
 
 @implementation RocksDBReadOptions

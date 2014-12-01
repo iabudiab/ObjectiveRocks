@@ -13,6 +13,7 @@
 {
 	rocksdb::WriteOptions _writeOptions;
 }
+@property (nonatomic, readonly) rocksdb::WriteOptions options;
 @end
 
 @implementation RocksDBWriteOptions

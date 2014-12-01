@@ -24,7 +24,7 @@
 
 	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
 	path = [path stringByAppendingPathComponent:@"BCRocks"];
-	_rocks = [[RocksDB alloc] initWithPath:path andOptions:^(RocksDBOptions *options) {
+	_rocks = [[RocksDB alloc] initWithPath:path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 }

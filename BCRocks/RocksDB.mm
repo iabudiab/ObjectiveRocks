@@ -9,6 +9,8 @@
 #import "RocksDB.h"
 #import "BCRocksError.h"
 #import "RocksDBOptions.h"
+#import "RocksDBReadOptions.h"
+#import "RocksDBWriteOptions.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
@@ -20,10 +22,20 @@
 @property (nonatomic, readonly) rocksdb::Options options;
 @end
 
+@interface RocksDBReadOptions (Private)
+@property (nonatomic, readonly) rocksdb::ReadOptions options;
+@end
+
+@interface RocksDBWriteOptions (Private)
+@property (nonatomic, readonly) rocksdb::WriteOptions options;
+@end
+
 @interface RocksDB ()
 {
 	rocksdb::DB *_db;
 	RocksDBOptions *_options;
+	RocksDBReadOptions *_readOptions;
+	RocksDBWriteOptions *_writeOptions;
 }
 @end
 
@@ -33,10 +45,10 @@
 
 - (instancetype)initWithPath:(NSString *)path
 {
-	return [self initWithPath:path andOptions:nil];
+	return [self initWithPath:path andDBOptions:nil];
 }
 
-- (instancetype)initWithPath:(NSString *)path andOptions:(void (^)(RocksDBOptions *))optionsBlock
+- (instancetype)initWithPath:(NSString *)path andDBOptions:(void (^)(RocksDBOptions *))optionsBlock
 {
 	self = [super init];
 	if (self) {
@@ -70,6 +82,22 @@
 	}
 }
 
+#pragma mark - Read/Write Options
+
+- (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *))readOptionsBlock andWriteOptions:(void (^)(RocksDBWriteOptions *))writeOptionsBlock
+{
+	_readOptions = [RocksDBReadOptions new];
+	_writeOptions = [RocksDBWriteOptions new];
+
+	if (readOptionsBlock) {
+		readOptionsBlock(_readOptions);
+	}
+
+	if (writeOptionsBlock) {
+		writeOptionsBlock(_writeOptions);
+	}
+}
+
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
 {
 	return [self setData:data forKey:aKey error:nil];
@@ -77,7 +105,7 @@
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
 {
-	rocksdb::Status status = _db->Put(rocksdb::WriteOptions(),
+	rocksdb::Status status = _db->Put(_writeOptions.options,
 									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
 									  rocksdb::Slice((char *)data.bytes, data.length));
 
@@ -97,7 +125,7 @@
 - (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error
 {
 	std::string value;
-	rocksdb::Status status = _db->Get(rocksdb::ReadOptions(),
+	rocksdb::Status status = _db->Get(_readOptions.options,
 									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
 									  &value);
 	if (!status.ok()) {
