@@ -14,6 +14,7 @@
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
 		6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */; };
 		62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */; };
+		623FE7501A2D2ED500E68421 /* RocksDBWriteBatch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623FE74F1A2D2ED500E68421 /* RocksDBWriteBatch.mm */; };
 		628B0CEA1A1C104D0099C39B /* BCRocksError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* BCRocksError.mm */; };
 		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
@@ -190,6 +191,8 @@
 		6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl.cc; sourceTree = "<group>"; };
 		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
 		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
+		623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBWriteBatch.h; sourceTree = "<group>"; };
+		623FE74F1A2D2ED500E68421 /* RocksDBWriteBatch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBWriteBatch.mm; sourceTree = "<group>"; };
 		626A7D4C1A27EC570098A979 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		626A7D4D1A27EC570098A979 /* API.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = API.md; sourceTree = "<group>"; };
 		626A7D4E1A27EC570098A979 /* binding.gyp */ = {isa = PBXFileReference; lastKnownFileType = text; path = binding.gyp; sourceTree = "<group>"; };
@@ -997,6 +1000,8 @@
 				62AEF9B81A1D5CF000E63E89 /* BCRocks.h */,
 				6299F80C1A17B28200123F56 /* RocksDB.h */,
 				6299F80E1A17B28200123F56 /* RocksDB.mm */,
+				623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */,
+				623FE74F1A2D2ED500E68421 /* RocksDBWriteBatch.mm */,
 				62269EE21A200CD9005A58D3 /* Options */,
 				628B0CE81A1C104D0099C39B /* BCRocksError.h */,
 				628B0CE91A1C104D0099C39B /* BCRocksError.mm */,
@@ -2168,6 +2173,7 @@
 				62EE2D011A1ABA2000486C31 /* two_level_iterator.cc in Sources */,
 				62EE2D931A1ABA2100486C31 /* spatial_db.cc in Sources */,
 				62EE2CD51A1ABA2000486C31 /* block_prefix_index.cc in Sources */,
+				623FE7501A2D2ED500E68421 /* RocksDBWriteBatch.mm in Sources */,
 				62EE2CC31A1ABA2000486C31 /* adaptive_table_factory.cc in Sources */,
 				62EE2CF91A1ABA2000486C31 /* plain_table_key_coding.cc in Sources */,
 				62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */,
