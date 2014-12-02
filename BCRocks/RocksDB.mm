@@ -109,17 +109,19 @@
 	return [self setData:data forKey:aKey error:nil];
 }
 
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
 {
-	return [self setData:data forKey:aKey error:error withWriteOptions:nil];
+	return [self setData:data forKey:aKey error:error writeOptions:nil];
 }
 
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	return [self setData:data forKey:aKey error:nil withWriteOptions:writeOptionsBlock];
+	return [self setData:data forKey:aKey error:nil writeOptions:writeOptionsBlock];
 }
 
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
+		  error:(NSError * __autoreleasing *)error
+   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	RocksDBWriteOptions *writeOptions = _writeOptions;
 	if (writeOptionsBlock) {
@@ -146,17 +148,19 @@
 	return [self dataForKey:aKey error:nil];
 }
 
-- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error
+- (NSData *)dataForKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
 {
-	return [self dataForKey:aKey error:error withReadOptions:nil];
+	return [self dataForKey:aKey error:error readOptions:nil];
 }
 
-- (NSData *)dataForKey:(NSData *)aKey withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+- (NSData *)dataForKey:(NSData *)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
-	return [self dataForKey:aKey error:nil withReadOptions:readOptionsBlock];
+	return [self dataForKey:aKey error:nil readOptions:readOptionsBlock];
 }
 
-- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+- (NSData *)dataForKey:(NSData *)aKey
+				 error:(NSError * __autoreleasing *)error
+		   readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
 	RocksDBReadOptions *readOptions = _readOptions;
 	if (readOptionsBlock) {
@@ -183,17 +187,19 @@
 	return [self deleteDataForKey:aKey error:nil];
 }
 
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
 {
-	return [self deleteDataForKey:aKey error:error withWriteOptions:nil];
+	return [self deleteDataForKey:aKey error:error writeOptions:nil];
 }
 
-- (BOOL)deleteDataForKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	return [self deleteDataForKey:aKey error:nil withWriteOptions:writeOptionsBlock];
+	return [self deleteDataForKey:aKey error:nil writeOptions:writeOptionsBlock];
 }
 
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+- (BOOL)deleteDataForKey:(NSData *)aKey
+				   error:(NSError **)error
+			writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	RocksDBWriteOptions *writeOptions = _writeOptions;
 	if (writeOptionsBlock) {

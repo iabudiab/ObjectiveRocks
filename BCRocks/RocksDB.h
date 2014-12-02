@@ -22,19 +22,18 @@
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 - (NSData *)dataForKey:(NSData *)aKey;
 - (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error;
-- (NSData *)dataForKey:(NSData *)aKey withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
-- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error withReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (NSData *)dataForKey:(NSData *)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 
 - (BOOL)deleteDataForKey:(NSData *)aKey;
 - (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error;
-- (BOOL)deleteDataForKey:(NSData *)aKey withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
+- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch;
 
