@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RocksDBWriteOptions : NSObject
+@interface RocksDBWriteOptions : NSObject <NSCopying> 
 
 @property (nonatomic, assign) BOOL syncWrites;
 @property (nonatomic, assign) BOOL disableWriteAheadLog;

@@ -233,7 +233,7 @@
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
 {
 	RocksDBWriteBatch *writeBatch = [RocksDBWriteBatch new];
-	RocksDBWriteOptions *writeOptions = [RocksDBWriteOptions new];
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 	if (batchBlock) {
 		batchBlock(writeBatch, writeOptions);
 		rocksdb::WriteBatch batch = writeBatch.writeBatch;

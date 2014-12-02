@@ -13,7 +13,7 @@
 {
 	rocksdb::WriteOptions _writeOptions;
 }
-@property (nonatomic, readonly) rocksdb::WriteOptions options;
+@property (nonatomic, assign) rocksdb::WriteOptions options;
 @end
 
 @implementation RocksDBWriteOptions
@@ -69,6 +69,15 @@
 - (void)setIgnoreMissingColumnFamilies:(BOOL)ignoreMissingColumnFamilies
 {
 	_writeOptions.ignore_missing_column_families = ignoreMissingColumnFamilies;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	RocksDBWriteOptions *copy = [RocksDBWriteOptions new];
+	copy.options = self.options;
+	return copy;
 }
 
 @end
