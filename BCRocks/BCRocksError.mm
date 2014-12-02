@@ -21,10 +21,7 @@ NSString * const BCRocksErrorDomain = @"co.braincookie.bcrocks.error";
 							   NSLocalizedFailureReasonErrorKey : reason
 							   };
 
-	NSError *error = [[NSError alloc] initWithDomain:BCRocksErrorDomain
-												code:status.code()
-											userInfo:userInfo];
-	return error;
+	return [NSError errorWithDomain:BCRocksErrorDomain code:status.code() userInfo:userInfo];
 }
 
 @end

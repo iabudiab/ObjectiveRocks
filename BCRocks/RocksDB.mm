@@ -134,7 +134,10 @@
 									  rocksdb::Slice((char *)data.bytes, data.length));
 
 	if (!status.ok()) {
-		*error = [BCRocksError errorWithRocksStatus:status];
+		NSError *temp = [BCRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
 		return NO;
 	}
 
@@ -173,7 +176,10 @@
 									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
 									  &value);
 	if (!status.ok()) {
-		*error = [BCRocksError errorWithRocksStatus:status];
+		NSError *temp = [BCRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
 		return nil;
 	}
 
@@ -211,7 +217,10 @@
 									  rocksdb::Slice((char *)aKey.bytes, aKey.length));
 	
 	if (!status.ok()) {
-		*error = [BCRocksError errorWithRocksStatus:status];
+		NSError *temp = [BCRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
 		return NO;
 	}
 
