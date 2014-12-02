@@ -30,6 +30,10 @@
 @property (nonatomic, readonly) rocksdb::WriteOptions options;
 @end
 
+@interface RocksDBWriteBatch (Private)
+@property (nonatomic, readonly) rocksdb::WriteBatch writeBatch;
+@end
+
 @interface RocksDB ()
 {
 	rocksdb::DB *_db;
@@ -206,6 +210,25 @@
 	}
 
 	return YES;
+}
+
+#pragma mark - Batch Writes
+
+
+- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
+{
+	RocksDBWriteBatch *writeBatch = [RocksDBWriteBatch new];
+	RocksDBWriteOptions *writeOptions = [RocksDBWriteOptions new];
+	if (batchBlock) {
+		batchBlock(writeBatch, writeOptions);
+		rocksdb::WriteBatch batch = writeBatch.writeBatch;
+		rocksdb::Status status = _db->Write(writeOptions.options, &batch);
+		if (!status.ok()) {
+			return NO;
+		}
+		return YES;
+	}
+	return NO;
 }
 
 @end

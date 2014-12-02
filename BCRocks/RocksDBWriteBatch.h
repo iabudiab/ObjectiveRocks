@@ -10,4 +10,8 @@
 
 @interface RocksDBWriteBatch : NSObject
 
+- (void)setData:(NSData *)data forKey:(NSData *)aKey;
+- (void)deleteDataForKey:(NSData *)aKey;
+- (void)clear;
+
 @end

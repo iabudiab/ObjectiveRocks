@@ -10,6 +10,7 @@
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
+#import "RocksDBWriteBatch.h"
 
 @interface RocksDB : NSObject
 
@@ -35,6 +36,7 @@
 - (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 
+- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch;
 
 - (void)close;
 
