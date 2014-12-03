@@ -1,5 +1,5 @@
 //
-//  BCRocksTests.m
+//  RocksDBTests.m
 //  BCRocks
 //
 //  Created by Iska on 15/11/14.
@@ -10,13 +10,15 @@
 #import <XCTest/XCTest.h>
 #import "BCRocks.h"
 
-@interface BCRocksTests : XCTestCase
+#define Data(x) [x dataUsingEncoding:NSUTF8StringEncoding]
+
+@interface RocksDBTests : XCTestCase
 {
 	RocksDB *_rocks;
 }
 @end
 
-@implementation BCRocksTests
+@implementation RocksDBTests
 
 - (void)setUp
 {
