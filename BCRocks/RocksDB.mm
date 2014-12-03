@@ -232,18 +232,28 @@
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
 {
+	return [self performWriteBatch:batchBlock error:nil];
+}
+
+- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock error:(NSError **)error
+{
+	if (batchBlock == nil) return NO;
+
 	RocksDBWriteBatch *writeBatch = [RocksDBWriteBatch new];
 	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
-	if (batchBlock) {
-		batchBlock(writeBatch, writeOptions);
-		rocksdb::WriteBatch batch = writeBatch.writeBatch;
-		rocksdb::Status status = _db->Write(writeOptions.options, &batch);
-		if (!status.ok()) {
-			return NO;
+
+	batchBlock(writeBatch, writeOptions);
+	rocksdb::WriteBatch batch = writeBatch.writeBatch;
+	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
+
+	if (!status.ok()) {
+		NSError *temp = [BCRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
 		}
-		return YES;
+		return NO;
 	}
-	return NO;
+	return YES;
 }
 
 @end
