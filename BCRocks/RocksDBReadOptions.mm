@@ -14,7 +14,7 @@
 {
 	rocksdb::ReadOptions _readOptions;
 }
-@property (nonatomic, readonly) rocksdb::ReadOptions options;
+@property (nonatomic, assign) rocksdb::ReadOptions options;
 @end
 
 @implementation RocksDBReadOptions
@@ -50,6 +50,15 @@
 - (void)setFillCache:(BOOL)fillCache
 {
 	_readOptions.fill_cache = fillCache;
+}
+
+#pragma mark - NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+	RocksDBReadOptions *copy = [RocksDBReadOptions new];
+	copy.options = self.options;
+	return copy;
 }
 
 @end

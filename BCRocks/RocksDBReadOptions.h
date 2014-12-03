@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RocksDBReadOptions : NSObject
+@interface RocksDBReadOptions : NSObject <NSCopying> 
 
 @property (nonatomic, assign) BOOL verifyChecksums;
 @property (nonatomic, assign) BOOL fillCache;

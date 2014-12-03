@@ -123,9 +123,8 @@
 		  error:(NSError * __autoreleasing *)error
    writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	RocksDBWriteOptions *writeOptions = _writeOptions;
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];;
 	if (writeOptionsBlock) {
-		writeOptions = [RocksDBWriteOptions new];
 		writeOptionsBlock(writeOptions);
 	}
 
@@ -165,9 +164,8 @@
 				 error:(NSError * __autoreleasing *)error
 		   readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
-	RocksDBReadOptions *readOptions = _readOptions;
+	RocksDBReadOptions *readOptions = [_readOptions copy];
 	if (readOptionsBlock) {
-		readOptions = [RocksDBReadOptions new];
 		readOptionsBlock(readOptions);
 	}
 
@@ -207,9 +205,8 @@
 				   error:(NSError **)error
 			writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	RocksDBWriteOptions *writeOptions = _writeOptions;
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 	if (writeOptionsBlock) {
-		writeOptions = [RocksDBWriteOptions new];
 		writeOptionsBlock(writeOptions);
 	}
 
