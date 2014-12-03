@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
 #import <XCTest/XCTest.h>
 #import "BCRocks.h"
 
