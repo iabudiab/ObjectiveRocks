@@ -89,8 +89,24 @@
 	[_rocks close];
 }
 
-	NSString *roundtrip = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	XCTAssertEqualObjects(roundtrip, value);
+- (void)testDB_Iterator
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+
+	NSMutableArray *expected = [NSMutableArray array];
+	[_rocks enumerateKeysUsingBlock:^(id key, BOOL *stop) {
+		[expected addObject:Str(key)];
+	}];
+
+	NSArray *actual = @[ @"key 1", @"key 2", @"key 3" ];
+	XCTAssertEqualObjects(actual, expected);
+}
 }
 
 @end

@@ -226,7 +226,6 @@
 
 #pragma mark - Batch Writes
 
-
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
 {
 	return [self performWriteBatch:batchBlock error:nil];
@@ -251,6 +250,33 @@
 		return NO;
 	}
 	return YES;
+}
+
+#pragma mark - Iteration
+
+- (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
+{
+	[self enumerateKeysWithOptions:0 usingBlock:block];
+}
+
+- (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	BOOL stop = NO;
+	rocksdb::Iterator *iterator = _db->NewIterator(_readOptions.options);
+
+	for (iterator->SeekToFirst(); iterator->Valid(); iterator->Next()) {
+		rocksdb::Slice keySlice = iterator->key();
+		NSData *key = [NSData dataWithBytes:keySlice.data() length:keySlice.size()];
+
+		if (block) block(key, &stop);
+		if (stop == YES) break;
+	}
+	rocksdb::Status status = iterator->status();
+	if (!status.ok()) {
+
+	}
+
+	delete iterator;
 }
 
 @end
