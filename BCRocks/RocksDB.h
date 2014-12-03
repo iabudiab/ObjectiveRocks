@@ -11,6 +11,7 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 #import "RocksDBWriteBatch.h"
+#import "RocksDBIterator.h"
 
 @interface RocksDB : NSObject
 
@@ -37,6 +38,9 @@
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch;
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error;
+
+- (RocksDBIterator *)iterator;
+- (RocksDBIterator *)iteratorWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
 - (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block;
