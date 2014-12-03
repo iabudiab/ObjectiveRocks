@@ -11,9 +11,11 @@
 #import "BCRocks.h"
 
 #define Data(x) [x dataUsingEncoding:NSUTF8StringEncoding]
+#define Str(x)	[[NSString alloc] initWithData:x encoding:NSUTF8StringEncoding]
 
 @interface RocksDBTests : XCTestCase
 {
+	NSString *_path;
 	RocksDB *_rocks;
 }
 @end
@@ -24,17 +26,12 @@
 {
 	[super setUp];
 
-	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	path = [path stringByAppendingPathComponent:@"BCRocks"];
-	_rocks = [[RocksDB alloc] initWithPath:path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-	}];
+	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
+	_path = [_path stringByAppendingPathComponent:@"BCRocks"];
 }
 
 - (void)tearDown
 {
-	[_rocks close];
-
 	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
 	path = [path stringByAppendingPathComponent:@"BCRocks"];
 
@@ -46,16 +43,51 @@
 	[super tearDown];
 }
 
-- (void)testDB_Init
+- (void)testDB_Open_ErrorIfExists
 {
-	NSString *key = @"key";
-	NSString *value = @"value";
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+	[_rocks close];
 
-	BOOL ok = [_rocks setData:[value dataUsingEncoding:NSUTF8StringEncoding] forKey:[key dataUsingEncoding:NSUTF8StringEncoding]];
-    XCTAssert(ok, @"Put Data");
+	RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.errorIfExists = YES;
+	}];
 
-	NSData *data = [_rocks dataForKey:[key dataUsingEncoding:NSUTF8StringEncoding]];
-	XCTAssertNotNil(data);
+	XCTAssertNil(db);
+}
+
+- (void)testDB_CRUD
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+	[_rocks setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
+		readOptions.fillCache = YES;
+		readOptions.verifyChecksums = YES;
+	} andWriteOptions:^(RocksDBWriteOptions *writeOptions) {
+		writeOptions.syncWrites = YES;
+	}];
+
+
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1")], Data(@"value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2")], Data(@"value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 3")], Data(@"value 3"));
+
+	[_rocks deleteDataForKey:Data(@"key 2")];
+	XCTAssertNil([_rocks dataForKey:Data(@"key 2")]);
+
+	NSError *error = nil;
+	BOOL ok = [_rocks deleteDataForKey:Data(@"key 2") error:&error];
+	XCTAssertTrue(ok);
+	XCTAssertNil(error);
+
+	[_rocks close];
+}
 
 	NSString *roundtrip = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 	XCTAssertEqualObjects(roundtrip, value);
