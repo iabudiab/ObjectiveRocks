@@ -8,11 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
-typedef struct RocksDBIteratorRange
+typedef struct _RocksDBIteratorRange
 {
 	NSData *start;
 	NSData *end;
 } RocksDBIteratorRange;
+
+NS_INLINE RocksDBIteratorRange RocksMakeRange(NSData *start, NSData *end) {
+	RocksDBIteratorRange range;
+	range.start = start;
+	range.end = end;
+	return range;
+}
 
 namespace rocksdb {
 	class Iterator;
@@ -33,6 +40,7 @@ namespace rocksdb {
 - (NSData *)value;
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
-- (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInRange:(RocksDBIteratorRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 
 @end

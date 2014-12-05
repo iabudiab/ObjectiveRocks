@@ -92,23 +92,49 @@
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysWithOptions:0 usingBlock:block];
+	[self enumerateKeysInReverse:NO usingBlock:block];
 }
 
-- (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block
+- (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	[self enumerateKeysInRange:RocksMakeRange(nil, nil) reverse:reverse usingBlock:block];
+}
+
+- (void)enumerateKeysInRange:(RocksDBIteratorRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
 	BOOL stop = NO;
 
-	for (_iterator->SeekToFirst(); _iterator->Valid(); _iterator->Next()) {
-		rocksdb::Slice keySlice = _iterator->key();
-		NSData *key = [NSData dataWithBytes:keySlice.data() length:keySlice.size()];
-
-		if (block) block(key, &stop);
-		if (stop == YES) break;
+	if (range.start != nil) {
+		[self seekToKey:range.start];
+	} else {
+		reverse ? _iterator->SeekToLast(): _iterator->SeekToFirst();
 	}
-	rocksdb::Status status = _iterator->status();
-	if (!status.ok()) {
 
+	rocksdb::Slice limitSlice;
+	if (range.end != nil) {
+		limitSlice = rocksdb::Slice((char *)range.end.bytes, range.end.length);
+	}
+
+	BOOL (^ checkLimit)(BOOL reverse, rocksdb::Slice key) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
+		if (limitSlice.size() == 0) return YES;
+
+		if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
+		if (!reverse && key.ToString() >= limitSlice.ToString()) return NO;
+
+		return YES;
+	};
+
+	rocksdb::Slice keySlice;
+	while (_iterator->Valid() && checkLimit(reverse, keySlice)) {
+
+		keySlice = _iterator->key();
+
+		NSData *key = [NSData dataWithBytes:keySlice.data() length:keySlice.size()];
+		if (block) block(key, &stop);
+
+		if (stop == YES) break;
+
+		reverse ? _iterator->Prev(): _iterator->Next();
 	}
 }
 
