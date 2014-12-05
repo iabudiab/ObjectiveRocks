@@ -31,11 +31,10 @@
 
 - (void)tearDown
 {
-	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	path = [path stringByAppendingPathComponent:@"BCRocks"];
+	[_rocks close];
 
 	NSError *error = nil;
-	[[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+	[[NSFileManager defaultManager] removeItemAtPath:_path error:&error];
 	if (error) {
 		NSLog(@"Error test teardown: %@", [error debugDescription]);
 	}
@@ -62,7 +61,6 @@
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
-	[_rocks close];
 }
 
 - (void)testDB_Iterator_Reverse
@@ -85,7 +83,6 @@
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
-	[_rocks close];
 }
 
 - (void)testDB_Iterator_RangeStart
@@ -109,7 +106,6 @@
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
-	[_rocks close];
 }
 
 - (void)testDB_Iterator_RangeEnd
@@ -133,7 +129,6 @@
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
-	[_rocks close];
 }
 
 - (void)testDB_Iterator_RangeStartEnd
@@ -157,7 +152,6 @@
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
-	[_rocks close];
 }
 
 @end

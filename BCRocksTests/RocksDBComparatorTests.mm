@@ -31,11 +31,10 @@
 
 - (void)tearDown
 {
-	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	path = [path stringByAppendingPathComponent:@"BCRocks"];
+	[_rocks close];
 
 	NSError *error = nil;
-	[[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+	[[NSFileManager defaultManager] removeItemAtPath:_path error:&error];
 	if (error) {
 		NSLog(@"Error test teardown: %@", [error debugDescription]);
 	}

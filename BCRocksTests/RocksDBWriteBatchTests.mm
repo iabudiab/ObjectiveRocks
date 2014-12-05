@@ -13,6 +13,7 @@
 
 @interface RocksDBWriteBatchTests : XCTestCase
 {
+	NSString *_path;
 	RocksDB *_rocks;
 }
 @end
@@ -23,22 +24,16 @@
 {
 	[super setUp];
 
-	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	path = [path stringByAppendingPathComponent:@"BCRocks"];
-	_rocks = [[RocksDB alloc] initWithPath:path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-	}];
+	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
+	_path = [_path stringByAppendingPathComponent:@"BCRocks"];
 }
 
 - (void)tearDown
 {
 	[_rocks close];
 
-	NSString * path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	path = [path stringByAppendingPathComponent:@"BCRocks"];
-
 	NSError *error = nil;
-	[[NSFileManager defaultManager] removeItemAtPath:path error:&error];
+	[[NSFileManager defaultManager] removeItemAtPath:_path error:&error];
 	if (error) {
 		NSLog(@"Error test teardown: %@", [error debugDescription]);
 	}
@@ -47,6 +42,10 @@
 
 - (void)testWriteBatch
 {
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
 		[batch setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 		[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -61,6 +60,10 @@
 
 - (void)testWriteBatch_DeleteOps
 {
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
@@ -77,6 +80,10 @@
 
 - (void)testWriteBatch_ClearOps
 {
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
