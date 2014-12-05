@@ -270,16 +270,4 @@
 	return [[RocksDBIterator alloc] initWithDBIterator:iterator];
 }
 
-- (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
-{
-	[self enumerateKeysWithOptions:0 usingBlock:block];
-}
-
-- (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block
-{
-	RocksDBIterator *iterator = [self iterator];
-	[iterator enumerateKeysWithOptions:options usingBlock:block];
-	[iterator close];
-}
-
 @end

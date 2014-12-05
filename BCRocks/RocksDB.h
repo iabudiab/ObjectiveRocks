@@ -42,9 +42,6 @@
 - (RocksDBIterator *)iterator;
 - (RocksDBIterator *)iteratorWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 
-- (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
-- (void)enumerateKeysWithOptions:(NSEnumerationOptions)options usingBlock:(void (^)(id key, BOOL *stop))block;
-
 - (void)close;
 
 @end
