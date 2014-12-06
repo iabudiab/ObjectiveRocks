@@ -76,6 +76,7 @@
 			[self close];
 			return nil;
 		}
+		[self setDefaultReadOptions:nil andWriteOptions:nil];
 	}
 	return self;
 }
