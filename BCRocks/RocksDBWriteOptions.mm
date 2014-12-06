@@ -11,7 +11,7 @@
 
 @interface RocksDBWriteOptions ()
 {
-	rocksdb::WriteOptions _writeOptions;
+	rocksdb::WriteOptions _options;
 }
 @property (nonatomic, assign) rocksdb::WriteOptions options;
 @end
@@ -24,7 +24,7 @@
 {
 	self = [super init];
 	if (self) {
-		_writeOptions = rocksdb::WriteOptions();
+		_options = rocksdb::WriteOptions();
 	}
 	return self;
 }
@@ -33,42 +33,42 @@
 
 - (BOOL)syncWrites
 {
-	return _writeOptions.sync;
+	return _options.sync;
 }
 
 - (void)setSyncWrites:(BOOL)syncWrites
 {
-	_writeOptions.sync = syncWrites;
+	_options.sync = syncWrites;
 }
 
 - (BOOL)disableWriteAheadLog
 {
-	return _writeOptions.disableWAL;
+	return _options.disableWAL;
 }
 
 - (void)setDisableWriteAheadLog:(BOOL)disableWriteAheadLog
 {
-	_writeOptions.disableWAL = disableWriteAheadLog;
+	_options.disableWAL = disableWriteAheadLog;
 }
 
 - (uint64_t)timeoutHint
 {
-	return _writeOptions.timeout_hint_us;
+	return _options.timeout_hint_us;
 }
 
 - (void)setTimeoutHint:(uint64_t)timeoutHint
 {
-	_writeOptions.timeout_hint_us = timeoutHint;
+	_options.timeout_hint_us = timeoutHint;
 }
 
 - (BOOL)ignoreMissingColumnFamilies
 {
-	return _writeOptions.ignore_missing_column_families;
+	return _options.ignore_missing_column_families;
 }
 
 - (void)setIgnoreMissingColumnFamilies:(BOOL)ignoreMissingColumnFamilies
 {
-	_writeOptions.ignore_missing_column_families = ignoreMissingColumnFamilies;
+	_options.ignore_missing_column_families = ignoreMissingColumnFamilies;
 }
 
 #pragma mark - NSCopying

@@ -12,7 +12,7 @@
 
 @interface RocksDBReadOptions ()
 {
-	rocksdb::ReadOptions _readOptions;
+	rocksdb::ReadOptions _options;
 }
 @property (nonatomic, assign) rocksdb::ReadOptions options;
 @end
@@ -25,7 +25,7 @@
 {
 	self = [super init];
 	if (self) {
-		_readOptions = rocksdb::ReadOptions();
+		_options = rocksdb::ReadOptions();
 	}
 	return self;
 }
@@ -34,22 +34,22 @@
 
 - (BOOL)verifyChecksums
 {
-	return _readOptions.verify_checksums;
+	return _options.verify_checksums;
 }
 
 - (void)setVerifyChecksums:(BOOL)verifyChecksums
 {
-	_readOptions.verify_checksums = verifyChecksums;
+	_options.verify_checksums = verifyChecksums;
 }
 
 - (BOOL)fillCache
 {
-	return _readOptions.fill_cache;
+	return _options.fill_cache;
 }
 
 - (void)setFillCache:(BOOL)fillCache
 {
-	_readOptions.fill_cache = fillCache;
+	_options.fill_cache = fillCache;
 }
 
 #pragma mark - NSCopying
