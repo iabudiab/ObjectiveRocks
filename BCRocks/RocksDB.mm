@@ -133,7 +133,7 @@
 		  error:(NSError * __autoreleasing *)error
    writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	RocksDBWriteOptions *writeOptions = [_writeOptions copy];;
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 	if (writeOptionsBlock) {
 		writeOptionsBlock(writeOptions);
 	}
