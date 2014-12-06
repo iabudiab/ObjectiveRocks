@@ -19,19 +19,19 @@
 #pragma mark - 
 
 @interface RocksDBOptions (Private)
-@property (nonatomic, readonly) rocksdb::Options options;
+@property (nonatomic, assign) rocksdb::Options options;
 @end
 
 @interface RocksDBReadOptions (Private)
-@property (nonatomic, readonly) rocksdb::ReadOptions options;
+@property (nonatomic, assign) rocksdb::ReadOptions options;
 @end
 
 @interface RocksDBWriteOptions (Private)
-@property (nonatomic, readonly) rocksdb::WriteOptions options;
+@property (nonatomic, assign) rocksdb::WriteOptions options;
 @end
 
 @interface RocksDBWriteBatch (Private)
-@property (nonatomic, readonly) rocksdb::WriteBatch writeBatch;
+@property (nonatomic, assign) rocksdb::WriteBatch writeBatch;
 @end
 
 @interface RocksDB ()
