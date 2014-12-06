@@ -11,6 +11,7 @@
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
+#import "RocksDBSnapshot.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
@@ -276,6 +277,19 @@
 	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options);
 
 	return [[RocksDBIterator alloc] initWithDBIterator:iterator];
+}
+
+#pragma mark - Snapshot
+
+- (RocksDBSnapshot *)snapshot
+{
+	RocksDBReadOptions *readOptions = [_readOptions copy];
+	rocksdb::ReadOptions options = readOptions.options;
+	options.snapshot = _db->GetSnapshot();
+	readOptions.options = options;
+
+	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db andReadOptions:readOptions];
+	return snapshot;
 }
 
 @end
