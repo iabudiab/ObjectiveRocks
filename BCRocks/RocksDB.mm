@@ -41,9 +41,17 @@
 	RocksDBReadOptions *_readOptions;
 	RocksDBWriteOptions *_writeOptions;
 }
+@property (nonatomic, assign) rocksdb::DB *db;
+@property (nonatomic, retain) RocksDBOptions *options;
+@property (nonatomic, retain) RocksDBReadOptions *readOptions;
+@property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
 @end
 
 @implementation RocksDB
+@synthesize db = _db;
+@synthesize options = _options;
+@synthesize readOptions = _readOptions;
+@synthesize writeOptions = _writeOptions;
 
 #pragma mark - Lifecycle
 
