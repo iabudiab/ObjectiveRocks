@@ -7,3 +7,9 @@
 //
 
 #import "RocksDB.h"
+#import "RocksDBOptions.h"
+#import "RocksDBReadOptions.h"
+#import "RocksDBWriteOptions.h"
+#import "RocksDBWriteBatch.h"
+#import "RocksDBIterator.h"
+#import "RocksDBSnapshot.h"
