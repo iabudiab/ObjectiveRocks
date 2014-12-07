@@ -284,7 +284,16 @@
 
 - (RocksDBSnapshot *)snapshot
 {
+	return [self snapshotWithReadOptions:nil];
+}
+
+- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+{
 	RocksDBReadOptions *readOptions = [_readOptions copy];
+	if (readOptionsBlock) {
+		readOptionsBlock(readOptions);
+	}
+
 	rocksdb::ReadOptions options = readOptions.options;
 	options.snapshot = _db->GetSnapshot();
 	readOptions.options = options;

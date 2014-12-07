@@ -71,5 +71,6 @@
 @interface RocksDB (Snapshot)
 
 - (RocksDBSnapshot *)snapshot;
+- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
 
 @end
