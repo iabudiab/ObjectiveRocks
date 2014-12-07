@@ -56,6 +56,11 @@ namespace rocksdb {
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch NA("Snapshots are read-only");
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch
 					error:(NSError **)error NA("Snapshots are read-only");
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch
+	   withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions NA("Snapshots are read-only");
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch
+				  error:(NSError **)error
+		   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions NA("Snapshots are read-only");
 
 - (RocksDBSnapshot *)snapshot NA("Yo Dawg, Snapshot in Snapshot ... ");
 

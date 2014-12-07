@@ -262,6 +262,31 @@
 	return YES;
 }
 
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self applyWriteBatch:writeBatch error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
+	if (writeOptionsBlock) {
+		writeOptionsBlock(writeOptions);
+	}
+
+	rocksdb::WriteBatch batch = writeBatch.writeBatch;
+	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
+
+	if (!status.ok()) {
+		NSError *temp = [BCRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+	return YES;
+}
+
 #pragma mark - Iteration
 
 - (RocksDBIterator *)iterator
