@@ -14,4 +14,8 @@
 - (void)deleteDataForKey:(NSData *)aKey;
 - (void)clear;
 
+- (int)count;
+- (NSData *)data;
+- (size_t)dataSize;
+
 @end

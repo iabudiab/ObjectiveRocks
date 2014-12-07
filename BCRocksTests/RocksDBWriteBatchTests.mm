@@ -166,4 +166,37 @@
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], Data(@"Value 4"));
 }
 
+- (void)testWriteBatch_Count
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+
+	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+
+	[batch deleteDataForKey:Data(@"Key 1")];
+
+	XCTAssertEqual(batch.count, 1);
+
+	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
+	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
+
+	XCTAssertEqual(batch.count, 3);
+
+	[batch clear];
+
+	XCTAssertEqual(batch.count, 0);
+
+	[batch setData:Data(@"Value 4") forKey:Data(@"Key 4")];
+	[batch setData:Data(@"Value 5") forKey:Data(@"Key 4")];
+
+	XCTAssertEqual(batch.count, 2);
+
+	[batch deleteDataForKey:Data(@"Key 4")];
+
+	XCTAssertEqual(batch.count, 3);
+}
+
 @end
