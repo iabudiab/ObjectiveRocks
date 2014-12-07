@@ -9,27 +9,33 @@
 #import "RocksDBComparator.h"
 #import "RocksDBCallbackComparator.h"
 
-#import <objc/runtime.h>
-
 #import <rocksdb/comparator.h>
 #include <rocksdb/slice.h>
 
 @interface RocksDBComparator ()
 {
+	NSString *_name;
 	int (^_comparatorBlock)(NSData *data1, NSData *data2);
 	const rocksdb::Comparator *_comparator;
 }
+@property (readonly, assign) const rocksdb::Comparator *comparator;
 @end
 
 @implementation RocksDBComparator
 @synthesize comparator = _comparator;
 
-- (instancetype)initWithBlock:(int (^)(NSData *data1, NSData *data2))block
++ (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block
+{
+	return [[RocksDBComparator alloc] initWithName:name andBlock:block];
+}
+
+- (instancetype)initWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block
 {
 	self = [super init];
 	if (self) {
+		_name = [name copy];
 		_comparatorBlock = [block copy];
-		_comparator = RocksDBCallbackComparator((__bridge void *)self, &trampoline);
+		_comparator = RocksDBCallbackComparator((__bridge void *)self, name.UTF8String, &trampoline);
 	}
 	return self;
 }

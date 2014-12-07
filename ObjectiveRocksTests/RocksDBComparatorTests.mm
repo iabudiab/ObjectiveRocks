@@ -45,9 +45,9 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = ^ int (NSData *data1, NSData *data2) {
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
 			return [Str(data1) compare:Str(data2)];
-		};
+		}];
 	}];
 
 	/* Expected Array: [A0, A1, A11, A12 ... A2, A21 ...] */
@@ -71,11 +71,11 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = ^ int (NSData *data1, NSData *data2) {
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
 			if (Str(data1).length > Str(data2).length) return 1;
 			if (Str(data1).length < Str(data2).length) return -1;
 			return 0;
-		};
+		}];
 	}];
 
 	/* Expected Array: [A, BB, CCC, ... , Y{25}, Z{26}] */
@@ -99,11 +99,11 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = ^ int (NSData *data1, NSData *data2) {
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
 			if (Str(data1).length > Str(data2).length) return -1;
 			if (Str(data1).length < Str(data2).length) return 1;
 			return 0;
-		};
+		}];
 	}];
 
 	/* Expected Array: [Z{26}, Y{25}, ..., CCC, BB, A] */

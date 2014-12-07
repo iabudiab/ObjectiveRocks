@@ -14,6 +14,6 @@
 
 typedef int (* CompareCallback)(void* instance, const rocksdb::Slice& a, const rocksdb::Slice& b);
 
-extern const rocksdb::Comparator* RocksDBCallbackComparator(void* instance, CompareCallback callback);
+extern const rocksdb::Comparator* RocksDBCallbackComparator(void* instance, const char* name, CompareCallback callback);
 
 #endif /* defined(__ObjectiveRocks__RocksDBCallbackComparator__) */

@@ -11,10 +11,14 @@
 
 #import <rocksdb/options.h>
 
+@interface RocksDBComparator ()
+@property (readonly, assign) const rocksdb::Comparator *comparator;
+@end
+
 @interface RocksDBOptions ()
 {
 	rocksdb::Options _options;
-	RocksDBComparator *_wrapper;
+	RocksDBComparator *_comparatorWrapper;
 }
 @property (nonatomic, readonly) rocksdb::Options options;
 @end
@@ -167,10 +171,15 @@
 
 #pragma mark - Column Family Options
 
-- (void)setComparator:(int (^)(NSData *, NSData *))block
+- (void)setComparator:(RocksDBComparator *)comparator
 {
-	_wrapper = [[RocksDBComparator alloc] initWithBlock:block];
-	_options.comparator = _wrapper.comparator;
+	_comparatorWrapper = comparator;
+	_options.comparator = _comparatorWrapper.comparator;
+}
+
+- (RocksDBComparator *)comparator
+{
+	return _comparatorWrapper;
 }
 
 - (size_t)writeBufferSize
