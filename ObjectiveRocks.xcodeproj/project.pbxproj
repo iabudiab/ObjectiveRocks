@@ -153,6 +153,15 @@
 		62EE2D931A1ABA2100486C31 /* spatial_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2BC91A1ABA2000486C31 /* spatial_db.cc */; };
 		62EE2D961A1ABA2100486C31 /* db_ttl_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2BCE1A1ABA2000486C31 /* db_ttl_impl.cc */; };
 		62EE2D991A1ABA2100486C31 /* write_batch_with_index.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2BD31A1ABA2000486C31 /* write_batch_with_index.cc */; };
+		62EEC4AB1A34B93B00624DA2 /* ObjectiveRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */; };
+		62EEC4AC1A34B93B00624DA2 /* RocksDBIterator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62385EB01A2FC87500493F18 /* RocksDBIterator.h */; };
+		62EEC4AD1A34B93B00624DA2 /* RocksDBWriteBatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; };
+		62EEC4AE1A34B93B00624DA2 /* RocksDBComparator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; };
+		62EEC4AF1A34B93B00624DA2 /* RocksDBOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; };
+		62EEC4B01A34B93B00624DA2 /* RocksDBWriteOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */; };
+		62EEC4B11A34B93B00624DA2 /* RocksDBReadOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7361A1E860700B14535 /* RocksDBReadOptions.h */; };
+		62EEC4B21A34B93B00624DA2 /* RocksDBSnapshot.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; };
+		62EEC4B31A34B93B00624DA2 /* ObjectiveRocksError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* ObjectiveRocksError.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -172,6 +181,15 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				62EEC4AB1A34B93B00624DA2 /* ObjectiveRocks.h in CopyFiles */,
+				62EEC4AC1A34B93B00624DA2 /* RocksDBIterator.h in CopyFiles */,
+				62EEC4AD1A34B93B00624DA2 /* RocksDBWriteBatch.h in CopyFiles */,
+				62EEC4AE1A34B93B00624DA2 /* RocksDBComparator.h in CopyFiles */,
+				62EEC4AF1A34B93B00624DA2 /* RocksDBOptions.h in CopyFiles */,
+				62EEC4B01A34B93B00624DA2 /* RocksDBWriteOptions.h in CopyFiles */,
+				62EEC4B11A34B93B00624DA2 /* RocksDBReadOptions.h in CopyFiles */,
+				62EEC4B21A34B93B00624DA2 /* RocksDBSnapshot.h in CopyFiles */,
+				62EEC4B31A34B93B00624DA2 /* ObjectiveRocksError.h in CopyFiles */,
 				6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
