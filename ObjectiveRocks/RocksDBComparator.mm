@@ -18,7 +18,7 @@
 	int (^_comparatorBlock)(NSData *data1, NSData *data2);
 	const rocksdb::Comparator *_comparator;
 }
-@property (readonly, assign) const rocksdb::Comparator *comparator;
+@property (nonatomic, assign) const rocksdb::Comparator *comparator;
 @end
 
 @implementation RocksDBComparator
