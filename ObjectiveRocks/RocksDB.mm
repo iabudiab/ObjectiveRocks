@@ -153,6 +153,20 @@
 	return YES;
 }
 
+#pragma mark - Merge Operations
+
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey
+{
+	rocksdb::Status status = _db->Merge(_writeOptions.options,
+										rocksdb::Slice((char *)aKey.bytes, aKey.length),
+										rocksdb::Slice((char *)data.bytes, data.length));
+	
+	if (!status.ok()) {
+		return NO;
+	}
+	return YES;
+}
+
 #pragma mark - Read Operations
 
 - (NSData *)dataForKey:(NSData *)aKey
