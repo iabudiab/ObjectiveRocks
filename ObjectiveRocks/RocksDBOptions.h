@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RocksDBComparator.h"
+#import "RocksDBMergeOperator.h"
 
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 {
@@ -49,6 +50,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @interface RocksDBOptions (ColumnFamilyOptions)
 
 @property (nonatomic, strong) RocksDBComparator *comparator;
+@property (nonatomic, strong) RocksDBMergeOperator *mergeOperator;
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;

@@ -10,17 +10,24 @@
 #import "RocksDBComparator.h"
 
 #import <rocksdb/options.h>
+#import <rocksdb/comparator.h>
+#import <rocksdb/merge_operator.h>
 
 @interface RocksDBComparator ()
-@property (readonly, assign) const rocksdb::Comparator *comparator;
+@property (nonatomic, assign) const rocksdb::Comparator *comparator;
+@end
+
+@interface RocksDBMergeOperator ()
+@property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
 
 @interface RocksDBOptions ()
 {
 	rocksdb::Options _options;
 	RocksDBComparator *_comparatorWrapper;
+	RocksDBMergeOperator *_mergeOperatorWrapper;
 }
-@property (nonatomic, readonly) rocksdb::Options options;
+@property (nonatomic, assign) rocksdb::Options options;
 @end
 
 @implementation RocksDBOptions
@@ -180,6 +187,17 @@
 - (RocksDBComparator *)comparator
 {
 	return _comparatorWrapper;
+}
+
+- (void)setMergeOperator:(RocksDBMergeOperator *)mergeOperator
+{
+	_mergeOperatorWrapper = mergeOperator;
+	_options.merge_operator.reset(_mergeOperatorWrapper.mergeOperator);
+}
+
+- (RocksDBMergeOperator *)mergeOperator
+{
+	return _mergeOperatorWrapper;
 }
 
 - (size_t)writeBufferSize
