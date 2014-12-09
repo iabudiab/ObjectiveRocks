@@ -26,7 +26,7 @@
 
 + (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block
 {
-	return [[RocksDBComparator alloc] initWithName:name andBlock:block];
+	return [[self alloc] initWithName:name andBlock:block];
 }
 
 - (instancetype)initWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block
