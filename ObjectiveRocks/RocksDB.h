@@ -39,9 +39,9 @@
 @interface RocksDB (MergeOps)
 
 - (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey;
-//- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
-//- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-//- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 @end
 

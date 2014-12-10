@@ -158,13 +158,38 @@
 
 - (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey
 {
+	return [self mergeData:data forKey:aKey error:nil];
+}
+
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
+{
+	return [self mergeData:data forKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self mergeData:data forKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
+	if (writeOptionsBlock) {
+		writeOptionsBlock(writeOptions);
+	}
+
 	rocksdb::Status status = _db->Merge(_writeOptions.options,
 										SliceFromData(aKey),
 										SliceFromData(data));
-	
+
 	if (!status.ok()) {
+		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
 		return NO;
 	}
+
 	return YES;
 }
 
