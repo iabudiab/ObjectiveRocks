@@ -8,6 +8,7 @@
 
 #import "RocksDBComparator.h"
 #import "RocksDBCallbackComparator.h"
+#import "RocksDBSlice.h"
 
 #import <rocksdb/comparator.h>
 #include <rocksdb/slice.h>
@@ -47,10 +48,7 @@
 
 int trampoline(void* instance, const rocksdb::Slice& slice1, const rocksdb::Slice& slice2)
 {
-	NSData *data1 = [NSData dataWithBytes:slice1.data() length:slice1.size()];
-	NSData *data2 = [NSData dataWithBytes:slice2.data() length:slice2.size()];
-
-	return [(__bridge id)instance compare:data1 with:data2];
+	return [(__bridge id)instance compare:DataFromSlice(slice1) with:DataFromSlice(slice2)];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "RocksDBWriteBatch.h"
+#import "RocksDBSlice.h"
 
 #import <rocksdb/write_batch.h>
 
@@ -24,14 +25,14 @@
 
 - (void)setData:(NSData *)data forKey:(NSData *)aKey
 {
-	_writeBatch.Put(rocksdb::Slice((char *)aKey.bytes, aKey.length),
-					rocksdb::Slice((char *)data.bytes, data.length));
+	_writeBatch.Put(SliceFromData(aKey),
+					SliceFromData(data));
 	
 }
 
 - (void)deleteDataForKey:(NSData *)aKey
 {
-	_writeBatch.Delete(rocksdb::Slice((char *)aKey.bytes, aKey.length));
+	_writeBatch.Delete(SliceFromData(aKey));
 }
 
 - (void)clear
@@ -49,8 +50,7 @@
 - (NSData *)data
 {
 	std::string rep = _writeBatch.Data();
-	NSData *data = [[NSData alloc] initWithBytes:rep.data() length:rep.size()];
-	return data;
+	return DataFromSlice(rocksdb::Slice(rep));
 }
 
 - (size_t)dataSize

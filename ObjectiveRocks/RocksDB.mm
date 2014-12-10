@@ -12,6 +12,7 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 #import "RocksDBSnapshot.h"
+#import "RocksDBSlice.h"
 
 #include <rocksdb/db.h>
 #include <rocksdb/slice.h>
@@ -139,8 +140,8 @@
 	}
 
 	rocksdb::Status status = _db->Put(writeOptions.options,
-									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
-									  rocksdb::Slice((char *)data.bytes, data.length));
+									  SliceFromData(aKey),
+									  SliceFromData(data));
 
 	if (!status.ok()) {
 		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
@@ -158,8 +159,8 @@
 - (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey
 {
 	rocksdb::Status status = _db->Merge(_writeOptions.options,
-										rocksdb::Slice((char *)aKey.bytes, aKey.length),
-										rocksdb::Slice((char *)data.bytes, data.length));
+										SliceFromData(aKey),
+										SliceFromData(data));
 	
 	if (!status.ok()) {
 		return NO;
@@ -195,7 +196,7 @@
 
 	std::string value;
 	rocksdb::Status status = _db->Get(readOptions.options,
-									  rocksdb::Slice((char *)aKey.bytes, aKey.length),
+									  SliceFromData(aKey),
 									  &value);
 	if (!status.ok()) {
 		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
@@ -205,7 +206,7 @@
 		return nil;
 	}
 
-	return [NSData dataWithBytes:value.c_str() length:value.length()];
+	return DataFromSlice(rocksdb::Slice(value));
 }
 
 #pragma mark - Delete Operations
@@ -235,7 +236,7 @@
 	}
 
 	rocksdb::Status status = _db->Delete(writeOptions.options,
-									  rocksdb::Slice((char *)aKey.bytes, aKey.length));
+										 SliceFromData(aKey));
 	
 	if (!status.ok()) {
 		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];

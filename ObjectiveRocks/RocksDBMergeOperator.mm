@@ -8,6 +8,7 @@
 
 #import "RocksDBMergeOperator.h"
 #import "RocksDBCallbackAssociativeMergeOperator.h"
+#import "RocksDBSlice.h"
 
 #import <rocksdb/slice.h>
 #import <Rocksdb/env.h>
@@ -52,14 +53,11 @@ bool trampoline(void* instance,
 				std::string* new_value,
 				rocksdb::Logger* logger)
 {
-	NSData *keyData = [NSData dataWithBytes:key.data() length:key.size()];
-
 	NSData *existingData = (existing_value == nullptr) ? nil : [NSData dataWithBytes:existing_value->data() length:existing_value->size()];
-	NSData *valueData = [NSData dataWithBytes:value.data() length:value.size()];
 
-	NSData *result = [(__bridge id)instance mergeForKey:keyData
+	NSData *result = [(__bridge id)instance mergeForKey:DataFromSlice(key)
 									  withExistingValue:existingData
-											   andValue:valueData];
+											   andValue:DataFromSlice(value)];
 	*new_value = (char *)result.bytes;
 	return true;
 }
