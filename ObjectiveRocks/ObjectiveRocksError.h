@@ -15,5 +15,6 @@ extern NSString * const ObjectiveRocksErrorDomain;
 @interface ObjectiveRocksError : NSObject
 
 + (NSError *)errorWithRocksStatus:(rocksdb::Status)status;
++ (NSError *)errorForMissingConversionBlock;
 
 @end

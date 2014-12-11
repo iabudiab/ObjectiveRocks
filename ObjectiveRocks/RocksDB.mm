@@ -115,6 +115,40 @@
 
 #pragma mark - Write Operations
 
+- (BOOL)setObject:(id)anObject forKey:(id)aKey
+{
+	return [self setObject:anObject forKey:aKey error:nil];
+}
+
+- (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError * __autoreleasing *)error
+{
+	return [self setObject:anObject forKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)setObject:(id)anObject forKey:(id)aKey  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self setObject:anObject forKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)setObject:(id)anObject
+		   forKey:(id)aKey
+		  error:(NSError * __autoreleasing *)error
+   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+
+	return [self setData:_options.valueEncoder(aKey, anObject)
+				  forKey:_options.keyEncoder(aKey)
+				   error:error
+			writeOptions:writeOptionsBlock];
+}
+
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
 {
 	return [self setData:data forKey:aKey error:nil];
@@ -156,6 +190,40 @@
 
 #pragma mark - Merge Operations
 
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey
+{
+	return [self mergeObject:anObject forKey:aKey error:nil];
+}
+
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error
+{
+	return [self mergeObject:anObject forKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self mergeObject:anObject forKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)mergeObject:(id)anObject
+			 forKey:(id)aKey
+			  error:(NSError **)error
+	   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+
+	return [self mergeData:_options.valueEncoder(aKey, anObject)
+					forKey:_options.keyEncoder(aKey)
+					 error:error
+			  writeOptions:writeOptionsBlock];
+}
+
 - (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey
 {
 	return [self mergeData:data forKey:aKey error:nil];
@@ -171,7 +239,10 @@
 	return [self mergeData:data forKey:aKey error:nil writeOptions:writeOptionsBlock];
 }
 
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+- (BOOL)mergeData:(NSData *)data
+		   forKey:(NSData *)aKey
+			error:(NSError **)error
+	 writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 	if (writeOptionsBlock) {
@@ -194,6 +265,38 @@
 }
 
 #pragma mark - Read Operations
+
+- (id)objectForKey:(id)aKey
+{
+	return [self objectForKey:aKey error:nil];
+}
+
+- (id)objectForKey:(id)aKey error:(NSError **)error
+{
+	return [self objectForKey:aKey error:error readOptions:nil];
+}
+
+- (id)objectForKey:(id)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+{
+	return [self objectForKey:aKey error:nil readOptions:readOptionsBlock];
+}
+
+- (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+{
+	if (_options.keyEncoder == nil || _options.valueDecoder == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return nil;
+	}
+
+	NSData *data = [self dataForKey:_options.keyEncoder(aKey)
+							  error:error
+						readOptions:readOptionsBlock];
+
+	return _options.valueDecoder(aKey, data);
+}
 
 - (NSData *)dataForKey:(NSData *)aKey
 {
@@ -235,6 +338,38 @@
 }
 
 #pragma mark - Delete Operations
+
+- (BOOL)deleteObjectForKey:(id)aKey
+{
+	return [self deleteObjectForKey:aKey error:nil];
+}
+
+- (BOOL)deleteObjectForKey:(id)aKey error:(NSError **)error
+{
+	return [self deleteObjectForKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self deleteObjectForKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)deleteObjectForKey:(id)aKey
+					 error:(NSError **)error
+			  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	if (_options.keyEncoder == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+
+	return [self deleteDataForKey:_options.keyEncoder(aKey)
+							error:error
+					 writeOptions:writeOptionsBlock];
+}
 
 - (BOOL)deleteDataForKey:(NSData *)aKey
 {

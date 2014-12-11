@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import <string>
+#import <rocksdb/slice.h>
 
-namespace rocksdb {
-	class Slice;
+NS_INLINE rocksdb::Slice SliceFromData(NSData *data) {
+	return rocksdb::Slice((char *)data.bytes, data.length);
 }
 
-NS_INLINE rocksdb::Slice SliceFromData(NSData *data);
-NS_INLINE NSData * DataFromSlice(rocksdb::Slice slice);
+NS_INLINE NSData * DataFromSlice(rocksdb::Slice slice)
+{
+	return [NSData dataWithBytes:slice.data() length:slice.size()];
+}

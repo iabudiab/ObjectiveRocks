@@ -24,4 +24,18 @@ NSString * const ObjectiveRocksErrorDomain = @"co.braincookie.objectiverocks.err
 	return [NSError errorWithDomain:ObjectiveRocksErrorDomain code:status.code() userInfo:userInfo];
 }
 
++ (NSError *)errorForMissingConversionBlock
+{
+	NSString *reason = @"Missing key/value encoder blocks";
+	NSString *recovery = @"Provide encoder blocks for key/value objects in the RocksDB Options when initing the database";
+
+	NSDictionary *userInfo = @{
+							   NSLocalizedDescriptionKey : @"Operation couldn't be completed",
+							   NSLocalizedFailureReasonErrorKey : reason,
+							   NSLocalizedRecoverySuggestionErrorKey: recovery
+							   };
+
+	return [NSError errorWithDomain:ObjectiveRocksErrorDomain code:3000 userInfo:userInfo];
+}
+
 @end

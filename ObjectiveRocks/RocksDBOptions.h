@@ -31,6 +31,15 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
 @interface RocksDBOptions : NSObject
 
+@property (nonatomic, copy) NSData * (^ keyEncoder)(id key);
+@property (nonatomic, copy) id (^ keyDecoder)(NSData *data);
+@property (nonatomic, copy) NSData * (^ valueEncoder)(id key, id value);
+@property (nonatomic, copy) id (^ valueDecoder)(id key, NSData *data);
+
+@end
+
+@interface RocksDBOptions (DBOptions)
+
 @property (nonatomic, assign) BOOL createIfMissing;
 @property (nonatomic, assign) BOOL createMissingColumnFamilies;
 @property (nonatomic, assign) BOOL errorIfExists;
@@ -56,3 +65,4 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
 
 @end
+
