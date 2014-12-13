@@ -241,6 +241,7 @@
 		626A7D541A27EC570098A979 /* unit_test.js */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.javascript; path = unit_test.js; sourceTree = "<group>"; };
 		628B0CE81A1C104D0099C39B /* ObjectiveRocksError.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjectiveRocksError.h; sourceTree = "<group>"; };
 		628B0CE91A1C104D0099C39B /* ObjectiveRocksError.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ObjectiveRocksError.mm; sourceTree = "<group>"; };
+		628C51C71A3BD08500B96F8F /* RocksDBSnapshotUnavailable.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RocksDBSnapshotUnavailable.h; sourceTree = "<group>"; };
 		6299F8091A17B28200123F56 /* libObjectiveRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		6299F80C1A17B28200123F56 /* RocksDB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RocksDB.h; sourceTree = "<group>"; };
 		6299F80E1A17B28200123F56 /* RocksDB.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDB.mm; sourceTree = "<group>"; };
@@ -1027,6 +1028,7 @@
 			children = (
 				620494851A3284A800A0E950 /* RocksDBSnapshot.h */,
 				620494861A3284A800A0E950 /* RocksDBSnapshot.mm */,
+				628C51C71A3BD08500B96F8F /* RocksDBSnapshotUnavailable.h */,
 			);
 			name = Snapshot;
 			sourceTree = "<group>";
