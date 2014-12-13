@@ -199,4 +199,36 @@
 	XCTAssertEqual(batch.count, 3);
 }
 
+- (void)testWriteBatch_Encoded
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.keyEncoder = ^ NSData * (id key) {
+			return [key dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.keyDecoder = ^ NSString * (NSData *data) {
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+		options.valueEncoder = ^ NSData * (id key, id value) {
+			return [value dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.valueDecoder = ^ NSString * (id key, NSData * data) {
+			if (data == nil) return nil;
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+	}];
+
+	[_rocks setObject:@"Value 1" forKey:@"Key 1"];
+
+	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
+		[batch setObject:@"Value 2" forKey:@"Key 2"];
+		[batch setObject:@"Value 3" forKey:@"Key 3"];
+		[batch deleteObjectForKey:@"Key 1"];
+	}];
+
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 1"], nil);
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 2"], @"Value 2");
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 3"], @"Value 3");
+}
+
 @end
