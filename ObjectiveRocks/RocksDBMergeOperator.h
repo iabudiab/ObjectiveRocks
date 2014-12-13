@@ -10,7 +10,7 @@
 
 @interface RocksDBMergeOperator : NSObject
 
-+ (instancetype)operatorWithName:(NSString *)name andBlock:(NSData * (^)(NSData *key, NSData *existingValue, NSData *value))block;
-- (instancetype)initWithName:(NSString *)name andBlock:(NSData * (^)(NSData *key, NSData *existingValue, NSData *value))block;
++ (instancetype)operatorWithName:(NSString *)name andBlock:(id (^)(id key, id existingValue, id value))block;
+- (instancetype)initWithName:(NSString *)name andBlock:(id (^)(id key, id existingValue, id value))block;
 
 @end

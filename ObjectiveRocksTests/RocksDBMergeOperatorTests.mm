@@ -43,10 +43,10 @@
 	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
 }
 
-- (void)testX
+- (void)testAssociativeMergeOperator
 {
 	RocksDBMergeOperator *addOperator = [RocksDBMergeOperator operatorWithName:@"operator"
-																	  andBlock:^NSData *(NSData *key, NSData *existingValue, NSData *value) {
+																	  andBlock:^id (id key, id existingValue, id value) {
 																		  uint64_t prev = 0;
 																		  if (existingValue != nil) {
 																			  [existingValue getBytes:&prev length:sizeof(uint64_t)];
@@ -72,8 +72,48 @@
 
 	uint64_t res;
 	Val([_rocks dataForKey:StrData(@"Key 1")], res);
+	
+	XCTAssertTrue(res == 6);
+}
 
-	NSLog(@"%llu", res);
+- (void)testAssociativeMergeOperator_Encoded
+{
+	RocksDBMergeOperator *addOperator = [RocksDBMergeOperator operatorWithName:@"operator"
+																	  andBlock:^id (id key, NSNumber *existingValue, NSNumber *value) {
+																		  NSNumber *result = @(existingValue.floatValue + value.floatValue);
+																		  return result;
+																	  }];
+
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.mergeOperator = addOperator;
+
+		options.keyEncoder = ^ NSData * (id key) {
+			return [key dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.keyDecoder = ^ NSString * (NSData *data) {
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+		options.valueEncoder = ^ NSData * (id key, id value) {
+			float val = [value floatValue];
+			NSData *data = [NSData dataWithBytes:&val length:sizeof(val)];
+			return data;
+		};
+		options.valueDecoder = ^ NSNumber * (id key, NSData * data) {
+			if (data == nil) return nil;
+
+			float value;
+			[data getBytes:&value length:sizeof(value)];
+			return @(value);
+		};
+	}];
+
+	[_rocks mergeObject:@(100.541) forKey:@"Key 1"];
+
+	[_rocks mergeObject:@(200.125) forKey:@"Key 1"];
+
+
+	XCTAssertEqualWithAccuracy([[_rocks objectForKey:@"Key 1"] floatValue], 300.666, 0.0001);
 }
 
 @end

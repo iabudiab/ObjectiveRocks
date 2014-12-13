@@ -59,6 +59,11 @@ NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSErr
 	return encoded;
 }
 
+NS_INLINE rocksdb::Slice SliceFromValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
+{
+	return SliceFromData(EncodeValue(aKey, value, options, error));
+}
+
 NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
 	id key = DataFromSlice(slice);

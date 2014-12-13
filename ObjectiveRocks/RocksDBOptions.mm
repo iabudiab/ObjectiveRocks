@@ -18,6 +18,7 @@
 @end
 
 @interface RocksDBMergeOperator ()
+@property (nonatomic, strong) RocksDBOptions *options;
 @property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
 
@@ -192,6 +193,7 @@
 - (void)setMergeOperator:(RocksDBMergeOperator *)mergeOperator
 {
 	_mergeOperatorWrapper = mergeOperator;
+	_mergeOperatorWrapper.options = self;
 	_options.merge_operator.reset(_mergeOperatorWrapper.mergeOperator);
 }
 

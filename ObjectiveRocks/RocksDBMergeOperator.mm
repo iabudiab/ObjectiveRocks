@@ -7,30 +7,34 @@
 //
 
 #import "RocksDBMergeOperator.h"
-#import "RocksDBCallbackAssociativeMergeOperator.h"
+#import "RocksDBOptions.h"
 #import "RocksDBSlice.h"
+#import "RocksDBCallbackAssociativeMergeOperator.h"
 
 #import <rocksdb/slice.h>
 #import <Rocksdb/env.h>
 
 @interface RocksDBMergeOperator ()
 {
+	RocksDBOptions *_options;
 	NSString *_name;
-	NSData * (^ _mergeBlock)(NSData *key, NSData *existingValue, NSData *value);
+	id (^ _mergeBlock)(id, id existingValue, id value);
 	rocksdb::MergeOperator *_mergeOperator;
 }
+@property (nonatomic, strong) RocksDBOptions *options;
 @property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
 
 @implementation RocksDBMergeOperator
+@synthesize options = _options;
 @synthesize mergeOperator = _mergeOperator;
 
-+ (instancetype)operatorWithName:(NSString *)name andBlock:(NSData *(^)(NSData *, NSData *, NSData *))block
++ (instancetype)operatorWithName:(NSString *)name andBlock:(id (^)(id, id, id))block
 {
 	return [[self alloc] initWithName:name andBlock:block];
 }
 
-- (instancetype)initWithName:(NSString *)name andBlock:(NSData *(^)(NSData *, NSData *, NSData *))block
+- (instancetype)initWithName:(NSString *)name andBlock:(id (^)(id, id, id))block
 {
 	self = [super init];
 	if (self) {
@@ -41,9 +45,17 @@
 	return self;
 }
 
-- (NSData *)mergeForKey:(NSData *)key withExistingValue:(NSData *)existing andValue:(NSData *)value
+- (NSData *)mergeForKey:(const rocksdb::Slice &)keySlice
+withExistingValue:(const rocksdb::Slice *)existingSlice
+		 andValue:(const rocksdb::Slice &)valueSlice
 {
-	return _mergeBlock ? _mergeBlock(key, existing, value) : nil;
+	id key = DecodeKeySlice(keySlice, _options, nil);
+	id previous = (existingSlice == nullptr) ? nil : DecodeValueSlice(key, *existingSlice, _options, nil);
+	id value = DecodeValueSlice(key, valueSlice, _options, nil);
+
+	id mergeResult = _mergeBlock ? _mergeBlock(key, previous, value): nil;
+
+	return EncodeValue(key, mergeResult, _options, nil);
 }
 
 bool trampoline(void* instance,
@@ -53,12 +65,10 @@ bool trampoline(void* instance,
 				std::string* new_value,
 				rocksdb::Logger* logger)
 {
-	NSData *existingData = (existing_value == nullptr) ? nil : [NSData dataWithBytes:existing_value->data() length:existing_value->size()];
-
-	NSData *result = [(__bridge id)instance mergeForKey:DataFromSlice(key)
-									  withExistingValue:existingData
-											   andValue:DataFromSlice(value)];
-	*new_value = (char *)result.bytes;
+	NSData *data = [(__bridge id)instance mergeForKey:key
+									withExistingValue:existing_value
+											 andValue:value];
+	*new_value = (char *)data.bytes;
 	return true;
 }
 
