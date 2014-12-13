@@ -37,28 +37,28 @@
 
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
-	if (_options.keyEncoder != nil && _options.valueEncoder != nil) {
-		[self setData:_options.valueEncoder(aKey, anObject)
-			   forKey:_options.keyEncoder(aKey)];
-	}
+	[self setData:EncodeValue(aKey, anObject, _options, nil)
+		   forKey:EncodeKey(aKey, _options, nil)];
 }
 
 - (void)setData:(NSData *)data forKey:(NSData *)aKey
 {
-	_writeBatch.Put(SliceFromData(aKey),
-					SliceFromData(data));
+	if (aKey != nil && data != nil) {
+		_writeBatch.Put(SliceFromData(aKey),
+						SliceFromData(data));
+	}
 }
 
 - (void)deleteObjectForKey:(id)aKey
 {
-	if (_options.keyEncoder != nil) {
-		[self deleteDataForKey:_options.keyEncoder(aKey)];
-	}
+	[self deleteDataForKey:EncodeKey(aKey, _options, nil)];
 }
 
 - (void)deleteDataForKey:(NSData *)aKey
 {
-	_writeBatch.Delete(SliceFromData(aKey));
+	if (aKey != nil) {
+		_writeBatch.Delete(SliceFromData(aKey));
+	}
 }
 
 - (void)clear
