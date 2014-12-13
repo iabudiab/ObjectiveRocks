@@ -26,18 +26,19 @@
 
 	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
 	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
+	[self cleanupDB];
 }
 
 - (void)tearDown
 {
 	[_rocks close];
-
-	NSError *error = nil;
-	[[NSFileManager defaultManager] removeItemAtPath:_path error:&error];
-	if (error) {
-		NSLog(@"Error test teardown: %@", [error debugDescription]);
-	}
+	[self cleanupDB];
 	[super tearDown];
+}
+
+- (void)cleanupDB
+{
+	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
 }
 
 - (void)testWriteBatch_Perform
