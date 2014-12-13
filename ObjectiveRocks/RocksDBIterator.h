@@ -7,17 +7,19 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBOptions.h"
 
-typedef struct _RocksDBIteratorRange
+typedef struct RocksDBIteratorKeyRange
 {
-	NSData *start;
-	NSData *end;
-} RocksDBIteratorRange;
+	id start;
+	id end;
+} RocksDBIteratorKeyRange;
 
-NS_INLINE RocksDBIteratorRange RocksMakeRange(NSData *start, NSData *end) {
-	RocksDBIteratorRange range;
-	range.start = start;
-	range.end = end;
+NS_INLINE RocksDBIteratorKeyRange RocksDBMakeKeyRange(id start, id end) {
+	RocksDBIteratorKeyRange range = (RocksDBIteratorKeyRange) {
+		.start = start,
+		.end = end
+	};
 	return range;
 }
 
@@ -27,7 +29,7 @@ namespace rocksdb {
 
 @interface RocksDBIterator : NSObject
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator;
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options;
 - (void)close;
 
 - (BOOL)isValid;
@@ -36,11 +38,11 @@ namespace rocksdb {
 - (void)seekToKey:(NSData *)aKey;
 - (void)next;
 - (void)previous;
-- (NSData *)key;
-- (NSData *)value;
+- (id)key;
+- (id)value;
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
-- (void)enumerateKeysInRange:(RocksDBIteratorRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 
 @end

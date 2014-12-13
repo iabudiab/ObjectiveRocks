@@ -7,12 +7,14 @@
 //
 
 #import "RocksDBIterator.h"
+#import "RocksDBSlice.h"
 
 #import <rocksdb/iterator.h>
 
 @interface RocksDBIterator ()
 {
 	rocksdb::Iterator *_iterator;
+	RocksDBOptions *_options;
 }
 @end
 
@@ -20,11 +22,12 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options
 {
 	self = [super init];
 	if (self) {
 		_iterator = iterator;
+		_options = options;
 	}
 	return self;
 }
@@ -61,9 +64,11 @@
 	_iterator->SeekToLast();
 }
 
-- (void)seekToKey:(NSData *)aKey
+- (void)seekToKey:(id)aKey
 {
-	_iterator->Seek(rocksdb::Slice((char *)aKey.bytes, aKey.length));
+	if (aKey != nil) {
+		_iterator->Seek(SliceFromKey(aKey, _options, nil));
+	}
 }
 
 - (void)next
@@ -76,16 +81,18 @@
 	_iterator->Prev();
 }
 
-- (NSData *)key
+- (id)key
 {
 	rocksdb::Slice keySlice = _iterator->key();
-	return [NSData dataWithBytes:keySlice.data() length:keySlice.size()];
+	id key = DecodeKeySlice(keySlice, _options, nil);
+	return key;
 }
 
-- (NSData *)value
+- (id)value
 {
 	rocksdb::Slice valueSlice = _iterator->value();
-	return [NSData dataWithBytes:valueSlice.data() length:valueSlice.size()];
+	id value = DecodeValueSlice(self.key, valueSlice, _options, nil);
+	return value;
 }
 
 #pragma mark - Enumeration
@@ -97,10 +104,10 @@
 
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysInRange:RocksMakeRange(nil, nil) reverse:reverse usingBlock:block];
+	[self enumerateKeysInRange:RocksDBMakeKeyRange(nil, nil) reverse:reverse usingBlock:block];
 }
 
-- (void)enumerateKeysInRange:(RocksDBIteratorRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
 	BOOL stop = NO;
 
@@ -112,7 +119,7 @@
 
 	rocksdb::Slice limitSlice;
 	if (range.end != nil) {
-		limitSlice = rocksdb::Slice((char *)range.end.bytes, range.end.length);
+		limitSlice = SliceFromKey(range.end, _options, nil);
 	}
 
 	BOOL (^ checkLimit)(BOOL reverse, rocksdb::Slice key) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
@@ -126,12 +133,9 @@
 
 	rocksdb::Slice keySlice;
 	while (_iterator->Valid() && checkLimit(reverse, keySlice)) {
-
 		keySlice = _iterator->key();
 
-		NSData *key = [NSData dataWithBytes:keySlice.data() length:keySlice.size()];
-		if (block) block(key, &stop);
-
+		if (block) block(self.key, &stop);
 		if (stop == YES) break;
 
 		reverse ? _iterator->Prev(): _iterator->Next();

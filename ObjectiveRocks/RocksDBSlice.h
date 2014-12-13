@@ -34,6 +34,11 @@ NS_INLINE NSData * EncodeKey(id aKey, RocksDBOptions *options, NSError * __autor
 	return encoded;
 }
 
+NS_INLINE rocksdb::Slice SliceFromKey(id aKey, RocksDBOptions *options, NSError * __autoreleasing *error)
+{
+	return SliceFromData(EncodeKey(aKey, options, error));
+}
+
 NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
 	NSData *encoded = nil;

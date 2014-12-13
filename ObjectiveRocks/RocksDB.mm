@@ -482,7 +482,7 @@
 	}
 	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options);
 
-	return [[RocksDBIterator alloc] initWithDBIterator:iterator];
+	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:_options];
 }
 
 #pragma mark - Snapshot
