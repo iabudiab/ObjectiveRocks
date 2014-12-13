@@ -7,11 +7,18 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBOptions.h"
 
 @interface RocksDBWriteBatch : NSObject
 
+- (instancetype)initWithOptions:(RocksDBOptions *)options;
+
+- (void)setObject:(id)anObject forKey:(id)aKey;
 - (void)setData:(NSData *)data forKey:(NSData *)aKey;
+
+- (void)deleteObjectForKey:(id)aKey;
 - (void)deleteDataForKey:(NSData *)aKey;
+
 - (void)clear;
 
 - (int)count;

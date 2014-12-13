@@ -411,6 +411,11 @@
 
 #pragma mark - Batch Writes
 
+- (RocksDBWriteBatch *)writeBatch
+{
+	return [[RocksDBWriteBatch alloc] initWithOptions:_options];
+}
+
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
 {
 	return [self performWriteBatch:batchBlock error:nil];
@@ -420,7 +425,7 @@
 {
 	if (batchBlock == nil) return NO;
 
-	RocksDBWriteBatch *writeBatch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *writeBatch = [self writeBatch];
 	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 
 	batchBlock(writeBatch, writeOptions);
