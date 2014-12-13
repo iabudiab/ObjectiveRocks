@@ -98,7 +98,7 @@
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksMakeRange(Data(@"key 2"), nil) reverse:NO usingBlock:^(id key, BOOL *stop) {
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(Data(@"key 2"), nil) reverse:NO usingBlock:^(id key, BOOL *stop) {
 		[actual addObject:Str(key)];
 	}];
 
@@ -121,7 +121,7 @@
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksMakeRange(nil, Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(nil, Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
 		[actual addObject:Str(key)];
 	}];
 
@@ -144,7 +144,7 @@
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksMakeRange(Data(@"key 2"), Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(Data(@"key 2"), Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
 		[actual addObject:Str(key)];
 	}];
 
