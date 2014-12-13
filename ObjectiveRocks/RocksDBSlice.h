@@ -24,6 +24,10 @@ NS_INLINE NSData * DataFromSlice(rocksdb::Slice slice)
 
 NS_INLINE NSData * EncodeKey(id aKey, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
+	if ([aKey isKindOfClass:[NSData class]]) {
+		return aKey;
+	}
+
 	NSData *encoded = nil;
 	if (options.keyEncoder != nil) {
 		encoded = options.keyEncoder(aKey);
@@ -41,6 +45,10 @@ NS_INLINE rocksdb::Slice SliceFromKey(id aKey, RocksDBOptions *options, NSError 
 
 NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
+	if ([value isKindOfClass:[NSData class]]) {
+		return value;
+	}
+
 	NSData *encoded = nil;
 	if (options.valueEncoder != nil) {
 		encoded = options.valueEncoder(aKey, value);
