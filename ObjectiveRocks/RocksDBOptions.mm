@@ -14,6 +14,7 @@
 #import <rocksdb/merge_operator.h>
 
 @interface RocksDBComparator ()
+@property (nonatomic, strong) RocksDBOptions *options;
 @property (nonatomic, assign) const rocksdb::Comparator *comparator;
 @end
 
@@ -182,6 +183,7 @@
 - (void)setComparator:(RocksDBComparator *)comparator
 {
 	_comparatorWrapper = comparator;
+	_comparatorWrapper.options = self;
 	_options.comparator = _comparatorWrapper.comparator;
 }
 

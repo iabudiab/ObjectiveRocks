@@ -10,7 +10,7 @@
 
 @interface RocksDBComparator : NSObject
 
-+ (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block;
-- (instancetype)initWithName:(NSString *)name andBlock:(int (^)(NSData *data1, NSData *data2))block;
++ (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
+- (instancetype)initWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
 
 @end

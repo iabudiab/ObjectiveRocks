@@ -46,8 +46,8 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
-			return [Str(data1) compare:Str(data2)];
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
+			return [Str(key1) compare:Str(key2)];
 		}];
 	}];
 
@@ -72,9 +72,9 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
-			if (Str(data1).length > Str(data2).length) return 1;
-			if (Str(data1).length < Str(data2).length) return -1;
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
+			if (Str(key1).length > Str(key2).length) return 1;
+			if (Str(key1).length < Str(key2).length) return -1;
 			return 0;
 		}];
 	}];
@@ -100,9 +100,9 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int(NSData *data1, NSData *data2) {
-			if (Str(data1).length > Str(data2).length) return -1;
-			if (Str(data1).length < Str(data2).length) return 1;
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
+			if (Str(key1).length > Str(key2).length) return -1;
+			if (Str(key1).length < Str(key2).length) return 1;
 			return 0;
 		}];
 	}];
@@ -120,6 +120,48 @@
 	RocksDBIterator *iterator = [_rocks iterator];
 	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
 		XCTAssertEqualObjects(Str(key), expected[idx]);
+		idx++;
+	}];
+}
+
+- (void)testDB_Comparator_StringLengthCompare_Desc_Encoded
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (NSString *key1, NSString *key2) {
+			if (key1.length > key2.length) return -1;
+			if (key1.length < key2.length) return 1;
+			return 0;
+		}];
+
+		options.keyEncoder = ^ NSData * (id key) {
+			return [key dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.keyDecoder = ^ NSString * (NSData *data) {
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+		options.valueEncoder = ^ NSData * (id key, id value) {
+			return [value dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.valueDecoder = ^ NSString * (id key, NSData * data) {
+			if (data == nil) return nil;
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+	}];
+
+	/* Expected Array: [Z{26}, Y{25}, ..., CCC, BB, A] */
+	NSMutableArray *expected = [NSMutableArray array];
+	for (unichar i = 90; i >= 65; i--) {
+		NSString *str = [NSString stringWithCharacters:&i length:1];
+		str = [str stringByPaddingToLength:(i-64) withString:str startingAtIndex:0];
+		[expected addObject:str];
+		[_rocks setObject:str forKey:str];
+	}
+
+	__block NSUInteger idx = 0;
+	RocksDBIterator *iterator = [_rocks iterator];
+	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
+		XCTAssertEqualObjects(key, expected[idx]);
 		idx++;
 	}];
 }
