@@ -190,6 +190,36 @@
 
 #pragma mark - Merge Operations
 
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey
+{
+	return [self mergeOperation:aMerge forKey:aKey error:nil];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error
+{
+	return [self mergeOperation:aMerge forKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self mergeOperation:aMerge forKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	if (_options.keyEncoder == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+
+	return [self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
+					forKey:EncodeKey(aKey, _options, error)
+			  writeOptions:writeOptionsBlock];
+}
+
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey
 {
 	return [self mergeObject:anObject forKey:aKey error:nil];

@@ -43,6 +43,11 @@
 
 @interface RocksDB (MergeOps)
 
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey;
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error;
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
