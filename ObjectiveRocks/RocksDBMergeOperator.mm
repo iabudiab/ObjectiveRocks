@@ -164,7 +164,9 @@ bool trampolineFullMerge(void* instance,
 
 	for (const auto &value : operand_list) {
 		id decoded = [NSString stringWithCString:value.c_str() encoding:NSUTF8StringEncoding];
-		[operands addObject:decoded];
+		if (decoded != nil) {
+			[operands addObject:decoded];
+		}
 	}
 
 	id mergeResult = _fullMergeBlock ? _fullMergeBlock(key, previous, operands) : nil;
