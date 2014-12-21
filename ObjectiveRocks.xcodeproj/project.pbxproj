@@ -14,7 +14,7 @@
 		623224AC1A2116A400FB6625 /* RocksDBComparator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623224AB1A2116A400FB6625 /* RocksDBComparator.mm */; };
 		6232B7351A1E80F900B14535 /* RocksDBWriteOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */; };
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
-		6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */; };
+		623533A01A47722900D5CD14 /* memtable_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6235339E1A47722900D5CD14 /* memtable_allocator.cc */; };
 		62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */; };
 		62385EB21A2FC87500493F18 /* RocksDBIterator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB11A2FC87500493F18 /* RocksDBIterator.mm */; };
 		62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB31A2FCFB100493F18 /* RocksDBIteratorTests.mm */; };
@@ -213,11 +213,10 @@
 		6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBWriteOptions.mm; sourceTree = "<group>"; };
 		6232B7361A1E860700B14535 /* RocksDBReadOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBReadOptions.h; sourceTree = "<group>"; };
 		6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBReadOptions.mm; sourceTree = "<group>"; };
-		6232B7391A1EB2B900B14535 /* thread_status.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status.h; sourceTree = "<group>"; };
-		6232B73A1A1EB2FD00B14535 /* thread_list_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_list_test.cc; sourceTree = "<group>"; };
-		6232B73B1A1EB30900B14535 /* thread_status_impl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status_impl.h; sourceTree = "<group>"; };
-		6232B73C1A1EB31000B14535 /* thread_status_impl_debug.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl_debug.cc; sourceTree = "<group>"; };
-		6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = thread_status_impl.cc; sourceTree = "<group>"; };
+		6235339E1A47722900D5CD14 /* memtable_allocator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memtable_allocator.cc; sourceTree = "<group>"; };
+		6235339F1A47722900D5CD14 /* memtable_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memtable_allocator.h; sourceTree = "<group>"; };
+		623533A11A47724D00D5CD14 /* writebuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writebuffer.h; sourceTree = "<group>"; };
+		623533A21A4772AC00D5CD14 /* allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator.h; sourceTree = "<group>"; };
 		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
 		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
 		62385EB01A2FC87500493F18 /* RocksDBIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBIterator.h; sourceTree = "<group>"; };
@@ -996,6 +995,8 @@
 				62EE295F1A1ABA1F00486C31 /* log_writer.h */,
 				62EE29611A1ABA1F00486C31 /* memtable.cc */,
 				62EE29621A1ABA1F00486C31 /* memtable.h */,
+				6235339E1A47722900D5CD14 /* memtable_allocator.cc */,
+				6235339F1A47722900D5CD14 /* memtable_allocator.h */,
 				62EE29641A1ABA1F00486C31 /* memtable_list.cc */,
 				62EE29651A1ABA1F00486C31 /* memtable_list.h */,
 				62EE29671A1ABA1F00486C31 /* merge_context.h */,
@@ -1037,6 +1038,7 @@
 				62EE29971A1ABA1F00486C31 /* write_controller_test.cc */,
 				62EE29981A1ABA1F00486C31 /* write_thread.cc */,
 				62EE29991A1ABA1F00486C31 /* write_thread.h */,
+				623533A11A47724D00D5CD14 /* writebuffer.h */,
 			);
 			path = db;
 			sourceTree = "<group>";
@@ -1132,7 +1134,6 @@
 				62EE29CA1A1ABA1F00486C31 /* status.h */,
 				62EE29CB1A1ABA1F00486C31 /* table.h */,
 				62EE29CC1A1ABA1F00486C31 /* table_properties.h */,
-				6232B7391A1EB2B900B14535 /* thread_status.h */,
 				62EE29CD1A1ABA1F00486C31 /* transaction_log.h */,
 				62EE29CE1A1ABA1F00486C31 /* types.h */,
 				62EE29CF1A1ABA1F00486C31 /* universal_compaction.h */,
@@ -1362,6 +1363,7 @@
 		62EE2B051A1ABA2000486C31 /* util */ = {
 			isa = PBXGroup;
 			children = (
+				623533A21A4772AC00D5CD14 /* allocator.h */,
 				62EE2B061A1ABA2000486C31 /* arena.cc */,
 				62EE2B071A1ABA2000486C31 /* arena.h */,
 				62EE2B091A1ABA2000486C31 /* arena_test.cc */,
@@ -1464,13 +1466,9 @@
 				62EE2B911A1ABA2000486C31 /* testharness.h */,
 				62EE2B921A1ABA2000486C31 /* testutil.cc */,
 				62EE2B931A1ABA2000486C31 /* testutil.h */,
-				6232B73A1A1EB2FD00B14535 /* thread_list_test.cc */,
 				62EE2B941A1ABA2000486C31 /* thread_local.cc */,
 				62EE2B951A1ABA2000486C31 /* thread_local.h */,
 				62EE2B971A1ABA2000486C31 /* thread_local_test.cc */,
-				6232B73C1A1EB31000B14535 /* thread_status_impl_debug.cc */,
-				6232B73D1A1EB31B00B14535 /* thread_status_impl.cc */,
-				6232B73B1A1EB30900B14535 /* thread_status_impl.h */,
 				62EE2B981A1ABA2000486C31 /* vectorrep.cc */,
 				62EE2B9A1A1ABA2000486C31 /* xxhash.cc */,
 				62EE2B9B1A1ABA2000486C31 /* xxhash.h */,
@@ -1719,6 +1717,7 @@
 				62EE2D221A1ABA2100486C31 /* comparator.cc in Sources */,
 				62EE2D621A1ABA2100486C31 /* skiplistrep.cc in Sources */,
 				62EE2D3C1A1ABA2100486C31 /* hash_linklist_rep.cc in Sources */,
+				623533A01A47722900D5CD14 /* memtable_allocator.cc in Sources */,
 				62EE2C051A1ABA2000486C31 /* flush_scheduler.cc in Sources */,
 				62EE2D751A1ABA2100486C31 /* vectorrep.cc in Sources */,
 				62EE2D071A1ABA2000486C31 /* ldb.cc in Sources */,
@@ -1756,7 +1755,6 @@
 				62EE2D191A1ABA2100486C31 /* build_version.cc in Sources */,
 				62EE2CF01A1ABA2000486C31 /* meta_blocks.cc in Sources */,
 				62EE2CD01A1ABA2000486C31 /* block_builder.cc in Sources */,
-				6232B73E1A1EB31B00B14535 /* thread_status_impl.cc in Sources */,
 				62EE2D291A1ABA2100486C31 /* dynamic_bloom.cc in Sources */,
 				62EE2D811A1ABA2100486C31 /* json_document.cc in Sources */,
 				62EE2C411A1ABA2000486C31 /* memenv.cc in Sources */,
