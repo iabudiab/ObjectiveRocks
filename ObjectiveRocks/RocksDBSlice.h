@@ -22,6 +22,8 @@ NS_INLINE NSData * DataFromSlice(rocksdb::Slice slice)
 	return [NSData dataWithBytes:slice.data() length:slice.size()];
 }
 
+#pragma mark - Key Encoding
+
 NS_INLINE NSData * EncodeKey(id aKey, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
 	if ([aKey isKindOfClass:[NSData class]]) {
@@ -42,6 +44,32 @@ NS_INLINE rocksdb::Slice SliceFromKey(id aKey, RocksDBOptions *options, NSError 
 {
 	return SliceFromData(EncodeKey(aKey, options, error));
 }
+
+NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
+{
+	id key = DataFromSlice(slice);
+	if (options.keyDecoder != nil) {
+		key = options.keyDecoder(key);
+	} else if (error && *error == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		*error = temp;
+	}
+	return key;
+}
+
+NS_INLINE id DecodeKeyData(NSData *data, RocksDBOptions *options, NSError * __autoreleasing *error)
+{
+	id key = nil;
+	if (options.keyDecoder != nil) {
+		key = options.keyDecoder(data);
+	} else if (error && *error == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		*error = temp;
+	}
+	return key;
+}
+
+#pragma mark - Value Encoding
 
 NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
@@ -64,22 +92,23 @@ NS_INLINE rocksdb::Slice SliceFromValue(id aKey, id value, RocksDBOptions *optio
 	return SliceFromData(EncodeValue(aKey, value, options, error));
 }
 
-NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
-{
-	id key = DataFromSlice(slice);
-	if (options.keyDecoder != nil) {
-		key = options.keyDecoder(key);
-	} else if (error && *error == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
-		*error = temp;
-	}
-	return key;
-}
 NS_INLINE id DecodeValueSlice(id aKey, rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
 {
 	id value = DataFromSlice(slice);
 	if (options.valueDecoder != nil) {
 		value = options.valueDecoder(aKey, value);
+	} else if (error && *error == nil) {
+		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+		*error = temp;
+	}
+	return value;
+}
+
+NS_INLINE id DecodeValueData(id aKey, NSData *data, RocksDBOptions *options, NSError * __autoreleasing *error)
+{
+	id value = nil;
+	if (options.valueDecoder != nil) {
+		value = options.valueDecoder(aKey, data);
 	} else if (error && *error == nil) {
 		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
 		*error = temp;

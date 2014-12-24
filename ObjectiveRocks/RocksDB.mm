@@ -135,16 +135,18 @@
 		  error:(NSError * __autoreleasing *)error
    writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, _options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self setData:_options.valueEncoder(aKey, anObject)
-				  forKey:_options.keyEncoder(aKey)
+	return [self setData:valueData
+				  forKey:keyData
 				   error:error
 			writeOptions:writeOptionsBlock];
 }
@@ -207,16 +209,17 @@
 
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
 	return [self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
-					forKey:EncodeKey(aKey, _options, error)
+					forKey:keyData
 			  writeOptions:writeOptionsBlock];
 }
 
@@ -240,16 +243,18 @@
 			  error:(NSError **)error
 	   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, _options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self mergeData:_options.valueEncoder(aKey, anObject)
-					forKey:_options.keyEncoder(aKey)
+	return [self mergeData:valueData
+					forKey:keyData
 					 error:error
 			  writeOptions:writeOptionsBlock];
 }
@@ -313,19 +318,20 @@
 
 - (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueDecoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return nil;
 	}
 
-	NSData *data = [self dataForKey:_options.keyEncoder(aKey)
+	NSData *data = [self dataForKey:keyData
 							  error:error
 						readOptions:readOptionsBlock];
 
-	return _options.valueDecoder(aKey, data);
+	return DecodeValueData(aKey, data, _options, error);
 }
 
 - (NSData *)dataForKey:(NSData *)aKey
@@ -388,15 +394,16 @@
 					 error:(NSError **)error
 			  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self deleteDataForKey:_options.keyEncoder(aKey)
+	return [self deleteDataForKey:keyData
 							error:error
 					 writeOptions:writeOptionsBlock];
 }
