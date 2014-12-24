@@ -14,121 +14,133 @@
 
 @implementation RocksDBComparatorTests
 
-- (void)testDB_Comparator_StringCompare
+- (void)testComparator_Native_Bytewise_Ascending
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
-			return [Str(key1) compare:Str(key2)];
-		}];
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseAscending];
 	}];
 
-	/* Expected Array: [A0, A1, A11, A12 ... A2, A21 ...] */
-	NSMutableArray *expected = [NSMutableArray array];
-	for (int i = 0; i < 26; i++) {
-		NSString *str = [NSString stringWithFormat:@"A%d", i];
-		[expected addObject:str];
-		[_rocks setData:Data(str) forKey:Data(str)];
-	}
-	[expected sortUsingSelector:@selector(compare:)];
+	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1")];
+	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2")];
+	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3")];
 
-	__block NSUInteger idx = 0;
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		XCTAssertEqualObjects(Str(key), expected[idx]);
-		idx++;
-	}];
+
+	[iterator seekToFirst];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc1"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc2"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc3"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc3"));
+
+	[iterator next];
+
+	XCTAssertFalse(iterator.isValid);
+
+	[iterator seekToLast];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc3"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc3"));
+
+	[iterator seekToKey:Data(@"abc")];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc1"));
+
+	[iterator close];
 }
 
-- (void)testDB_Comparator_StringLengthCompare_Asc
+- (void)testComparator_Native_Bytewise_Descending
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
-			if (Str(key1).length > Str(key2).length) return 1;
-			if (Str(key1).length < Str(key2).length) return -1;
-			return 0;
-		}];
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseDescending];
 	}];
 
-	/* Expected Array: [A, BB, CCC, ... , Y{25}, Z{26}] */
-	NSMutableArray *expected = [NSMutableArray array];
-	for (unichar i = 65; i <= 90; i++) {
-		NSString *str = [NSString stringWithCharacters:&i length:1];
-		str = [str stringByPaddingToLength:(i-64) withString:str startingAtIndex:0];
-		[expected addObject:str];
-		[_rocks setData:Data(str) forKey:Data(str)];
-	}
+	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1")];
+	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2")];
+	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3")];
 
-	__block NSUInteger idx = 0;
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		XCTAssertEqualObjects(Str(key), expected[idx]);
-		idx++;
-	}];
+
+	[iterator seekToFirst];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc3"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc3"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc2"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc1"));
+
+	[iterator next];
+
+	XCTAssertFalse(iterator.isValid);
+
+	[iterator seekToLast];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc1"));
+
+	[iterator seekToKey:Data(@"abc")];
+
+	XCTAssertFalse(iterator.isValid);
+
+	[iterator seekToKey:Data(@"abc999")];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"abc3"));
+	XCTAssertEqualObjects(iterator.value, Data(@"abc3"));
+
+	[iterator close];
 }
 
-- (void)testDB_Comparator_StringLengthCompare_Desc
+- (void)testComparator_StringCompare_Ascending
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (id key1, id key2) {
-			if (Str(key1).length > Str(key2).length) return -1;
-			if (Str(key1).length < Str(key2).length) return 1;
-			return 0;
-		}];
-	}];
-
-	/* Expected Array: [Z{26}, Y{25}, ..., CCC, BB, A] */
-	NSMutableArray *expected = [NSMutableArray array];
-	for (unichar i = 90; i >= 65; i--) {
-		NSString *str = [NSString stringWithCharacters:&i length:1];
-		str = [str stringByPaddingToLength:(i-64) withString:str startingAtIndex:0];
-		[expected addObject:str];
-		[_rocks setData:Data(str) forKey:Data(str)];
-	}
-
-	__block NSUInteger idx = 0;
-	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		XCTAssertEqualObjects(Str(key), expected[idx]);
-		idx++;
-	}];
-}
-
-- (void)testDB_Comparator_StringLengthCompare_Desc_Encoded
-{
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-		options.comparator = [RocksDBComparator comaparatorWithName:@"comparator" andBlock:^int (NSString *key1, NSString *key2) {
-			if (key1.length > key2.length) return -1;
-			if (key1.length < key2.length) return 1;
-			return 0;
-		}];
-
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
 		options.keyEncoder = ^ NSData * (id key) {
 			return [key dataUsingEncoding:NSUTF8StringEncoding];
 		};
 		options.keyDecoder = ^ NSString * (NSData *data) {
 			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			return [value dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.valueDecoder = ^ NSString * (id key, NSData * data) {
-			if (data == nil) return nil;
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
 	}];
 
-	/* Expected Array: [Z{26}, Y{25}, ..., CCC, BB, A] */
+
 	NSMutableArray *expected = [NSMutableArray array];
-	for (unichar i = 90; i >= 65; i--) {
-		NSString *str = [NSString stringWithCharacters:&i length:1];
-		str = [str stringByPaddingToLength:(i-64) withString:str startingAtIndex:0];
+	for (int i = 0; i < 10000; i++) {
+		NSString *str = [NSString stringWithFormat:@"A%d", i];
 		[expected addObject:str];
-		[_rocks setObject:str forKey:str];
+		[_rocks setData:Data(str) forKey:Data(str)];
 	}
+
+	/* Expected Array: [A0, A1, A10, A100, A1000, A1001, A1019, A102, A1020, ...] */
+	[expected sortUsingSelector:@selector(compare:)];
 
 	__block NSUInteger idx = 0;
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -136,6 +148,118 @@
 		XCTAssertEqualObjects(key, expected[idx]);
 		idx++;
 	}];
+}
+
+- (void)testComparator_StringCompare_Descending
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareDescending];
+		options.keyEncoder = ^ NSData * (id key) {
+			return [key dataUsingEncoding:NSUTF8StringEncoding];
+		};
+		options.keyDecoder = ^ NSString * (NSData *data) {
+			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+		};
+	}];
+
+
+	NSMutableArray *expected = [NSMutableArray array];
+	for (int i = 0; i < 10000; i++) {
+		NSString *str = [NSString stringWithFormat:@"A%d", i];
+		[expected addObject:str];
+		[_rocks setData:Data(str) forKey:Data(str)];
+	}
+
+	/* Expected Array: [A9999, A9998 .. A9990, A999, A9989, ...] */
+	[expected sortUsingSelector:@selector(compare:)];
+
+	__block NSUInteger idx = 9999;
+	RocksDBIterator *iterator = [_rocks iterator];
+	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
+		XCTAssertEqualObjects(key, expected[idx]);
+		idx--;
+	}];
+}
+
+- (void)testComparator_Number_Ascending
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorNumberAscending];
+
+		options.keyEncoder = ^ NSData * (id key) {
+			u_int32_t r = [key unsignedIntValue];
+			return NumData(r);
+		};
+		options.keyDecoder = ^ id (NSData *data) {
+			if (data == nil) return nil;
+			u_int32_t r;
+			Val(data, r);
+			return @(r);
+		};
+	}];
+
+	for (int i = 0; i < 10000; i++) {
+		u_int32_t r = arc4random_uniform(UINT32_MAX);
+		if ([_rocks objectForKey:@(r)] != nil) {
+			i--;
+		} else {
+			[_rocks setObject:Data(@"value") forKey:@(r)];
+		}
+	}
+
+	__block NSUInteger count = 0;
+	__block NSNumber *lastKey = [NSNumber numberWithUnsignedInt:0];
+
+	RocksDBIterator *iterator = [_rocks iterator];
+	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
+		XCTAssertGreaterThan(key, lastKey);
+		lastKey = key;
+		count++;
+	}];
+
+	XCTAssertEqual(count, 10000);
+}
+
+- (void)testComparator_Number_Descending
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorNumberDescending];
+
+		options.keyEncoder = ^ NSData * (id key) {
+			u_int32_t r = [key unsignedIntValue];
+			return NumData(r);
+		};
+		options.keyDecoder = ^ id (NSData *data) {
+			if (data == nil) return nil;
+			u_int32_t r;
+			Val(data, r);
+			return @(r);
+		};
+	}];
+
+	for (int i = 0; i < 10000; i++) {
+		u_int32_t r = arc4random_uniform(UINT32_MAX);
+		if ([_rocks objectForKey:@(r)] != nil) {
+			i--;
+		} else {
+			[_rocks setObject:Data(@"value") forKey:@(r)];
+		}
+	}
+
+	__block NSUInteger count = 0;
+	__block NSNumber *lastKey = [NSNumber numberWithUnsignedInt:UINT32_MAX];
+
+	RocksDBIterator *iterator = [_rocks iterator];
+	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
+		XCTAssertLessThan(key, lastKey);
+		lastKey = key;
+		count++;
+	}];
+
+	XCTAssertEqual(count, 10000);
 }
 
 @end

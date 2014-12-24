@@ -8,9 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, RocksDBComparatorType)
+{
+	RocksDBComparatorBytewiseAscending,
+	RocksDBComparatorBytewiseDescending,
+	RocksDBComparatorStringCompareAscending,
+	RocksDBComparatorStringCompareDescending,
+	RocksDBComparatorNumberAscending,
+	RocksDBComparatorNumberDescending
+};
+
 @interface RocksDBComparator : NSObject
 
-+ (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
++ (instancetype)comaparatorWithType:(RocksDBComparatorType)type;
+
 - (instancetype)initWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
 
 @end

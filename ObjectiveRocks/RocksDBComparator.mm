@@ -22,17 +22,49 @@
 	const rocksdb::Comparator *_comparator;
 }
 @property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) const rocksdb::Comparator *comparator;
 @end
 
 @implementation RocksDBComparator
 @synthesize options = _options;
+@synthesize name = _name;
 @synthesize comparator = _comparator;
 
-+ (instancetype)comaparatorWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block
+#pragma mark - Comparator Factory
+
++ (instancetype)comaparatorWithType:(RocksDBComparatorType)type
 {
-	return [[self alloc] initWithName:name andBlock:block];
+	switch (type) {
+		case RocksDBComparatorBytewiseAscending:
+			return [[self alloc] initWithNativeComparator:rocksdb::BytewiseComparator()];
+
+		case RocksDBComparatorBytewiseDescending:
+			return [[self alloc] initWithNativeComparator:rocksdb::ReverseBytewiseComparator()];
+
+		case RocksDBComparatorStringCompareAscending:
+			return [[self alloc] initWithName:@"objectiverocks.string.compare.asc" andBlock:^int(id key1, id key2) {
+				return [key1 compare:key2];
+			}];
+
+		case RocksDBComparatorStringCompareDescending:
+			return [[self alloc] initWithName:@"objectiverocks.string.compare.desc" andBlock:^int(id key1, id key2) {
+				return -1 * [key1 compare:key2];
+			}];
+
+		case RocksDBComparatorNumberAscending:
+			return [[self alloc] initWithName:@"objectiverocks.key.length.asc" andBlock:^int(id key1, id key2) {
+				return [key1 compare:key2];
+			}];
+
+		case RocksDBComparatorNumberDescending:
+			return [[self alloc] initWithName:@"objectiverocks.key.length.desc" andBlock:^int(id key1, id key2) {
+				return [key1 compare:key2] * -1;
+			}];
+	}
 }
+
+#pragma mark - Lifecycle
 
 - (instancetype)initWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block
 {
@@ -44,6 +76,18 @@
 	}
 	return self;
 }
+
+- (instancetype)initWithNativeComparator:(const rocksdb::Comparator *)comparator
+{
+	self = [super init];
+	if (self) {
+		_name = [NSString stringWithCString:comparator->Name() encoding:NSUTF8StringEncoding];
+		_comparator = comparator;
+	}
+	return self;
+}
+
+#pragma mark - Callback
 
 - (int)compare:(const rocksdb::Slice &)slice1 with:(const rocksdb::Slice &)slice2
 {
