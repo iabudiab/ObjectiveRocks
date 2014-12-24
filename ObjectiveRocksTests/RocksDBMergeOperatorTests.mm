@@ -6,18 +6,10 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "ObjectiveRocks.h"
+#import "RocksDBTests.h"
 
-#define NumData(x) [NSData dataWithBytes:&x length:sizeof(x)]
-#define StrData(x) [x dataUsingEncoding:NSUTF8StringEncoding]
-#define Val(data, x) [data getBytes:&x length:sizeof(x)];
+@interface RocksDBMergeOperatorTests : RocksDBTests
 
-@interface RocksDBMergeOperatorTests : XCTestCase
-{
-	NSString *_path;
-	RocksDB *_rocks;
-}
 @end
 
 @implementation RocksDBMergeOperatorTests
@@ -65,13 +57,13 @@
 	}];
 
 	uint64_t value = 1;
-	[_rocks mergeData:NumData(value) forKey:StrData(@"Key 1")];
+	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1")];
 
 	value = 5;
-	[_rocks mergeData:NumData(value) forKey:StrData(@"Key 1")];
+	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1")];
 
 	uint64_t res;
-	Val([_rocks dataForKey:StrData(@"Key 1")], res);
+	Val([_rocks dataForKey:Data(@"Key 1")], res);
 
 	XCTAssertTrue(res == 6);
 }

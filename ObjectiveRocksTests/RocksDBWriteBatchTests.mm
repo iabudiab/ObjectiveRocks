@@ -6,40 +6,13 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "ObjectiveRocks.h"
+#import "RocksDBTests.h"
 
-#define Data(x) [x dataUsingEncoding:NSUTF8StringEncoding]
+@interface RocksDBWriteBatchTests : RocksDBTests
 
-@interface RocksDBWriteBatchTests : XCTestCase
-{
-	NSString *_path;
-	RocksDB *_rocks;
-}
 @end
 
 @implementation RocksDBWriteBatchTests
-
-- (void)setUp
-{
-	[super setUp];
-
-	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
-	[self cleanupDB];
-}
-
-- (void)tearDown
-{
-	[_rocks close];
-	[self cleanupDB];
-	[super tearDown];
-}
-
-- (void)cleanupDB
-{
-	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
-}
 
 - (void)testWriteBatch_Perform
 {
