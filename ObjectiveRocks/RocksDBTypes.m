@@ -20,9 +20,13 @@
 
 		case RocksDBTypeNSJSONSerializable:
 			return ^NSData * (id key) {
+				NSError *error = nil;
 				NSData *data = [NSJSONSerialization dataWithJSONObject:key
 															   options:0
-																 error:nil];
+																 error:&error];
+				if (error) {
+					NSLog(@"Error encoding key: %@", error.debugDescription);
+				}
 				return data;
 			};
 	}
@@ -40,9 +44,13 @@
 		case RocksDBTypeNSJSONSerializable:
 			return ^id (NSData * data) {
 				if (data == nil) return nil;
+				NSError *error = nil;
 				id obj = [NSJSONSerialization JSONObjectWithData:data
 														 options:NSJSONReadingMutableContainers
-														   error:nil];
+														   error:&error];
+				if (error) {
+					NSLog(@"Error decoding key: %@", error.debugDescription);
+				}
 				return obj;
 			};
 	}
@@ -58,9 +66,13 @@
 
 		case RocksDBTypeNSJSONSerializable:
 			return ^NSData * (id key, id value) {
+				NSError *error = nil;
 				NSData *data = [NSJSONSerialization dataWithJSONObject:value
 															   options:0
-																 error:nil];
+																 error:&error];
+				if (error) {
+					NSLog(@"Error encoding value: %@", error.debugDescription);
+				}
 				return data;
 			};
 
@@ -79,9 +91,13 @@
 		case RocksDBTypeNSJSONSerializable:
 			return ^id (id key, NSData * data) {
 				if (data == nil) return nil;
+				NSError *error = nil;
 				id obj = [NSJSONSerialization JSONObjectWithData:data
 														 options:NSJSONReadingMutableContainers
-														   error:nil];
+														   error:&error];
+				if (error) {
+					NSLog(@"Error decoding value: %@", error.debugDescription);
+				}
 				return obj;
 			};
 	}
