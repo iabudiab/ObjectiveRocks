@@ -116,6 +116,26 @@
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
 }
 
+- (void)testWriteBatch_Apply_MergeOps
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+
+	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+
+	[batch deleteDataForKey:Data(@"Key 1")];
+	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
+	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
+	[batch mergeData:Data(@"Value 2 New") forKey:Data(@"Key 2")];
+
+	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+
+	XCTFail(@"Merge stuff");
+}
+
 - (void)testWriteBatch_Apply_ClearOps
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {

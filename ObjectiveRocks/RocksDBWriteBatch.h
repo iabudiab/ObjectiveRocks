@@ -16,6 +16,10 @@
 - (void)setObject:(id)anObject forKey:(id)aKey;
 - (void)setData:(NSData *)data forKey:(NSData *)aKey;
 
+- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey;
+- (void)mergeObject:(id)anObject forKey:(id)aKey;
+- (void)mergeData:(NSData *)data forKey:(NSData *)aKey;
+
 - (void)deleteObjectForKey:(id)aKey;
 - (void)deleteDataForKey:(NSData *)aKey;
 

@@ -33,7 +33,7 @@
 	return self;
 }
 
-#pragma mark - CRD
+#pragma mark - CRUD
 
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
@@ -47,6 +47,27 @@
 		_writeBatch.Put(SliceFromData(aKey),
 						SliceFromData(data));
 	}
+}
+
+- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey
+{
+	[self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
+			 forKey:EncodeKey(aKey, _options, nil)];
+}
+
+- (void)mergeObject:(id)anObject forKey:(id)aKey
+{
+	[self mergeData:EncodeValue(aKey, anObject, _options, nil)
+			 forKey:EncodeKey(aKey, _options, nil)];
+}
+
+- (void)mergeData:(NSData *)data forKey:(NSData *)aKey
+{
+	if (aKey != nil && data != nil) {
+		_writeBatch.Merge(SliceFromData(aKey),
+						  SliceFromData(data));
+	}
+
 }
 
 - (void)deleteObjectForKey:(id)aKey
