@@ -14,27 +14,6 @@
 
 @implementation RocksDBMergeOperatorTests
 
-- (void)setUp
-{
-	[super setUp];
-
-	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
-	[self cleanupDB];
-}
-
-- (void)tearDown
-{
-	[_rocks close];
-	[self cleanupDB];
-	[super tearDown];
-}
-
-- (void)cleanupDB
-{
-	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
-}
-
 - (void)testAssociativeMergeOperator
 {
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
@@ -114,9 +93,10 @@
 																  andBlock:^id (id key, NSMutableDictionary *existingValue, id value) {
 																	  NSMutableDictionary *result = [NSMutableDictionary dictionary];
 																	  if (existingValue != nil) {
-																		  result = existingValue;
+																		  [result addEntriesFromDictionary:existingValue];
 																	  }
 																	  [result addEntriesFromDictionary:value];
+																	  NSLog(@"%@", result);
 																	  return result;
 																  }];
 
@@ -138,7 +118,7 @@
 		};
 		options.valueDecoder = ^ NSDictionary * (id key, NSData * data) {
 			NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-																		options:NSJSONReadingAllowFragments | NSJSONReadingMutableContainers
+																		options:NSJSONReadingMutableContainers
 																		  error:nil];
 			return dict;
 		};
