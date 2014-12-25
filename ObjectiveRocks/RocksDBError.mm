@@ -1,16 +1,18 @@
 //
-//  ObjectiveRocksError.m
+//  RocksDBError.m
 //  ObjectiveRocks
 //
 //  Created by Iska on 19/11/14.
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import "ObjectiveRocksError.h"
+#import "RocksDBError.h"
 
-NSString * const ObjectiveRocksErrorDomain = @"co.braincookie.objectiverocks.error";
+#import <rocksdb/status.h>
 
-@implementation ObjectiveRocksError
+NSString * const RocksDBErrorDomain = @"co.braincookie.objectiverocks.error";
+
+@implementation RocksDBError
 
 + (NSError *)errorWithRocksStatus:(rocksdb::Status)status
 {
@@ -21,7 +23,7 @@ NSString * const ObjectiveRocksErrorDomain = @"co.braincookie.objectiverocks.err
 							   NSLocalizedFailureReasonErrorKey : reason
 							   };
 
-	return [NSError errorWithDomain:ObjectiveRocksErrorDomain code:status.code() userInfo:userInfo];
+	return [NSError errorWithDomain:RocksDBErrorDomain code:status.code() userInfo:userInfo];
 }
 
 + (NSError *)errorForMissingConversionBlock
@@ -35,7 +37,7 @@ NSString * const ObjectiveRocksErrorDomain = @"co.braincookie.objectiverocks.err
 							   NSLocalizedRecoverySuggestionErrorKey: recovery
 							   };
 
-	return [NSError errorWithDomain:ObjectiveRocksErrorDomain code:3000 userInfo:userInfo];
+	return [NSError errorWithDomain:RocksDBErrorDomain code:3000 userInfo:userInfo];
 }
 
 @end

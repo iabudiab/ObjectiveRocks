@@ -7,7 +7,7 @@
 //
 
 #import "RocksDB.h"
-#import "ObjectiveRocksError.h"
+#import "RocksDBError.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -73,7 +73,7 @@
 
 		rocksdb::Status status = rocksdb::DB::Open(_options.options, path.UTF8String, &_db);
 		if (!status.ok()) {
-			NSLog(@"Error creating database: %@", [ObjectiveRocksError errorWithRocksStatus:status]);
+			NSLog(@"Error creating database: %@", [RocksDBError errorWithRocksStatus:status]);
 			[self close];
 			return nil;
 		}
@@ -180,7 +180,7 @@
 									  SliceFromData(data));
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -289,7 +289,7 @@
 										SliceFromData(data));
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -363,7 +363,7 @@
 									  SliceFromData(aKey),
 									  &value);
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -436,7 +436,7 @@
 										 SliceFromData(aKey));
 	
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -470,7 +470,7 @@
 	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -495,7 +495,7 @@
 	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}

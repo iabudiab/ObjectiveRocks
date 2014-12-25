@@ -17,3 +17,4 @@
 #import "RocksDBMergeOperator.h"
 
 #import "RocksDBTypes.h"
+#import "RocksDBError.h"
