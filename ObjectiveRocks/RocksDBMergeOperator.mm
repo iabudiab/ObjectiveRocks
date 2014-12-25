@@ -59,7 +59,8 @@ bool trampoline(void* instance,
 	NSData *data = [(__bridge id)instance mergeForKey:key
 									withExistingValue:existing_value
 											 andValue:value];
-	*new_value = (char *)data.bytes;
+	new_value->clear();
+	new_value->assign((char *)data.bytes, data.length);
 	return true;
 }
 

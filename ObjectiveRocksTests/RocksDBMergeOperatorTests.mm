@@ -87,13 +87,12 @@
 {
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
 																  andBlock:^id (id key, NSMutableDictionary *existingValue, id value) {
-																	  NSMutableDictionary *result = [NSMutableDictionary dictionary];
 																	  if (existingValue != nil) {
-																		  [result addEntriesFromDictionary:existingValue];
+																		  [existingValue addEntriesFromDictionary:value];
+																		  return existingValue;
+																	  } else {
+																		  return value;
 																	  }
-																	  [result addEntriesFromDictionary:value];
-																	  NSLog(@"%@", result);
-																	  return result;
 																  }];
 
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
