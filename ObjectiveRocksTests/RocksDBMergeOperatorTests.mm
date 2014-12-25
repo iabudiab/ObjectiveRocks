@@ -59,12 +59,8 @@
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
+
 		options.valueEncoder = ^ NSData * (id key, id value) {
 			float val = [value floatValue];
 			NSData *data = [NSData dataWithBytes:&val length:sizeof(val)];
@@ -104,24 +100,8 @@
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			NSData *data = [NSJSONSerialization dataWithJSONObject:value
-														   options:0
-															 error:nil];
-			return data;
-		};
-		options.valueDecoder = ^ NSDictionary * (id key, NSData * data) {
-			NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-																		options:NSJSONReadingMutableContainers
-																		  error:nil];
-			return dict;
-		};
+		options.keyType = RocksDBTypeNSString;
+		options.valueType = RocksDBTypeNSJSONSerializable;
 	}];
 
 	[_rocks setObject:@{@"Key 1": @"Value 1"} forKey:@"Dict Key"];
@@ -172,24 +152,8 @@
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			NSData *data = [NSJSONSerialization dataWithJSONObject:value
-														   options:0
-															 error:nil];
-			return data;
-		};
-		options.valueDecoder = ^ NSDictionary * (id key, NSData * data) {
-			NSMutableDictionary *dict = [NSJSONSerialization JSONObjectWithData:data
-																		options:NSJSONReadingAllowFragments | NSJSONReadingMutableContainers
-																		  error:nil];
-			return dict;
-		};
+		options.keyType = RocksDBTypeNSString;
+		options.valueType = RocksDBTypeNSJSONSerializable;
 	}];
 
 	NSDictionary *object = @{@"Key 1" : @"Value 1",

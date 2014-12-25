@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
+#import "RocksDBTypes.h"
 
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 {
@@ -35,6 +36,9 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, copy) id (^ keyDecoder)(NSData *data);
 @property (nonatomic, copy) NSData * (^ valueEncoder)(id key, id value);
 @property (nonatomic, copy) id (^ valueDecoder)(id key, NSData *data);
+
+@property (nonatomic, assign) RocksDBType keyType;
+@property (nonatomic, assign) RocksDBType valueType;
 
 @end
 

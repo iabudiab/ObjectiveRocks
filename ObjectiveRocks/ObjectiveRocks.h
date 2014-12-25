@@ -15,3 +15,5 @@
 #import "RocksDBSnapshot.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
+
+#import "RocksDBTypes.h"

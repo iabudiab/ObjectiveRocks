@@ -131,19 +131,8 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			return [value dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.valueDecoder = ^ NSString * (id key, NSData * data) {
-			if (data == nil) return nil;
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
+		options.valueType = RocksDBTypeNSString;
 	}];
 
 	[_rocks setObject:@"value 1" forKey:@"Key 1"];

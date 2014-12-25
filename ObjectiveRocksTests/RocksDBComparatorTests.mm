@@ -123,12 +123,7 @@
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
 	}];
 
 
@@ -155,12 +150,7 @@
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareDescending];
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
 	}];
 
 

@@ -46,6 +46,22 @@
 	return self;
 }
 
+#pragma mark - Types
+
+- (void)setKeyType:(RocksDBType)type
+{
+	self.keyEncoder = [RocksDBTypes keyEncoderForType:type];
+	self.keyDecoder = [RocksDBTypes keyDecoderForType:type];
+	_keyType = type;
+}
+
+- (void)setValueType:(RocksDBType)type
+{
+	self.valueEncoder = [RocksDBTypes valueEncoderForType:type];
+	self.valueDecoder = [RocksDBTypes valueDecoderForType:type];
+	_valueType = type;
+}
+
 #pragma mark - DB Options
 
 - (BOOL)createIfMissing
