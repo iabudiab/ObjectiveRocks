@@ -16,6 +16,8 @@
 		6232B7351A1E80F900B14535 /* RocksDBWriteOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */; };
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
 		623533A01A47722900D5CD14 /* memtable_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6235339E1A47722900D5CD14 /* memtable_allocator.cc */; };
+		6236E2571A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */; };
+		6236E25A1A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6236E2581A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp */; };
 		62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */; };
 		62385EB21A2FC87500493F18 /* RocksDBIterator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB11A2FC87500493F18 /* RocksDBIterator.mm */; };
 		62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB31A2FCFB100493F18 /* RocksDBIteratorTests.mm */; };
@@ -224,6 +226,10 @@
 		6235339F1A47722900D5CD14 /* memtable_allocator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = memtable_allocator.h; sourceTree = "<group>"; };
 		623533A11A47724D00D5CD14 /* writebuffer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = writebuffer.h; sourceTree = "<group>"; };
 		623533A21A4772AC00D5CD14 /* allocator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = allocator.h; sourceTree = "<group>"; };
+		6236E2551A4DD25000A81ED6 /* RocksDBPrefixExtractor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBPrefixExtractor.h; sourceTree = "<group>"; };
+		6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBPrefixExtractor.mm; sourceTree = "<group>"; };
+		6236E2581A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackSliceTransform.cpp; sourceTree = "<group>"; };
+		6236E2591A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackSliceTransform.h; sourceTree = "<group>"; };
 		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
 		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
 		62385EB01A2FC87500493F18 /* RocksDBIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBIterator.h; sourceTree = "<group>"; };
@@ -726,6 +732,8 @@
 			children = (
 				62385EB01A2FC87500493F18 /* RocksDBIterator.h */,
 				62385EB11A2FC87500493F18 /* RocksDBIterator.mm */,
+				6236E2551A4DD25000A81ED6 /* RocksDBPrefixExtractor.h */,
+				6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */,
 			);
 			name = Iterator;
 			sourceTree = "<group>";
@@ -778,6 +786,8 @@
 				62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */,
 				6214FD081A3F698300B92E5C /* RocksDBCallbackMergeOperator.h */,
 				6214FD071A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp */,
+				6236E2591A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.h */,
+				6236E2581A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp */,
 				623D3C201A37C4FF00389207 /* RocksDBSlice.h */,
 			);
 			name = Internal;
@@ -1755,6 +1765,7 @@
 				62EE2C411A1ABA2000486C31 /* memenv.cc in Sources */,
 				628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */,
 				62EE2D711A1ABA2100486C31 /* testutil.cc in Sources */,
+				6236E2571A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm in Sources */,
 				62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */,
 				62EE2D8E1A1ABA2100486C31 /* uint64add.cc in Sources */,
 				62EE2D771A1ABA2100486C31 /* xxhash.cc in Sources */,
@@ -1826,6 +1837,7 @@
 				62EE2D571A1ABA2100486C31 /* options_builder.cc in Sources */,
 				62EE2C211A1ABA2000486C31 /* table_cache.cc in Sources */,
 				62EE2D431A1ABA2100486C31 /* iostats_context.cc in Sources */,
+				6236E25A1A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp in Sources */,
 				62EE2C021A1ABA2000486C31 /* flush_job.cc in Sources */,
 				62EE2CE91A1ABA2000486C31 /* get_context.cc in Sources */,
 				62EE2CCE1A1ABA2000486C31 /* block_based_table_reader.cc in Sources */,

@@ -34,7 +34,7 @@ public:
 				   rocksdb::Logger* logger) const
 	{
 		return fullMergeCallback(instance, key, existing_value, operand_list, new_value, logger);
-	};
+	}
 
 	virtual bool PartialMerge(const rocksdb::Slice& key,
 					  const rocksdb::Slice& left_operand,

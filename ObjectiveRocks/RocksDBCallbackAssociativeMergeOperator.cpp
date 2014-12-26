@@ -18,16 +18,16 @@ public:
 	RocksDBCallbackAssociativeMergeOperatorImpl(void* instance,
 												const char* name,
 												MergeCallback callback): instance(instance), name(name), callback(callback) {}
-	const char* Name() const
+	virtual const char* Name() const
 	{
 		return name;
 	}
 
-	bool Merge(const rocksdb::Slice& key,
-			   const rocksdb::Slice* existing_value,
-			   const rocksdb::Slice& value,
-			   std::string* new_value,
-			   rocksdb::Logger* logger) const
+	virtual bool Merge(const rocksdb::Slice& key,
+					   const rocksdb::Slice* existing_value,
+					   const rocksdb::Slice& value,
+					   std::string* new_value,
+					   rocksdb::Logger* logger) const
 	{
 		return callback(instance, key, existing_value, value, new_value, logger);
 	}
