@@ -36,6 +36,50 @@
 	[iterator close];
 }
 
+- (void)testDB_Iterator_Seek
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+
+	RocksDBIterator *iterator = [_rocks iterator];
+
+	[iterator seekToFirst];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
+
+	[iterator next];
+
+	XCTAssertFalse(iterator.isValid);
+
+	[iterator seekToLast];
+	[iterator previous];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+
+	[iterator seekToFirst];
+	[iterator seekToLast];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
+
+	[iterator close];
+}
+
 - (void)testDB_Iterator_Reverse
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
