@@ -35,7 +35,7 @@ namespace rocksdb {
 - (BOOL)isValid;
 - (void)seekToFirst;
 - (void)seekToLast;
-- (void)seekToKey:(NSData *)aKey;
+- (void)seekToKey:(id)aKey;
 - (void)next;
 - (void)previous;
 - (id)key;
