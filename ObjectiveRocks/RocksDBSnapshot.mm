@@ -12,6 +12,7 @@
 
 @interface RocksDB (Private)
 @property (nonatomic, assign) rocksdb::DB *db;
+@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
 @property (nonatomic, retain) RocksDBOptions *options;
 @property (nonatomic, retain) RocksDBReadOptions *readOptions;
 @property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
@@ -23,11 +24,14 @@
 
 @implementation RocksDBSnapshot
 
-- (instancetype)initWithDBInstance:(rocksdb::DB *)db andReadOptions:(RocksDBReadOptions *)readOptions
+- (instancetype)initWithDBInstance:(rocksdb::DB *)db
+					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+					andReadOptions:(RocksDBReadOptions *)readOptions
 {
 	self = [super init];
 	if (self) {
 		self.db = db;
+		self.columnFamily = columnFamily;
 		self.readOptions = readOptions;
 	}
 	return self;

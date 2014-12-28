@@ -39,11 +39,13 @@
 @interface RocksDB ()
 {
 	rocksdb::DB *_db;
+	rocksdb::ColumnFamilyHandle *_columnFamily;
 	RocksDBOptions *_options;
 	RocksDBReadOptions *_readOptions;
 	RocksDBWriteOptions *_writeOptions;
 }
 @property (nonatomic, assign) rocksdb::DB *db;
+@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
 @property (nonatomic, retain) RocksDBOptions *options;
 @property (nonatomic, retain) RocksDBReadOptions *readOptions;
 @property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
@@ -51,6 +53,7 @@
 
 @implementation RocksDB
 @synthesize db = _db;
+@synthesize columnFamily = _columnFamily;
 @synthesize options = _options;
 @synthesize readOptions = _readOptions;
 @synthesize writeOptions = _writeOptions;
@@ -77,6 +80,8 @@
 			[self close];
 			return nil;
 		}
+		_columnFamily = _db->DefaultColumnFamily();
+
 		[self setDefaultReadOptions:nil andWriteOptions:nil];
 	}
 	return self;
@@ -176,6 +181,7 @@
 	}
 
 	rocksdb::Status status = _db->Put(writeOptions.options,
+									  _columnFamily,
 									  SliceFromData(aKey),
 									  SliceFromData(data));
 
@@ -285,6 +291,7 @@
 	}
 
 	rocksdb::Status status = _db->Merge(_writeOptions.options,
+										_columnFamily,
 										SliceFromData(aKey),
 										SliceFromData(data));
 
@@ -360,6 +367,7 @@
 
 	std::string value;
 	rocksdb::Status status = _db->Get(readOptions.options,
+									  _columnFamily,
 									  SliceFromData(aKey),
 									  &value);
 	if (!status.ok()) {
@@ -433,6 +441,7 @@
 	}
 
 	rocksdb::Status status = _db->Delete(writeOptions.options,
+										 _columnFamily,
 										 SliceFromData(aKey));
 	
 	if (!status.ok()) {
@@ -517,7 +526,8 @@
 	if (readOptionsBlock) {
 		readOptionsBlock(readOptions);
 	}
-	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options);
+	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options,
+												   _columnFamily);
 
 	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:_options];
 }
@@ -540,7 +550,7 @@
 	options.snapshot = _db->GetSnapshot();
 	readOptions.options = options;
 
-	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db andReadOptions:readOptions];
+	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db columnFamily:_columnFamily andReadOptions:readOptions];
 	return snapshot;
 }
 
