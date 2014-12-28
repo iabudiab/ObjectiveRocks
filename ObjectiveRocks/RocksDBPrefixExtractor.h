@@ -8,6 +8,18 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, RocksDBPrefixType)
+{
+	RocksDBPrefixFixedLength
+};
+
 @interface RocksDBPrefixExtractor : NSObject
+
++ (instancetype)prefixExtractorWithType:(RocksDBPrefixType)type length:(size_t)length;
+
+- (instancetype)initWithName:(NSString *)name
+			  transformBlock:(id (^)(id key))transformBlock
+		prefixCandidateBlock:(BOOL (^)(id key))prefixCandidateBlock
+			validPrefixBlock:(BOOL (^)(id prefix))validPrefixBlock;
 
 @end

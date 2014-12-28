@@ -142,4 +142,27 @@
 	}
 }
 
+- (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	BOOL stop = NO;
+
+	rocksdb::Slice prefixSlice = SliceFromKey(prefix, _options, nil);
+	_iterator->Seek(prefixSlice);
+
+	BOOL (^ checkBounds)(rocksdb::Slice key) = ^ BOOL (rocksdb::Slice key) {
+		return key.starts_with(prefixSlice);
+	};
+
+	rocksdb::Slice keySlice = _iterator->key();
+
+	while (_iterator->Valid() && checkBounds(keySlice)) {
+		keySlice = _iterator->key();
+
+		if (block) block(self.key, &stop);
+		if (stop == YES) break;
+
+		_iterator->Next();
+	}
+}
+
 @end

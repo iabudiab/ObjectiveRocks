@@ -12,6 +12,10 @@
 #import <rocksdb/options.h>
 #import <rocksdb/comparator.h>
 #import <rocksdb/merge_operator.h>
+#import <rocksdb/slice_transform.h>
+
+#include <rocksdb/filter_policy.h>
+#include <rocksdb/table.h>
 
 @interface RocksDBComparator ()
 @property (nonatomic, strong) RocksDBOptions *options;
@@ -23,11 +27,17 @@
 @property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
 
+@interface RocksDBPrefixExtractor ()
+@property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
+@end
+
 @interface RocksDBOptions ()
 {
 	rocksdb::Options _options;
 	RocksDBComparator *_comparatorWrapper;
 	RocksDBMergeOperator *_mergeOperatorWrapper;
+	RocksDBPrefixExtractor *_prefixExtractorWrapper;
 }
 @property (nonatomic, assign) rocksdb::Options options;
 @end
@@ -42,6 +52,9 @@
 	self = [super init];
 	if (self) {
 		_options = rocksdb::Options();
+		rocksdb::BlockBasedTableOptions table_options;
+		table_options.filter_policy.reset(rocksdb::NewBloomFilterPolicy(10, true));
+		_options.table_factory.reset(NewBlockBasedTableFactory(table_options));
 	}
 	return self;
 }
@@ -218,6 +231,18 @@
 - (RocksDBMergeOperator *)mergeOperator
 {
 	return _mergeOperatorWrapper;
+}
+
+- (void)setPrefixExtractor:(RocksDBPrefixExtractor *)prefixExtractor
+{
+	_prefixExtractorWrapper = prefixExtractor;
+	_prefixExtractorWrapper.options = self;
+	_options.prefix_extractor.reset(_prefixExtractorWrapper.sliceTransform);
+}
+
+- (RocksDBPrefixExtractor *)prefixExtractor
+{
+	return _prefixExtractorWrapper;
 }
 
 - (size_t)writeBufferSize

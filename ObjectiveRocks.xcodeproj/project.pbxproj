@@ -18,6 +18,7 @@
 		623533A01A47722900D5CD14 /* memtable_allocator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6235339E1A47722900D5CD14 /* memtable_allocator.cc */; };
 		6236E2571A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */; };
 		6236E25A1A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6236E2581A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp */; };
+		6236E25C1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */; };
 		62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */; };
 		62385EB21A2FC87500493F18 /* RocksDBIterator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB11A2FC87500493F18 /* RocksDBIterator.mm */; };
 		62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB31A2FCFB100493F18 /* RocksDBIteratorTests.mm */; };
@@ -230,6 +231,7 @@
 		6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBPrefixExtractor.mm; sourceTree = "<group>"; };
 		6236E2581A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackSliceTransform.cpp; sourceTree = "<group>"; };
 		6236E2591A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackSliceTransform.h; sourceTree = "<group>"; };
+		6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBPrefixExtractorTests.mm; sourceTree = "<group>"; };
 		62376BBD1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackComparator.cpp; sourceTree = "<group>"; };
 		62376BBE1A20EDF000C85DFB /* RocksDBCallbackComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackComparator.h; sourceTree = "<group>"; };
 		62385EB01A2FC87500493F18 /* RocksDBIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBIterator.h; sourceTree = "<group>"; };
@@ -879,6 +881,7 @@
 				62385EB51A2FD05500493F18 /* RocksDBComparatorTests.mm */,
 				623DC2551A335BAF00B61B18 /* RocksDBSnapshotTests.mm */,
 				620A2CAD1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm */,
+				6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */,
 				6299F8191A17B28200123F56 /* Supporting Files */,
 			);
 			path = ObjectiveRocksTests;
@@ -1857,6 +1860,7 @@
 				62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */,
 				62385EB61A2FD05500493F18 /* RocksDBComparatorTests.mm in Sources */,
 				623DC2561A335BAF00B61B18 /* RocksDBSnapshotTests.mm in Sources */,
+				6236E25C1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm in Sources */,
 				62685CB91A2E600A009401B1 /* RocksDBWriteBatchTests.mm in Sources */,
 				620A2CAE1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm in Sources */,
 			);

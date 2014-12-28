@@ -12,9 +12,9 @@
 #include <rocksdb/slice_transform.h>
 #import <rocksdb/slice.h>
 
-typedef rocksdb::Slice (* TransformCallback)(void* instance, rocksdb::Slice src);
-typedef bool (* InDomainCallback)(void* instance, rocksdb::Slice src);
-typedef bool (* InRangeCallback)(void* instance, rocksdb::Slice dst);
+typedef rocksdb::Slice (* TransformCallback)(void* instance, const rocksdb::Slice& src);
+typedef bool (* InDomainCallback)(void* instance, const rocksdb::Slice& src);
+typedef bool (* InRangeCallback)(void* instance, const rocksdb::Slice& dst);
 
 extern rocksdb::SliceTransform* RocksDBCallbackSliceTransform(void* instance,
 															  const char* name,
