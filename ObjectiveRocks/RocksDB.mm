@@ -7,11 +7,14 @@
 //
 
 #import "RocksDB.h"
-#import "RocksDBError.h"
+
+#import "RocksDBColumnFamily.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 #import "RocksDBSnapshot.h"
+
+#import "RocksDBError.h"
 #import "RocksDBSlice.h"
 
 #include <rocksdb/db.h>
@@ -22,6 +25,12 @@
 
 @interface RocksDBOptions (Private)
 @property (nonatomic, assign) rocksdb::Options options;
+@property (nonatomic, readonly) RocksDBDatabaseOptions *databaseOptions;
+@property (nonatomic, readonly) RocksDBColumnFamilyOptions *columnFamilyOption;
+@end
+
+@interface RocksDBColumnFamilyOptions (Private)
+@property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
 @end
 
 @interface RocksDBReadOptions (Private)
@@ -101,6 +110,47 @@
 			_db = NULL;
 		}
 	}
+}
+
+#pragma mark - Column Families
+
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path
+{
+	std::vector<std::string> names;
+
+	rocksdb::Status status = rocksdb::DB::ListColumnFamilies(rocksdb::Options(), path.UTF8String, &names);
+	if (!status.ok()) {
+		NSLog(@"Error listing column families in database at %@: %@", path, [RocksDBError errorWithRocksStatus:status]);
+	}
+
+	NSMutableArray *columnFamilies = [NSMutableArray array];
+	for(auto it = std::begin(names); it != std::end(names); ++it) {
+		[columnFamilies addObject:[[NSString alloc] initWithCString:it->c_str() encoding:NSUTF8StringEncoding]];
+	}
+	return columnFamilies;
+}
+
+- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock
+{
+	RocksDBColumnFamilyOptions *columnFamilyOptions = [RocksDBColumnFamilyOptions new];
+	if (optionsBlock) {
+		optionsBlock(columnFamilyOptions);
+	}
+
+	rocksdb::ColumnFamilyHandle *handle;
+	rocksdb::Status status = _db->CreateColumnFamily(columnFamilyOptions.options, name.UTF8String, &handle);
+	if (!status.ok()) {
+		NSLog(@"Error creating column family: %@", [RocksDBError errorWithRocksStatus:status]);
+		return nil;
+	}
+
+	RocksDBOptions *options = [[RocksDBOptions alloc] initWithDatabaseOptions:_options.databaseOptions
+													   andColumnFamilyOptions:columnFamilyOptions];
+	
+	RocksDBColumnFamily *columnFamily = [[RocksDBColumnFamily alloc] initWithDBInstance:_db
+																		   columnFamily:handle
+																			 andOptions:options];
+	return columnFamily;
 }
 
 #pragma mark - Read/Write Options

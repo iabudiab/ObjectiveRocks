@@ -13,6 +13,7 @@
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
 
+@class RocksDBColumnFamily;
 @class RocksDBSnapshot;
 
 @interface RocksDB : NSObject
@@ -22,6 +23,10 @@
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
+- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
+										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock;
 
 - (void)close;
 

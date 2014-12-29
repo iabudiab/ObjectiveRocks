@@ -7,6 +7,7 @@
 //
 
 #import "RocksDB.h"
+#import "RocksDBColumnFamily.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"

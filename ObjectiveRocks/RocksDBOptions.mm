@@ -27,9 +27,13 @@
 	RocksDBColumnFamilyOptions *_columnFamilyOption;
 }
 @property (nonatomic, readonly) rocksdb::Options options;
+@property (nonatomic, readonly) RocksDBDatabaseOptions *databaseOptions;
+@property (nonatomic, readonly) RocksDBColumnFamilyOptions *columnFamilyOption;
 @end
 
 @implementation RocksDBOptions
+@synthesize databaseOptions = _databaseOptions;
+@synthesize columnFamilyOption = _columnFamilyOption;
 
 #pragma mark - Lifecycle
 
