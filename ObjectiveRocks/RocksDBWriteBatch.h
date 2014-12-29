@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 
 @interface RocksDBWriteBatch : NSObject
 
-- (instancetype)initWithOptions:(RocksDBOptions *)options;
+- (instancetype)initWithOptions:(RocksDBEncodingOptions *)options;
 
 - (void)setObject:(id)anObject forKey:(id)aKey;
 - (void)setData:(NSData *)data forKey:(NSData *)aKey;

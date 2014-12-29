@@ -14,7 +14,7 @@
 @interface RocksDBIterator ()
 {
 	rocksdb::Iterator *_iterator;
-	RocksDBOptions *_options;
+	RocksDBEncodingOptions *_options;
 }
 @end
 
@@ -22,7 +22,7 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {

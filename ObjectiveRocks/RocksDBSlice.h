@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 #import "RocksDBError.h"
 
 #import <rocksdb/slice.h>
@@ -24,7 +24,7 @@ NS_INLINE NSData * DataFromSlice(rocksdb::Slice slice)
 
 #pragma mark - Key Encoding
 
-NS_INLINE NSData * EncodeKey(id aKey, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE NSData * EncodeKey(id aKey, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	if ([aKey isKindOfClass:[NSData class]]) {
 		return aKey;
@@ -40,12 +40,12 @@ NS_INLINE NSData * EncodeKey(id aKey, RocksDBOptions *options, NSError * __autor
 	return encoded;
 }
 
-NS_INLINE rocksdb::Slice SliceFromKey(id aKey, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE rocksdb::Slice SliceFromKey(id aKey, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	return SliceFromData(EncodeKey(aKey, options, error));
 }
 
-NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	id key = DataFromSlice(slice);
 	if (options.keyDecoder != nil) {
@@ -57,7 +57,7 @@ NS_INLINE id DecodeKeySlice(rocksdb::Slice slice, RocksDBOptions *options, NSErr
 	return key;
 }
 
-NS_INLINE id DecodeKeyData(NSData *data, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE id DecodeKeyData(NSData *data, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	id key = nil;
 	if (options.keyDecoder != nil) {
@@ -71,7 +71,7 @@ NS_INLINE id DecodeKeyData(NSData *data, RocksDBOptions *options, NSError * __au
 
 #pragma mark - Value Encoding
 
-NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	if ([value isKindOfClass:[NSData class]]) {
 		return value;
@@ -87,12 +87,12 @@ NS_INLINE NSData * EncodeValue(id aKey, id value, RocksDBOptions *options, NSErr
 	return encoded;
 }
 
-NS_INLINE rocksdb::Slice SliceFromValue(id aKey, id value, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE rocksdb::Slice SliceFromValue(id aKey, id value, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	return SliceFromData(EncodeValue(aKey, value, options, error));
 }
 
-NS_INLINE id DecodeValueSlice(id aKey, rocksdb::Slice slice, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE id DecodeValueSlice(id aKey, rocksdb::Slice slice, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	id value = DataFromSlice(slice);
 	if (options.valueDecoder != nil) {
@@ -104,7 +104,7 @@ NS_INLINE id DecodeValueSlice(id aKey, rocksdb::Slice slice, RocksDBOptions *opt
 	return value;
 }
 
-NS_INLINE id DecodeValueData(id aKey, NSData *data, RocksDBOptions *options, NSError * __autoreleasing *error)
+NS_INLINE id DecodeValueData(id aKey, NSData *data, RocksDBEncodingOptions *options, NSError * __autoreleasing *error)
 {
 	id value = nil;
 	if (options.valueDecoder != nil) {

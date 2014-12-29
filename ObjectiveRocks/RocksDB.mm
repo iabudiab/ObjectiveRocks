@@ -40,15 +40,16 @@
 {
 	rocksdb::DB *_db;
 	rocksdb::ColumnFamilyHandle *_columnFamily;
+
 	RocksDBOptions *_options;
 	RocksDBReadOptions *_readOptions;
 	RocksDBWriteOptions *_writeOptions;
 }
 @property (nonatomic, assign) rocksdb::DB *db;
 @property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
-@property (nonatomic, retain) RocksDBOptions *options;
-@property (nonatomic, retain) RocksDBReadOptions *readOptions;
-@property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
+@property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, strong) RocksDBReadOptions *readOptions;
+@property (nonatomic, strong) RocksDBWriteOptions *writeOptions;
 @end
 
 @implementation RocksDB
@@ -141,8 +142,8 @@
    writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	NSError *locError = nil;
-	NSData *keyData = EncodeKey(aKey, _options, &locError);
-	NSData *valueData = EncodeValue(aKey, anObject, _options, &locError);
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, (RocksDBEncodingOptions *)_options, &locError);
 	if (locError) {
 		if (error && *error == nil) {
 			*error = locError;
@@ -216,7 +217,7 @@
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	NSError *locError = nil;
-	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
 	if (locError) {
 		if (error && *error == nil) {
 			*error = locError;
@@ -250,8 +251,8 @@
 	   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	NSError *locError = nil;
-	NSData *keyData = EncodeKey(aKey, _options, &locError);
-	NSData *valueData = EncodeValue(aKey, anObject, _options, &locError);
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, (RocksDBEncodingOptions *)_options, &locError);
 	if (locError) {
 		if (error && *error == nil) {
 			*error = locError;
@@ -326,7 +327,7 @@
 - (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
 	NSError *locError = nil;
-	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
 	if (locError) {
 		if (error && *error == nil) {
 			*error = locError;
@@ -338,7 +339,7 @@
 							  error:error
 						readOptions:readOptionsBlock];
 
-	return DecodeValueData(aKey, data, _options, error);
+	return DecodeValueData(aKey, data, (RocksDBEncodingOptions *)_options, error);
 }
 
 - (NSData *)dataForKey:(NSData *)aKey
@@ -403,7 +404,7 @@
 			  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
 	NSError *locError = nil;
-	NSData *keyData = EncodeKey(aKey, _options, &locError);
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
 	if (locError) {
 		if (error && *error == nil) {
 			*error = locError;
@@ -459,7 +460,7 @@
 
 - (RocksDBWriteBatch *)writeBatch
 {
-	return [[RocksDBWriteBatch alloc] initWithOptions:_options];
+	return [[RocksDBWriteBatch alloc] initWithOptions:(RocksDBEncodingOptions *)_options];
 }
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
@@ -529,7 +530,7 @@
 	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options,
 												   _columnFamily);
 
-	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:_options];
+	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:(RocksDBEncodingOptions *)_options];
 }
 
 #pragma mark - Snapshot

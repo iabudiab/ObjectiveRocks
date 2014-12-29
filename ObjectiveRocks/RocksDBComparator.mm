@@ -7,7 +7,7 @@
 //
 
 #import "RocksDBComparator.h"
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 #import "RocksDBSlice.h"
 #import "RocksDBCallbackComparator.h"
 
@@ -16,18 +16,18 @@
 
 @interface RocksDBComparator ()
 {
-	RocksDBOptions *_options;
+	RocksDBEncodingOptions *_encodingOptions;
 	NSString *_name;
 	int (^_comparatorBlock)(id data1, id data2);
 	const rocksdb::Comparator *_comparator;
 }
-@property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) const rocksdb::Comparator *comparator;
 @end
 
 @implementation RocksDBComparator
-@synthesize options = _options;
+@synthesize encodingOptions = _encodingOptions;
 @synthesize name = _name;
 @synthesize comparator = _comparator;
 
@@ -91,8 +91,8 @@
 
 - (int)compare:(const rocksdb::Slice &)slice1 with:(const rocksdb::Slice &)slice2
 {
-	id key1 = DecodeKeySlice(slice1, _options, nil);
-	id key2 = DecodeKeySlice(slice2, _options, nil);
+	id key1 = DecodeKeySlice(slice1, _encodingOptions, nil);
+	id key2 = DecodeKeySlice(slice2, _encodingOptions, nil);
 	return _comparatorBlock ? _comparatorBlock(key1, key2) : 0;
 }
 

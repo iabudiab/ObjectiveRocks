@@ -13,7 +13,7 @@
 
 @interface RocksDBWriteBatch ()
 {
-	RocksDBOptions *_options;
+	RocksDBEncodingOptions *_encodingOptions;
 	rocksdb::WriteBatch _writeBatch;
 }
 @property (nonatomic, readonly) rocksdb::WriteBatch writeBatch;
@@ -24,11 +24,11 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithOptions:(RocksDBOptions *)options
+- (instancetype)initWithOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
-		_options = options;
+		_encodingOptions = options;
 	}
 	return self;
 }
@@ -37,8 +37,8 @@
 
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
-	[self setData:EncodeValue(aKey, anObject, _options, nil)
-		   forKey:EncodeKey(aKey, _options, nil)];
+	[self setData:EncodeValue(aKey, anObject, _encodingOptions, nil)
+		   forKey:EncodeKey(aKey, _encodingOptions, nil)];
 }
 
 - (void)setData:(NSData *)data forKey:(NSData *)aKey
@@ -52,13 +52,13 @@
 - (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey
 {
 	[self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
-			 forKey:EncodeKey(aKey, _options, nil)];
+			 forKey:EncodeKey(aKey, _encodingOptions, nil)];
 }
 
 - (void)mergeObject:(id)anObject forKey:(id)aKey
 {
-	[self mergeData:EncodeValue(aKey, anObject, _options, nil)
-			 forKey:EncodeKey(aKey, _options, nil)];
+	[self mergeData:EncodeValue(aKey, anObject, _encodingOptions, nil)
+			 forKey:EncodeKey(aKey, _encodingOptions, nil)];
 }
 
 - (void)mergeData:(NSData *)data forKey:(NSData *)aKey
@@ -72,7 +72,7 @@
 
 - (void)deleteObjectForKey:(id)aKey
 {
-	[self deleteDataForKey:EncodeKey(aKey, _options, nil)];
+	[self deleteDataForKey:EncodeKey(aKey, _encodingOptions, nil)];
 }
 
 - (void)deleteDataForKey:(NSData *)aKey

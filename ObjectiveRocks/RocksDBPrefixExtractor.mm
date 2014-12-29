@@ -7,7 +7,7 @@
 //
 
 #import "RocksDBPrefixExtractor.h"
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 #import "RocksDBSlice.h"
 #import "RocksDBCallbackSliceTransform.h"
 
@@ -16,7 +16,7 @@
 
 @interface RocksDBPrefixExtractor ()
 {
-	RocksDBOptions *_options;
+	RocksDBEncodingOptions *_encodingOptions;
 	NSString *_name;
 	const rocksdb::SliceTransform *_sliceTransform;
 
@@ -24,13 +24,13 @@
 	BOOL (^ _prefixCandidateBlock)(id key);
 	BOOL (^ _validPrefixBlock)(id prefix);
 }
-@property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
 @end
 
 @implementation RocksDBPrefixExtractor
-@synthesize options = _options;
+@synthesize encodingOptions = _encodingOptions;
 @synthesize name = _name;
 @synthesize sliceTransform = _sliceTransform;
 
@@ -77,9 +77,9 @@ rocksdb::Slice trampolineTransform(void* instance, const rocksdb::Slice& src)
 
 - (NSData *)transformKey:(const rocksdb::Slice &)keySlice
 {
-	id key = DecodeKeySlice(keySlice, _options, nil);
+	id key = DecodeKeySlice(keySlice, _encodingOptions, nil);
 	id transformed = _transformBlock(key);
-	return EncodeKey(transformed, _options, nil);
+	return EncodeKey(transformed, _encodingOptions, nil);
 }
 
 bool trampolineInDomain(void* instance, const rocksdb::Slice& src)
@@ -89,7 +89,7 @@ bool trampolineInDomain(void* instance, const rocksdb::Slice& src)
 
 - (BOOL)isKeyPrefixCandidate:(const rocksdb::Slice &)keySlice
 {
-	id key = DecodeKeySlice(keySlice, _options, nil);
+	id key = DecodeKeySlice(keySlice, _encodingOptions, nil);
 	return _prefixCandidateBlock(key);
 }
 
@@ -100,7 +100,7 @@ bool trampolineInRange(void* instance, const rocksdb::Slice& dst)
 
 - (BOOL)isPrefixValid:(const rocksdb::Slice &)prefixSlice
 {
-	id prefix = DecodeKeySlice(prefixSlice, _options, nil);
+	id prefix = DecodeKeySlice(prefixSlice, _encodingOptions, nil);
 	return _prefixCandidateBlock(prefix);
 }
 

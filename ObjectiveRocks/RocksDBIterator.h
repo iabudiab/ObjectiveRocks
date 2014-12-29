@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 
 typedef struct RocksDBIteratorKeyRange
 {
@@ -29,7 +29,7 @@ namespace rocksdb {
 
 @interface RocksDBIterator : NSObject
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options;
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBEncodingOptions *)options;
 - (void)close;
 
 - (BOOL)isValid;
