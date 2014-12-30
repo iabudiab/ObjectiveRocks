@@ -41,9 +41,9 @@
 - (void)close
 {
 	@synchronized(self) {
-		if (_iterator != NULL) {
+		if (_iterator != nullptr) {
 			delete _iterator;
-			_iterator = NULL;
+			_iterator = nullptr;
 		}
 	}
 }

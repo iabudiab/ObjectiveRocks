@@ -37,18 +37,13 @@
 	return self;
 }
 
-- (void)dealloc
-{
-	[self close];
-}
-
 - (void)close
 {
 	@synchronized(self) {
 		rocksdb::ReadOptions options = self.readOptions.options;
-		if (options.snapshot != NULL) {
+		if (options.snapshot != nullptr) {
 			self.db->ReleaseSnapshot(options.snapshot);
-			options.snapshot = NULL;
+			options.snapshot = nullptr;
 			self.readOptions.options = options;
 		}
 	}
