@@ -7,14 +7,20 @@
 //
 
 #import "RocksDBWriteBatch.h"
+#import "RocksDBColumnFamily.h"
 #import "RocksDBSlice.h"
 
 #import <rocksdb/write_batch.h>
+
+@interface RocksDBColumnFamily (Private)
+@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
+@end
 
 @interface RocksDBWriteBatch ()
 {
 	RocksDBEncodingOptions *_encodingOptions;
 	rocksdb::WriteBatch _writeBatch;
+	rocksdb::ColumnFamilyHandle *_columnFamily;
 }
 @property (nonatomic, readonly) rocksdb::WriteBatch writeBatch;
 @end
@@ -24,61 +30,121 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithOptions:(RocksDBEncodingOptions *)options
+- (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+				  andEncodingOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
+		_columnFamily = columnFamily;
 		_encodingOptions = options;
 	}
 	return self;
 }
 
-#pragma mark - CRUD
+#pragma mark - Put
 
 - (void)setObject:(id)anObject forKey:(id)aKey
 {
-	[self setData:EncodeValue(aKey, anObject, _encodingOptions, nil)
-		   forKey:EncodeKey(aKey, _encodingOptions, nil)];
+	[self setObject:anObject forKey:aKey inColumnFamily:nil];
 }
 
 - (void)setData:(NSData *)data forKey:(NSData *)aKey
 {
+	[self setData:data forKey:aKey inColumnFamily:nil];
+}
+
+- (void)setObject:(id)anObject forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
+	[self setData:EncodeValue(aKey, anObject, _encodingOptions, nil)
+		   forKey:EncodeKey(aKey, _encodingOptions, nil)
+   inColumnFamily:columnFamily];
+}
+
+- (void)setData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
 	if (aKey != nil && data != nil) {
-		_writeBatch.Put(SliceFromData(aKey),
+		rocksdb::ColumnFamilyHandle *handle = _columnFamily;
+		if (columnFamily != nil) {
+			handle = columnFamily.columnFamily;
+		}
+
+		_writeBatch.Put(handle,
+						SliceFromData(aKey),
 						SliceFromData(data));
 	}
 }
 
+#pragma mark - Merge
+
 - (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey
 {
-	[self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
-			 forKey:EncodeKey(aKey, _encodingOptions, nil)];
+	[self mergeOperation:aMerge forKey:aKey inColumnFamily:nil];
 }
 
 - (void)mergeObject:(id)anObject forKey:(id)aKey
 {
-	[self mergeData:EncodeValue(aKey, anObject, _encodingOptions, nil)
-			 forKey:EncodeKey(aKey, _encodingOptions, nil)];
+	[self mergeObject:anObject forKey:aKey inColumnFamily:nil];
 }
 
 - (void)mergeData:(NSData *)data forKey:(NSData *)aKey
 {
+	[self mergeData:data forKey:aKey inColumnFamily:nil];
+}
+
+- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
+	[self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
+			 forKey:EncodeKey(aKey, _encodingOptions, nil)
+	 inColumnFamily:columnFamily];
+}
+
+- (void)mergeObject:(id)anObject forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
+	[self mergeData:EncodeValue(aKey, anObject, _encodingOptions, nil)
+			 forKey:EncodeKey(aKey, _encodingOptions, nil)
+	 inColumnFamily:columnFamily];
+}
+
+- (void)mergeData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+{
 	if (aKey != nil && data != nil) {
-		_writeBatch.Merge(SliceFromData(aKey),
+		rocksdb::ColumnFamilyHandle *handle = _columnFamily;
+		if (columnFamily != nil) {
+			handle = columnFamily.columnFamily;
+		}
+		_writeBatch.Merge(handle,
+						  SliceFromData(aKey),
 						  SliceFromData(data));
 	}
-
 }
+
+#pragma mark - Delete
 
 - (void)deleteObjectForKey:(id)aKey
 {
-	[self deleteDataForKey:EncodeKey(aKey, _encodingOptions, nil)];
+	[self deleteObjectForKey:aKey inColumnFamily:nil];
 }
 
 - (void)deleteDataForKey:(NSData *)aKey
 {
+	[self deleteDataForKey:aKey inColumnFamily:nil];
+}
+
+- (void)deleteObjectForKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
+	[self deleteDataForKey:EncodeKey(aKey, _encodingOptions, nil)
+			inColumnFamily:columnFamily];
+}
+
+- (void)deleteDataForKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily
+{
 	if (aKey != nil) {
-		_writeBatch.Delete(SliceFromData(aKey));
+		rocksdb::ColumnFamilyHandle *handle = _columnFamily;
+		if (columnFamily != nil) {
+			handle = columnFamily.columnFamily;
+		}
+		_writeBatch.Delete(handle,
+						   SliceFromData(aKey));
 	}
 }
 

@@ -9,19 +9,34 @@
 #import <Foundation/Foundation.h>
 #import "RocksDBEncodingOptions.h"
 
+@class RocksDBColumnFamily;
+
+namespace rocksdb {
+	class ColumnFamilyHandle;
+}
+
 @interface RocksDBWriteBatch : NSObject
 
-- (instancetype)initWithOptions:(RocksDBEncodingOptions *)options;
+- (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+				  andEncodingOptions:(RocksDBEncodingOptions *)options;
 
 - (void)setObject:(id)anObject forKey:(id)aKey;
 - (void)setData:(NSData *)data forKey:(NSData *)aKey;
+- (void)setObject:(id)anObject forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+- (void)setData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
 
 - (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey;
 - (void)mergeObject:(id)anObject forKey:(id)aKey;
 - (void)mergeData:(NSData *)data forKey:(NSData *)aKey;
+- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+- (void)mergeObject:(id)anObject forKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+- (void)mergeData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+
 
 - (void)deleteObjectForKey:(id)aKey;
 - (void)deleteDataForKey:(NSData *)aKey;
+- (void)deleteObjectForKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
+- (void)deleteDataForKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
 
 - (void)clear;
 

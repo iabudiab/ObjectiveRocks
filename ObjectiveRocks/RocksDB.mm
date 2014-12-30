@@ -600,7 +600,7 @@
 
 - (RocksDBWriteBatch *)writeBatch
 {
-	return [[RocksDBWriteBatch alloc] initWithOptions:(RocksDBEncodingOptions *)_options];
+	return [[RocksDBWriteBatch alloc] initWithColumnFamily:_columnFamily andEncodingOptions:(RocksDBEncodingOptions *)_options];
 }
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock

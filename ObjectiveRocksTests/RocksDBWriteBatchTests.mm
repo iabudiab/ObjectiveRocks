@@ -80,7 +80,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -102,7 +102,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -124,7 +124,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -144,7 +144,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -168,7 +168,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 
