@@ -29,21 +29,17 @@
 		self.db = db;
 		self.columnFamily = columnFamily;
 		self.options = options;
+		[self setDefaultReadOptions:nil andWriteOptions:nil];
 	}
 	return self;
-}
-
-- (void)dealloc
-{
-	[self close];
 }
 
 - (void)close
 {
 	@synchronized(self) {
-		if (self.columnFamily != NULL) {
+		if (self.columnFamily != nullptr) {
 			delete self.columnFamily;
-			self.columnFamily = NULL;
+			self.columnFamily = nullptr;
 		}
 	}
 }

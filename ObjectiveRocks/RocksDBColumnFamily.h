@@ -19,6 +19,9 @@ namespace rocksdb {
 - (instancetype)initWithPath:(NSString *)path __attribute__((unavailable("Create column family via a RocksDB instance")));
 - (instancetype)initWithPath:(NSString *)path
 				andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+- (instancetype)initWithPath:(NSString *)path
+			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path __attribute__((unavailable("Use the superclass RocksDB instead")));
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name

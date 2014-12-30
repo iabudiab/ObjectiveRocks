@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBColumnFamilyDescriptor.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -18,17 +19,23 @@
 
 @interface RocksDB : NSObject
 
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
+
 - (instancetype)initWithPath:(NSString *)path;
-- (instancetype)initWithPath:(NSString *)path andDBOptions:(void (^)(RocksDBOptions *options))options;
+- (instancetype)initWithPath:(NSString *)path
+				andDBOptions:(void (^)(RocksDBOptions *options))options;
+- (instancetype)initWithPath:(NSString *)path
+			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
+
+- (void)close;
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
-+ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock;
-
-- (void)close;
+- (NSArray *)columnFamilies;
 
 @end
 
@@ -36,7 +43,7 @@
 
 - (BOOL)setObject:(id)anObject forKey:(id)aKey;
 - (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error;
-- (BOOL)setObject:(id)anObject forKey:(id)aKey  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock;
+- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock;
 - (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;

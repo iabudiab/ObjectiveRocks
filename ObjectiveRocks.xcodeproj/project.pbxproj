@@ -12,6 +12,7 @@
 		620629631A50ECCA001DEDC4 /* RocksDBEncodingOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620629621A50ECCA001DEDC4 /* RocksDBEncodingOptions.mm */; };
 		620629661A510056001DEDC4 /* RocksDBDatabaseOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620629651A510056001DEDC4 /* RocksDBDatabaseOptions.mm */; };
 		6206296A1A510D36001DEDC4 /* RocksDBColumnFamily.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620629691A510D36001DEDC4 /* RocksDBColumnFamily.mm */; };
+		62074F2D1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62074F2C1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm */; };
 		620A2CAE1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620A2CAD1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm */; };
 		6214FD091A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6214FD071A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp */; };
 		62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDB1A1FF27A005A58D3 /* checkpoint.cc */; };
@@ -223,6 +224,8 @@
 		620629651A510056001DEDC4 /* RocksDBDatabaseOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBDatabaseOptions.mm; sourceTree = "<group>"; };
 		620629681A510D36001DEDC4 /* RocksDBColumnFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBColumnFamily.h; sourceTree = "<group>"; };
 		620629691A510D36001DEDC4 /* RocksDBColumnFamily.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBColumnFamily.mm; sourceTree = "<group>"; };
+		62074F2B1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBColumnFamilyDescriptor.h; sourceTree = "<group>"; };
+		62074F2C1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBColumnFamilyDescriptor.mm; sourceTree = "<group>"; };
 		620A2CAD1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBMergeOperatorTests.mm; sourceTree = "<group>"; };
 		6214FD071A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackMergeOperator.cpp; sourceTree = "<group>"; };
 		6214FD081A3F698300B92E5C /* RocksDBCallbackMergeOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackMergeOperator.h; sourceTree = "<group>"; };
@@ -768,6 +771,8 @@
 			children = (
 				620629681A510D36001DEDC4 /* RocksDBColumnFamily.h */,
 				620629691A510D36001DEDC4 /* RocksDBColumnFamily.mm */,
+				62074F2B1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.h */,
+				62074F2C1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm */,
 			);
 			name = "Column Family";
 			sourceTree = "<group>";
@@ -1829,6 +1834,7 @@
 				62EE2D791A1ABA2100486C31 /* backupable_db.cc in Sources */,
 				620629601A509DF1001DEDC4 /* RocksDBColumnFamilyOptions.mm in Sources */,
 				62EE2D991A1ABA2100486C31 /* write_batch_with_index.cc in Sources */,
+				62074F2D1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm in Sources */,
 				62EE2D041A1ABA2000486C31 /* db_repl_stress.cc in Sources */,
 				62451AD21A4BC85400AF11C8 /* thread_status_updater.cc in Sources */,
 				62EE2BFF1A1ABA2000486C31 /* filename.cc in Sources */,
