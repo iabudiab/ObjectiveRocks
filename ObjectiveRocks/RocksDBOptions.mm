@@ -26,9 +26,9 @@
 	RocksDBDatabaseOptions *_databaseOptions;
 	RocksDBColumnFamilyOptions *_columnFamilyOption;
 }
-@property (nonatomic, readonly) rocksdb::Options options;
-@property (nonatomic, readonly) RocksDBDatabaseOptions *databaseOptions;
-@property (nonatomic, readonly) RocksDBColumnFamilyOptions *columnFamilyOption;
+@property (nonatomic, assign) rocksdb::Options options;
+@property (nonatomic, strong) RocksDBDatabaseOptions *databaseOptions;
+@property (nonatomic, strong) RocksDBColumnFamilyOptions *columnFamilyOption;
 @end
 
 @implementation RocksDBOptions
