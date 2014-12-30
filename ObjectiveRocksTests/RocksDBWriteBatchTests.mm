@@ -120,6 +120,15 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
+		options.mergeOperator = [RocksDBMergeOperator operatorWithName:@"merge" andBlock:^id(id key, id existingValue, id value) {
+			NSMutableString *result = [NSMutableString string];
+ 			if (existingValue != nil) {
+				[result setString:Str(existingValue)];
+			}
+			[result appendString:@","];
+			[result appendString:Str(value)];
+			return Data(result);
+		}];
 	}];
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
@@ -133,7 +142,7 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTFail(@"Merge stuff");
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2,Value 2 New"));
 }
 
 - (void)testWriteBatch_Apply_ClearOps
