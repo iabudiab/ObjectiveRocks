@@ -670,7 +670,7 @@
 	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options,
 												   _columnFamily);
 
-	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:(RocksDBEncodingOptions *)_options];
+	return [[RocksDBIterator alloc] initWithDBIterator:iterator andEncodingOptions:(RocksDBEncodingOptions *)_options];
 }
 
 #pragma mark - Snapshot

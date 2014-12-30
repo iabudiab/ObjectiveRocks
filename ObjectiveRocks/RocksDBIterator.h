@@ -29,7 +29,8 @@ namespace rocksdb {
 
 @interface RocksDBIterator : NSObject
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBEncodingOptions *)options;
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
+				andEncodingOptions:(RocksDBEncodingOptions *)options;
 - (void)close;
 
 - (BOOL)isValid;

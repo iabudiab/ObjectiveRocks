@@ -22,7 +22,8 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBEncodingOptions *)options
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
+				andEncodingOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
