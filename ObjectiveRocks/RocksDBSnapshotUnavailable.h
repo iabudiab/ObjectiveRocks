@@ -24,6 +24,11 @@ NA_SELECTOR(- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)e
 NA_SELECTOR(- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
 NA_SELECTOR(- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
 \
+NA_SELECTOR(- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey) \
+NA_SELECTOR(- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error) \
+NA_SELECTOR(- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
+NA_SELECTOR(- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
+\
 NA_SELECTOR(- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey) \
 NA_SELECTOR(- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error) \
 NA_SELECTOR(- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \

@@ -7,6 +7,7 @@
 //
 
 #import "RocksDB.h"
+#import "RocksDBColumnFamily.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -15,3 +16,6 @@
 #import "RocksDBSnapshot.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
+
+#import "RocksDBTypes.h"
+#import "RocksDBError.h"

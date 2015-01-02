@@ -7,34 +7,31 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import "RocksDBDatabaseOptions.h"
+#import "RocksDBEncodingOptions.h"
+#import "RocksDBColumnFamilyOptions.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
-
-typedef NS_ENUM(unsigned char, RocksDBLogLevel)
-{
-	RocksDBLogLevelDebug = 0,
-	RocksDBLogLevelInfo,
-	RocksDBLogLevelWarn,
-	RocksDBLogLevelError,
-	RocksDBLogLevelFatal
-};
-
-typedef NS_ENUM(char, RocksDBCompressionType)
-{
-	RocksDBCompressionNone = 0x0,
-	RocksDBCompressionSnappy = 0x1,
-	RocksDBCompressionZlib = 0x2,
-	RocksDBCompressionBZip2 = 0x3,
-	RocksDBCompressionLZ4 = 0x4,
-	RocksDBCompressionLZ4HC = 0x5
-};
+#import "RocksDBPrefixExtractor.h"
+#import "RocksDBTypes.h"
 
 @interface RocksDBOptions : NSObject
+
+- (instancetype)initWithDatabaseOptions:(RocksDBDatabaseOptions *)dbOptions
+				 andColumnFamilyOptions:(RocksDBColumnFamilyOptions *)columnFamilyOptions;
+
+@end
+
+@interface RocksDBOptions (Encoding)
 
 @property (nonatomic, copy) NSData * (^ keyEncoder)(id key);
 @property (nonatomic, copy) id (^ keyDecoder)(NSData *data);
 @property (nonatomic, copy) NSData * (^ valueEncoder)(id key, id value);
 @property (nonatomic, copy) id (^ valueDecoder)(id key, NSData *data);
+
+@property (nonatomic, assign) RocksDBType keyType;
+@property (nonatomic, assign) RocksDBType valueType;
 
 @end
 
@@ -60,6 +57,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
 @property (nonatomic, strong) RocksDBComparator *comparator;
 @property (nonatomic, strong) RocksDBMergeOperator *mergeOperator;
+@property (nonatomic, strong) RocksDBPrefixExtractor *prefixExtractor;
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;

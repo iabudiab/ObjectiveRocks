@@ -1,12 +1,12 @@
 //
-//  RocksDBSnapshot.m
+//  RocksDBColumnFamily.m
 //  ObjectiveRocks
 //
-//  Created by Iska on 06/12/14.
+//  Created by Iska on 29/12/14.
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import "RocksDBSnapshot.h"
+#import "RocksDBColumnFamily.h"
 
 #import <rocksdb/db.h>
 
@@ -18,21 +18,18 @@
 @property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
 @end
 
-@interface RocksDBReadOptions (Private)
-@property (nonatomic, assign) rocksdb::ReadOptions options;
-@end
-
-@implementation RocksDBSnapshot
+@implementation RocksDBColumnFamily
 
 - (instancetype)initWithDBInstance:(rocksdb::DB *)db
 					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					andReadOptions:(RocksDBReadOptions *)readOptions
+						andOptions:(RocksDBOptions *)options
 {
 	self = [super init];
 	if (self) {
 		self.db = db;
 		self.columnFamily = columnFamily;
-		self.readOptions = readOptions;
+		self.options = options;
+		[self setDefaultReadOptions:nil andWriteOptions:nil];
 	}
 	return self;
 }
@@ -40,14 +37,16 @@
 - (void)close
 {
 	@synchronized(self) {
-		rocksdb::ReadOptions options = self.readOptions.options;
-		if (options.snapshot != nullptr) {
-			self.db->ReleaseSnapshot(options.snapshot);
-			options.snapshot = nullptr;
-			self.readOptions.options = options;
+		if (self.columnFamily != nullptr) {
+			delete self.columnFamily;
+			self.columnFamily = nullptr;
 		}
 	}
 }
 
+- (void)drop
+{
+	self.db->DropColumnFamily(self.columnFamily);
+}
 
 @end

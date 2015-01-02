@@ -14,7 +14,7 @@
 @interface RocksDBIterator ()
 {
 	rocksdb::Iterator *_iterator;
-	RocksDBOptions *_options;
+	RocksDBEncodingOptions *_options;
 }
 @end
 
@@ -22,7 +22,8 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
+				andEncodingOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
@@ -40,9 +41,9 @@
 - (void)close
 {
 	@synchronized(self) {
-		if (_iterator != NULL) {
+		if (_iterator != nullptr) {
 			delete _iterator;
-			_iterator = NULL;
+			_iterator = nullptr;
 		}
 	}
 }
@@ -139,6 +140,29 @@
 		if (stop == YES) break;
 
 		reverse ? _iterator->Prev(): _iterator->Next();
+	}
+}
+
+- (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	BOOL stop = NO;
+
+	rocksdb::Slice prefixSlice = SliceFromKey(prefix, _options, nil);
+	_iterator->Seek(prefixSlice);
+
+	BOOL (^ checkBounds)(rocksdb::Slice key) = ^ BOOL (rocksdb::Slice key) {
+		return key.starts_with(prefixSlice);
+	};
+
+	rocksdb::Slice keySlice = _iterator->key();
+
+	while (_iterator->Valid() && checkBounds(keySlice)) {
+		keySlice = _iterator->key();
+
+		if (block) block(self.key, &stop);
+		if (stop == YES) break;
+
+		_iterator->Next();
 	}
 }
 

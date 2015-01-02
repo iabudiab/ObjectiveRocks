@@ -7,11 +7,14 @@
 //
 
 #import "RocksDB.h"
-#import "ObjectiveRocksError.h"
+
+#import "RocksDBColumnFamily.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 #import "RocksDBSnapshot.h"
+
+#import "RocksDBError.h"
 #import "RocksDBSlice.h"
 
 #include <rocksdb/db.h>
@@ -20,8 +23,22 @@
 
 #pragma mark - 
 
+@interface RocksDBColumnFamilyDescriptor (Private)
+@property (nonatomic, assign) std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies;
+@end
+
 @interface RocksDBOptions (Private)
 @property (nonatomic, assign) rocksdb::Options options;
+@property (nonatomic, strong) RocksDBDatabaseOptions *databaseOptions;
+@property (nonatomic, strong) RocksDBColumnFamilyOptions *columnFamilyOption;
+@end
+
+@interface RocksDBDatabaseOptions (Private)
+@property (nonatomic, assign) rocksdb::DBOptions options;
+@end
+
+@interface RocksDBColumnFamilyOptions (Private)
+@property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
 @end
 
 @interface RocksDBReadOptions (Private)
@@ -38,19 +55,29 @@
 
 @interface RocksDB ()
 {
+	NSString *_path;
 	rocksdb::DB *_db;
+	rocksdb::ColumnFamilyHandle *_columnFamily;
+	std::vector<rocksdb::ColumnFamilyHandle *> *_columnFamilyHandles;
+
+	NSMutableArray *_columnFamilies;
+
 	RocksDBOptions *_options;
 	RocksDBReadOptions *_readOptions;
 	RocksDBWriteOptions *_writeOptions;
 }
+@property (nonatomic, strong) NSString *path;
 @property (nonatomic, assign) rocksdb::DB *db;
-@property (nonatomic, retain) RocksDBOptions *options;
-@property (nonatomic, retain) RocksDBReadOptions *readOptions;
-@property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
+@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
+@property (nonatomic, strong) RocksDBOptions *options;
+@property (nonatomic, strong) RocksDBReadOptions *readOptions;
+@property (nonatomic, strong) RocksDBWriteOptions *writeOptions;
 @end
 
 @implementation RocksDB
+@synthesize path = _path;
 @synthesize db = _db;
+@synthesize columnFamily = _columnFamily;
 @synthesize options = _options;
 @synthesize readOptions = _readOptions;
 @synthesize writeOptions = _writeOptions;
@@ -66,15 +93,37 @@
 {
 	self = [super init];
 	if (self) {
+		_path = [path copy];
 		_options = [RocksDBOptions new];
 		if (optionsBlock) {
 			optionsBlock(_options);
 		}
 
-		rocksdb::Status status = rocksdb::DB::Open(_options.options, path.UTF8String, &_db);
-		if (!status.ok()) {
-			NSLog(@"Error creating database: %@", [ObjectiveRocksError errorWithRocksStatus:status]);
-			[self close];
+		if ([self open] == NO) {
+			return nil;
+		}
+		[self setDefaultReadOptions:nil andWriteOptions:nil];
+	}
+	return self;
+}
+
+- (instancetype)initWithPath:(NSString *)path
+			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))optionsBlock
+{
+	self = [super init];
+	if (self) {
+		_path = [path copy];
+
+		RocksDBDatabaseOptions *dbOptions = [RocksDBDatabaseOptions new];
+		if (optionsBlock) {
+			optionsBlock(dbOptions);
+		}
+
+		_options = [RocksDBOptions new];
+		_options.databaseOptions = dbOptions;
+
+		if ([self openColumnFamilies:descriptor] == NO) {
 			return nil;
 		}
 		[self setDefaultReadOptions:nil andWriteOptions:nil];
@@ -90,11 +139,108 @@
 - (void)close
 {
 	@synchronized(self) {
-		if (_db != NULL) {
+		[_columnFamilies makeObjectsPerformSelector:@selector(close)];
+
+		if (_columnFamilyHandles != nullptr) {
+			delete _columnFamilyHandles;
+			_columnFamilyHandles = nullptr;
+		}
+
+		if (_db != nullptr) {
 			delete _db;
-			_db = NULL;
+			_db = nullptr;
 		}
 	}
+}
+
+#pragma mark - Open
+
+- (BOOL)open
+{
+	rocksdb::Status status = rocksdb::DB::Open(_options.options, _path.UTF8String, &_db);
+	if (!status.ok()) {
+		NSLog(@"Error opening database: %@", [RocksDBError errorWithRocksStatus:status]);
+		[self close];
+		return NO;
+	}
+	_columnFamily = _db->DefaultColumnFamily();
+
+	return YES;
+}
+
+- (BOOL)openColumnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+{
+	std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies = descriptor.columnFamilies;
+	_columnFamilyHandles = new std::vector<rocksdb::ColumnFamilyHandle *>;
+
+	rocksdb::Status status = rocksdb::DB::Open(_options.options,
+											   _path.UTF8String,
+											   *columnFamilies,
+											   _columnFamilyHandles,
+											   &_db);
+
+	if (!status.ok()) {
+		NSLog(@"Error opening database: %@", [RocksDBError errorWithRocksStatus:status]);
+		[self close];
+		return NO;
+	}
+	_columnFamily = _db->DefaultColumnFamily();
+
+	_columnFamilies = [NSMutableArray new];
+	for(auto it = std::begin(*_columnFamilyHandles); it != std::end(*_columnFamilyHandles); ++it) {
+		RocksDBColumnFamily *columnFamily = [[RocksDBColumnFamily alloc] initWithDBInstance:_db
+																			   columnFamily:*it
+																				 andOptions:_options];
+		[_columnFamilies addObject:columnFamily];
+	}
+
+	return YES;
+}
+
+#pragma mark - Column Families
+
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path
+{
+	std::vector<std::string> names;
+
+	rocksdb::Status status = rocksdb::DB::ListColumnFamilies(rocksdb::Options(), path.UTF8String, &names);
+	if (!status.ok()) {
+		NSLog(@"Error listing column families in database at %@: %@", path, [RocksDBError errorWithRocksStatus:status]);
+	}
+
+	NSMutableArray *columnFamilies = [NSMutableArray array];
+	for(auto it = std::begin(names); it != std::end(names); ++it) {
+		[columnFamilies addObject:[[NSString alloc] initWithCString:it->c_str() encoding:NSUTF8StringEncoding]];
+	}
+	return columnFamilies;
+}
+
+- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock
+{
+	RocksDBColumnFamilyOptions *columnFamilyOptions = [RocksDBColumnFamilyOptions new];
+	if (optionsBlock) {
+		optionsBlock(columnFamilyOptions);
+	}
+
+	rocksdb::ColumnFamilyHandle *handle;
+	rocksdb::Status status = _db->CreateColumnFamily(columnFamilyOptions.options, name.UTF8String, &handle);
+	if (!status.ok()) {
+		NSLog(@"Error creating column family: %@", [RocksDBError errorWithRocksStatus:status]);
+		return nil;
+	}
+
+	RocksDBOptions *options = [[RocksDBOptions alloc] initWithDatabaseOptions:_options.databaseOptions
+													   andColumnFamilyOptions:columnFamilyOptions];
+	
+	RocksDBColumnFamily *columnFamily = [[RocksDBColumnFamily alloc] initWithDBInstance:_db
+																		   columnFamily:handle
+																			 andOptions:options];
+	return columnFamily;
+}
+
+- (NSArray *)columnFamilies
+{
+	return _columnFamilies;
 }
 
 #pragma mark - Read/Write Options
@@ -135,16 +281,18 @@
 		  error:(NSError * __autoreleasing *)error
    writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, (RocksDBEncodingOptions *)_options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self setData:_options.valueEncoder(aKey, anObject)
-				  forKey:_options.keyEncoder(aKey)
+	return [self setData:valueData
+				  forKey:keyData
 				   error:error
 			writeOptions:writeOptionsBlock];
 }
@@ -174,11 +322,12 @@
 	}
 
 	rocksdb::Status status = _db->Put(writeOptions.options,
+									  _columnFamily,
 									  SliceFromData(aKey),
 									  SliceFromData(data));
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -189,6 +338,37 @@
 }
 
 #pragma mark - Merge Operations
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey
+{
+	return [self mergeOperation:aMerge forKey:aKey error:nil];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error
+{
+	return [self mergeOperation:aMerge forKey:aKey error:error writeOptions:nil];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	return [self mergeOperation:aMerge forKey:aKey error:nil writeOptions:writeOptionsBlock];
+}
+
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
+{
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	if (locError) {
+		if (error && *error == nil) {
+			*error = locError;
+		}
+		return NO;
+	}
+
+	return [self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
+					forKey:keyData
+			  writeOptions:writeOptionsBlock];
+}
 
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey
 {
@@ -210,16 +390,18 @@
 			  error:(NSError **)error
 	   writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	NSData *valueData = EncodeValue(aKey, anObject, (RocksDBEncodingOptions *)_options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self mergeData:_options.valueEncoder(aKey, anObject)
-					forKey:_options.keyEncoder(aKey)
+	return [self mergeData:valueData
+					forKey:keyData
 					 error:error
 			  writeOptions:writeOptionsBlock];
 }
@@ -250,11 +432,12 @@
 	}
 
 	rocksdb::Status status = _db->Merge(_writeOptions.options,
+										_columnFamily,
 										SliceFromData(aKey),
 										SliceFromData(data));
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -283,19 +466,20 @@
 
 - (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
-	if (_options.keyEncoder == nil || _options.valueDecoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return nil;
 	}
 
-	NSData *data = [self dataForKey:_options.keyEncoder(aKey)
+	NSData *data = [self dataForKey:keyData
 							  error:error
 						readOptions:readOptionsBlock];
 
-	return _options.valueDecoder(aKey, data);
+	return DecodeValueData(aKey, data, (RocksDBEncodingOptions *)_options, error);
 }
 
 - (NSData *)dataForKey:(NSData *)aKey
@@ -324,10 +508,11 @@
 
 	std::string value;
 	rocksdb::Status status = _db->Get(readOptions.options,
+									  _columnFamily,
 									  SliceFromData(aKey),
 									  &value);
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -358,15 +543,16 @@
 					 error:(NSError **)error
 			  writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock
 {
-	if (_options.keyEncoder == nil) {
-		NSError *temp = [ObjectiveRocksError errorForMissingConversionBlock];
+	NSError *locError = nil;
+	NSData *keyData = EncodeKey(aKey, (RocksDBEncodingOptions *)_options, &locError);
+	if (locError) {
 		if (error && *error == nil) {
-			*error = temp;
+			*error = locError;
 		}
 		return NO;
 	}
 
-	return [self deleteDataForKey:_options.keyEncoder(aKey)
+	return [self deleteDataForKey:keyData
 							error:error
 					 writeOptions:writeOptionsBlock];
 }
@@ -396,10 +582,11 @@
 	}
 
 	rocksdb::Status status = _db->Delete(writeOptions.options,
+										 _columnFamily,
 										 SliceFromData(aKey));
 	
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -413,7 +600,7 @@
 
 - (RocksDBWriteBatch *)writeBatch
 {
-	return [[RocksDBWriteBatch alloc] initWithOptions:_options];
+	return [[RocksDBWriteBatch alloc] initWithColumnFamily:_columnFamily andEncodingOptions:(RocksDBEncodingOptions *)_options];
 }
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
@@ -433,7 +620,7 @@
 	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -458,7 +645,7 @@
 	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
 
 	if (!status.ok()) {
-		NSError *temp = [ObjectiveRocksError errorWithRocksStatus:status];
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
 		if (error && *error == nil) {
 			*error = temp;
 		}
@@ -480,9 +667,10 @@
 	if (readOptionsBlock) {
 		readOptionsBlock(readOptions);
 	}
-	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options);
+	rocksdb::Iterator *iterator = _db->NewIterator(readOptions.options,
+												   _columnFamily);
 
-	return [[RocksDBIterator alloc] initWithDBIterator:iterator andOptions:_options];
+	return [[RocksDBIterator alloc] initWithDBIterator:iterator andEncodingOptions:(RocksDBEncodingOptions *)_options];
 }
 
 #pragma mark - Snapshot
@@ -503,7 +691,7 @@
 	options.snapshot = _db->GetSnapshot();
 	readOptions.options = options;
 
-	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db andReadOptions:readOptions];
+	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db columnFamily:_columnFamily andReadOptions:readOptions];
 	return snapshot;
 }
 

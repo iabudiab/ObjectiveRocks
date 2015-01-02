@@ -6,41 +6,13 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "ObjectiveRocks.h"
+#import "RocksDBTests.h"
 
-#define Data(x) [x dataUsingEncoding:NSUTF8StringEncoding]
-#define Str(x)	[[NSString alloc] initWithData:x encoding:NSUTF8StringEncoding]
+@interface RocksDBIteratorTests : RocksDBTests
 
-@interface RocksDBIteratorTests : XCTestCase
-{
-	NSString *_path;
-	RocksDB *_rocks;
-}
 @end
 
 @implementation RocksDBIteratorTests
-
-- (void)setUp
-{
-	[super setUp];
-
-	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
-	[self cleanupDB];
-}
-
-- (void)tearDown
-{
-	[_rocks close];
-	[self cleanupDB];
-	[super tearDown];
-}
-
-- (void)cleanupDB
-{
-	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
-}
 
 - (void)testDB_Iterator
 {
@@ -60,6 +32,50 @@
 
 	NSArray *expected = @[ @"key 1", @"key 2", @"key 3" ];
 	XCTAssertEqualObjects(actual, expected);
+
+	[iterator close];
+}
+
+- (void)testDB_Iterator_Seek
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+
+	RocksDBIterator *iterator = [_rocks iterator];
+
+	[iterator seekToFirst];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+
+	[iterator next];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
+
+	[iterator next];
+
+	XCTAssertFalse(iterator.isValid);
+
+	[iterator seekToLast];
+	[iterator previous];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+
+	[iterator seekToFirst];
+	[iterator seekToLast];
+
+	XCTAssertTrue(iterator.isValid);
+	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
+	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
 
 	[iterator close];
 }
@@ -159,19 +175,8 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			return [value dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.valueDecoder = ^ NSString * (id key, NSData * data) {
-			if (data == nil) return nil;
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
+		options.valueType = RocksDBTypeNSString;
 	}];
 
 	[_rocks setObject:@"value 1" forKey:@"Key 1"];

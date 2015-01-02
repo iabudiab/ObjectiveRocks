@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
 
 typedef struct RocksDBIteratorKeyRange
 {
@@ -29,13 +29,14 @@ namespace rocksdb {
 
 @interface RocksDBIterator : NSObject
 
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator andOptions:(RocksDBOptions *)options;
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
+				andEncodingOptions:(RocksDBEncodingOptions *)options;
 - (void)close;
 
 - (BOOL)isValid;
 - (void)seekToFirst;
 - (void)seekToLast;
-- (void)seekToKey:(NSData *)aKey;
+- (void)seekToKey:(id)aKey;
 - (void)next;
 - (void)previous;
 - (id)key;
@@ -44,5 +45,7 @@ namespace rocksdb {
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 - (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+
+- (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block;
 
 @end

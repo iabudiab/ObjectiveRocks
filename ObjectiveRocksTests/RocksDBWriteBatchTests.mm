@@ -6,40 +6,13 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#import <XCTest/XCTest.h>
-#import "ObjectiveRocks.h"
+#import "RocksDBTests.h"
 
-#define Data(x) [x dataUsingEncoding:NSUTF8StringEncoding]
+@interface RocksDBWriteBatchTests : RocksDBTests
 
-@interface RocksDBWriteBatchTests : XCTestCase
-{
-	NSString *_path;
-	RocksDB *_rocks;
-}
 @end
 
 @implementation RocksDBWriteBatchTests
-
-- (void)setUp
-{
-	[super setUp];
-
-	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
-	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
-	[self cleanupDB];
-}
-
-- (void)tearDown
-{
-	[_rocks close];
-	[self cleanupDB];
-	[super tearDown];
-}
-
-- (void)cleanupDB
-{
-	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
-}
 
 - (void)testWriteBatch_Perform
 {
@@ -107,7 +80,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -129,7 +102,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -143,6 +116,35 @@
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
 }
 
+- (void)testWriteBatch_Apply_MergeOps
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+		options.mergeOperator = [RocksDBMergeOperator operatorWithName:@"merge" andBlock:^id(id key, id existingValue, id value) {
+			NSMutableString *result = [NSMutableString string];
+ 			if (existingValue != nil) {
+				[result setString:Str(existingValue)];
+			}
+			[result appendString:@","];
+			[result appendString:Str(value)];
+			return Data(result);
+		}];
+	}];
+
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
+
+	[batch deleteDataForKey:Data(@"Key 1")];
+	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
+	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
+	[batch mergeData:Data(@"Value 2 New") forKey:Data(@"Key 2")];
+
+	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2,Value 2 New"));
+}
+
 - (void)testWriteBatch_Apply_ClearOps
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
@@ -151,7 +153,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
@@ -175,7 +177,7 @@
 
 	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 
-	RocksDBWriteBatch *batch = [RocksDBWriteBatch new];
+	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
 	[batch deleteDataForKey:Data(@"Key 1")];
 
@@ -204,19 +206,8 @@
 {
 	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
-		options.keyEncoder = ^ NSData * (id key) {
-			return [key dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.keyDecoder = ^ NSString * (NSData *data) {
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			return [value dataUsingEncoding:NSUTF8StringEncoding];
-		};
-		options.valueDecoder = ^ NSString * (id key, NSData * data) {
-			if (data == nil) return nil;
-			return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-		};
+		options.keyType = RocksDBTypeNSString;
+		options.valueType = RocksDBTypeNSString;
 	}];
 
 	[_rocks setObject:@"Value 1" forKey:@"Key 1"];

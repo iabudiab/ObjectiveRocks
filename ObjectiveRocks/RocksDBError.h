@@ -1,5 +1,5 @@
 //
-//  ObjectiveRocksError.h
+//  RocksDBError.h
 //  ObjectiveRocks
 //
 //  Created by Iska on 19/11/14.
@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
-#include <rocksdb/db.h>
+namespace rocksdb {
+	class Status;
+}
 
-extern NSString * const ObjectiveRocksErrorDomain;
+extern NSString * const RocksDBErrorDomain;
 
-@interface ObjectiveRocksError : NSObject
+@interface RocksDBError : NSObject
 
 + (NSError *)errorWithRocksStatus:(rocksdb::Status)status;
 + (NSError *)errorForMissingConversionBlock;
