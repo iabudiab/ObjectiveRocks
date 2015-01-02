@@ -14,8 +14,8 @@
 
 - (instancetype)initWithPath:(NSString *)path;
 
-- (void)createBackupForDatabase:(RocksDB *)database;
-- (void)restoreBackupToDestinationPath:(NSString *)destination;
+- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError * __autoreleasing *)error;
+- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError * __autoreleasing *)error;
 
 - (void)close;
 

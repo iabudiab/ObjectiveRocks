@@ -62,14 +62,30 @@
 
 #pragma mark - Backup & Restore
 
-- (void)createBackupForDatabase:(RocksDB *)database
+- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError * __autoreleasing *)error
 {
-	_backupEngine->CreateNewBackup(database.db);
+	rocksdb::Status status = _backupEngine->CreateNewBackup(database.db);
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+			return NO;
+		}
+	}
+	return YES;
 }
 
-- (void)restoreBackupToDestinationPath:(NSString *)destination
+- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError * __autoreleasing *)error
 {
-	_backupEngine->RestoreDBFromLatestBackup(destination.UTF8String, destination.UTF8String);
+	rocksdb::Status status = _backupEngine->RestoreDBFromLatestBackup(destination.UTF8String, destination.UTF8String);
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+			return NO;
+		}
+	}
+	return YES;
 }
 
 @end
