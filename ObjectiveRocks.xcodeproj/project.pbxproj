@@ -174,6 +174,7 @@
 		62EEC4B31A34B93B00624DA2 /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
 		62EEC4B71A34FEE100624DA2 /* RocksDBMergeOperator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B61A34FEE100624DA2 /* RocksDBMergeOperator.mm */; };
 		62EEC4BA1A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */; };
+		62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -711,6 +712,7 @@
 		62EEC4B61A34FEE100624DA2 /* RocksDBMergeOperator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBMergeOperator.mm; sourceTree = "<group>"; };
 		62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackAssociativeMergeOperator.cpp; sourceTree = "<group>"; };
 		62EEC4B91A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackAssociativeMergeOperator.h; sourceTree = "<group>"; };
+		62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBackupTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -895,6 +897,7 @@
 				623DC2551A335BAF00B61B18 /* RocksDBSnapshotTests.mm */,
 				620A2CAD1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm */,
 				6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */,
+				62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */,
 				6299F8191A17B28200123F56 /* Supporting Files */,
 			);
 			path = ObjectiveRocksTests;
@@ -1870,6 +1873,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */,
+				62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */,
 				6249A3CC1A4A43CA00949B07 /* RocksDBTests.mm in Sources */,
 				62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */,
 				62385EB61A2FD05500493F18 /* RocksDBComparatorTests.mm in Sources */,
