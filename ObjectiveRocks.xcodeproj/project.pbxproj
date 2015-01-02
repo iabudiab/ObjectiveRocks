@@ -179,6 +179,10 @@
 		62EEC4B31A34B93B00624DA2 /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
 		62EEC4B71A34FEE100624DA2 /* RocksDBMergeOperator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B61A34FEE100624DA2 /* RocksDBMergeOperator.mm */; };
 		62EEC4BA1A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */; };
+		62F3ED511A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F3ED501A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm */; };
+		62F3ED551A57212800EBFEBF /* RocksDBCache.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F3ED541A57212800EBFEBF /* RocksDBCache.mm */; };
+		62F3ED581A5727A300EBFEBF /* RocksDBFilterPolicy.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F3ED571A5727A300EBFEBF /* RocksDBFilterPolicy.mm */; };
+		62F3ED5B1A574F7500EBFEBF /* RocksDBTableFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F3ED5A1A574F7500EBFEBF /* RocksDBTableFactory.mm */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -725,6 +729,14 @@
 		62EEC4B61A34FEE100624DA2 /* RocksDBMergeOperator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBMergeOperator.mm; sourceTree = "<group>"; };
 		62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = RocksDBCallbackAssociativeMergeOperator.cpp; sourceTree = "<group>"; };
 		62EEC4B91A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackAssociativeMergeOperator.h; sourceTree = "<group>"; };
+		62F3ED4F1A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBBlockBasedTableOptions.h; sourceTree = "<group>"; };
+		62F3ED501A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBlockBasedTableOptions.mm; sourceTree = "<group>"; };
+		62F3ED531A57212800EBFEBF /* RocksDBCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCache.h; sourceTree = "<group>"; };
+		62F3ED541A57212800EBFEBF /* RocksDBCache.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBCache.mm; sourceTree = "<group>"; };
+		62F3ED561A5727A300EBFEBF /* RocksDBFilterPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBFilterPolicy.h; sourceTree = "<group>"; };
+		62F3ED571A5727A300EBFEBF /* RocksDBFilterPolicy.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBFilterPolicy.mm; sourceTree = "<group>"; };
+		62F3ED591A574F7500EBFEBF /* RocksDBTableFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBTableFactory.h; sourceTree = "<group>"; };
+		62F3ED5A1A574F7500EBFEBF /* RocksDBTableFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBTableFactory.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -809,6 +821,7 @@
 				6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */,
 				6232B7361A1E860700B14535 /* RocksDBReadOptions.h */,
 				6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */,
+				62F3ED521A57176200EBFEBF /* Table */,
 			);
 			name = Options;
 			sourceTree = "<group>";
@@ -1649,6 +1662,21 @@
 			name = "Merge Operator";
 			sourceTree = "<group>";
 		};
+		62F3ED521A57176200EBFEBF /* Table */ = {
+			isa = PBXGroup;
+			children = (
+				62F3ED591A574F7500EBFEBF /* RocksDBTableFactory.h */,
+				62F3ED5A1A574F7500EBFEBF /* RocksDBTableFactory.mm */,
+				62F3ED4F1A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.h */,
+				62F3ED501A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm */,
+				62F3ED531A57212800EBFEBF /* RocksDBCache.h */,
+				62F3ED541A57212800EBFEBF /* RocksDBCache.mm */,
+				62F3ED561A5727A300EBFEBF /* RocksDBFilterPolicy.h */,
+				62F3ED571A5727A300EBFEBF /* RocksDBFilterPolicy.mm */,
+			);
+			name = Table;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1763,6 +1791,7 @@
 				62EE2D3C1A1ABA2100486C31 /* hash_linklist_rep.cc in Sources */,
 				623533A01A47722900D5CD14 /* memtable_allocator.cc in Sources */,
 				62EE2C051A1ABA2000486C31 /* flush_scheduler.cc in Sources */,
+				62F3ED581A5727A300EBFEBF /* RocksDBFilterPolicy.mm in Sources */,
 				62EE2D751A1ABA2100486C31 /* vectorrep.cc in Sources */,
 				62EE2D071A1ABA2000486C31 /* ldb.cc in Sources */,
 				62EE2CBF1A1ABA2000486C31 /* stack_trace.cc in Sources */,
@@ -1796,11 +1825,13 @@
 				62EE2BE51A1ABA2000486C31 /* compaction_picker.cc in Sources */,
 				62EE2CDF1A1ABA2000486C31 /* cuckoo_table_reader.cc in Sources */,
 				62EE2CFB1A1ABA2000486C31 /* plain_table_reader.cc in Sources */,
+				62F3ED5B1A574F7500EBFEBF /* RocksDBTableFactory.mm in Sources */,
 				62EE2CEB1A1ABA2000486C31 /* iterator.cc in Sources */,
 				62EE2D191A1ABA2100486C31 /* build_version.cc in Sources */,
 				62EE2CF01A1ABA2000486C31 /* meta_blocks.cc in Sources */,
 				62EE2CD01A1ABA2000486C31 /* block_builder.cc in Sources */,
 				62EE2D291A1ABA2100486C31 /* dynamic_bloom.cc in Sources */,
+				62F3ED511A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm in Sources */,
 				62EE2D811A1ABA2100486C31 /* json_document.cc in Sources */,
 				62EE2C411A1ABA2000486C31 /* memenv.cc in Sources */,
 				628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */,
@@ -1835,6 +1866,7 @@
 				620629601A509DF1001DEDC4 /* RocksDBColumnFamilyOptions.mm in Sources */,
 				62EE2D991A1ABA2100486C31 /* write_batch_with_index.cc in Sources */,
 				62074F2D1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm in Sources */,
+				62F3ED551A57212800EBFEBF /* RocksDBCache.mm in Sources */,
 				62EE2D041A1ABA2000486C31 /* db_repl_stress.cc in Sources */,
 				62451AD21A4BC85400AF11C8 /* thread_status_updater.cc in Sources */,
 				62EE2BFF1A1ABA2000486C31 /* filename.cc in Sources */,

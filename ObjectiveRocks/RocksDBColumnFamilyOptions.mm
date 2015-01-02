@@ -13,6 +13,7 @@
 #import <rocksdb/comparator.h>
 #import <rocksdb/merge_operator.h>
 #import <rocksdb/slice_transform.h>
+#import <rocksdb/table.h>
 
 @class RocksDBOptions;
 
@@ -31,6 +32,10 @@
 @property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
 @end
 
+@interface RocksDBTableFactory ()
+@property (nonatomic, assign) rocksdb::TableFactory *tableFactory;
+@end
+
 @interface RocksDBColumnFamilyOptions ()
 {
 	rocksdb::ColumnFamilyOptions _options;
@@ -39,6 +44,8 @@
 	RocksDBComparator *_comparatorWrapper;
 	RocksDBMergeOperator *_mergeOperatorWrapper;
 	RocksDBPrefixExtractor *_prefixExtractorWrapper;
+
+	RocksDBTableFactory *_tableFactoryWrapper;
 }
 @property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
 @end
@@ -135,6 +142,17 @@
 - (void)setCompressionType:(RocksDBCompressionType)compressionType
 {
 	_options.compression = (rocksdb::CompressionType)compressionType;
+}
+
+- (void)setTableFacotry:(RocksDBTableFactory *)tableFacotry
+{
+	_tableFactoryWrapper = tableFacotry;
+	_options.table_factory.reset(_tableFactoryWrapper.tableFactory);
+}
+
+- (RocksDBTableFactory *)tableFacotry
+{
+	return _tableFactoryWrapper;
 }
 
 @end

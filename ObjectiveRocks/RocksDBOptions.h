@@ -61,6 +61,7 @@
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
+@property (nonatomic, strong) RocksDBTableFactory *tableFacotry;
 
 @end
 

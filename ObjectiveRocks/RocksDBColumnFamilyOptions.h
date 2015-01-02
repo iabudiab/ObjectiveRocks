@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBTableFactory.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
 #import "RocksDBPrefixExtractor.h"
@@ -30,6 +31,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
+@property (nonatomic, strong) RocksDBTableFactory *tableFacotry;
 
 @end
 
