@@ -14,6 +14,7 @@
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
 #import "RocksDBSnapshot.h"
+#import "RocksDBCheckpoint.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
 
