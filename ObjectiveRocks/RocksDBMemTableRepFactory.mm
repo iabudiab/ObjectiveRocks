@@ -25,6 +25,8 @@
 	return [[self alloc] initWithNatviceMemTableRepFactory:new rocksdb::SkipListFactory];
 }
 
+#ifndef ROCKSDB_LITE
+
 + (instancetype)vectorRepFactory
 {
 	return [[self alloc] initWithNatviceMemTableRepFactory:new rocksdb::VectorRepFactory];
@@ -44,6 +46,8 @@
 {
 	return [[self alloc] initWithNatviceMemTableRepFactory:rocksdb::NewHashCuckooRepFactory(writeBufferSize)];
 }
+
+#endif
 
 - (instancetype)initWithNatviceMemTableRepFactory:(rocksdb::MemTableRepFactory *)factory
 {

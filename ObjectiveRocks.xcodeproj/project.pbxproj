@@ -39,11 +39,12 @@
 		625F8F1C1A59C3EB007796BA /* RocksDBProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1B1A59C3EB007796BA /* RocksDBProperties.m */; };
 		625F8F1D1A59C3EB007796BA /* RocksDBProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1B1A59C3EB007796BA /* RocksDBProperties.m */; };
 		625F8F1F1A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */; };
-		625F8F201A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */; };
 		625F8F231A59CF82007796BA /* RocksDBCheckpoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F221A59CF82007796BA /* RocksDBCheckpoint.mm */; };
 		625F8F251A59D11D007796BA /* RocksDBCheckpointTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F241A59D11D007796BA /* RocksDBCheckpointTests.mm */; };
 		625F8F291A59D7B1007796BA /* RocksDBMemTableRepFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F281A59D7B1007796BA /* RocksDBMemTableRepFactory.mm */; };
 		625F8F2A1A59D7B1007796BA /* RocksDBMemTableRepFactory.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F281A59D7B1007796BA /* RocksDBMemTableRepFactory.mm */; };
+		625F8F2B1A59DE25007796BA /* RocksDBStatistics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */; };
+		625F8F2D1A59DEF2007796BA /* RocksDBStatisticsHistogram.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm */; };
 		62685CB91A2E600A009401B1 /* RocksDBWriteBatchTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62685CB81A2E600A009401B1 /* RocksDBWriteBatchTests.mm */; };
 		628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* RocksDBError.mm */; };
 		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
@@ -228,7 +229,7 @@
 		62A8B05E1A58C49F0069B4C8 /* libObjectiveRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libObjectiveRocks.a */; };
 		62A8B0611A58CC400069B4C8 /* RocksDBBackupInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0601A58CC400069B4C8 /* RocksDBBackupInfo.mm */; };
 		62A8B0651A58DD7D0069B4C8 /* RocksDBStatistics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */; };
-		62A8B0691A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m */; };
+		62A8B0691A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm */; };
 		62A8B06B1A5900540069B4C8 /* RocksDBStatisticsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */; };
 		62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */; };
 		62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29141A1ABA1F00486C31 /* builder.cc */; };
@@ -527,7 +528,7 @@
 		62A8B0631A58DD7D0069B4C8 /* RocksDBStatistics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBStatistics.h; sourceTree = "<group>"; };
 		62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBStatistics.mm; sourceTree = "<group>"; };
 		62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBStatisticsHistogram.h; sourceTree = "<group>"; };
-		62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBStatisticsHistogram.m; sourceTree = "<group>"; };
+		62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBStatisticsHistogram.mm; sourceTree = "<group>"; };
 		62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBStatisticsTests.mm; sourceTree = "<group>"; };
 		62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveRocks.h; sourceTree = "<group>"; };
 		62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBOptions.h; sourceTree = "<group>"; };
@@ -1234,7 +1235,7 @@
 				62A8B0631A58DD7D0069B4C8 /* RocksDBStatistics.h */,
 				62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */,
 				62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */,
-				62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m */,
+				62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm */,
 			);
 			name = Statistics;
 			sourceTree = "<group>";
@@ -2200,7 +2201,7 @@
 				62EE2BE01A1ABA2000486C31 /* compaction.cc in Sources */,
 				62EE2CDD1A1ABA2000486C31 /* cuckoo_table_factory.cc in Sources */,
 				62EE2CC51A1ABA2000486C31 /* block.cc in Sources */,
-				62A8B0691A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m in Sources */,
+				62A8B0691A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm in Sources */,
 				62EE2C091A1ABA2000486C31 /* internal_stats.cc in Sources */,
 				62EE2D1F1A1ABA2100486C31 /* coding.cc in Sources */,
 				62EE2D061A1ABA2000486C31 /* db_stress.cc in Sources */,
@@ -2401,6 +2402,7 @@
 				62A8AFFF1A58C30E0069B4C8 /* thread_status_updater.cc in Sources */,
 				62A8B0001A58C30E0069B4C8 /* filename.cc in Sources */,
 				62A8B0011A58C30E0069B4C8 /* slice.cc in Sources */,
+				625F8F2B1A59DE25007796BA /* RocksDBStatistics.mm in Sources */,
 				62A8B0021A58C30E0069B4C8 /* murmurhash.cc in Sources */,
 				62A8B0031A58C30E0069B4C8 /* write_thread.cc in Sources */,
 				62A8B0041A58C30E0069B4C8 /* ldb_tool.cc in Sources */,
@@ -2445,6 +2447,7 @@
 				62A8B02B1A58C30E0069B4C8 /* iostats_context.cc in Sources */,
 				62A8B02C1A58C30E0069B4C8 /* RocksDBCallbackSliceTransform.cpp in Sources */,
 				62A8B02D1A58C30E0069B4C8 /* flush_job.cc in Sources */,
+				625F8F2D1A59DEF2007796BA /* RocksDBStatisticsHistogram.mm in Sources */,
 				62A8B02E1A58C30E0069B4C8 /* get_context.cc in Sources */,
 				62A8B02F1A58C30E0069B4C8 /* block_based_table_reader.cc in Sources */,
 				62A8B0301A58C30E0069B4C8 /* bloom.cc in Sources */,
@@ -2464,7 +2467,6 @@
 				62A8B04A1A58C40A0069B4C8 /* RocksDBColumnFamilyTests.mm in Sources */,
 				62A8B04B1A58C40A0069B4C8 /* RocksDBIteratorTests.mm in Sources */,
 				62A8B04C1A58C40A0069B4C8 /* RocksDBComparatorTests.mm in Sources */,
-				625F8F201A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */,
 				62A8B04D1A58C40A0069B4C8 /* RocksDBSnapshotTests.mm in Sources */,
 				62A8B04E1A58C40A0069B4C8 /* RocksDBPrefixExtractorTests.mm in Sources */,
 				62A8B04F1A58C40A0069B4C8 /* RocksDBWriteBatchTests.mm in Sources */,

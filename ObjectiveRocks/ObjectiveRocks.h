@@ -14,16 +14,19 @@
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
 #import "RocksDBSnapshot.h"
-#import "RocksDBCheckpoint.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
 
-#import "RocksDBStatistics.h"
-#import "RocksDBStatisticsHistogram.h"
-
-#import "RocksDBBackupEngine.h"
-#import "RocksDBBackupInfo.h"
-
-#import "RocksDBProperties.h"
 #import "RocksDBTypes.h"
 #import "RocksDBError.h"
+
+#ifndef ROCKSDB_LITE
+
+#import "RocksDBCheckpoint.h"
+#import "RocksDBBackupEngine.h"
+#import "RocksDBBackupInfo.h"
+#import "RocksDBStatistics.h"
+#import "RocksDBStatisticsHistogram.h"
+#import "RocksDBProperties.h"
+
+#endif

@@ -11,9 +11,14 @@
 @interface RocksDBMemTableRepFactory : NSObject
 
 + (instancetype)skipListRepFacotry;
+
+#ifndef ROCKSDB_LITE
+
 + (instancetype)vectorRepFactory;
 + (instancetype)hashSkipListRepFactory;
 + (instancetype)hashLinkListRepFactory;
 + (instancetype)hashCuckooRepFactoryWithWriteBufferSize:(size_t)writeBufferSize;
+
+#endif
 
 @end
