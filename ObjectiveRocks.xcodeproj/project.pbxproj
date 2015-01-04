@@ -221,6 +221,7 @@
 		62A8B0611A58CC400069B4C8 /* RocksDBBackupInfo.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0601A58CC400069B4C8 /* RocksDBBackupInfo.mm */; };
 		62A8B0651A58DD7D0069B4C8 /* RocksDBStatistics.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */; };
 		62A8B0691A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m */; };
+		62A8B06B1A5900540069B4C8 /* RocksDBStatisticsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */; };
 		62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */; };
 		62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29141A1ABA1F00486C31 /* builder.cc */; };
 		62EE2BDA1A1ABA2000486C31 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29171A1ABA1F00486C31 /* c.cc */; };
@@ -511,6 +512,7 @@
 		62A8B0641A58DD7D0069B4C8 /* RocksDBStatistics.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBStatistics.mm; sourceTree = "<group>"; };
 		62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBStatisticsHistogram.h; sourceTree = "<group>"; };
 		62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBStatisticsHistogram.m; sourceTree = "<group>"; };
+		62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBStatisticsTests.mm; sourceTree = "<group>"; };
 		62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveRocks.h; sourceTree = "<group>"; };
 		62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBOptions.h; sourceTree = "<group>"; };
 		62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBOptions.mm; sourceTree = "<group>"; };
@@ -1180,6 +1182,7 @@
 				6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */,
 				624566C71A51DA79009AC3FB /* RocksDBColumnFamilyTests.mm */,
 				62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */,
+				62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */,
 				6299F8191A17B28200123F56 /* Supporting Files */,
 			);
 			path = ObjectiveRocksTests;
@@ -2239,6 +2242,7 @@
 				6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */,
 				62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */,
 				6249A3CC1A4A43CA00949B07 /* RocksDBTests.mm in Sources */,
+				62A8B06B1A5900540069B4C8 /* RocksDBStatisticsTests.mm in Sources */,
 				624566C81A51DA79009AC3FB /* RocksDBColumnFamilyTests.mm in Sources */,
 				62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */,
 				62385EB61A2FD05500493F18 /* RocksDBComparatorTests.mm in Sources */,
