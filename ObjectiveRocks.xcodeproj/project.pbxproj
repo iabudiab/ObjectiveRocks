@@ -36,6 +36,7 @@
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		6299F8151A17B28200123F56 /* libObjectiveRocks.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6299F8091A17B28200123F56 /* libObjectiveRocks.a */; };
 		6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
+		62A8B0611A58CC400069B4C8 /* RocksDBBackupInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0601A58CC400069B4C8 /* RocksDBBackupInfo.m */; };
 		62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */; };
 		62EE2BD81A1ABA2000486C31 /* builder.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29141A1ABA1F00486C31 /* builder.cc */; };
 		62EE2BDA1A1ABA2000486C31 /* c.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29171A1ABA1F00486C31 /* c.cc */; };
@@ -277,6 +278,8 @@
 		6299F8141A17B28200123F56 /* ObjectiveRocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ObjectiveRocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		6299F81A1A17B28200123F56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBasicTests.mm; sourceTree = "<group>"; };
+		62A8B05F1A58CC400069B4C8 /* RocksDBBackupInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBBackupInfo.h; sourceTree = "<group>"; };
+		62A8B0601A58CC400069B4C8 /* RocksDBBackupInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBBackupInfo.m; sourceTree = "<group>"; };
 		62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ObjectiveRocks.h; sourceTree = "<group>"; };
 		62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBOptions.h; sourceTree = "<group>"; };
 		62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBOptions.mm; sourceTree = "<group>"; };
@@ -759,6 +762,8 @@
 			children = (
 				621CD71A1A4FB24700853E16 /* RocksDBBackupEngine.h */,
 				621CD71B1A4FB24700853E16 /* RocksDBBackupEngine.mm */,
+				62A8B05F1A58CC400069B4C8 /* RocksDBBackupInfo.h */,
+				62A8B0601A58CC400069B4C8 /* RocksDBBackupInfo.m */,
 			);
 			name = Backup;
 			sourceTree = "<group>";
@@ -1761,6 +1766,7 @@
 				62EE2C281A1ABA2000486C31 /* version_builder.cc in Sources */,
 				62EE2D301A1ABA2100486C31 /* env_posix.cc in Sources */,
 				62EE2D8B1A1ABA2100486C31 /* stringappend2.cc in Sources */,
+				62A8B0611A58CC400069B4C8 /* RocksDBBackupInfo.m in Sources */,
 				62EE2C231A1ABA2000486C31 /* table_properties_collector.cc in Sources */,
 				62EE2D6E1A1ABA2100486C31 /* sync_point.cc in Sources */,
 				62EE2CF51A1ABA2000486C31 /* plain_table_factory.cc in Sources */,

@@ -14,8 +14,14 @@
 
 - (instancetype)initWithPath:(NSString *)path;
 
-- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError * __autoreleasing *)error;
-- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError * __autoreleasing *)error;
+- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError **)error;
+- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError **)error;
+- (BOOL)restoreBackupWithId:(uint32_t)backupId toDestinationPath:(NSString *)destination error:(NSError **)error;
+
+- (BOOL)purgeOldBackupsKeepingLast:(uint32_t)countBackups error:(NSError **)error;
+- (BOOL)deleteBackupWithId:(uint32_t)backupId error:(NSError **)error;
+
+- (NSArray *)backupInfo;
 
 - (void)close;
 

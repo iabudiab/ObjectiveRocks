@@ -8,6 +8,7 @@
 
 #import "RocksDBBackupEngine.h"
 #import "RocksDBError.h"
+#import "RocksDBBackupInfo.h"
 
 #undef ROCKSDB_LITE
 
@@ -86,6 +87,62 @@
 		}
 	}
 	return YES;
+}
+
+- (BOOL)restoreBackupWithId:(uint32_t)backupId toDestinationPath:(NSString *)destination error:(NSError *__autoreleasing *)error
+{
+	rocksdb::Status status = _backupEngine->RestoreDBFromBackup(backupId, destination.UTF8String, destination.UTF8String);
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+			return NO;
+		}
+	}
+	return YES;
+}
+
+- (BOOL)purgeOldBackupsKeepingLast:(uint32_t)countBackups error:(NSError *__autoreleasing *)error
+{
+	rocksdb::Status status = _backupEngine->PurgeOldBackups(countBackups);
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+			return NO;
+		}
+	}
+	return YES;
+}
+
+- (BOOL)deleteBackupWithId:(uint32_t)backupId error:(NSError *__autoreleasing *)error
+{
+	rocksdb::Status status = _backupEngine->DeleteBackup(backupId);
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+			return NO;
+		}
+	}
+	return YES;
+}
+
+- (NSArray *)backupInfo
+{
+	std::vector<rocksdb::BackupInfo> *backup_info = new std::vector<rocksdb::BackupInfo>;
+	_backupEngine->GetBackupInfo(backup_info);
+
+	NSMutableArray *backupInfo = [NSMutableArray array];
+	for (auto it = std::begin(*backup_info); it != std::end(*backup_info); ++it) {
+		RocksDBBackupInfo *info = [RocksDBBackupInfo new];
+		info.backupId = (*it).backup_id;
+		info.timestamp = (*it).timestamp;
+		info.size = (*it).size;
+		info.numberFiles = (*it).number_files;
+		[backupInfo addObject:info];
+	}
+	return backupInfo;
 }
 
 @end
