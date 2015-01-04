@@ -18,6 +18,8 @@
 @interface RocksDBTests : XCTestCase
 {
 	NSString *_path;
+	NSString *_backupPath;
+	NSString *_restorePath;
 	RocksDB *_rocks;
 }
 @end

@@ -16,6 +16,8 @@
 
 	_path = [[NSBundle bundleForClass:[self class]] bundlePath];
 	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
+	_backupPath = [_path stringByAppendingString:@"Backup"];
+	_restorePath = [_path stringByAppendingString:@"Restore"];
 	[self cleanupDB];
 }
 
@@ -29,6 +31,8 @@
 - (void)cleanupDB
 {
 	[[NSFileManager defaultManager] removeItemAtPath:_path error:nil];
+	[[NSFileManager defaultManager] removeItemAtPath:_backupPath error:nil];
+	[[NSFileManager defaultManager] removeItemAtPath:_restorePath error:nil];
 }
 
 @end
