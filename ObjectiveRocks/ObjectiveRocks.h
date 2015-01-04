@@ -23,5 +23,6 @@
 #import "RocksDBBackupEngine.h"
 #import "RocksDBBackupInfo.h"
 
+#import "RocksDBProperties.h"
 #import "RocksDBTypes.h"
 #import "RocksDBError.h"

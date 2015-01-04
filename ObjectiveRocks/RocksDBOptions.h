@@ -61,6 +61,7 @@
 @property (nonatomic, strong) RocksDBPrefixExtractor *prefixExtractor;
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
+@property (nonatomic, assign) int minWriteBufferNumberToMerge;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
 @property (nonatomic, assign) int numLevels;
 @property (nonatomic, assign) int level0FileNumCompactionTrigger;
