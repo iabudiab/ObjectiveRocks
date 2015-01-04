@@ -140,6 +140,10 @@
 		info.numberFiles = (*it).number_files;
 		[backupInfo addObject:info];
 	}
+
+	backup_info->clear();
+	delete backup_info;
+
 	return backupInfo;
 }
 
