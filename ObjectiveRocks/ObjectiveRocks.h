@@ -17,6 +17,9 @@
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
 
+#import "RocksDBStatistics.h"
+#import "RocksDBStatisticsHistogram.h"
+
 #import "RocksDBBackupEngine.h"
 #import "RocksDBBackupInfo.h"
 

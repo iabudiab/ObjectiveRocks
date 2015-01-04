@@ -10,9 +10,15 @@
 
 #import <rocksdb/options.h>
 
+@interface RocksDBStatistics ()
+@property (nonatomic, assign) std::shared_ptr<rocksdb::Statistics> statistics;
+@end
+
 @interface RocksDBDatabaseOptions ()
 {
 	rocksdb::DBOptions _options;
+
+	RocksDBStatistics *_statisticsWrapper;
 }
 @property (nonatomic, assign) const rocksdb::DBOptions options;
 @end
@@ -101,6 +107,17 @@
 - (void)setMaxWriteAheadLogSize:(uint64_t)maxWriteAheadLogSize
 {
 	_options.max_total_wal_size	= maxWriteAheadLogSize;
+}
+
+- (RocksDBStatistics *)statistics
+{
+	return _statisticsWrapper;
+}
+
+- (void)setStatistics:(RocksDBStatistics *)statistics
+{
+	_statisticsWrapper = statistics;
+	_options.statistics = _statisticsWrapper.statistics;
 }
 
 - (BOOL)disableDataSync
