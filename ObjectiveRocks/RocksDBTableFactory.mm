@@ -14,9 +14,17 @@
 @property (nonatomic, assign) rocksdb::BlockBasedTableOptions options;
 @end
 
+#ifndef ROCKSDB_LITE
+
 @interface RocksDBPlainTableOptions ()
 @property (nonatomic, assign) rocksdb::PlainTableOptions options;
 @end
+
+@interface RocksDBCuckooTableOptions ()
+@property (nonatomic, assign) rocksdb::CuckooTableOptions options;
+@end
+
+#endif
 
 @interface RocksDBTableFactory ()
 {
@@ -49,6 +57,17 @@
 	}
 
 	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewPlainTableFactory(options.options)];
+	return instance;
+}
+
++ (instancetype)cuckooTableFactoryWithOptions:(void (^)(RocksDBCuckooTableOptions *options))optionsBlock
+{
+	RocksDBCuckooTableOptions *options = [RocksDBCuckooTableOptions new];
+	if (optionsBlock) {
+		optionsBlock(options);
+	}
+
+	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewCuckooTableFactory(options.options)];
 	return instance;
 }
 

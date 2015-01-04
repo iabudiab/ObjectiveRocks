@@ -11,6 +11,7 @@
 
 #ifndef ROCKSDB_LITE
 #import "RocksDBPlainTableOptions.h"
+#import "RocksDBCuckooTableOptions.h"
 #endif
 
 @interface RocksDBTableFactory : NSObject
@@ -19,6 +20,7 @@
 
 #ifndef ROCKSDB_LITE
 + (instancetype)plainTableFactoryWithOptions:(void (^)(RocksDBPlainTableOptions *options))options;
++ (instancetype)cuckooTableFactoryWithOptions:(void (^)(RocksDBCuckooTableOptions *options))options;
 #endif
 
 @end
