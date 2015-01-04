@@ -14,7 +14,7 @@
 {
 	[super setUp];
 
-	_path = [[NSBundle bundleForClass:[self class]] resourcePath];
+	_path = [[NSBundle bundleForClass:[self class]] bundlePath];
 	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
 	[self cleanupDB];
 }
