@@ -9,8 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "RocksDBBlockBasedTableOptions.h"
 
+#ifndef ROCKSDB_LITE
+#import "RocksDBPlainTableOptions.h"
+#endif
+
 @interface RocksDBTableFactory : NSObject
 
 + (instancetype)blockBasedTableFactoryWithOptions:(void (^)(RocksDBBlockBasedTableOptions *options))options;
+
+#ifndef ROCKSDB_LITE
++ (instancetype)plainTableFactoryWithOptions:(void (^)(RocksDBPlainTableOptions *options))options;
+#endif
 
 @end
