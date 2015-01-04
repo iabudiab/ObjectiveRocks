@@ -54,7 +54,7 @@
 
 	RocksDBStatisticsHistogram *histogram = [RocksDBStatisticsHistogram new];
 
-	std::string tickerName = rocksdb::TickersNameMap[ticker].second;
+	std::string tickerName = rocksdb::HistogramsNameMap[ticker].second;
 
 	histogram.ticker = [NSString stringWithCString:tickerName.c_str() encoding:NSUTF8StringEncoding];
 	histogram.median = data->median;
