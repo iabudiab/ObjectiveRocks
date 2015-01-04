@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBMemTableRepFactory.h"
 #import "RocksDBTableFactory.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
@@ -53,6 +54,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, assign) BOOL verifyChecksumsInCompaction;
 @property (nonatomic, assign) BOOL filterDeletes;
 @property (nonatomic, assign) uint64_t maxSequentialSkipInIterations;
+@property (nonatomic, strong) RocksDBMemTableRepFactory *memTableRepFactory;
 @property (nonatomic, strong) RocksDBTableFactory *tableFacotry;
 @property (nonatomic, assign) uint32_t memtablePrefixBloomBits;
 @property (nonatomic, assign) uint32_t memtablePrefixBloomProbes;

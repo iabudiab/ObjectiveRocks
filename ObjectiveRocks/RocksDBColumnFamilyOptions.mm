@@ -13,6 +13,7 @@
 #import <rocksdb/comparator.h>
 #import <rocksdb/merge_operator.h>
 #import <rocksdb/slice_transform.h>
+#import <rocksdb/memtablerep.h>
 #import <rocksdb/table.h>
 
 @class RocksDBOptions;
@@ -32,6 +33,10 @@
 @property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
 @end
 
+@interface RocksDBMemTableRepFactory ()
+@property (nonatomic, assign) rocksdb::MemTableRepFactory *memTableRepFactory;
+@end
+
 @interface RocksDBTableFactory ()
 @property (nonatomic, assign) rocksdb::TableFactory *tableFactory;
 @end
@@ -45,6 +50,7 @@
 	RocksDBMergeOperator *_mergeOperatorWrapper;
 	RocksDBPrefixExtractor *_prefixExtractorWrapper;
 
+	RocksDBMemTableRepFactory *_memTableRepFactoryWrapper;
 	RocksDBTableFactory *_tableFactoryWrapper;
 }
 @property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
@@ -357,6 +363,17 @@
 - (uint64_t)maxSequentialSkipInIterations
 {
 	return _options.max_sequential_skip_in_iterations;
+}
+
+- (void)setMemTableRepFactory:(RocksDBMemTableRepFactory *)memTableRepFactory
+{
+	_memTableRepFactoryWrapper = memTableRepFactory;
+	_options.memtable_factory.reset(_memTableRepFactoryWrapper.memTableRepFactory);
+}
+
+- (RocksDBMemTableRepFactory *)memTableRepFactory
+{
+	return _memTableRepFactoryWrapper;
 }
 
 - (void)setTableFacotry:(RocksDBTableFactory *)tableFacotry
