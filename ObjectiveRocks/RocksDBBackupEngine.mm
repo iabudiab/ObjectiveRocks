@@ -10,8 +10,6 @@
 #import "RocksDBError.h"
 #import "RocksDBBackupInfo.h"
 
-#undef ROCKSDB_LITE
-
 #include <rocksdb/db.h>
 #include <rocksdb/utilities/backupable_db.h>
 
