@@ -128,11 +128,11 @@
 
 - (NSArray *)backupInfo
 {
-	std::vector<rocksdb::BackupInfo> *backup_info = new std::vector<rocksdb::BackupInfo>;
-	_backupEngine->GetBackupInfo(backup_info);
+	std::vector<rocksdb::BackupInfo> backup_info;
+	_backupEngine->GetBackupInfo(&backup_info);
 
 	NSMutableArray *backupInfo = [NSMutableArray array];
-	for (auto it = std::begin(*backup_info); it != std::end(*backup_info); ++it) {
+	for (auto it = std::begin(backup_info); it != std::end(backup_info); ++it) {
 		RocksDBBackupInfo *info = [RocksDBBackupInfo new];
 		info.backupId = (*it).backup_id;
 		info.timestamp = (*it).timestamp;
@@ -140,9 +140,6 @@
 		info.numberFiles = (*it).number_files;
 		[backupInfo addObject:info];
 	}
-
-	backup_info->clear();
-	delete backup_info;
 
 	return backupInfo;
 }
