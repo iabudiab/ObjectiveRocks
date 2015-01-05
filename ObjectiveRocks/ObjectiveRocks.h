@@ -7,14 +7,31 @@
 //
 
 #import "RocksDB.h"
+
 #import "RocksDBColumnFamily.h"
-#import "RocksDBOptions.h"
-#import "RocksDBReadOptions.h"
-#import "RocksDBWriteOptions.h"
-#import "RocksDBWriteBatch.h"
+#import "RocksDBColumnFamilyDescriptor.h"
+
 #import "RocksDBIterator.h"
-#import "RocksDBSnapshot.h"
+#import "RocksDBPrefixExtractor.h"
+
+#import "RocksDBWriteBatch.h"
+
 #import "RocksDBComparator.h"
+
+#import "RocksDBOptions.h"
+#import "RocksDBEncodingOptions.h"
+#import "RocksDBDatabaseOptions.h"
+#import "RocksDBColumnFamilyOptions.h"
+#import "RocksDBWriteOptions.h"
+#import "RocksDBReadOptions.h"
+#import "RocksDBTableFactory.h"
+#import "RocksDBBlockBasedTableOptions.h"
+#import "RocksDBCache.h"
+#import "RocksDBFilterPolicy.h"
+#import "RocksDBMemTableRepFactory.h"
+
+#import "RocksDBSnapshot.h"
+
 #import "RocksDBMergeOperator.h"
 
 #import "RocksDBTypes.h"
@@ -22,11 +39,17 @@
 
 #ifndef ROCKSDB_LITE
 
+#import "RocksDBPlainTableOptions.h"
+#import "RocksDBCuckooTableOptions.h"
+
 #import "RocksDBCheckpoint.h"
-#import "RocksDBBackupEngine.h"
-#import "RocksDBBackupInfo.h"
+
 #import "RocksDBStatistics.h"
 #import "RocksDBStatisticsHistogram.h"
+
+#import "RocksDBBackupEngine.h"
+#import "RocksDBBackupInfo.h"
+
 #import "RocksDBProperties.h"
 
 #endif
