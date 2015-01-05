@@ -18,6 +18,9 @@
 		621CD71C1A4FB24700853E16 /* RocksDBBackupEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 621CD71B1A4FB24700853E16 /* RocksDBBackupEngine.mm */; };
 		62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDB1A1FF27A005A58D3 /* checkpoint.cc */; };
 		62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */; };
+		6231475B1A5AE18A0019D14A /* RocksDBEnv.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6231475A1A5AE18A0019D14A /* RocksDBEnv.mm */; };
+		6231475C1A5AE18A0019D14A /* RocksDBEnv.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6231475A1A5AE18A0019D14A /* RocksDBEnv.mm */; };
+		6231475F1A5AE3E30019D14A /* RocksDBThreadStatus.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6231475E1A5AE3E30019D14A /* RocksDBThreadStatus.mm */; };
 		623224AC1A2116A400FB6625 /* RocksDBComparator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623224AB1A2116A400FB6625 /* RocksDBComparator.mm */; };
 		6232B7351A1E80F900B14535 /* RocksDBWriteOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */; };
 		6232B7381A1E860700B14535 /* RocksDBReadOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */; };
@@ -526,6 +529,11 @@
 		62269EDB1A1FF27A005A58D3 /* checkpoint.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkpoint.cc; sourceTree = "<group>"; };
 		62269EDD1A1FF2B2005A58D3 /* leveldb_options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = leveldb_options.h; sourceTree = "<group>"; };
 		62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = leveldb_options.cc; sourceTree = "<group>"; };
+		623147591A5AE18A0019D14A /* RocksDBEnv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBEnv.h; sourceTree = "<group>"; };
+		6231475A1A5AE18A0019D14A /* RocksDBEnv.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBEnv.mm; sourceTree = "<group>"; };
+		6231475D1A5AE3E30019D14A /* RocksDBThreadStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBThreadStatus.h; sourceTree = "<group>"; };
+		6231475E1A5AE3E30019D14A /* RocksDBThreadStatus.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBThreadStatus.mm; sourceTree = "<group>"; };
+		623147601A5AF1190019D14A /* thread_status.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_status.h; sourceTree = "<group>"; };
 		623224AA1A2116A400FB6625 /* RocksDBComparator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBComparator.h; sourceTree = "<group>"; };
 		623224AB1A2116A400FB6625 /* RocksDBComparator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBComparator.mm; sourceTree = "<group>"; };
 		6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBWriteOptions.h; sourceTree = "<group>"; };
@@ -1158,10 +1166,22 @@
 				6232B7341A1E80F900B14535 /* RocksDBWriteOptions.mm */,
 				6232B7361A1E860700B14535 /* RocksDBReadOptions.h */,
 				6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */,
+				623147581A5AE1720019D14A /* Env */,
 				62F3ED521A57176200EBFEBF /* Table */,
 				625F8F261A59D78E007796BA /* Mem Table */,
 			);
 			name = Options;
+			sourceTree = "<group>";
+		};
+		623147581A5AE1720019D14A /* Env */ = {
+			isa = PBXGroup;
+			children = (
+				623147591A5AE18A0019D14A /* RocksDBEnv.h */,
+				6231475A1A5AE18A0019D14A /* RocksDBEnv.mm */,
+				6231475D1A5AE3E30019D14A /* RocksDBThreadStatus.h */,
+				6231475E1A5AE3E30019D14A /* RocksDBThreadStatus.mm */,
+			);
+			name = Env;
 			sourceTree = "<group>";
 		};
 		62376BBC1A20EA4B00C85DFB /* Internal */ = {
@@ -1551,6 +1571,7 @@
 				62EE29CA1A1ABA1F00486C31 /* status.h */,
 				62EE29CB1A1ABA1F00486C31 /* table.h */,
 				62EE29CC1A1ABA1F00486C31 /* table_properties.h */,
+				623147601A5AF1190019D14A /* thread_status.h */,
 				62EE29CD1A1ABA1F00486C31 /* transaction_log.h */,
 				62EE29CE1A1ABA1F00486C31 /* types.h */,
 				62EE29CF1A1ABA1F00486C31 /* universal_compaction.h */,
@@ -2269,6 +2290,7 @@
 				62EE2D7E1A1ABA2100486C31 /* document_db.cc in Sources */,
 				62EEC4BA1A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp in Sources */,
 				62EE2C261A1ABA2000486C31 /* transaction_log_impl.cc in Sources */,
+				6231475B1A5AE18A0019D14A /* RocksDBEnv.mm in Sources */,
 				62EE2D0A1A1ABA2000486C31 /* arena.cc in Sources */,
 				620629661A510056001DEDC4 /* RocksDBDatabaseOptions.mm in Sources */,
 				62EE2C341A1ABA2000486C31 /* write_batch.cc in Sources */,
@@ -2276,6 +2298,7 @@
 				62376BBF1A20EDF000C85DFB /* RocksDBCallbackComparator.cpp in Sources */,
 				62EE2CE61A1ABA2000486C31 /* full_filter_block.cc in Sources */,
 				62EE2D6A1A1ABA2100486C31 /* status.cc in Sources */,
+				6231475F1A5AE3E30019D14A /* RocksDBThreadStatus.mm in Sources */,
 				62EE2BDA1A1ABA2000486C31 /* c.cc in Sources */,
 				62EE2D551A1ABA2100486C31 /* options.cc in Sources */,
 				62EE2BE01A1ABA2000486C31 /* compaction.cc in Sources */,
@@ -2490,6 +2513,7 @@
 				62A8B0061A58C30E0069B4C8 /* options_helper.cc in Sources */,
 				62A8B0071A58C30E0069B4C8 /* hash_cuckoo_rep.cc in Sources */,
 				62A8B0081A58C30E0069B4C8 /* sst_dump_tool.cc in Sources */,
+				6231475C1A5AE18A0019D14A /* RocksDBEnv.mm in Sources */,
 				62A8B0091A58C30E0069B4C8 /* block_hash_index.cc in Sources */,
 				62A8B00A1A58C30E0069B4C8 /* block_based_table_factory.cc in Sources */,
 				62A8B00B1A58C30E0069B4C8 /* log_writer.cc in Sources */,
@@ -2654,6 +2678,7 @@
 					"DEBUG=1",
 					"OS_MACOSX=1",
 					"ROCKSDB_PLATFORM_POSIX=1",
+					"ROCKSDB_USING_THREAD_STATUS=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -2681,6 +2706,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OS_MACOSX=1",
 					"ROCKSDB_PLATFORM_POSIX=1",
+					"ROCKSDB_USING_THREAD_STATUS=1",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",

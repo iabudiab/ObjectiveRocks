@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-
+#import "RocksDBEnv.h"
 #import "RocksDBStatistics.h"
 
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)
@@ -25,12 +25,15 @@ typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 @property (nonatomic, assign) BOOL createMissingColumnFamilies;
 @property (nonatomic, assign) BOOL errorIfExists;
 @property (nonatomic, assign) BOOL paranoidChecks;
+@property (nonatomic, strong) RocksDBEnv *env;
 @property (nonatomic, assign) RocksDBLogLevel infoLogLevel;
 @property (nonatomic, assign) int  maxOpenFiles;
 @property (nonatomic, assign) uint64_t  maxWriteAheadLogSize;
 @property (nonatomic, strong) RocksDBStatistics *statistics;
 @property (nonatomic, assign) BOOL disableDataSync;
 @property (nonatomic, assign) BOOL useFSync;
+@property (nonatomic, assign) int maxBackgroundCompactions;
+@property (nonatomic, assign) int maxBackgroundFlushes;
 @property (nonatomic, assign) size_t maxLogFileSize;
 @property (nonatomic, assign) size_t logFileTimeToRoll;
 @property (nonatomic, assign) size_t keepLogFileNum;

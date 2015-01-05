@@ -29,6 +29,7 @@
 #import "RocksDBCache.h"
 #import "RocksDBFilterPolicy.h"
 #import "RocksDBMemTableRepFactory.h"
+#import "RocksDBEnv.h"
 
 #import "RocksDBSnapshot.h"
 
@@ -41,6 +42,8 @@
 
 #import "RocksDBPlainTableOptions.h"
 #import "RocksDBCuckooTableOptions.h"
+
+#import "RocksDBThreadStatus.h"
 
 #import "RocksDBCheckpoint.h"
 
