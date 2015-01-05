@@ -36,7 +36,15 @@ If you are interested in the internals of RocksDB, please refer to the [RocksDB 
 
 ## RocksDB Lite
 
-ObjectiveRocks builds the RocksDB Lite version which is suitable for iOS. Later versions will include an OSX target that compiles and wraps the full feature set.
+ObjectiveRocks incldues two targets, for iOS and OSX. The iOS target builds the RocksDB Lite version, which doesn't include the complete feature set.
+
+These features are only available in OSX:
+
+* Plain and Cuckoo Table Factories
+* Vector, HashSkipList, HashLinkList and HashCuckoo Memtable Rep Factories
+* Database Backups
+* Database Statistics
+* Database Properties
 
 ## Installation
 
@@ -65,7 +73,31 @@ RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDB
 }];
 ```
 
-The [configuration guide](#configuration) lists all currently available options along with their description.
+The [configuration guide](#configuration), *currently in progress*, lists all currently available options along with their description.
+
+A more production ready setup could look like this:
+
+```objective-c
+RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+	options.createIfMissing = YES;
+
+	options.maxOpenFiles = 50000;
+
+	options.tableFacotry = [RocksDBTableFactory blockBasedTableFactoryWithOptions:^(RocksDBBlockBasedTableOptions *options) {
+		options.filterPolicy = [RocksDBFilterPolicy bloomFilterPolicyWithBitsPerKey:10];
+		options.blockCache = [RocksDBCache LRUCacheWithCapacity:1024 * 1024 * 1024];
+		options.blockSize = 64 * 1024;
+	}];
+
+	options.writeBufferSize = 64 * 1024 * 1024;
+	options.maxWriteBufferNumber = 7;
+	options.targetFileSizeBase = 64 * 1024 * 1024;
+	options.numLevels = 7;
+
+	options.maxLogFileSize = 50 * 1024 * 1024;
+	options.keepLogFileNum = 30;
+}];
+```
 
 ## Open Column Families
 
@@ -343,6 +375,10 @@ RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"C", @"A");
 }];
 ```
 
+## Prefix-Seek Iteration
+
+TBD
+
 ## Snapshot
 
 A Snapshot provides consistent read-only view over the state of the key-value store. Do not forget to close the snapshot when it's no longer needed:
@@ -365,6 +401,24 @@ NSString *value2 = [snapshot objectForKey:@"B"];
 // value2 == nil
 ...
 [snapshot close];
+```
+
+## Checkpoint
+
+A checkpoint is an openable Snapshot of a database at a point in time:
+
+```objective-c
+[db setObject:@"Value 1" forKey:@"A"];
+[db setObject:@"Value 2" forKey:@"B"];
+
+RocksDBCheckpoint *checkpoint = [[RocksDBCheckpoint alloc] initWithDatabase:db];
+NSError *error = nil;
+[checkpoint createCheckpointAtPath:@"path/to/checkpoint" error:&error];
+
+RocksDB *db2 = [[RocksDB alloc] initWithPath:@"path/to/checkpoint"];
+...
+[db close];
+[db2 close];
 ```
 
 ## Keys Comparator
@@ -507,7 +561,114 @@ result = @{@"Key 1" : @"Value 1 New",
 */
 ```
 
+## Backup & Restore
+
+To backup a database use the `RocksDBBackupEngine`:
+
+```objective-c
+RocksDB *db = ...
+
+RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
+NSError *error = nil;
+[backupEngine createBackupForDatabase:db error:&error];
+...
+[backupEngine close];
+```
+
+To restore a database backup:
+
+```objective-c
+RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
+backupEngine restoreBackupToDestinationPath:@"path/to/db" error:nil];
+backupEngine close];
+
+RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db"];
+...
+[db2 close];
+```
+
+Backups are incremental and only the new data will be copied to backup directory, so you can:
+
+* Retrieve info about all the backups available
+* Restore a specific incremental backup instead of the last one
+* Delete specific backups
+* Purge all backups keeping the last N backups
+
+```objecgtive-c
+RocksDB *db = ...
+
+RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
+
+[db setObject:@"Value 1" forKey:@"A"];
+[backupEngine createBackupForDatabase:_rocks error:nil];
+
+[db setObject:@"Value 2" forKey:@"B"];
+[backupEngine createBackupForDatabase:_rocks error:nil];
+
+[db setObject:@"Value 3" forKey:@"C"];
+[backupEngine createBackupForDatabase:_rocks error:nil];
+
+// An array containing RocksDBBackupInfo objects
+NSArray *backupInfo = backupEngine.backupInfo;
+
+// Restore second backup
+[backupEngine restoreBackupWithId:2 toDestinationPath:@"path/to/db" error:nil];
+
+// Delete first backup
+[backupEngine deleteBackupWithId:1 error:nil];
+
+// Purge all except the last two
+[backupEngine purgeOldBackupsKeepingLast:2 error:nil];
+```
+
+## Statistics
+
+You can collect those statistics by creating and setting the `RocksDBStatistics` object in the database options:
+
+```objective-c
+RocksDBStatistics *dbStatistics = [RocksDBStatistics new];
+
+RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	options.statistics = dbStatistics;
+}];
+...
+
+[dbStatistics countForTicker:RocksDBTickerBytesRead];
+RocksDBStatisticsHistogram *dbGetHistogram = [dbStatistics histogramDataForType:RocksDBHistogramDBGet];
+```
+
+Available Tickers and Histograms are defined in `RocksDBStatistics.h`
+ 
+## Properties
+
+The database exports some properties about its state via properties on a per column family level. Available properties are defined in `RocksDBProperties.h`
+
+```objective-c
+RocksDB *db = ...
+
+NSString *dbStats = [db valueForProperty:RocksDBPropertyDBStats];
+uint64_t sizeActiveMemTable = [db valueForIntProperty:RocksDBIntPropertyCurSizeActiveMemTable];
+```
+
 # Configuration <a name="configuration"></a>
+
+TBD
+
+## Table Formats
+
+* `BlockBasedTable`: is the default SST table format in RocksDB.
+* `PlainTable`: is a RocksDB's SST file format optimized for low query latency on pure-memory or really low-latency media.
+* `CuckooTable`: designed for applications that require fast point lookups but not fast range scans.
+
+## Memtable Formats
+
+* `SkipList`: uses a skip list to store keys. It is the default.
+* `Vector`: creates MemTableReps that are backed by an std::vector. On iteration, the vector is sorted. This is useful for workloads where iteration is very rare and writes are generally not issued after reads begin.
+* `HashSkipList`: contains a fixed array of buckets, each pointing to a skiplist.
+* `HashLinkedList`: creates memtables based on a hash table: it contains a fixed array of buckets, each pointing to either a linked list or a skip list if number of entries inside the bucket exceeds a predefined threshold.
+* `Cuckoo`: creates a cuckoo-hashing based mem-table representation. Cuckoo-hash is a closed-hash strategy, in which all key/value pairs are stored in the bucket array itself intead of in some data structures external to the bucket array
+
+For more details visit the wiki [Hash based memtable implementations](https://github.com/facebook/rocksdb/wiki/Hash-based-memtable-implementations)
 
 ## ObjectiveRocks DBOptions
 
