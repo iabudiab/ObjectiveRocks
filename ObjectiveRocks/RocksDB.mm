@@ -259,6 +259,34 @@
 	}
 }
 
+#pragma mark - Peroperties
+
+- (NSString *)valueForProperty:(NSString *)property
+{
+	std::string value;
+	bool ok = _db->GetProperty(_columnFamily,
+							   SliceFromData([property dataUsingEncoding:NSUTF8StringEncoding]),
+							   &value);
+	if (!ok) {
+		return nil;
+	}
+
+	NSData *data = DataFromSlice(rocksdb::Slice(value));
+	return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+}
+
+- (uint64_t)valueForIntProperty:(NSString *)property
+{
+	uint64_t value;
+	bool ok = _db->GetIntProperty(_columnFamily,
+								  SliceFromData([property dataUsingEncoding:NSUTF8StringEncoding]),
+								  &value);
+	if (!ok) {
+		return 0;
+	}
+	return value;
+}
+
 #pragma mark - Write Operations
 
 - (BOOL)setObject:(id)anObject forKey:(id)aKey

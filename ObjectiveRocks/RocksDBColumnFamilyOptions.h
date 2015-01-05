@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "RocksDBMemTableRepFactory.h"
+#import "RocksDBTableFactory.h"
 #import "RocksDBComparator.h"
 #import "RocksDBMergeOperator.h"
 #import "RocksDBPrefixExtractor.h"
@@ -29,7 +31,37 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, strong) RocksDBPrefixExtractor *prefixExtractor;
 @property (nonatomic, assign) size_t writeBufferSize;
 @property (nonatomic, assign) int maxWriteBufferNumber;
+@property (nonatomic, assign) int minWriteBufferNumberToMerge;
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
+@property (nonatomic, assign) int numLevels;
+@property (nonatomic, assign) int level0FileNumCompactionTrigger;
+@property (nonatomic, assign) int level0SlowdownWritesTrigger;
+@property (nonatomic, assign) int level0StopWritesTrigger;
+@property (nonatomic, assign) int maxMemCompactionLevel;
+@property (nonatomic, assign) uint64_t targetFileSizeBase;
+@property (nonatomic, assign) int targetFileSizeMultiplier;
+@property (nonatomic, assign) uint64_t maxBytesForLevelBase;
+@property (nonatomic, assign) int maxBytesForLevelMultiplier;
+@property (nonatomic, assign) int expandedCompactionFactor;
+@property (nonatomic, assign) int sourceCompactionFactor;
+@property (nonatomic, assign) int maxGrandparentOverlapFactor;
+@property (nonatomic, assign) double softRateLimit;
+@property (nonatomic, assign) double hardRateLimit;
+@property (nonatomic, assign) unsigned int rateLimitDelayMaxMilliseconds;
+@property (nonatomic, assign) size_t arenaBlockSize;
+@property (nonatomic, assign) BOOL disableAutoCompactions;
+@property (nonatomic, assign) BOOL purgeRedundantKvsWhileFlush;
+@property (nonatomic, assign) BOOL verifyChecksumsInCompaction;
+@property (nonatomic, assign) BOOL filterDeletes;
+@property (nonatomic, assign) uint64_t maxSequentialSkipInIterations;
+@property (nonatomic, strong) RocksDBMemTableRepFactory *memTableRepFactory;
+@property (nonatomic, strong) RocksDBTableFactory *tableFacotry;
+@property (nonatomic, assign) uint32_t memtablePrefixBloomBits;
+@property (nonatomic, assign) uint32_t memtablePrefixBloomProbes;
+@property (nonatomic, assign) size_t memtablePrefixBloomHugePageTlbSize;
+@property (nonatomic, assign) uint32_t bloomLocality;
+@property (nonatomic, assign) size_t maxSuccessiveMerges;
+@property (nonatomic, assign) uint32_t minPartialMergeOperands;
 
 @end
 

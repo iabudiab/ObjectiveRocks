@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "RocksDBStatistics.h"
+
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 {
 	RocksDBLogLevelDebug = 0,
@@ -26,6 +28,7 @@ typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 @property (nonatomic, assign) RocksDBLogLevel infoLogLevel;
 @property (nonatomic, assign) int  maxOpenFiles;
 @property (nonatomic, assign) uint64_t  maxWriteAheadLogSize;
+@property (nonatomic, strong) RocksDBStatistics *statistics;
 @property (nonatomic, assign) BOOL disableDataSync;
 @property (nonatomic, assign) BOOL useFSync;
 @property (nonatomic, assign) size_t maxLogFileSize;

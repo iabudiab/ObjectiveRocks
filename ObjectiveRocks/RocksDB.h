@@ -39,6 +39,17 @@
 
 @end
 
+#ifndef ROCKSDB_LITE
+
+@interface RocksDB (Properties)
+
+- (NSString *)valueForProperty:(NSString *)property;
+- (uint64_t)valueForIntProperty:(NSString *)property;
+
+@end
+
+#endif
+
 @interface RocksDB (WriteOps)
 
 - (BOOL)setObject:(id)anObject forKey:(id)aKey;
