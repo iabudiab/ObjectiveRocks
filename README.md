@@ -597,16 +597,16 @@ Backups are incremental and only the new data will be copied to backup directory
 ```objecgtive-c
 RocksDB *db = ...
 
-RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
+RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
 
 [db setObject:@"Value 1" forKey:@"A"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 [db setObject:@"Value 2" forKey:@"B"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 [db setObject:@"Value 3" forKey:@"C"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 // An array containing RocksDBBackupInfo objects
 NSArray *backupInfo = backupEngine.backupInfo;
@@ -628,7 +628,7 @@ You can collect those statistics by creating and setting the `RocksDBStatistics`
 ```objective-c
 RocksDBStatistics *dbStatistics = [RocksDBStatistics new];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.statistics = dbStatistics;
 }];
 ...
