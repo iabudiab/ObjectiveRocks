@@ -47,9 +47,60 @@
 		625F8F2D1A59DEF2007796BA /* RocksDBStatisticsHistogram.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B0681A58E4B60069B4C8 /* RocksDBStatisticsHistogram.mm */; };
 		625F8F311A59E22E007796BA /* RocksDBPlainTableOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F301A59E22E007796BA /* RocksDBPlainTableOptions.mm */; };
 		625F8F351A59E648007796BA /* RocksDBCuckooTableOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F341A59E648007796BA /* RocksDBCuckooTableOptions.mm */; };
+		625F8F531A5A2273007796BA /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
+		625F8F541A5A2273007796BA /* RocksDBProperties.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F1A1A59C3EB007796BA /* RocksDBProperties.h */; };
+		625F8F551A5A2273007796BA /* RocksDBTypes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62451AC81A4BAEC000AF11C8 /* RocksDBTypes.h */; };
+		625F8F561A5A2273007796BA /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
+		625F8F571A5A2273007796BA /* RocksDBColumnFamily.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629681A510D36001DEDC4 /* RocksDBColumnFamily.h */; };
+		625F8F581A5A2273007796BA /* RocksDBColumnFamilyDescriptor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62074F2B1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.h */; };
+		625F8F591A5A2273007796BA /* RocksDBIterator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62385EB01A2FC87500493F18 /* RocksDBIterator.h */; };
+		625F8F5A1A5A2273007796BA /* RocksDBPrefixExtractor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6236E2551A4DD25000A81ED6 /* RocksDBPrefixExtractor.h */; };
+		625F8F5B1A5A2273007796BA /* RocksDBWriteBatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; };
+		625F8F5C1A5A2273007796BA /* RocksDBComparator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; };
+		625F8F5D1A5A2273007796BA /* RocksDBOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; };
+		625F8F5E1A5A2273007796BA /* RocksDBEncodingOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629611A50ECCA001DEDC4 /* RocksDBEncodingOptions.h */; };
+		625F8F5F1A5A2273007796BA /* RocksDBDatabaseOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629641A510056001DEDC4 /* RocksDBDatabaseOptions.h */; };
+		625F8F601A5A2273007796BA /* RocksDBColumnFamilyOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6206295E1A509DF1001DEDC4 /* RocksDBColumnFamilyOptions.h */; };
+		625F8F611A5A2273007796BA /* RocksDBWriteOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */; };
+		625F8F621A5A2273007796BA /* RocksDBReadOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7361A1E860700B14535 /* RocksDBReadOptions.h */; };
+		625F8F631A5A2273007796BA /* RocksDBTableFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED591A574F7500EBFEBF /* RocksDBTableFactory.h */; };
+		625F8F641A5A2273007796BA /* RocksDBBlockBasedTableOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED4F1A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.h */; };
+		625F8F651A5A2273007796BA /* RocksDBPlainTableOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F2F1A59E22E007796BA /* RocksDBPlainTableOptions.h */; };
+		625F8F661A5A2273007796BA /* RocksDBCuckooTableOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F331A59E648007796BA /* RocksDBCuckooTableOptions.h */; };
+		625F8F671A5A2273007796BA /* RocksDBCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED531A57212800EBFEBF /* RocksDBCache.h */; };
+		625F8F681A5A2273007796BA /* RocksDBFilterPolicy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED561A5727A300EBFEBF /* RocksDBFilterPolicy.h */; };
+		625F8F691A5A2273007796BA /* RocksDBMemTableRepFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F271A59D7B1007796BA /* RocksDBMemTableRepFactory.h */; };
+		625F8F6A1A5A2273007796BA /* RocksDBSnapshot.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; };
+		625F8F6C1A5A2273007796BA /* RocksDBCheckpoint.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F211A59CF82007796BA /* RocksDBCheckpoint.h */; };
+		625F8F6D1A5A2273007796BA /* RocksDBMergeOperator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62EEC4B51A34FEE100624DA2 /* RocksDBMergeOperator.h */; };
+		625F8F6E1A5A2273007796BA /* RocksDBStatistics.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62A8B0631A58DD7D0069B4C8 /* RocksDBStatistics.h */; };
+		625F8F6F1A5A2273007796BA /* RocksDBStatisticsHistogram.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */; };
+		625F8F701A5A2273007796BA /* RocksDBBackupEngine.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 621CD71A1A4FB24700853E16 /* RocksDBBackupEngine.h */; };
+		625F8F711A5A2273007796BA /* RocksDBBackupInfo.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62A8B05F1A58CC400069B4C8 /* RocksDBBackupInfo.h */; };
+		625F8F721A5A229C007796BA /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
+		625F8F731A5A229C007796BA /* RocksDBTypes.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62451AC81A4BAEC000AF11C8 /* RocksDBTypes.h */; };
+		625F8F741A5A229C007796BA /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
+		625F8F751A5A229C007796BA /* RocksDBColumnFamily.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629681A510D36001DEDC4 /* RocksDBColumnFamily.h */; };
+		625F8F761A5A229C007796BA /* RocksDBColumnFamilyDescriptor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62074F2B1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.h */; };
+		625F8F771A5A229C007796BA /* RocksDBIterator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62385EB01A2FC87500493F18 /* RocksDBIterator.h */; };
+		625F8F781A5A229C007796BA /* RocksDBPrefixExtractor.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6236E2551A4DD25000A81ED6 /* RocksDBPrefixExtractor.h */; };
+		625F8F791A5A229C007796BA /* RocksDBWriteBatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; };
+		625F8F7A1A5A229C007796BA /* RocksDBComparator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; };
+		625F8F7B1A5A229C007796BA /* RocksDBOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; };
+		625F8F7C1A5A229C007796BA /* RocksDBEncodingOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629611A50ECCA001DEDC4 /* RocksDBEncodingOptions.h */; };
+		625F8F7D1A5A229C007796BA /* RocksDBDatabaseOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620629641A510056001DEDC4 /* RocksDBDatabaseOptions.h */; };
+		625F8F7E1A5A229C007796BA /* RocksDBColumnFamilyOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6206295E1A509DF1001DEDC4 /* RocksDBColumnFamilyOptions.h */; };
+		625F8F7F1A5A229C007796BA /* RocksDBWriteOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */; };
+		625F8F801A5A229C007796BA /* RocksDBReadOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7361A1E860700B14535 /* RocksDBReadOptions.h */; };
+		625F8F811A5A229C007796BA /* RocksDBTableFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED591A574F7500EBFEBF /* RocksDBTableFactory.h */; };
+		625F8F821A5A229C007796BA /* RocksDBBlockBasedTableOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED4F1A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.h */; };
+		625F8F831A5A229C007796BA /* RocksDBCache.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED531A57212800EBFEBF /* RocksDBCache.h */; };
+		625F8F841A5A229C007796BA /* RocksDBFilterPolicy.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62F3ED561A5727A300EBFEBF /* RocksDBFilterPolicy.h */; };
+		625F8F851A5A229C007796BA /* RocksDBMemTableRepFactory.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 625F8F271A59D7B1007796BA /* RocksDBMemTableRepFactory.h */; };
+		625F8F861A5A229C007796BA /* RocksDBSnapshot.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; };
+		625F8F871A5A229C007796BA /* RocksDBMergeOperator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62EEC4B51A34FEE100624DA2 /* RocksDBMergeOperator.h */; };
 		62685CB91A2E600A009401B1 /* RocksDBWriteBatchTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62685CB81A2E600A009401B1 /* RocksDBWriteBatchTests.mm */; };
 		628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* RocksDBError.mm */; };
-		6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
 		62A8AF981A58C30E0069B4C8 /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29611A1ABA1F00486C31 /* memtable.cc */; };
@@ -209,15 +260,6 @@
 		62A8B0321A58C30E0069B4C8 /* cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B1D1A1ABA2000486C31 /* cache.cc */; };
 		62A8B0331A58C30E0069B4C8 /* db_impl_readonly.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29341A1ABA1F00486C31 /* db_impl_readonly.cc */; };
 		62A8B0361A58C30E0069B4C8 /* ObjectiveRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */; };
-		62A8B0371A58C30E0069B4C8 /* RocksDBIterator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62385EB01A2FC87500493F18 /* RocksDBIterator.h */; };
-		62A8B0381A58C30E0069B4C8 /* RocksDBWriteBatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; };
-		62A8B0391A58C30E0069B4C8 /* RocksDBComparator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; };
-		62A8B03A1A58C30E0069B4C8 /* RocksDBOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; };
-		62A8B03B1A58C30E0069B4C8 /* RocksDBWriteOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */; };
-		62A8B03C1A58C30E0069B4C8 /* RocksDBReadOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7361A1E860700B14535 /* RocksDBReadOptions.h */; };
-		62A8B03D1A58C30E0069B4C8 /* RocksDBSnapshot.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; };
-		62A8B03E1A58C30E0069B4C8 /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
-		62A8B03F1A58C30E0069B4C8 /* RocksDB.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6299F80C1A17B28200123F56 /* RocksDB.h */; };
 		62A8B0481A58C40A0069B4C8 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
 		62A8B0491A58C40A0069B4C8 /* RocksDBTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6249A3CB1A4A43CA00949B07 /* RocksDBTests.mm */; };
 		62A8B04A1A58C40A0069B4C8 /* RocksDBColumnFamilyTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 624566C71A51DA79009AC3FB /* RocksDBColumnFamilyTests.mm */; };
@@ -361,14 +403,6 @@
 		62EE2D961A1ABA2100486C31 /* db_ttl_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2BCE1A1ABA2000486C31 /* db_ttl_impl.cc */; };
 		62EE2D991A1ABA2100486C31 /* write_batch_with_index.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2BD31A1ABA2000486C31 /* write_batch_with_index.cc */; };
 		62EEC4AB1A34B93B00624DA2 /* ObjectiveRocks.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */; };
-		62EEC4AC1A34B93B00624DA2 /* RocksDBIterator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62385EB01A2FC87500493F18 /* RocksDBIterator.h */; };
-		62EEC4AD1A34B93B00624DA2 /* RocksDBWriteBatch.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; };
-		62EEC4AE1A34B93B00624DA2 /* RocksDBComparator.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; };
-		62EEC4AF1A34B93B00624DA2 /* RocksDBOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; };
-		62EEC4B01A34B93B00624DA2 /* RocksDBWriteOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7331A1E80F900B14535 /* RocksDBWriteOptions.h */; };
-		62EEC4B11A34B93B00624DA2 /* RocksDBReadOptions.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 6232B7361A1E860700B14535 /* RocksDBReadOptions.h */; };
-		62EEC4B21A34B93B00624DA2 /* RocksDBSnapshot.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; };
-		62EEC4B31A34B93B00624DA2 /* RocksDBError.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = 628B0CE81A1C104D0099C39B /* RocksDBError.h */; };
 		62EEC4B71A34FEE100624DA2 /* RocksDBMergeOperator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B61A34FEE100624DA2 /* RocksDBMergeOperator.mm */; };
 		62EEC4BA1A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 62EEC4B81A34FF0600624DA2 /* RocksDBCallbackAssociativeMergeOperator.cpp */; };
 		62F3ED511A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F3ED501A57175F00EBFEBF /* RocksDBBlockBasedTableOptions.mm */; };
@@ -402,16 +436,37 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				625F8F531A5A2273007796BA /* RocksDB.h in CopyFiles */,
+				625F8F541A5A2273007796BA /* RocksDBProperties.h in CopyFiles */,
+				625F8F551A5A2273007796BA /* RocksDBTypes.h in CopyFiles */,
+				625F8F561A5A2273007796BA /* RocksDBError.h in CopyFiles */,
+				625F8F571A5A2273007796BA /* RocksDBColumnFamily.h in CopyFiles */,
+				625F8F581A5A2273007796BA /* RocksDBColumnFamilyDescriptor.h in CopyFiles */,
+				625F8F591A5A2273007796BA /* RocksDBIterator.h in CopyFiles */,
+				625F8F5A1A5A2273007796BA /* RocksDBPrefixExtractor.h in CopyFiles */,
+				625F8F5B1A5A2273007796BA /* RocksDBWriteBatch.h in CopyFiles */,
+				625F8F5C1A5A2273007796BA /* RocksDBComparator.h in CopyFiles */,
+				625F8F5D1A5A2273007796BA /* RocksDBOptions.h in CopyFiles */,
+				625F8F5E1A5A2273007796BA /* RocksDBEncodingOptions.h in CopyFiles */,
+				625F8F5F1A5A2273007796BA /* RocksDBDatabaseOptions.h in CopyFiles */,
+				625F8F601A5A2273007796BA /* RocksDBColumnFamilyOptions.h in CopyFiles */,
+				625F8F611A5A2273007796BA /* RocksDBWriteOptions.h in CopyFiles */,
+				625F8F621A5A2273007796BA /* RocksDBReadOptions.h in CopyFiles */,
+				625F8F631A5A2273007796BA /* RocksDBTableFactory.h in CopyFiles */,
+				625F8F641A5A2273007796BA /* RocksDBBlockBasedTableOptions.h in CopyFiles */,
+				625F8F651A5A2273007796BA /* RocksDBPlainTableOptions.h in CopyFiles */,
+				625F8F661A5A2273007796BA /* RocksDBCuckooTableOptions.h in CopyFiles */,
+				625F8F671A5A2273007796BA /* RocksDBCache.h in CopyFiles */,
+				625F8F681A5A2273007796BA /* RocksDBFilterPolicy.h in CopyFiles */,
+				625F8F691A5A2273007796BA /* RocksDBMemTableRepFactory.h in CopyFiles */,
+				625F8F6A1A5A2273007796BA /* RocksDBSnapshot.h in CopyFiles */,
+				625F8F6C1A5A2273007796BA /* RocksDBCheckpoint.h in CopyFiles */,
+				625F8F6D1A5A2273007796BA /* RocksDBMergeOperator.h in CopyFiles */,
+				625F8F6E1A5A2273007796BA /* RocksDBStatistics.h in CopyFiles */,
+				625F8F6F1A5A2273007796BA /* RocksDBStatisticsHistogram.h in CopyFiles */,
+				625F8F701A5A2273007796BA /* RocksDBBackupEngine.h in CopyFiles */,
+				625F8F711A5A2273007796BA /* RocksDBBackupInfo.h in CopyFiles */,
 				62EEC4AB1A34B93B00624DA2 /* ObjectiveRocks.h in CopyFiles */,
-				62EEC4AC1A34B93B00624DA2 /* RocksDBIterator.h in CopyFiles */,
-				62EEC4AD1A34B93B00624DA2 /* RocksDBWriteBatch.h in CopyFiles */,
-				62EEC4AE1A34B93B00624DA2 /* RocksDBComparator.h in CopyFiles */,
-				62EEC4AF1A34B93B00624DA2 /* RocksDBOptions.h in CopyFiles */,
-				62EEC4B01A34B93B00624DA2 /* RocksDBWriteOptions.h in CopyFiles */,
-				62EEC4B11A34B93B00624DA2 /* RocksDBReadOptions.h in CopyFiles */,
-				62EEC4B21A34B93B00624DA2 /* RocksDBSnapshot.h in CopyFiles */,
-				62EEC4B31A34B93B00624DA2 /* RocksDBError.h in CopyFiles */,
-				6299F80D1A17B28200123F56 /* RocksDB.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -421,16 +476,29 @@
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				625F8F721A5A229C007796BA /* RocksDB.h in CopyFiles */,
+				625F8F731A5A229C007796BA /* RocksDBTypes.h in CopyFiles */,
+				625F8F741A5A229C007796BA /* RocksDBError.h in CopyFiles */,
+				625F8F751A5A229C007796BA /* RocksDBColumnFamily.h in CopyFiles */,
+				625F8F761A5A229C007796BA /* RocksDBColumnFamilyDescriptor.h in CopyFiles */,
+				625F8F771A5A229C007796BA /* RocksDBIterator.h in CopyFiles */,
+				625F8F781A5A229C007796BA /* RocksDBPrefixExtractor.h in CopyFiles */,
+				625F8F791A5A229C007796BA /* RocksDBWriteBatch.h in CopyFiles */,
+				625F8F7A1A5A229C007796BA /* RocksDBComparator.h in CopyFiles */,
+				625F8F7B1A5A229C007796BA /* RocksDBOptions.h in CopyFiles */,
+				625F8F7C1A5A229C007796BA /* RocksDBEncodingOptions.h in CopyFiles */,
+				625F8F7D1A5A229C007796BA /* RocksDBDatabaseOptions.h in CopyFiles */,
+				625F8F7E1A5A229C007796BA /* RocksDBColumnFamilyOptions.h in CopyFiles */,
+				625F8F7F1A5A229C007796BA /* RocksDBWriteOptions.h in CopyFiles */,
+				625F8F801A5A229C007796BA /* RocksDBReadOptions.h in CopyFiles */,
+				625F8F811A5A229C007796BA /* RocksDBTableFactory.h in CopyFiles */,
+				625F8F821A5A229C007796BA /* RocksDBBlockBasedTableOptions.h in CopyFiles */,
+				625F8F831A5A229C007796BA /* RocksDBCache.h in CopyFiles */,
+				625F8F841A5A229C007796BA /* RocksDBFilterPolicy.h in CopyFiles */,
+				625F8F851A5A229C007796BA /* RocksDBMemTableRepFactory.h in CopyFiles */,
+				625F8F861A5A229C007796BA /* RocksDBSnapshot.h in CopyFiles */,
+				625F8F871A5A229C007796BA /* RocksDBMergeOperator.h in CopyFiles */,
 				62A8B0361A58C30E0069B4C8 /* ObjectiveRocks.h in CopyFiles */,
-				62A8B0371A58C30E0069B4C8 /* RocksDBIterator.h in CopyFiles */,
-				62A8B0381A58C30E0069B4C8 /* RocksDBWriteBatch.h in CopyFiles */,
-				62A8B0391A58C30E0069B4C8 /* RocksDBComparator.h in CopyFiles */,
-				62A8B03A1A58C30E0069B4C8 /* RocksDBOptions.h in CopyFiles */,
-				62A8B03B1A58C30E0069B4C8 /* RocksDBWriteOptions.h in CopyFiles */,
-				62A8B03C1A58C30E0069B4C8 /* RocksDBReadOptions.h in CopyFiles */,
-				62A8B03D1A58C30E0069B4C8 /* RocksDBSnapshot.h in CopyFiles */,
-				62A8B03E1A58C30E0069B4C8 /* RocksDBError.h in CopyFiles */,
-				62A8B03F1A58C30E0069B4C8 /* RocksDB.h in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
