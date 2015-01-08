@@ -46,6 +46,10 @@ namespace rocksdb {
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 - (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 
+- (void)enumerateKeysAndValuesUsingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesInReverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+
 - (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block;
 
 @end

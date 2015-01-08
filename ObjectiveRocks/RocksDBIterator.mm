@@ -11,6 +11,8 @@
 
 #import <rocksdb/iterator.h>
 
+static RocksDBIteratorKeyRange RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil);
+
 @interface RocksDBIterator ()
 {
 	rocksdb::Iterator *_iterator;
@@ -96,19 +98,42 @@
 	return value;
 }
 
-#pragma mark - Enumeration
+#pragma mark - Enumerate Keys
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysInReverse:NO usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
 }
 
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysInRange:RocksDBMakeKeyRange(nil, nil) reverse:reverse usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
 }
 
 - (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:range reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
+}
+
+#pragma mark - Enumerate Keys & Values
+
+- (void)enumerateKeysAndValuesUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:block];
+}
+
+- (void)enumerateKeysAndValuesInReverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:block];
+}
+
+- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
 	BOOL stop = NO;
 
@@ -136,7 +161,7 @@
 	while (_iterator->Valid() && checkLimit(reverse, keySlice)) {
 		keySlice = _iterator->key();
 
-		if (block) block(self.key, &stop);
+		if (block) block(self.key, self.value, &stop);
 		if (stop == YES) break;
 
 		reverse ? _iterator->Prev(): _iterator->Next();
