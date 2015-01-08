@@ -11,6 +11,6 @@
 @interface RocksDBFilterPolicy : NSObject
 
 + (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey;
-+ (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey useBlockBasedBuilde:(BOOL)useBlockBasedBuilder;
++ (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey useBlockBasedBuilder:(BOOL)useBlockBasedBuilder;
 
 @end
