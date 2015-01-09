@@ -594,7 +594,7 @@ Backups are incremental and only the new data will be copied to backup directory
 * Delete specific backups
 * Purge all backups keeping the last N backups
 
-```objecgtive-c
+```objective-c
 RocksDB *db = ...
 
 RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
