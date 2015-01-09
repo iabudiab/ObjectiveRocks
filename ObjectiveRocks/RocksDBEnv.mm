@@ -82,7 +82,8 @@
 		thread.threadType  = (RocksDBThreadType)(*it).thread_type;
 		thread.databaseName = [NSString stringWithCString:(*it).db_name.c_str() encoding:NSUTF8StringEncoding];
 		thread.columnFamilyname = [NSString stringWithCString:(*it).cf_name.c_str() encoding:NSUTF8StringEncoding];
-		thread.event = [NSString stringWithCString:(*it).event.c_str() encoding:NSUTF8StringEncoding];
+		thread.operationType = (RocksDBOperationType)(*it).operation_type;
+		thread.stateType = (RocksDBStateType)(*it).state_type;
 		[threadList addObject:thread];
 	}
 

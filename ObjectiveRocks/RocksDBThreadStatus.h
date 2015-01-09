@@ -8,11 +8,23 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, RocksDBThreadType)
+typedef NS_ENUM(int, RocksDBThreadType)
 {
-	RocksDBThreadHighPiority = 0x0,
-	RocksDBThreadLowPiority = 0x1,
-	RocksDBThreadUser = 0x2,
+	RocksDBThreadHighPiority = 0,
+	RocksDBThreadLowPiority,
+	RocksDBThreadUser
+};
+
+typedef NS_ENUM(int, RocksDBOperationType)
+{
+	RocksDBOperationUnknown = 0,
+	RocksDBOperationCompaction,
+	RocksDBOperationFlush
+};
+
+typedef NS_ENUM(int, RocksDBStateType)
+{
+	RocksDBStateUnknown = 0,
 };
 
 @interface RocksDBThreadStatus : NSObject
@@ -21,6 +33,7 @@ typedef NS_ENUM(NSUInteger, RocksDBThreadType)
 @property (nonatomic, assign) RocksDBThreadType threadType;
 @property (nonatomic, strong) NSString *databaseName;
 @property (nonatomic, strong) NSString *columnFamilyname;
-@property (nonatomic, strong) NSString *event;
+@property (nonatomic, assign) RocksDBOperationType operationType;
+@property (nonatomic, assign) RocksDBStateType stateType;
 
 @end
