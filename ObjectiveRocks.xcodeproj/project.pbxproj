@@ -106,6 +106,7 @@
 		628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */ = {isa = PBXBuildFile; fileRef = 628B0CE91A1C104D0099C39B /* RocksDBError.mm */; };
 		6299F80F1A17B28200123F56 /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
+		62A74F861A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A74F851A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.mm */; };
 		62A8AF981A58C30E0069B4C8 /* memtable.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE29611A1ABA1F00486C31 /* memtable.cc */; };
 		62A8AF991A58C30E0069B4C8 /* hash.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B3F1A1ABA2000486C31 /* hash.cc */; };
 		62A8AF9A1A58C30E0069B4C8 /* RocksDBCallbackMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6214FD071A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp */; };
@@ -605,6 +606,8 @@
 		6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBasicTests.mm; sourceTree = "<group>"; };
 		62A74F821A6037F500BAD95B /* thread_operation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = thread_operation.h; sourceTree = "<group>"; };
 		62A74F831A60385D00BAD95B /* memtablerep_bench.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = memtablerep_bench.cc; sourceTree = "<group>"; };
+		62A74F841A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBColumnFamilyMetadata.h; sourceTree = "<group>"; };
+		62A74F851A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBColumnFamilyMetadata.mm; sourceTree = "<group>"; };
 		62A8B0431A58C30E0069B4C8 /* libObjectiveRocks.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libObjectiveRocks.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A8B0571A58C40A0069B4C8 /* ObjectiveRocksTests-iOS.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ObjectiveRocksTests-iOS.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		62A8B05F1A58CC400069B4C8 /* RocksDBBackupInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBBackupInfo.h; sourceTree = "<group>"; };
@@ -1121,6 +1124,8 @@
 				620629691A510D36001DEDC4 /* RocksDBColumnFamily.mm */,
 				62074F2B1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.h */,
 				62074F2C1A520EC2002B1885 /* RocksDBColumnFamilyDescriptor.mm */,
+				62A74F841A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.h */,
+				62A74F851A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.mm */,
 			);
 			name = "Column Family";
 			sourceTree = "<group>";
@@ -2369,6 +2374,7 @@
 				62EE2D431A1ABA2100486C31 /* iostats_context.cc in Sources */,
 				6236E25A1A4DD71600A81ED6 /* RocksDBCallbackSliceTransform.cpp in Sources */,
 				62EE2C021A1ABA2000486C31 /* flush_job.cc in Sources */,
+				62A74F861A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.mm in Sources */,
 				62EE2CE91A1ABA2000486C31 /* get_context.cc in Sources */,
 				62EE2CCE1A1ABA2000486C31 /* block_based_table_reader.cc in Sources */,
 				62EE2D161A1ABA2100486C31 /* bloom.cc in Sources */,

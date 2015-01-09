@@ -238,6 +238,15 @@
 	return columnFamily;
 }
 
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetadata
+{
+	rocksdb::ColumnFamilyMetaData metadata;
+	_db->GetColumnFamilyMetaData(_columnFamily, &metadata);
+
+	RocksDBColumnFamilyMetaData *columnFamilyMetaData = [[RocksDBColumnFamilyMetaData alloc] initWithMetaData:metadata];
+	return columnFamilyMetaData;
+}
+
 - (NSArray *)columnFamilies
 {
 	return _columnFamilies;

@@ -29,6 +29,16 @@ namespace rocksdb {
 - (instancetype)initWithPath:(NSString *)path NA("Create a snapshot via a DB instance");
 - (instancetype)initWithPath:(NSString *)path
 				andDBOptions:(void (^)(RocksDBOptions *options))options NA("Create a snapshot via a DB instance");
+- (instancetype)initWithPath:(NSString *)path
+			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options NA("Create a snapshot via a DB instance");
+
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path NA("Column Family API not available");
+
+- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
+										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock NA("Column Family API not available");
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData NA("Column Family API not available");
+- (NSArray *)columnFamilies NA("Column Family API not available");
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions NA("Specify options when creating snapshot via DB instance");
