@@ -148,6 +148,15 @@
 	}
 }
 
+#pragma mark - 
+
+- (void)putLogData:(NSData *)logData;
+{
+	if (logData != nil) {
+		_writeBatch.PutLogData(SliceFromData(logData));
+	}
+}
+
 - (void)clear
 {
 	_writeBatch.Clear();

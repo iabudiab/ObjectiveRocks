@@ -38,6 +38,8 @@ namespace rocksdb {
 - (void)deleteObjectForKey:(id)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
 - (void)deleteDataForKey:(NSData *)aKey inColumnFamily:(RocksDBColumnFamily *)columnFamily;
 
+- (void)putLogData:(NSData *)logData;
+
 - (void)clear;
 
 - (int)count;
