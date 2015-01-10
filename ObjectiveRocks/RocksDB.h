@@ -40,8 +40,14 @@
 
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock;
-- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData;
+
 - (NSArray *)columnFamilies;
+
+#ifndef ROCKSDB_LITE
+
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData;
+
+#endif
 
 @end
 

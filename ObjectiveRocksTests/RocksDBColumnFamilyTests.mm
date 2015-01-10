@@ -290,31 +290,4 @@
 	[newColumnFamily close];
 }
 
-- (void)testColumnFamilies_Metadata
-{
-	RocksDBColumnFamilyDescriptor *descriptor = [RocksDBColumnFamilyDescriptor new];
-	[descriptor addDefaultColumnFamilyWithOptions:nil];
-	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
-
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
-		options.createIfMissing = YES;
-		options.createMissingColumnFamilies = YES;
-	}];
-
-	RocksDBColumnFamily *defaultColumnFamily = _rocks.columnFamilies[0];
-	RocksDBColumnFamily *newColumnFamily = _rocks.columnFamilies[1];
-
-	[defaultColumnFamily setData:Data(@"df_value1") forKey:Data(@"df_key1")];
-	[defaultColumnFamily setData:Data(@"df_value2") forKey:Data(@"df_key2")];
-
-	[newColumnFamily setData:Data(@"cf_value1") forKey:Data(@"cf_key1")];
-	[newColumnFamily setData:Data(@"cf_value2") forKey:Data(@"cf_key2")];
-
-	RocksDBColumnFamilyMetaData *defaultMetadata = defaultColumnFamily.columnFamilyMetaData;
-	XCTAssertNotNil(defaultMetadata);
-
-	RocksDBColumnFamilyMetaData *newColumnFamilyMetadata = newColumnFamily.columnFamilyMetaData;
-	XCTAssertNotNil(newColumnFamilyMetadata);
-}
-
 @end

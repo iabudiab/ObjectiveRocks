@@ -222,15 +222,6 @@
 	return columnFamily;
 }
 
-- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
-{
-	rocksdb::ColumnFamilyMetaData metadata;
-	_db->GetColumnFamilyMetaData(_columnFamily, &metadata);
-
-	RocksDBColumnFamilyMetaData *columnFamilyMetaData = [[RocksDBColumnFamilyMetaData alloc] initWithMetaData:metadata];
-	return columnFamilyMetaData;
-}
-
 - (NSArray *)columnFamilies
 {
 	if (_columnFamilies == nil) {
@@ -245,6 +236,19 @@
 
 	return _columnFamilies;
 }
+
+#ifndef ROCKSDB_LITE
+
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
+{
+	rocksdb::ColumnFamilyMetaData metadata;
+	_db->GetColumnFamilyMetaData(_columnFamily, &metadata);
+
+	RocksDBColumnFamilyMetaData *columnFamilyMetaData = [[RocksDBColumnFamilyMetaData alloc] initWithMetaData:metadata];
+	return columnFamilyMetaData;
+}
+
+#endif
 
 #pragma mark - Read/Write Options
 

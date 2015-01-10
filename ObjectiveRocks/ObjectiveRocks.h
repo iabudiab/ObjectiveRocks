@@ -40,6 +40,8 @@
 
 #ifndef ROCKSDB_LITE
 
+#import "RocksDBColumnFamilyMetadata.h"
+
 #import "RocksDBPlainTableOptions.h"
 #import "RocksDBCuckooTableOptions.h"
 
