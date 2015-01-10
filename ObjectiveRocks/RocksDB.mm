@@ -238,7 +238,7 @@
 	return columnFamily;
 }
 
-- (RocksDBColumnFamilyMetaData *)columnFamilyMetadata
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
 {
 	rocksdb::ColumnFamilyMetaData metadata;
 	_db->GetColumnFamilyMetaData(_columnFamily, &metadata);
