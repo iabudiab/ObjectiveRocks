@@ -10,6 +10,8 @@
 
 #import <rocksdb/db.h>
 
+NSString * const RocksDBDefaultColumnFamilyName = @"default";
+
 @interface RocksDBColumnFamilyOptions ()
 @property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
 @end
@@ -23,6 +25,8 @@
 
 @implementation RocksDBColumnFamilyDescriptor
 @synthesize columnFamilies = _columnFamilies;
+
+#pragma mark - Lifecycle
 
 - (instancetype)init
 {
@@ -42,6 +46,13 @@
 			_columnFamilies = NULL;
 		}
 	}
+}
+
+#pragma mark - Add Column Families
+
+- (void)addDefaultColumnFamilyWithOptions:(void (^)(RocksDBColumnFamilyOptions *options))options
+{
+	[self addColumnFamilyWithName:RocksDBDefaultColumnFamilyName andOptions:options];
 }
 
 - (void)addColumnFamilyWithName:(NSString *)name andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock
