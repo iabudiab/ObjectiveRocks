@@ -11,7 +11,15 @@
 
 #import <rocksdb/iterator.h>
 
-static RocksDBIteratorKeyRange RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil);
+#pragma mark - Iterator Key Range
+
+static RocksDBIteratorKeyRange *RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil);
+
+@implementation RocksDBIteratorKeyRange
+
+@end
+
+#pragma mark - Iterator
 
 @interface RocksDBIterator ()
 {
@@ -114,7 +122,7 @@ static RocksDBIteratorKeyRange RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil)
 	}];
 }
 
-- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
 	[self enumerateKeysAndValuesInRange:range reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
 		block(key, stop);
@@ -133,7 +141,7 @@ static RocksDBIteratorKeyRange RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil)
 	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:block];
 }
 
-- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
+- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
 	BOOL stop = NO;
 

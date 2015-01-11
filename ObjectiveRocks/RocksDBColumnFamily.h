@@ -9,11 +9,6 @@
 #import "RocksDB.h"
 #import	"RocksDBOptions.h"
 
-namespace rocksdb {
-	class DB;
-	class ColumnFamilyHandle;
-}
-
 @interface RocksDBColumnFamily : RocksDB
 
 - (instancetype)initWithPath:(NSString *)path __attribute__((unavailable("Create column family via a RocksDB instance")));
@@ -26,10 +21,6 @@ namespace rocksdb {
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path __attribute__((unavailable("Use the superclass RocksDB instead")));
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock __attribute__((unavailable("Use the superclass RocksDB instead")));
-
-- (instancetype)initWithDBInstance:(rocksdb::DB *)db
-					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-						andOptions:(RocksDBOptions *)options;
 
 - (void)drop;
 

@@ -9,10 +9,18 @@
 #import "RocksDB.h"
 
 #import "RocksDBColumnFamily.h"
+#import "RocksDBColumnFamily+Private.h"
+#import "RocksDBColumnFamilyMetaData+Private.h"
+
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
+
+#import "RocksDBIterator+Private.h"
+#import "RocksDBWriteBatch+Private.h"
+
 #import "RocksDBSnapshot.h"
+#import "RocksDBSnapshot+Private.h"
 
 #import "RocksDBError.h"
 #import "RocksDBSlice.h"
@@ -47,10 +55,6 @@
 
 @interface RocksDBWriteOptions (Private)
 @property (nonatomic, assign) rocksdb::WriteOptions options;
-@end
-
-@interface RocksDBWriteBatch (Private)
-@property (nonatomic, assign) rocksdb::WriteBatch writeBatch;
 @end
 
 @interface RocksDB ()

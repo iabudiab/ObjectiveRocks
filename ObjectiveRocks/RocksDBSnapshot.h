@@ -11,16 +11,7 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBSnapshotUnavailable.h"
 
-namespace rocksdb {
-	class DB;
-	class ColumnFamilyHandle;
-}
-
 @interface RocksDBSnapshot : RocksDB
-
-- (instancetype)initWithDBInstance:(rocksdb::DB *)db
-					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					andReadOptions:(RocksDBReadOptions *)readOptions;
 
 @end
 

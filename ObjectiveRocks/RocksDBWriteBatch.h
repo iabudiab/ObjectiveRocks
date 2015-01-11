@@ -11,14 +11,7 @@
 
 @class RocksDBColumnFamily;
 
-namespace rocksdb {
-	class ColumnFamilyHandle;
-}
-
 @interface RocksDBWriteBatch : NSObject
-
-- (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-				  andEncodingOptions:(RocksDBEncodingOptions *)options;
 
 - (void)setObject:(id)anObject forKey:(id)aKey;
 - (void)setData:(NSData *)data forKey:(NSData *)aKey;

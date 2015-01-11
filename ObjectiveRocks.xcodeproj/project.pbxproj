@@ -16,6 +16,8 @@
 		620A2CAE1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620A2CAD1A3654D5007224A4 /* RocksDBMergeOperatorTests.mm */; };
 		6214FD091A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 6214FD071A3F698300B92E5C /* RocksDBCallbackMergeOperator.cpp */; };
 		621CD71C1A4FB24700853E16 /* RocksDBBackupEngine.mm in Sources */ = {isa = PBXBuildFile; fileRef = 621CD71B1A4FB24700853E16 /* RocksDBBackupEngine.mm */; };
+		6221B7A71A629E1B00D28BF5 /* RockDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6221B7A41A629B3600D28BF5 /* RockDBTests.swift */; };
+		6221B7A81A629E2700D28BF5 /* RockDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6221B7A41A629B3600D28BF5 /* RockDBTests.swift */; };
 		62269EDC1A1FF27A005A58D3 /* checkpoint.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDB1A1FF27A005A58D3 /* checkpoint.cc */; };
 		62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62269EDF1A1FF2DC005A58D3 /* leveldb_options.cc */; };
 		6231475B1A5AE18A0019D14A /* RocksDBEnv.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6231475A1A5AE18A0019D14A /* RocksDBEnv.mm */; };
@@ -526,6 +528,15 @@
 		6214FD081A3F698300B92E5C /* RocksDBCallbackMergeOperator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBCallbackMergeOperator.h; sourceTree = "<group>"; };
 		621CD71A1A4FB24700853E16 /* RocksDBBackupEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBBackupEngine.h; sourceTree = "<group>"; };
 		621CD71B1A4FB24700853E16 /* RocksDBBackupEngine.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBackupEngine.mm; sourceTree = "<group>"; };
+		6221B78A1A62970800D28BF5 /* RocksDB+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDB+Private.h"; sourceTree = "<group>"; };
+		6221B78E1A62973500D28BF5 /* RocksDBColumnFamily+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBColumnFamily+Private.h"; sourceTree = "<group>"; };
+		6221B7921A62976F00D28BF5 /* RocksDBColumnFamilyMetaData+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBColumnFamilyMetaData+Private.h"; sourceTree = "<group>"; };
+		6221B7961A6298AD00D28BF5 /* RocksDBIterator+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBIterator+Private.h"; sourceTree = "<group>"; };
+		6221B79A1A6298F800D28BF5 /* RocksDBWriteBatch+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBWriteBatch+Private.h"; sourceTree = "<group>"; };
+		6221B79E1A629A4F00D28BF5 /* RocksDBSnapshot+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBSnapshot+Private.h"; sourceTree = "<group>"; };
+		6221B7A21A629B3500D28BF5 /* ObjectiveRocksTests-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveRocksTests-Bridging-Header.h"; sourceTree = "<group>"; };
+		6221B7A31A629B3500D28BF5 /* ObjectiveRocksTests-iOS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "ObjectiveRocksTests-iOS-Bridging-Header.h"; sourceTree = "<group>"; };
+		6221B7A41A629B3600D28BF5 /* RockDBTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RockDBTests.swift; sourceTree = "<group>"; };
 		62269ED91A1FF266005A58D3 /* checkpoint.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = checkpoint.h; path = utilities/checkpoint.h; sourceTree = "<group>"; };
 		62269EDB1A1FF27A005A58D3 /* checkpoint.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = checkpoint.cc; sourceTree = "<group>"; };
 		62269EDD1A1FF2B2005A58D3 /* leveldb_options.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = leveldb_options.h; sourceTree = "<group>"; };
@@ -1142,6 +1153,19 @@
 			name = Backup;
 			sourceTree = "<group>";
 		};
+		6221B7851A6295FA00D28BF5 /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				6221B78A1A62970800D28BF5 /* RocksDB+Private.h */,
+				6221B78E1A62973500D28BF5 /* RocksDBColumnFamily+Private.h */,
+				6221B7921A62976F00D28BF5 /* RocksDBColumnFamilyMetaData+Private.h */,
+				6221B7961A6298AD00D28BF5 /* RocksDBIterator+Private.h */,
+				6221B79A1A6298F800D28BF5 /* RocksDBWriteBatch+Private.h */,
+				6221B79E1A629A4F00D28BF5 /* RocksDBSnapshot+Private.h */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
 		62269EDA1A1FF27A005A58D3 /* checkpoint */ = {
 			isa = PBXGroup;
 			children = (
@@ -1295,6 +1319,7 @@
 				62EEC4B41A34FEC500624DA2 /* Merge Operator */,
 				62A8B0621A58DD620069B4C8 /* Statistics */,
 				621CD7191A4FB22C00853E16 /* Backup */,
+				6221B7851A6295FA00D28BF5 /* Private */,
 				62376BBC1A20EA4B00C85DFB /* Internal */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
 			);
@@ -1304,8 +1329,11 @@
 		6299F8181A17B28200123F56 /* ObjectiveRocksTests */ = {
 			isa = PBXGroup;
 			children = (
+				6221B7A21A629B3500D28BF5 /* ObjectiveRocksTests-Bridging-Header.h */,
+				6221B7A31A629B3500D28BF5 /* ObjectiveRocksTests-iOS-Bridging-Header.h */,
 				6249A3CD1A4A6E4000949B07 /* RocksDBTests.h */,
 				6249A3CB1A4A43CA00949B07 /* RocksDBTests.mm */,
+				6221B7A41A629B3600D28BF5 /* RockDBTests.swift */,
 				6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */,
 				62685CB81A2E600A009401B1 /* RocksDBWriteBatchTests.mm */,
 				62385EB31A2FCFB100493F18 /* RocksDBIteratorTests.mm */,
@@ -2392,6 +2420,7 @@
 			files = (
 				6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */,
 				62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */,
+				6221B7A71A629E1B00D28BF5 /* RockDBTests.swift in Sources */,
 				625F8F251A59D11D007796BA /* RocksDBCheckpointTests.mm in Sources */,
 				6249A3CC1A4A43CA00949B07 /* RocksDBTests.mm in Sources */,
 				62A8B06B1A5900540069B4C8 /* RocksDBStatisticsTests.mm in Sources */,
@@ -2578,6 +2607,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6221B7A81A629E2700D28BF5 /* RockDBTests.swift in Sources */,
 				62A8B0481A58C40A0069B4C8 /* RocksDBBasicTests.mm in Sources */,
 				62A8B0491A58C40A0069B4C8 /* RocksDBTests.mm in Sources */,
 				62A8B04A1A58C40A0069B4C8 /* RocksDBColumnFamilyTests.mm in Sources */,
@@ -2685,6 +2715,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2697,8 +2728,9 @@
 					"$(SRCROOT)/rocksdb",
 					"$(SRCROOT)/rocksdb/include",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -2714,6 +2746,7 @@
 			buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"OS_MACOSX=1",
@@ -2725,6 +2758,7 @@
 					"$(SRCROOT)/rocksdb",
 					"$(SRCROOT)/rocksdb/include",
 				);
+				LD_RUNPATH_SEARCH_PATHS = "";
 				LIBRARY_SEARCH_PATHS = "";
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
@@ -2739,26 +2773,35 @@
 		6299F8211A17B28200123F56 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		6299F8221A17B28200123F56 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -2782,7 +2825,7 @@
 					"$(SRCROOT)/rocksdb/include",
 				);
 				LIBRARY_SEARCH_PATHS = "";
-				ONLY_ACTIVE_ARCH = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = "";
 				OTHER_CPLUSPLUSFLAGS = "$(OTHER_CFLAGS)";
 				OTHER_LDFLAGS = "-ObjC";
@@ -2823,6 +2866,8 @@
 		62A8B0551A58C40A0069B4C8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
@@ -2831,16 +2876,21 @@
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		62A8B0561A58C40A0069B4C8 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
+				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
 			};
 			name = Release;
 		};

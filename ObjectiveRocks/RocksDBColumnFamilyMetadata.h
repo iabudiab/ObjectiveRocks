@@ -8,15 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-namespace rocksdb {
-	class ColumnFamilyMetaData;
-	class LevelMetaData;
-	class SstFileMetaData;
-}
-
 @interface RocksDBColumnFamilyMetaData : NSObject
-
-- (instancetype)initWithMetaData:(rocksdb::ColumnFamilyMetaData)metadata;
 
 @property (nonatomic, assign) uint64_t size;
 @property (nonatomic, assign) size_t fileCount;
@@ -27,8 +19,6 @@ namespace rocksdb {
 
 @interface RocksDBLevelFileMetaData : NSObject
 
-- (instancetype)initWithLevelMetaData:(rocksdb::LevelMetaData)metadata;
-
 @property (nonatomic, assign) const int level;
 @property (nonatomic, assign) const uint64_t size;
 @property (nonatomic, strong, readonly) NSArray *files;
@@ -36,8 +26,6 @@ namespace rocksdb {
 @end
 
 @interface RocksDBSstFileMetaData : NSObject
-
-- (instancetype)initWithSstFileMetaData:(rocksdb::SstFileMetaData)metadata;
 
 @property (nonatomic, assign) uint64_t size;
 @property (nonatomic, assign) NSString *name;

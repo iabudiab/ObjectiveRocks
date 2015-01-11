@@ -7,13 +7,10 @@
 //
 
 #import "RocksDBCheckpoint.h"
+#import "RocksDB+Private.h"
 #import "RocksDBError.h"
 
 #import <rocksdb/utilities/checkpoint.h>
-
-@interface RocksDB (Private)
-@property (nonatomic, assign) rocksdb::DB *db;
-@end
 
 @interface RocksDBCheckpoint ()
 {

@@ -8,13 +8,10 @@
 
 #import "RocksDBWriteBatch.h"
 #import "RocksDBColumnFamily.h"
+#import "RocksDBColumnFamily+Private.h"
 #import "RocksDBSlice.h"
 
 #import <rocksdb/write_batch.h>
-
-@interface RocksDBColumnFamily (Private)
-@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
-@end
 
 @interface RocksDBWriteBatch ()
 {

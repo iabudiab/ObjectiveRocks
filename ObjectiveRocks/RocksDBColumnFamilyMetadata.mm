@@ -7,6 +7,7 @@
 //
 
 #import "RocksDBColumnFamilyMetaData.h"
+#import "RocksDBColumnFamilyMetaData+Private.h"
 
 #import <rocksdb/metadata.h>
 

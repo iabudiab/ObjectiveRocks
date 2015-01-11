@@ -1,9 +1,5 @@
 //
-//  ObjectiveRocks.h
-//  ObjectiveRocks
-//
-//  Created by Iska on 20/11/14.
-//  Copyright (c) 2014 BrainCookie. All rights reserved.
+//  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
 #import "RocksDB.h"
@@ -36,24 +32,3 @@
 #import "RocksDBMergeOperator.h"
 
 #import "RocksDBTypes.h"
-
-#ifndef ROCKSDB_LITE
-
-#import "RocksDBColumnFamilyMetadata.h"
-
-#import "RocksDBPlainTableOptions.h"
-#import "RocksDBCuckooTableOptions.h"
-
-#import "RocksDBThreadStatus.h"
-
-#import "RocksDBCheckpoint.h"
-
-#import "RocksDBStatistics.h"
-#import "RocksDBStatisticsHistogram.h"
-
-#import "RocksDBBackupEngine.h"
-#import "RocksDBBackupInfo.h"
-
-#import "RocksDBProperties.h"
-
-#endif
