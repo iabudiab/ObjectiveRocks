@@ -18,8 +18,8 @@
 	_path = [_path stringByAppendingPathComponent:@"ObjectiveRocks"];
 	_backupPath = [_path stringByAppendingString:@"Backup"];
 	_restorePath = [_path stringByAppendingString:@"Restore"];
-	_chekpointPath_1 = [_path stringByAppendingPathComponent:@"Snapshot1"];
-	_chekpointPath_2 = [_path stringByAppendingPathComponent:@"Snapshot2"];
+	_chekpointPath_1 = [_path stringByAppendingString:@"Snapshot1"];
+	_chekpointPath_2 = [_path stringByAppendingString:@"Snapshot2"];
 	[self cleanupDB];
 }
 
