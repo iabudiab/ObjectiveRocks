@@ -7,16 +7,9 @@
 //
 
 #import "RocksDBColumnFamily.h"
+#import "RocksDB+Private.h"
 
 #import <rocksdb/db.h>
-
-@interface RocksDB (Private)
-@property (nonatomic, assign) rocksdb::DB *db;
-@property (nonatomic, assign) rocksdb::ColumnFamilyHandle *columnFamily;
-@property (nonatomic, retain) RocksDBOptions *options;
-@property (nonatomic, retain) RocksDBReadOptions *readOptions;
-@property (nonatomic, retain) RocksDBWriteOptions *writeOptions;
-@end
 
 @implementation RocksDBColumnFamily
 

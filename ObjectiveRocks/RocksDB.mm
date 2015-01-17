@@ -9,10 +9,18 @@
 #import "RocksDB.h"
 
 #import "RocksDBColumnFamily.h"
+#import "RocksDBColumnFamily+Private.h"
+#import "RocksDBColumnFamilyMetaData+Private.h"
+
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
+
+#import "RocksDBIterator+Private.h"
+#import "RocksDBWriteBatch+Private.h"
+
 #import "RocksDBSnapshot.h"
+#import "RocksDBSnapshot+Private.h"
 
 #import "RocksDBError.h"
 #import "RocksDBSlice.h"
@@ -47,10 +55,6 @@
 
 @interface RocksDBWriteOptions (Private)
 @property (nonatomic, assign) rocksdb::WriteOptions options;
-@end
-
-@interface RocksDBWriteBatch (Private)
-@property (nonatomic, assign) rocksdb::WriteBatch writeBatch;
 @end
 
 @interface RocksDB ()
@@ -99,7 +103,7 @@
 			optionsBlock(_options);
 		}
 
-		if ([self open] == NO) {
+		if ([self openColumnFamilies:nil] == NO) {
 			return nil;
 		}
 		[self setDefaultReadOptions:nil andWriteOptions:nil];
@@ -155,29 +159,21 @@
 
 #pragma mark - Open
 
-- (BOOL)open
-{
-	rocksdb::Status status = rocksdb::DB::Open(_options.options, _path.UTF8String, &_db);
-	if (!status.ok()) {
-		NSLog(@"Error opening database: %@", [RocksDBError errorWithRocksStatus:status]);
-		[self close];
-		return NO;
-	}
-	_columnFamily = _db->DefaultColumnFamily();
-
-	return YES;
-}
-
 - (BOOL)openColumnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 {
-	std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies = descriptor.columnFamilies;
-	_columnFamilyHandles = new std::vector<rocksdb::ColumnFamilyHandle *>;
+	rocksdb::Status status;
+	if (descriptor == nil) {
+		status = rocksdb::DB::Open(_options.options, _path.UTF8String, &_db);
+	} else {
+		std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies = descriptor.columnFamilies;
+		_columnFamilyHandles = new std::vector<rocksdb::ColumnFamilyHandle *>;
+		status = rocksdb::DB::Open(_options.options,
+								   _path.UTF8String,
+								   *columnFamilies,
+								   _columnFamilyHandles,
+								   &_db);
+	}
 
-	rocksdb::Status status = rocksdb::DB::Open(_options.options,
-											   _path.UTF8String,
-											   *columnFamilies,
-											   _columnFamilyHandles,
-											   &_db);
 
 	if (!status.ok()) {
 		NSLog(@"Error opening database: %@", [RocksDBError errorWithRocksStatus:status]);
@@ -185,14 +181,6 @@
 		return NO;
 	}
 	_columnFamily = _db->DefaultColumnFamily();
-
-	_columnFamilies = [NSMutableArray new];
-	for(auto it = std::begin(*_columnFamilyHandles); it != std::end(*_columnFamilyHandles); ++it) {
-		RocksDBColumnFamily *columnFamily = [[RocksDBColumnFamily alloc] initWithDBInstance:_db
-																			   columnFamily:*it
-																				 andOptions:_options];
-		[_columnFamilies addObject:columnFamily];
-	}
 
 	return YES;
 }
@@ -240,8 +228,35 @@
 
 - (NSArray *)columnFamilies
 {
+	if (_columnFamilyHandles == nullptr) {
+		return nil;
+	}
+
+	if (_columnFamilies == nil) {
+		_columnFamilies = [NSMutableArray new];
+		for(auto it = std::begin(*_columnFamilyHandles); it != std::end(*_columnFamilyHandles); ++it) {
+			RocksDBColumnFamily *columnFamily = [[RocksDBColumnFamily alloc] initWithDBInstance:_db
+																				   columnFamily:*it
+																					 andOptions:_options];
+			[_columnFamilies addObject:columnFamily];
+		}
+	}
+
 	return _columnFamilies;
 }
+
+#ifndef ROCKSDB_LITE
+
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
+{
+	rocksdb::ColumnFamilyMetaData metadata;
+	_db->GetColumnFamilyMetaData(_columnFamily, &metadata);
+
+	RocksDBColumnFamilyMetaData *columnFamilyMetaData = [[RocksDBColumnFamilyMetaData alloc] initWithMetaData:metadata];
+	return columnFamilyMetaData;
+}
+
+#endif
 
 #pragma mark - Read/Write Options
 

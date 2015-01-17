@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RocksDBColumnFamilyDescriptor.h"
+#import "RocksDBColumnFamilyMetaData.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -18,8 +19,6 @@
 @class RocksDBSnapshot;
 
 @interface RocksDB : NSObject
-
-+ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
 
 - (instancetype)initWithPath:(NSString *)path;
 - (instancetype)initWithPath:(NSString *)path
@@ -33,9 +32,22 @@
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
+@end
+
+@interface RocksDB (ColumnFamilies)
+
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
+
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock;
+
 - (NSArray *)columnFamilies;
+
+#ifndef ROCKSDB_LITE
+
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData;
+
+#endif
 
 @end
 

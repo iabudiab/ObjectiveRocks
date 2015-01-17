@@ -11,6 +11,16 @@
 
 #import <rocksdb/iterator.h>
 
+#pragma mark - Iterator Key Range
+
+static RocksDBIteratorKeyRange *RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil);
+
+@implementation RocksDBIteratorKeyRange
+
+@end
+
+#pragma mark - Iterator
+
 @interface RocksDBIterator ()
 {
 	rocksdb::Iterator *_iterator;
@@ -96,19 +106,42 @@
 	return value;
 }
 
-#pragma mark - Enumeration
+#pragma mark - Enumerate Keys
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysInReverse:NO usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
 }
 
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysInRange:RocksDBMakeKeyRange(nil, nil) reverse:reverse usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
 }
 
-- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:range reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
+}
+
+#pragma mark - Enumerate Keys & Values
+
+- (void)enumerateKeysAndValuesUsingBlock:(void (^)(id key, id value, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:block];
+}
+
+- (void)enumerateKeysAndValuesInReverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:block];
+}
+
+- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
 	BOOL stop = NO;
 
@@ -123,7 +156,7 @@
 		limitSlice = SliceFromKey(range.end, _options, nil);
 	}
 
-	BOOL (^ checkLimit)(BOOL reverse, rocksdb::Slice key) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
+	BOOL (^ checkLimit)(BOOL, rocksdb::Slice) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
 		if (limitSlice.size() == 0) return YES;
 
 		if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
@@ -132,37 +165,33 @@
 		return YES;
 	};
 
-	rocksdb::Slice keySlice;
-	while (_iterator->Valid() && checkLimit(reverse, keySlice)) {
-		keySlice = _iterator->key();
-
-		if (block) block(self.key, &stop);
+	while (_iterator->Valid() && checkLimit(reverse, _iterator->key())) {
+		if (block) block(self.key, self.value, &stop);
 		if (stop == YES) break;
 
 		reverse ? _iterator->Prev(): _iterator->Next();
 	}
 }
 
+#pragma mark - Enumerate Prefix
+
 - (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block
+{
+	[self enumerateKeysAndValuesWithPrefix:prefix usingBlock:^(id key, id value, BOOL *stop) {
+		block(key, stop);
+	}];
+}
+
+- (void)enumerateKeysAndValuesWithPrefix:(id)prefix usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
 	BOOL stop = NO;
 
 	rocksdb::Slice prefixSlice = SliceFromKey(prefix, _options, nil);
-	_iterator->Seek(prefixSlice);
 
-	BOOL (^ checkBounds)(rocksdb::Slice key) = ^ BOOL (rocksdb::Slice key) {
-		return key.starts_with(prefixSlice);
-	};
-
-	rocksdb::Slice keySlice = _iterator->key();
-
-	while (_iterator->Valid() && checkBounds(keySlice)) {
-		keySlice = _iterator->key();
-
-		if (block) block(self.key, &stop);
+	for (_iterator->Seek(prefixSlice); _iterator->Valid(); _iterator->Next()) {
+		if (_iterator->key().starts_with(prefixSlice) == false) continue;
+		if (block) block(self.key, self.value, &stop);
 		if (stop == YES) break;
-
-		_iterator->Next();
 	}
 }
 

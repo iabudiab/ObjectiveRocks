@@ -34,6 +34,8 @@
 @synthesize name = _name;
 @synthesize sliceTransform = _sliceTransform;
 
+#pragma mark - Lifecycle
+
 + (instancetype)prefixExtractorWithType:(RocksDBPrefixType)type length:(size_t)length
 {
 	switch (type) {
@@ -68,6 +70,18 @@
 	}
 	return self;
 }
+
+- (void)dealloc
+{
+	@synchronized(self) {
+		if (_sliceTransform != nullptr) {
+			delete _sliceTransform;
+			_sliceTransform = nullptr;
+		}
+	}
+}
+
+#pragma mark - Callbacks
 
 rocksdb::Slice trampolineTransform(void* instance, const rocksdb::Slice& src)
 {

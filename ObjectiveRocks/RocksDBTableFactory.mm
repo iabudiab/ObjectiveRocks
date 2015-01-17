@@ -28,6 +28,7 @@
 
 @interface RocksDBTableFactory ()
 {
+	id _tableOptions;
 	rocksdb::TableFactory *_tableFactory;
 }
 @property (nonatomic, assign) rocksdb::TableFactory *tableFactory;
@@ -43,7 +44,8 @@
 		optionsBlock(options);
 	}
 
-	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewBlockBasedTableFactory(options.options)];
+	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewBlockBasedTableFactory(options.options)
+																				 andOptions:options];
 	return instance;
 }
 
@@ -56,7 +58,8 @@
 		optionsBlock(options);
 	}
 
-	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewPlainTableFactory(options.options)];
+	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewPlainTableFactory(options.options)
+																				 andOptions:options];
 	return instance;
 }
 
@@ -67,16 +70,18 @@
 		optionsBlock(options);
 	}
 
-	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewCuckooTableFactory(options.options)];
+	RocksDBTableFactory *instance = [[RocksDBTableFactory alloc] initWithNativeTableFacotry:rocksdb::NewCuckooTableFactory(options.options)
+																				 andOptions:options];
 	return instance;
 }
 
 #endif
 
-- (instancetype)initWithNativeTableFacotry:(rocksdb::TableFactory *)tableFactory
+- (instancetype)initWithNativeTableFacotry:(rocksdb::TableFactory *)tableFactory andOptions:(id)options
 {
 	self = [super init];
 	if (self) {
+		_tableOptions = options;
 		_tableFactory = tableFactory;
 	}
 	return self;

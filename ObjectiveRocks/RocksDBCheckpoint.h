@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "RocksDB.h"
 
 @interface RocksDBCheckpoint : NSObject

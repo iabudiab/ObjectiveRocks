@@ -162,7 +162,7 @@
 	[_rocks close];
 
 	RocksDBColumnFamilyDescriptor *descriptor = [RocksDBColumnFamilyDescriptor new];
-	[descriptor addColumnFamilyWithName:@"default" andOptions:nil];
+	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
 	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
@@ -202,7 +202,7 @@
 - (void)testColumnFamilies_WriteBatch
 {
 	RocksDBColumnFamilyDescriptor *descriptor = [RocksDBColumnFamilyDescriptor new];
-	[descriptor addColumnFamilyWithName:@"default" andOptions:nil];
+	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
 	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
@@ -243,7 +243,7 @@
 - (void)testColumnFamilies_Iterator
 {
 	RocksDBColumnFamilyDescriptor *descriptor = [RocksDBColumnFamilyDescriptor new];
-	[descriptor addColumnFamilyWithName:@"default" andOptions:nil];
+	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
 	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {

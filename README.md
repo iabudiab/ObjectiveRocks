@@ -10,6 +10,10 @@ ObjectiveRocks provides an easy interface to RocksDB and an Objective-C friendly
 
 If you are interested in the internals of RocksDB, please refer to the [RocksDB Wiki](https://github.com/facebook/rocksdb/wiki).
 
+## Swift
+
+ObjectiveRocks has a pure Objective-C interface and can be used in Swift projects. Additionally, all ObjectiveRocks tests are also ported to Swift. You can check the `Tests` targets and source code which also contain bridging headers for OSX and iOS ObjectiveRocks implementations.
+
 ## The Minimum You Need to Know
 
 * Keys and values are byte arrays
@@ -45,6 +49,7 @@ These features are only available in OSX:
 * Database Backups
 * Database Statistics
 * Database Properties
+* Thread Status
 
 ## Installation
 
@@ -355,29 +360,107 @@ or use one of the provided enumeration-blocks:
 
 RocksDBIterator *iterator = [db iterator];
 
+/* Keys Enumeration */
 [db enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@: %@", key, [db objectForKey:key]);
+	NSLog(@"%@", key);
 	// A, B, C, D
 }];
 
 // reverse enumeration
 [db enumerateKeysInReverse:YES usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@: %@", key, [db objectForKey:key]);
+	NSLog(@"%@", key);
 	// D, C, B, A
 }];
 
 // Enumeration in a given key-range [start, end)
-RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"C", @"A");
+RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
 
-[db enumerateKeysInRange:range reverse:YES usingBlock:^(id key, BOOL *stop) {
+[db enumerateKeysInRange:range reverse:NO usingBlock:^(id key, BOOL *stop) {
+	NSLog(@"%@", key, [db objectForKey:key]);
+	// B, C
+}];
+
+/* Key-Value Enumeration */
+[db enumerateKeysAndValuesUsingBlock:^(id key, id value BOOL *stop) {
+	NSLog(@"%@:%@", key, value);
+	// A:1, B:2, C:3, D:4
+}];
+
+[db enumerateKeysAndValuesInReverse:YES usingBlock:^(id key, BOOL *stop) {
 	NSLog(@"%@: %@", key, [db objectForKey:key]);
-	// C, B
+	// D:4, C:3, B:2, A:1
+}];
+
+// Enumeration in a given key-range [start, end)
+RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
+
+[db enumerateKeysAndValuesInRange:range reverse:YES usingBlock:^(id key, BOOL *stop) {
+	NSLog(@"%@:%@", key, [db objectForKey:key]);
+	// B:2, C:3
 }];
 ```
 
 ## Prefix-Seek Iteration
 
-TBD
+`RocksDBIterator` supports iterating inside a key-prefix by providing a `RocksDBPrefixExtractor`. One such extractor is built-in and it extracts a fixed-length prefix for each key:
+
+```objective-c
+RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	options.createIfMissing = YES;
+	options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];
+
+	options.keyType = RocksDBTypeNSString;
+	options.valueType = RocksDBTypeNSString;
+}];
+
+[db setObject:@"a" forKey:@"10.1"];
+[db setObject:@"b" forKey:@"10.2"];
+[db setObject:@"b" forKey:@"10.3"];
+[db setObject:@"c" forKey:@"11.1"];
+[db setObject:@"d" forKey:@"11.2"];
+[db setObject:@"d" forKey:@"11.3"];
+
+RocksDBIterator *iterator = [db iterator];
+
+// Enumeration starts with the key that is Greater-Than-Or-Equal to a key
+// with the given "prefix" parameter
+[iterator enumerateKeysWithPrefix:@"10" usingBlock:^(id key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// 10.1, 10.2, 10.3
+}];
+
+// .. so in this case the enumeration starts at key "10.2", even if "10.1" 
+// has the same prefix
+[iterator enumerateKeysWithPrefix:@"10.2" usingBlock:^(id key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// 10.2, 10.3
+}];
+```
+
+You can also define your own Prefix Extractor:
+
+```objective-c
+RocksDBPrefixExtractor *extractor = [[RocksDBPrefixExtractor alloc] initWithName:@"custom_prefix"
+	transformBlock:^id (id key) {
+		// Apply your key transformation to extract the prefix part
+		id prefix = extractPrefixFromKey(key);
+		return prefix;
+	}
+	prefixCandidateBlock:^BOOL (id key) {
+		// You can filter out keys that are not viable candidates for
+		// your custom prefix format, e.g. key length is smaller than
+		// the target prefix length
+		BOOL isCandidate = canExtractPrefixFromKey(key);
+		return isCandidate;
+	}
+	validPrefixBlock:^BOOL (id prefix) {
+		// After a prefix is extracted you can perform extra
+		// checks here to verify that the prefix is valid
+		BOOL isValid = isExtractedPrefixValid(prefix);
+		return isValid;
+	}
+];
+```
 
 ## Snapshot
 
@@ -561,6 +644,25 @@ result = @{@"Key 1" : @"Value 1 New",
 */
 ```
 
+## Env & Thread Status
+
+The `RocksDBEnv` allows for modifying the thread pool for backgrond jobs. RocksDB uses this thread pool for compactions and memtable flushes.
+
+```objective-c
+RocksDBEnv *dbEnv = [RocksDBEnv envWithLowPriorityThreadCount:12 andHighPriorityThreadCount:4];
+RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+	options.env = dbEnv;
+}];
+
+// To get a list of all threads
+NSArray *threads = dbEnv.threadList;
+
+// "threads" array contains objects of type RocksDBThreadStatus
+RocksDBThreadStatus *status = threads[0];
+```
+
+> Thread Status API is currently a WIP.
+
 ## Backup & Restore
 
 To backup a database use the `RocksDBBackupEngine`:
@@ -594,19 +696,19 @@ Backups are incremental and only the new data will be copied to backup directory
 * Delete specific backups
 * Purge all backups keeping the last N backups
 
-```objecgtive-c
+```objective-c
 RocksDB *db = ...
 
-RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
+RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
 
 [db setObject:@"Value 1" forKey:@"A"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 [db setObject:@"Value 2" forKey:@"B"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 [db setObject:@"Value 3" forKey:@"C"];
-[backupEngine createBackupForDatabase:_rocks error:nil];
+[backupEngine createBackupForDatabase:db error:nil];
 
 // An array containing RocksDBBackupInfo objects
 NSArray *backupInfo = backupEngine.backupInfo;
@@ -628,7 +730,7 @@ You can collect those statistics by creating and setting the `RocksDBStatistics`
 ```objective-c
 RocksDBStatistics *dbStatistics = [RocksDBStatistics new];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.statistics = dbStatistics;
 }];
 ...

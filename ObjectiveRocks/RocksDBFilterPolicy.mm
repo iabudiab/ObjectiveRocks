@@ -25,7 +25,7 @@
 	return [[RocksDBFilterPolicy alloc] initWithNativeFilterPolicy:rocksdb::NewBloomFilterPolicy(bitsPerKey)];
 }
 
-+ (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey useBlockBasedBuilde:(BOOL)useBlockBasedBuilder
++ (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey useBlockBasedBuilder:(BOOL)useBlockBasedBuilder
 {
 	return [[RocksDBFilterPolicy alloc] initWithNativeFilterPolicy:rocksdb::NewBloomFilterPolicy(bitsPerKey, useBlockBasedBuilder)];
 }
