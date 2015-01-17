@@ -68,9 +68,9 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			let res = sub1.compare(sub2)
 			switch res {
 			case .OrderedAscending:
-					return 1
-			case .OrderedDescending:
 					return -1
+			case .OrderedDescending:
+					return 1
 			case .OrderedSame:
 					return 0
 			}
@@ -104,7 +104,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 		let keys = NSMutableArray()
 
-		iterator.enumerateKeysWithPrefix("100", usingBlock: { (key, stop) -> Void in
+		iterator.enumerateKeysWithPrefix("10", usingBlock: { (key, stop) -> Void in
 			keys.addObject(key)
 		})
 
@@ -116,7 +116,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 
 		keys.removeAllObjects()
 
-		iterator.enumerateKeysWithPrefix("101", usingBlock: { (key, stop) -> Void in
+		iterator.enumerateKeysWithPrefix("42", usingBlock: { (key, stop) -> Void in
 			keys.addObject(key)
 		})
 
@@ -128,7 +128,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 
 		keys.removeAllObjects()
 
-		iterator.enumerateKeysWithPrefix("101", usingBlock: { (key, stop) -> Void in
+		iterator.enumerateKeysWithPrefix("53", usingBlock: { (key, stop) -> Void in
 			keys.addObject(key)
 		})
 
