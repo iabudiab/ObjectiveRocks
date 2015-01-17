@@ -228,6 +228,10 @@
 
 - (NSArray *)columnFamilies
 {
+	if (_columnFamilyHandles == nullptr) {
+		return nil;
+	}
+
 	if (_columnFamilies == nil) {
 		_columnFamilies = [NSMutableArray new];
 		for(auto it = std::begin(*_columnFamilyHandles); it != std::end(*_columnFamilyHandles); ++it) {
