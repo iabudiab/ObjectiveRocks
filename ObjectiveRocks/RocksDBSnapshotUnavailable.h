@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 BrainCookie. All rights reserved.
 //
 
-#define NA(x) __attribute__((unavailable(x)))
+#define UNAVAILABLE(x) __attribute__((unavailable(x)))
 
 #define SNAPSHOT_PUT_MERGE_DELETE_SELECTORS \
 NA_SELECTOR(- (BOOL)setObject:(id)anObject forKey:(id)aKey) \
