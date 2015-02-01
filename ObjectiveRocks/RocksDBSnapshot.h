@@ -13,6 +13,8 @@
 
 @interface RocksDBSnapshot : RocksDB
 
+- (uint64_t)sequenceNumber;
+
 @end
 
 @interface RocksDBSnapshot (Unavailable)

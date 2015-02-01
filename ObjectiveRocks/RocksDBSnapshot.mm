@@ -17,6 +17,8 @@
 
 @implementation RocksDBSnapshot
 
+#pragma mark - Lifecycle
+
 - (instancetype)initWithDBInstance:(rocksdb::DB *)db
 					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
 					andReadOptions:(RocksDBReadOptions *)readOptions
@@ -42,5 +44,11 @@
 	}
 }
 
+#pragma mark - 
+
+- (uint64_t)sequenceNumber
+{
+	return self.readOptions.options.snapshot->GetSequenceNumber();
+}
 
 @end
