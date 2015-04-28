@@ -82,6 +82,8 @@
 		624C22611AF01C8E006DC8FA /* db_impl_experimental.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C225F1AF01C8E006DC8FA /* db_impl_experimental.cc */; };
 		624C22631AF01CA7006DC8FA /* experimental.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C22621AF01CA7006DC8FA /* experimental.cc */; };
 		624C22641AF01CA7006DC8FA /* experimental.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C22621AF01CA7006DC8FA /* experimental.cc */; };
+		624C226B1AF02B1B006DC8FA /* instrumented_mutex.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C22691AF02B1B006DC8FA /* instrumented_mutex.cc */; };
+		624C226C1AF02B1B006DC8FA /* instrumented_mutex.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C22691AF02B1B006DC8FA /* instrumented_mutex.cc */; };
 		625F8F1C1A59C3EB007796BA /* RocksDBProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1B1A59C3EB007796BA /* RocksDBProperties.m */; };
 		625F8F1D1A59C3EB007796BA /* RocksDBProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1B1A59C3EB007796BA /* RocksDBProperties.m */; };
 		625F8F1F1A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */; };
@@ -679,6 +681,8 @@
 		624C22661AF01D30006DC8FA /* benchmark_leveldb.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = benchmark_leveldb.sh; sourceTree = "<group>"; };
 		624C22671AF01D36006DC8FA /* run_leveldb.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = run_leveldb.sh; sourceTree = "<group>"; };
 		624C22681AF0217C006DC8FA /* thread_list_test.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = thread_list_test.cc; sourceTree = "<group>"; };
+		624C22691AF02B1B006DC8FA /* instrumented_mutex.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = instrumented_mutex.cc; sourceTree = "<group>"; };
+		624C226A1AF02B1B006DC8FA /* instrumented_mutex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = instrumented_mutex.h; sourceTree = "<group>"; };
 		625F8F1A1A59C3EB007796BA /* RocksDBProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBProperties.h; sourceTree = "<group>"; };
 		625F8F1B1A59C3EB007796BA /* RocksDBProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBProperties.m; sourceTree = "<group>"; };
 		625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBPropertiesTests.mm; sourceTree = "<group>"; };
@@ -1943,6 +1947,8 @@
 				62EE2B4B1A1ABA2000486C31 /* histogram.cc */,
 				62EE2B4C1A1ABA2000486C31 /* histogram.h */,
 				62EE2B4E1A1ABA2000486C31 /* histogram_test.cc */,
+				624C22691AF02B1B006DC8FA /* instrumented_mutex.cc */,
+				624C226A1AF02B1B006DC8FA /* instrumented_mutex.h */,
 				62EE2B4F1A1ABA2000486C31 /* iostats_context.cc */,
 				62EE2B511A1ABA2000486C31 /* iostats_context_imp.h */,
 				62EE2B521A1ABA2000486C31 /* ldb_cmd.cc */,
@@ -2385,6 +2391,7 @@
 				628B0CEA1A1C104D0099C39B /* RocksDBError.mm in Sources */,
 				624C22281AF0161E006DC8FA /* managed_iterator.cc in Sources */,
 				625F8F291A59D7B1007796BA /* RocksDBMemTableRepFactory.mm in Sources */,
+				624C226B1AF02B1B006DC8FA /* instrumented_mutex.cc in Sources */,
 				6236E2571A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm in Sources */,
 				62269EE01A1FF2DC005A58D3 /* leveldb_options.cc in Sources */,
 				62EE2D8E1A1ABA2100486C31 /* uint64add.cc in Sources */,
@@ -2644,6 +2651,7 @@
 				62A8B0041A58C30E0069B4C8 /* ldb_tool.cc in Sources */,
 				62A8B0051A58C30E0069B4C8 /* db_ttl_impl.cc in Sources */,
 				62A8B0061A58C30E0069B4C8 /* options_helper.cc in Sources */,
+				624C226C1AF02B1B006DC8FA /* instrumented_mutex.cc in Sources */,
 				624C223A1AF0174B006DC8FA /* convenience.cc in Sources */,
 				62A8B0071A58C30E0069B4C8 /* hash_cuckoo_rep.cc in Sources */,
 				62A8B0081A58C30E0069B4C8 /* sst_dump_tool.cc in Sources */,
