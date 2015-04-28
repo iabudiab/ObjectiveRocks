@@ -51,7 +51,7 @@ class RocksDBStatisticsTests : RocksDBTests {
 
 		for i in 0...10000 {
 			let str = NSString(format: "a%d", i)
-			rocks.setData(Data(str), forKey: Data(str))
+			rocks.setData(Data(str as String), forKey: Data(str as String))
 		}
 
 		rocks.dataForKey(Data("a42"))

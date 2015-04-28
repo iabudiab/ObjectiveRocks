@@ -23,7 +23,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		for iterator.seekToFirst(); iterator.isValid(); iterator.next() {
-			actual.addObject(Str(iterator.key() as NSData))
+			actual.addObject(Str(iterator.key() as! NSData))
 		}
 
 		let expected = [ "key 1", "key 2", "key 3" ]
@@ -45,14 +45,14 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("key 1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("value 1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("key 1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("value 1"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("key 2"))
-		XCTAssertEqual(iterator.value() as NSData, Data("value 2"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("key 2"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("value 2"))
 
 		iterator.next()
 
@@ -62,15 +62,15 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.previous()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("key 1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("value 1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("key 1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("value 1"))
 
 		iterator.seekToFirst()
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("key 2"))
-		XCTAssertEqual(iterator.value() as NSData, Data("value 2"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("key 2"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("value 2"))
 
 		iterator.close()
 	}
@@ -88,7 +88,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 
@@ -111,7 +111,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysInReverse(true, usingBlock: { (key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		})
 
 		let expected = [ "key 3", "key 2", "key 1" ]
@@ -136,7 +136,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysInRange(RocksDBMakeKeyRange(Data("key 2"), nil), reverse: false)
 		{
 			(key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 		let expected = [ "key 2", "key 3", "key 4" ]
@@ -161,7 +161,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysInRange(RocksDBMakeKeyRange(nil, Data("key 4")), reverse: false)
 		{
 			(key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 		let expected = [ "key 1", "key 2", "key 3" ]
@@ -186,7 +186,7 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysInRange(RocksDBMakeKeyRange(Data("key 2"), Data("key 4")), reverse: false)
 		{
 			(key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 		let expected = [ "key 2", "key 3" ]
@@ -232,8 +232,8 @@ class RocksDBIteratorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysAndValuesUsingBlock { (key, value, stop) -> Void in
-			actual.addObject(Str(key as NSData))
-			actual.addObject(Str(value as NSData))
+			actual.addObject(Str(key as! NSData))
+			actual.addObject(Str(value as! NSData))
 		}
 
 		let expected = [ "key 1", "value 1", "key 2", "value 2", "key 3", "value 3" ]
@@ -255,8 +255,8 @@ class RocksDBIteratorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysAndValuesInReverse(true, usingBlock: { (key, value, stop) -> Void in
-			actual.addObject(Str(key as NSData))
-			actual.addObject(Str(value as NSData))
+			actual.addObject(Str(key as! NSData))
+			actual.addObject(Str(value as! NSData))
 		})
 
 		let expected = [ "key 3", "value 3", "key 2", "value 2", "key 1", "value 1" ]
@@ -281,8 +281,8 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysAndValuesInRange(RocksDBMakeKeyRange(Data("key 2"), nil), reverse: false)
 		{
 			(key, value, stop) -> Void in
-			actual.addObject(Str(key as NSData))
-			actual.addObject(Str(value as NSData))
+			actual.addObject(Str(key as! NSData))
+			actual.addObject(Str(value as! NSData))
 		}
 
 		let expected = [ "key 2", "value 2", "key 3", "value 3", "key 4", "value 4" ]
@@ -307,8 +307,8 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysAndValuesInRange(RocksDBMakeKeyRange(nil, Data("key 4")), reverse: false)
 		{
 			(key, value, stop) -> Void in
-			actual.addObject(Str(key as NSData))
-			actual.addObject(Str(value as NSData))
+			actual.addObject(Str(key as! NSData))
+			actual.addObject(Str(value as! NSData))
 		}
 
 		let expected = [ "key 1", "value 1", "key 2", "value 2", "key 3", "value 3" ]
@@ -333,8 +333,8 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.enumerateKeysAndValuesInRange(RocksDBMakeKeyRange(Data("key 2"), Data("key 4")), reverse: false)
 		{
 			(key, value, stop) -> Void in
-			actual.addObject(Str(key as NSData))
-			actual.addObject(Str(value as NSData))
+			actual.addObject(Str(key as! NSData))
+			actual.addObject(Str(value as! NSData))
 		}
 
 		let expected = [ "key 2", "value 2", "key 3", "value 3" ]

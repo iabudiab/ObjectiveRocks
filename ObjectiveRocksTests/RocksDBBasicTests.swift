@@ -69,9 +69,9 @@ class RocksDBBasicTests : RocksDBTests {
 		rocks.setObject("value 3", forKey: "key 3")
 
 
-		XCTAssertEqual(rocks.objectForKey("key 1") as NSString, "value 1");
-		XCTAssertEqual(rocks.objectForKey("key 2") as NSString, "value 2");
-		XCTAssertEqual(rocks.objectForKey("key 3") as NSString, "value 3");
+		XCTAssertEqual(rocks.objectForKey("key 1") as! NSString, "value 1");
+		XCTAssertEqual(rocks.objectForKey("key 2") as! NSString, "value 2");
+		XCTAssertEqual(rocks.objectForKey("key 3") as! NSString, "value 3");
 
 		rocks.deleteObjectForKey("key 2")
 		XCTAssertNil(rocks.objectForKey("key 2"));

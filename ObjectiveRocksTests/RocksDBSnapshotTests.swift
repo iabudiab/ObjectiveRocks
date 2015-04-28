@@ -52,7 +52,7 @@ class RocksDBSnapshotTests : RocksDBTests {
 		var actual: NSMutableArray = []
 		var iterator = snapshot.iterator()
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 		var expected = [ "key 1", "key 2", "key 3" ]
@@ -64,7 +64,7 @@ class RocksDBSnapshotTests : RocksDBTests {
 
 		iterator = snapshot.iterator()
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			actual.addObject(Str(key as NSData))
+			actual.addObject(Str(key as! NSData))
 		}
 
 		expected = [ "key 2", "key 3", "key 4" ]

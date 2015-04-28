@@ -82,7 +82,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 	func testSwift_AssociativeMergeOperator_DictionaryPut_Encoded() {
 		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject! in
 			if (existing != nil) {
-				existing.addEntriesFromDictionary(value as NSDictionary)
+				existing.addEntriesFromDictionary(value as! [NSObject : AnyObject])
 				return existing
 			} else {
 				return value
@@ -109,7 +109,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			"key 4" : "value 4",
 			"key 5" : "value 5"]
 
-		XCTAssertEqual(rocks.objectForKey("dict key") as NSDictionary, expected)
+		XCTAssertEqual(rocks.objectForKey("dict key") as! NSDictionary, expected)
 	}
 
 	func testSwift_MergeOperator_DictionaryUpdate_Encoded() {
@@ -118,26 +118,26 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 				(key, leftOperand, rightOperand) -> String! in
 				let left: NSString = leftOperand.componentsSeparatedByString(":")[0]
 				let right: NSString = rightOperand.componentsSeparatedByString(":")[0]
-				if left.isEqualToString(right) {
+				if left.isEqualToString(right as String) {
 					return rightOperand
 				}
 				return Optional.None!
 
 			},
-			{
+			fullMergeBlock: {
 				(key, existing, operands) -> NSMutableDictionary! in
 
-				var dict: NSMutableDictionary = existing as NSMutableDictionary
+				var dict: NSMutableDictionary = existing as! NSMutableDictionary
 				for op in operands as NSArray {
 					let comp: NSArray = op.componentsSeparatedByString(":")
-					let action: NSString = comp[1] as NSString
+					let action: NSString = comp[1] as! NSString
 					if action.isEqualToString("DELETE") {
 						dict.removeObjectForKey(comp[0])
 					} else {
-						dict.setObject(comp[2], forKey: comp[0] as NSString)
+						dict.setObject(comp[2], forKey: comp[0] as! NSString)
 					}
 				}
-				return existing as NSMutableDictionary
+				return existing as! NSMutableDictionary
 			})
 
 		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
@@ -162,6 +162,6 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			"key 3" : "value 3",
 			"key 4" : "value 4"];
 
-		XCTAssertEqual(rocks.objectForKey("dict key") as NSDictionary, expected)
+		XCTAssertEqual(rocks.objectForKey("dict key") as! NSDictionary, expected)
 	}
 }

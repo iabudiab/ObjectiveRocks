@@ -51,12 +51,12 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		iterator.seekToKey("1000")
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSString, "100A")
+		XCTAssertEqual(iterator.key() as! NSString, "100A")
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSString, "100B")
+		XCTAssertEqual(iterator.key() as! NSString, "100B")
 	}
 
 	func testSwift_PrefixExtractor_FixedLength_CustomComparator() {
@@ -65,7 +65,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			var sub1: NSString = key1.substringFromIndex(2) as NSString
 			var sub2: NSString = key2.substringFromIndex(2) as NSString
 
-			let res = sub1.compare(sub2)
+			let res = sub1.compare(sub2 as String)
 			switch res {
 			case .OrderedAscending:
 					return -1
