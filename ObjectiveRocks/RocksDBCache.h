@@ -12,6 +12,5 @@
 
 + (instancetype)LRUCacheWithCapacity:(size_t)capacity;
 + (instancetype)LRUCacheWithCapacity:(size_t)capacity numShardsBits:(int)numShardBits;
-+ (instancetype)LRUCacheWithCapacity:(size_t)capacity numShardsBits:(int)numShardBits removeScanCountLimit:(int)removeScanCountLimit;
 
 @end

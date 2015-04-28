@@ -30,11 +30,6 @@
 	return [[RocksDBCache alloc] initWithNativeCache:rocksdb::NewLRUCache(capacity, numShardBits)];
 }
 
-+ (instancetype)LRUCacheWithCapacity:(size_t)capacity numShardsBits:(int)numShardBits removeScanCountLimit:(int)removeScanCountLimit
-{
-	return [[RocksDBCache alloc] initWithNativeCache:rocksdb::NewLRUCache(capacity, numShardBits, removeScanCountLimit)];
-}
-
 - (instancetype)initWithNativeCache:(std::shared_ptr<rocksdb::Cache>)cache
 {
 	self = [super init];
