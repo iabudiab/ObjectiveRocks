@@ -92,6 +92,17 @@
 /** @brief Closes the database instance */
 - (void)close;
 
+/** 
+ Sets the default read & write options for all database operations.
+
+ @param readOptions A block with an instance of `RocksDBReadOptions` which configures the behaviour of read
+ operations in the database.
+ @param writeOptions A block with an instance of `RocksDBWriteOptions` which configures the behaviour of write
+ operations in the database.
+
+ @see RocksDBReadOptions
+ @see RocksDBWriteOptions
+ */
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
