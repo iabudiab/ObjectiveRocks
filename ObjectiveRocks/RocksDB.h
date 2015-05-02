@@ -109,15 +109,46 @@
 
 @interface RocksDB (ColumnFamilies)
 
+///--------------------------------
+/// @name Column Family Management
+///--------------------------------
+
+/**
+ Lists all existing Column Families in the DB residing under the given path.
+
+ @param path The file path of the database.
+ @return An array containing all Column Families currently present in the DB.
+
+ @see RocksDBColumnFamily
+ */
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
 
-- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
-										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock;
+/**
+ Creates a new Column Family with the given name and options.
+ 
+ @param name The name of the new Column Family.
+ @param options A block with a `RocksDBColumnFamilyOptions` instance for configuring the
+ new Column Family.
+ @return The newly-created Column Family with the given name and options.
 
+ @see RocksDBColumnFamily
+ @see RocksDBColumnFamilyOptions
+ */
+- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
+										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))options;
+
+/** @brief Returns an array */
 - (NSArray *)columnFamilies;
 
 #ifndef ROCKSDB_LITE
 
+/**
+ Returns the Meta Data object for the Column Family associated with this instance.
+
+ @see RocksDBColumnFamilyMetaData
+
+ @warning Not available in RocksDB Lite.
+ */
 - (RocksDBColumnFamilyMetaData *)columnFamilyMetaData;
 
 #endif
