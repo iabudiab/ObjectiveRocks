@@ -11,12 +11,20 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBSnapshotUnavailable.h"
 
+/**
+ The `RocksDBSnapshot` provides a consistent read-only view over the state of the key-value store.
+ */
 @interface RocksDBSnapshot : RocksDB
 
+/** @brief Returns the Snapshot's sequence number. */
 - (uint64_t)sequenceNumber;
 
 @end
 
+/**
+ This category marks all mutating method inherited form the `RocksDB` parent class as unavailable since the
+ `RocksDBSnapshot` is a read-only unmodifiable view over the DB.
+ */
 @interface RocksDBSnapshot (Unavailable)
 
 - (instancetype)initWithPath:(NSString *)path UNAVAILABLE("Create a snapshot via a DB instance");
