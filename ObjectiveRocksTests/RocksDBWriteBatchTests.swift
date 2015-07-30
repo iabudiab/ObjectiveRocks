@@ -113,11 +113,11 @@ class RocksDBWriteBatchTests : RocksDBTests {
 			options.mergeOperator = RocksDBMergeOperator(name: "merge", andBlock: { (key, existing, value) -> AnyObject! in
 				var result: NSMutableString = ""
 				if let existingValue = existing as? NSData {
-					result.setString(Str(existingValue))
+					result.setString(Str(existingValue) as String)
 				}
 				result.appendString(",")
-				result.appendString(Str(value as NSData))
-				return Data(result)
+				result.appendString(Str(value as! NSData) as String)
+				return Data(result as String)
 			})
 		})
 
@@ -206,7 +206,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 		}
 
 		XCTAssertNil(rocks.objectForKey("Key 1"))
-		XCTAssertEqual(rocks.objectForKey("key 2") as NSString, "value 2");
-		XCTAssertEqual(rocks.objectForKey("key 3") as NSString, "value 3");
+		XCTAssertEqual(rocks.objectForKey("key 2") as! NSString, "value 2");
+		XCTAssertEqual(rocks.objectForKey("key 3") as! NSString, "value 3");
 	}
 }

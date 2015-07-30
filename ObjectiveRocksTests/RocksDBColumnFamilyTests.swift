@@ -20,7 +20,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
 
 		XCTAssertTrue(names.count == 1);
-		XCTAssertEqual(names[0] as NSString, "default")
+		XCTAssertEqual(names[0] as! NSString, "default")
 	}
 
 	func testSwift_ColumnFamilies_Create() {
@@ -35,8 +35,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
 
 		XCTAssertTrue(names.count == 2);
-		XCTAssertEqual(names[0] as NSString, "default")
-		XCTAssertEqual(names[1] as NSString, "new_cf")
+		XCTAssertEqual(names[0] as! NSString, "default")
+		XCTAssertEqual(names[1] as! NSString, "new_cf")
 	}
 
 	func testSwift_ColumnFamilies_Drop() {
@@ -52,7 +52,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
 
 		XCTAssertTrue(names.count == 1);
-		XCTAssertEqual(names[0] as NSString, "default")
+		XCTAssertEqual(names[0] as! NSString, "default")
 	}
 
 	func testSwift_ColumnFamilies_Open() {
@@ -72,8 +72,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
 
 		XCTAssertTrue(names.count == 2)
-		XCTAssertEqual(names[0] as NSString, "default")
-		XCTAssertEqual(names[1] as NSString, "new_cf")
+		XCTAssertEqual(names[0] as! NSString, "default")
+		XCTAssertEqual(names[1] as! NSString, "new_cf")
 
 		let descriptor = RocksDBColumnFamilyDescriptor()
 
@@ -92,8 +92,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 
 		XCTAssertTrue(rocks.columnFamilies().count == 2)
 
-		let defaultColumnFamily = rocks.columnFamilies()[0] as RocksDBColumnFamily
-		let newColumnFamily = rocks.columnFamilies()[1] as RocksDBColumnFamily
+		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
+		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
 		XCTAssertNotNil(defaultColumnFamily)
 		XCTAssertNotNil(newColumnFamily)
@@ -119,8 +119,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
 
 		XCTAssertTrue(names.count == 2)
-		XCTAssertEqual(names[0] as NSString, "default")
-		XCTAssertEqual(names[1] as NSString, "new_cf")
+		XCTAssertEqual(names[0] as! NSString, "default")
+		XCTAssertEqual(names[1] as! NSString, "new_cf")
 
 		let descriptor = RocksDBColumnFamilyDescriptor()
 
@@ -165,8 +165,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		let defaultColumnFamily = rocks.columnFamilies()[0] as RocksDBColumnFamily
-		let newColumnFamily = rocks.columnFamilies()[1] as RocksDBColumnFamily
+		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
+		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
 		XCTAssertEqual(rocks.dataForKey(Data("df_key1")), Data("df_value"))
 		XCTAssertEqual(rocks.dataForKey(Data("df_key2")), Data("df_value"))
@@ -206,8 +206,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		let defaultColumnFamily = rocks.columnFamilies()[0] as RocksDBColumnFamily
-		let newColumnFamily = rocks.columnFamilies()[1] as RocksDBColumnFamily
+		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
+		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
 		newColumnFamily.setData(Data("xyz_value"), forKey: Data("xyz"))
 
@@ -247,8 +247,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		let defaultColumnFamily = rocks.columnFamilies()[0] as RocksDBColumnFamily
-		let newColumnFamily = rocks.columnFamilies()[1] as RocksDBColumnFamily
+		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
+		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
 		defaultColumnFamily.setData(Data("df_value1"), forKey: Data("df_key1"))
 		defaultColumnFamily.setData(Data("df_value2"), forKey: Data("df_key2"))
@@ -261,8 +261,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		let actual = NSMutableArray()
 
 		for dfIterator.seekToFirst(); dfIterator.isValid(); dfIterator.next() {
-			actual.addObject(Str(dfIterator.key() as NSData))
-			actual.addObject(Str(dfIterator.value() as NSData))
+			actual.addObject(Str(dfIterator.key() as! NSData))
+			actual.addObject(Str(dfIterator.value() as! NSData))
 		}
 
 		var expected = [ "df_key1", "df_value1", "df_key2", "df_value2" ]
@@ -275,8 +275,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		actual.removeAllObjects()
 
 		for cfIterator.seekToFirst(); cfIterator.isValid(); cfIterator.next() {
-			actual.addObject(Str(cfIterator.key() as NSData))
-			actual.addObject(Str(cfIterator.value() as NSData))
+			actual.addObject(Str(cfIterator.key() as! NSData))
+			actual.addObject(Str(cfIterator.value() as! NSData))
 		}
 
 		expected = [ "cf_key1", "cf_value1", "cf_key2", "cf_value2" ]

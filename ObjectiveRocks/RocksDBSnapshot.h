@@ -11,33 +11,43 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBSnapshotUnavailable.h"
 
+/**
+ The `RocksDBSnapshot` provides a consistent read-only view over the state of the key-value store.
+ */
 @interface RocksDBSnapshot : RocksDB
+
+/** @brief Returns the Snapshot's sequence number. */
+- (uint64_t)sequenceNumber;
 
 @end
 
+/**
+ This category marks all mutating method inherited form the `RocksDB` parent class as unavailable since the
+ `RocksDBSnapshot` is a read-only unmodifiable view over the DB.
+ */
 @interface RocksDBSnapshot (Unavailable)
 
-- (instancetype)initWithPath:(NSString *)path NA("Create a snapshot via a DB instance");
+- (instancetype)initWithPath:(NSString *)path UNAVAILABLE("Create a snapshot via a DB instance");
 - (instancetype)initWithPath:(NSString *)path
-				andDBOptions:(void (^)(RocksDBOptions *options))options NA("Create a snapshot via a DB instance");
+				andDBOptions:(void (^)(RocksDBOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
 - (instancetype)initWithPath:(NSString *)path
 			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options NA("Create a snapshot via a DB instance");
+		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
 
-+ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path NA("Column Family API not available");
++ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path UNAVAILABLE("Column Family API not available");
 
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
-										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock NA("Column Family API not available");
-- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData NA("Column Family API not available");
-- (NSArray *)columnFamilies NA("Column Family API not available");
+										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock UNAVAILABLE("Column Family API not available");
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData UNAVAILABLE("Column Family API not available");
+- (NSArray *)columnFamilies UNAVAILABLE("Column Family API not available");
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
-			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions NA("Specify options when creating snapshot via DB instance");
+			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions UNAVAILABLE("Specify options when creating snapshot via DB instance");
 
-- (RocksDBSnapshot *)snapshot NA("Yo Dawg, Snapshot in Snapshot ... ");
-- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions  NA("Yo Dawg, Snapshot in Snapshot ... ");
+- (RocksDBSnapshot *)snapshot UNAVAILABLE("Yo Dawg, Snapshot in Snapshot ... ");
+- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions  UNAVAILABLE("Yo Dawg, Snapshot in Snapshot ... ");
 
-#define NA_SELECTOR(sel) sel NA("Snapshot is read-only");
+#define NA_SELECTOR(sel) sel UNAVAILABLE("Snapshot is read-only");
 SNAPSHOT_PUT_MERGE_DELETE_SELECTORS
 #undef NA_SELECTOR
 

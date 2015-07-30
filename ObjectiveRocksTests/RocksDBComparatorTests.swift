@@ -25,20 +25,20 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc2"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
 
 		iterator.next()
 
@@ -47,14 +47,14 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
 
 		iterator.seekToKey(Data("abc"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
 
 		iterator.close()
 	}
@@ -74,20 +74,20 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc2"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
 
 		iterator.next()
 
@@ -96,8 +96,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
 
 		iterator.seekToKey(Data("abc"))
 
@@ -106,8 +106,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToKey(Data("abc999"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
 
 		iterator.close()
 	}
@@ -134,7 +134,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		var idx = 0
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertEqual(key as NSString, expected[idx] as NSString)
+			XCTAssertEqual(key as! NSString, expected[idx] as! NSString)
 			idx++
 		}
 	}
@@ -161,7 +161,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		var idx = 9999
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertEqual(key as NSString, expected[idx] as NSString)
+			XCTAssertEqual(key as! NSString, expected[idx] as! NSString)
 			idx--
 		}
 	}
@@ -201,8 +201,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertTrue(lastKey.compare(key as NSNumber) == .OrderedAscending)
-			lastKey = key as NSNumber
+			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedAscending)
+			lastKey = key as! NSNumber
 			count++
 		}
 
@@ -244,8 +244,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		let iterator = rocks.iterator()
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertTrue(lastKey.compare(key as NSNumber) == .OrderedDescending)
-			lastKey = key as NSNumber
+			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedDescending)
+			lastKey = key as! NSNumber
 			count++
 		}
 

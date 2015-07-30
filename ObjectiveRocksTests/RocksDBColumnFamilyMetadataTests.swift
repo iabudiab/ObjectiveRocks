@@ -20,8 +20,8 @@ class RocksDBColumnFamilyMetadataTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		let defaultColumnFamily = rocks.columnFamilies()[0] as RocksDBColumnFamily
-		let newColumnFamily = rocks.columnFamilies()[1] as RocksDBColumnFamily
+		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
+		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
 		defaultColumnFamily.setData(Data("df_value1"), forKey: Data("df_key1"))
 		defaultColumnFamily.setData(Data("df_value2"), forKey: Data("df_key2"))

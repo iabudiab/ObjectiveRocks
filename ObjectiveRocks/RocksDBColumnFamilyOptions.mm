@@ -108,18 +108,6 @@
 	return _mergeOperatorWrapper;
 }
 
-- (void)setPrefixExtractor:(RocksDBPrefixExtractor *)prefixExtractor
-{
-	_prefixExtractorWrapper = prefixExtractor;
-	_prefixExtractorWrapper.encodingOptions = _encodingOptions;
-	_options.prefix_extractor.reset(_prefixExtractorWrapper.sliceTransform);
-}
-
-- (RocksDBPrefixExtractor *)prefixExtractor
-{
-	return _prefixExtractorWrapper;
-}
-
 - (size_t)writeBufferSize
 {
 	return _options.write_buffer_size;
@@ -158,6 +146,18 @@
 - (void)setCompressionType:(RocksDBCompressionType)compressionType
 {
 	_options.compression = (rocksdb::CompressionType)compressionType;
+}
+
+- (void)setPrefixExtractor:(RocksDBPrefixExtractor *)prefixExtractor
+{
+	_prefixExtractorWrapper = prefixExtractor;
+	_prefixExtractorWrapper.encodingOptions = _encodingOptions;
+	_options.prefix_extractor.reset(_prefixExtractorWrapper.sliceTransform);
+}
+
+- (RocksDBPrefixExtractor *)prefixExtractor
+{
+	return _prefixExtractorWrapper;
 }
 
 - (void)setNumLevels:(int)numLevels
@@ -293,16 +293,6 @@
 - (double)hardRateLimit
 {
 	return _options.hard_rate_limit;
-}
-
-- (void)setRateLimitDelayMaxMilliseconds:(unsigned int)rateLimitDelayMaxMilliseconds
-{
-	_options.rate_limit_delay_max_milliseconds = rateLimitDelayMaxMilliseconds;
-}
-
-- (unsigned int)rateLimitDelayMaxMilliseconds
-{
-	return _options.rate_limit_delay_max_milliseconds;
 }
 
 - (void)setArenaBlockSize:(size_t)arenaBlockSize

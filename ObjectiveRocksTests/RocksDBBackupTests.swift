@@ -49,7 +49,7 @@ class RocksDBBackupTests : RocksDBTests {
 		XCTAssertNotNil(backupInfo)
 		XCTAssertEqual(backupInfo.count, 1);
 
-		let info = backupInfo[0] as RocksDBBackupInfo
+		let info = backupInfo[0] as! RocksDBBackupInfo
 
 		XCTAssertEqual(info.backupId, 1 as UInt32)
 	}

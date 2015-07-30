@@ -77,4 +77,28 @@
 	XCTAssertEqualObjects(actual, expected);
 }
 
+- (void)testSnapshot_SequenceNumber
+{
+	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+		options.createIfMissing = YES;
+	}];
+
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	RocksDBSnapshot *snapshot1 = [_rocks snapshot];
+
+	[_rocks setData:Data(@"Value 2") forKey:Data(@"Key 2")];
+	RocksDBSnapshot *snapshot2 = [_rocks snapshot];
+
+	[_rocks setData:Data(@"Value 3") forKey:Data(@"Key 3")];
+	RocksDBSnapshot *snapshot3 = [_rocks snapshot];
+
+	XCTAssertEqual(snapshot1.sequenceNumber, 1);
+	XCTAssertEqual(snapshot2.sequenceNumber, 2);
+	XCTAssertEqual(snapshot3.sequenceNumber, 3);
+
+	[snapshot1 close];
+	[snapshot2 close];
+	[snapshot3 close];
+}
+
 @end
