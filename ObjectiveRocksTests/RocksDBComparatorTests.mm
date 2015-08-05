@@ -200,11 +200,11 @@
 	}
 
 	__block NSUInteger count = 0;
-	__block NSNumber *lastKey = [NSNumber numberWithUnsignedInt:0];
+	__block NSNumber *lastKey = @(0);
 
 	RocksDBIterator *iterator = [_rocks iterator];
 	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		XCTAssertGreaterThan(key, lastKey);
+		XCTAssertGreaterThanOrEqual([key unsignedIntValue], [lastKey unsignedIntValue]);
 		lastKey = key;
 		count++;
 	}];
@@ -240,11 +240,11 @@
 	}
 
 	__block NSUInteger count = 0;
-	__block NSNumber *lastKey = [NSNumber numberWithUnsignedInt:UINT32_MAX];
+	__block NSNumber *lastKey = @(UINT32_MAX);
 
 	RocksDBIterator *iterator = [_rocks iterator];
 	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		XCTAssertLessThan(key, lastKey);
+		XCTAssertLessThanOrEqual([key unsignedIntValue], [lastKey unsignedIntValue]);
 		lastKey = key;
 		count++;
 	}];
