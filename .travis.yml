@@ -1,2 +1,7 @@
 language: objective-c
-osx_image: beta-xcode6.4
+osx_image: xcode6.4
+script:
+- xctool -project ObjectiveRocks.xcodeproj -scheme ObjectiveRocks -sdk macosx -configuration Release ONLY_ACTIVE_ARCH=NO
+- xctool test -project ObjectiveRocks.xcodeproj -scheme ObjectiveRocksTests -sdk macosx ONLY_ACTIVE_ARCH=NO
+- xctool -project ObjectiveRocks.xcodeproj -scheme ObjectiveRocks-iOS -sdk iphoneos -configuration Release ONLY_ACTIVE_ARCH=NO
+- xctool test -project ObjectiveRocks.xcodeproj -scheme ObjectiveRocksTests-iOS -sdk iphonesimulator ONLY_ACTIVE_ARCH=NO
