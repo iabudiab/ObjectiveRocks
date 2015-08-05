@@ -1,0 +1,2 @@
+language: objective-c
+osx_image: beta-xcode6.4
