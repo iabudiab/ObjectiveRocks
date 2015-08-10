@@ -27,12 +27,20 @@
  */
 @interface RocksDBSnapshot (Unavailable)
 
-- (instancetype)initWithPath:(NSString *)path UNAVAILABLE("Create a snapshot via a DB instance");
-- (instancetype)initWithPath:(NSString *)path
-				andDBOptions:(void (^)(RocksDBOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
-- (instancetype)initWithPath:(NSString *)path
-			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
++ (instancetype)databaseAtPath:(NSString *)path
+				  andDBOptions:(void (^)(RocksDBOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
++ (instancetype)databaseAtPath:(NSString *)path
+				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
+
+#ifndef ROCKSDB_LITE
+
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+							 andDBOptions:(void (^)(RocksDBOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
+#endif
 
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path UNAVAILABLE("Column Family API not available");
 
