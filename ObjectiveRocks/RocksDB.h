@@ -89,12 +89,18 @@
  @return The newly-intialized DB instance with the given path and options.
 
  @see RocksDBOptions
+ 
+ @remark Opening a non-existing database in read-only mode wont have any effect, even
+ if `createIfMissing` option is set.
  */
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 							 andDBOptions:(void (^)(RocksDBOptions *options))options;
 
 /**
  Intializes a DB instance for read-only and opens the defined Column Families.
+
+ @discussion All DB interfaces that modify data, like put/delete, will return error. In read-only mode no
+ compactions will happen.
 
  @param path The file path of the database.
  @param descriptor The descriptor holds the names and the options of the existing Column Families
@@ -112,7 +118,10 @@
  @remark The `RocksDBDatabaseOptions` differs from the `RocksDBOptions` as it holds only database-wide
  configuration settings.
 
- @warning When opening DB with read only, it is possible to specify only a subset of column families 
+ @remark Opening a non-existing database in read-only mode wont have any effect, even
+ if `createIfMissing` option is set.
+
+ @remark When opening DB with read only, it is possible to specify only a subset of column families 
  in the database that should be opened. However, default column family must specified.
  */
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
