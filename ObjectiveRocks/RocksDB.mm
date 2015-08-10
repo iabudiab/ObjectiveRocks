@@ -29,6 +29,8 @@
 #include <rocksdb/slice.h>
 #include <rocksdb/options.h>
 
+#import "RocksDBProperties.h"
+
 #pragma mark - 
 
 @interface RocksDBColumnFamilyDescriptor (Private)
@@ -334,11 +336,11 @@
 
 #pragma mark - Peroperties
 
-- (NSString *)valueForProperty:(NSString *)property
+- (NSString *)valueForProperty:(RocksDBProperty)property
 {
 	std::string value;
 	bool ok = _db->GetProperty(_columnFamily,
-							   SliceFromData([property dataUsingEncoding:NSUTF8StringEncoding]),
+							   SliceFromData([ResolveProperty(property) dataUsingEncoding:NSUTF8StringEncoding]),
 							   &value);
 	if (!ok) {
 		return nil;
@@ -348,11 +350,11 @@
 	return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
 }
 
-- (uint64_t)valueForIntProperty:(NSString *)property
+- (uint64_t)valueForIntProperty:(RocksDBIntProperty)property
 {
 	uint64_t value;
 	bool ok = _db->GetIntProperty(_columnFamily,
-								  SliceFromData([property dataUsingEncoding:NSUTF8StringEncoding]),
+								  SliceFromData([ResolveIntProperty(property) dataUsingEncoding:NSUTF8StringEncoding]),
 								  &value);
 	if (!ok) {
 		return 0;

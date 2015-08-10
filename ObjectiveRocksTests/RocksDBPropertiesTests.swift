@@ -22,8 +22,8 @@ class RocksDBPropertiesTests : RocksDBTests {
 		rocks.setData(Data("value 2"), forKey: Data("key 2"))
 		rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
-		XCTAssertGreaterThan(rocks.valueForIntProperty(String(RocksDBIntPropertyNumEntriesInMutableMemtable)), 0 as UInt64);
-		XCTAssertGreaterThan(rocks.valueForIntProperty(String(RocksDBIntPropertyCurSizeActiveMemTable)), 0 as UInt64);
+		XCTAssertGreaterThan(rocks.valueForIntProperty(.NumEntriesActiveMemtable), 0 as UInt64);
+		XCTAssertGreaterThan(rocks.valueForIntProperty(.CurSizeActiveMemTable), 0 as UInt64);
 	}
 
 	func testSwift_Properties_ColumnFamily() {
@@ -37,12 +37,12 @@ class RocksDBPropertiesTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		XCTAssertGreaterThanOrEqual(rocks.columnFamilies()[0].valueForIntProperty(String(RocksDBIntPropertyEstimatedNumKeys)), 0 as UInt64);
-		XCTAssertNotNil(rocks.columnFamilies()[0].valueForProperty(String(RocksDBPropertyStats)));
-		XCTAssertNotNil(rocks.columnFamilies()[0].valueForProperty(String(RocksDBPropertySsTables)));
+		XCTAssertGreaterThanOrEqual(rocks.columnFamilies()[0].valueForIntProperty(.EstimatedNumKeys), 0 as UInt64);
+		XCTAssertNotNil(rocks.columnFamilies()[0].valueForProperty(.Stats));
+		XCTAssertNotNil(rocks.columnFamilies()[0].valueForProperty(.SsTables));
 
-		XCTAssertGreaterThanOrEqual(rocks.columnFamilies()[1].valueForIntProperty(String(RocksDBIntPropertyEstimatedNumKeys)), 0 as UInt64);
-		XCTAssertNotNil(rocks.columnFamilies()[1].valueForProperty(String(RocksDBPropertyStats)));
-		XCTAssertNotNil(rocks.columnFamilies()[1].valueForProperty(String(RocksDBPropertySsTables)));
+		XCTAssertGreaterThanOrEqual(rocks.columnFamilies()[1].valueForIntProperty(.EstimatedNumKeys), 0 as UInt64);
+		XCTAssertNotNil(rocks.columnFamilies()[1].valueForProperty(.Stats));
+		XCTAssertNotNil(rocks.columnFamilies()[1].valueForProperty(.SsTables));
 	}
 }

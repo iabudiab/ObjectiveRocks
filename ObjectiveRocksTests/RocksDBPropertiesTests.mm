@@ -26,7 +26,7 @@
 	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
 	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
 
-	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyNumEntriesInMutableMemtable], 0);
+	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyNumEntriesActiveMemtable], 0);
 	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyCurSizeActiveMemTable], 0);
 }
 

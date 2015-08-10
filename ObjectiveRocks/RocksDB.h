@@ -14,6 +14,7 @@
 #import "RocksDBWriteOptions.h"
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
+#import "RocksDBProperties.h"
 
 @class RocksDBColumnFamily;
 @class RocksDBSnapshot;
@@ -215,7 +216,7 @@
 
  @warning Not available in RocksDB Lite.
  */
-- (NSString *)valueForProperty:(NSString *)property;
+- (NSString *)valueForProperty:(RocksDBProperty)property;
 
 /**
  Returns the integer value for the given int property name.
@@ -227,7 +228,7 @@
 
  @warning Not available in RocksDB Lite.
  */
-- (uint64_t)valueForIntProperty:(NSString *)property;
+- (uint64_t)valueForIntProperty:(RocksDBIntProperty)property;
 
 @end
 
