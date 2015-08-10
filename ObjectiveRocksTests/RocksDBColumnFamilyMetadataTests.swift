@@ -15,7 +15,7 @@ class RocksDBColumnFamilyMetadataTests : RocksDBTests {
 		descriptor.addDefaultColumnFamilyWithOptions(nil)
 		descriptor.addColumnFamilyWithName("new_cf", andOptions: nil)
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.createMissingColumnFamilies = true
 		})

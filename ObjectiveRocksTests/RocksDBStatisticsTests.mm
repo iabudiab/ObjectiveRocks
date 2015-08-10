@@ -18,7 +18,7 @@
 {
 	RocksDBStatistics *statistics = [RocksDBStatistics new];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.statistics = statistics;
 	}];
@@ -32,7 +32,7 @@
 {
 	RocksDBStatistics *statistics = [RocksDBStatistics new];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.statistics = statistics;
 	}];
@@ -51,7 +51,7 @@
 {
 	RocksDBStatistics *statistics = [RocksDBStatistics new];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.statistics = statistics;
 	}];

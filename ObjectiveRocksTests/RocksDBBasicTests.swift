@@ -11,12 +11,12 @@ import XCTest
 class RocksDBBasicTests : RocksDBTests {
 
 	func testSwift_DB_Open_ErrorIfExists() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 		rocks.close()
 
-		let db = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		let db = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.errorIfExists = true
 		})
 
@@ -24,7 +24,7 @@ class RocksDBBasicTests : RocksDBTests {
 	}
 
 	func testSwift_DB_CRUD() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 		rocks.setDefaultReadOptions({ (readOptions) -> Void in
@@ -52,7 +52,7 @@ class RocksDBBasicTests : RocksDBTests {
 	}
 
 	func testSwift_DB_CRUD_Encoded() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.keyType = .NSString
 			options.valueType = .NSString

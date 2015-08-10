@@ -11,7 +11,7 @@ import XCTest
 class RocksDBColumnFamilyTests : RocksDBTests {
 
 	func testSwift_ColumnFamilies_List() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -24,7 +24,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 	}
 
 	func testSwift_ColumnFamilies_Create() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -40,7 +40,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 	}
 
 	func testSwift_ColumnFamilies_Drop() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -56,7 +56,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 	}
 
 	func testSwift_ColumnFamilies_Open() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
 		})
@@ -84,7 +84,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
 		})
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -103,7 +103,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 	}
 
 	func testSwift_ColumnFamilies_Open_ComparatorMismatch() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
 		})
@@ -131,7 +131,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
 		})
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -139,7 +139,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 	}
 
 	func testSwift_ColumnFamilies_CRUD() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -160,7 +160,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		descriptor.addDefaultColumnFamilyWithOptions(nil)
 		descriptor.addColumnFamilyWithName("new_cf", andOptions: nil)
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.createMissingColumnFamilies = true
 		})
@@ -201,7 +201,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		descriptor.addDefaultColumnFamilyWithOptions(nil)
 		descriptor.addColumnFamilyWithName("new_cf", andOptions: nil)
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.createMissingColumnFamilies = true
 		})
@@ -242,7 +242,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		descriptor.addDefaultColumnFamilyWithOptions(nil)
 		descriptor.addColumnFamilyWithName("new_cf", andOptions: nil)
 
-		rocks = RocksDB(path: self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.createMissingColumnFamilies = true
 		})

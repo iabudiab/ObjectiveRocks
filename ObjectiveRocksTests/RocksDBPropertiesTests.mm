@@ -16,7 +16,7 @@
 
 - (void)testProperties
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.maxWriteBufferNumber = 10;
 		options.minWriteBufferNumberToMerge = 10;
@@ -36,7 +36,7 @@
 	[descriptor addColumnFamilyWithName:@"default" andOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 		options.createMissingColumnFamilies = YES;
 	}];

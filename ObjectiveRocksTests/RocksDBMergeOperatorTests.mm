@@ -30,7 +30,7 @@
 																	  return [NSData dataWithBytes:&result length:sizeof(uint64_t)];
 																  }];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 	}];
@@ -55,7 +55,7 @@
 																	  return result;
 																  }];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 
@@ -95,7 +95,7 @@
 																	  }
 																  }];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 
@@ -147,7 +147,7 @@
 															 return existing;
 														 }];
 	
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 

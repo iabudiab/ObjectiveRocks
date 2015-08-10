@@ -11,7 +11,7 @@ import XCTest
 class RocksDBComparatorTests : RocksDBTests {
 
 	func testSwift_Comparator_Native_Bytewise_Ascending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseAscending)
 		})
@@ -60,7 +60,7 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_Native_Bytewise_Descending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
 		})
@@ -113,7 +113,7 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_StringCompare_Ascending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
 			options.keyType = .NSString
@@ -140,7 +140,7 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_StringCompare_Descending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareDescending)
 			options.keyType = .NSString
@@ -167,7 +167,7 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_Number_Ascending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.NumberAscending)
 			options.keyEncoder = {
@@ -210,7 +210,7 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_Number_Decending() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.NumberDescending)
 			options.keyEncoder = {

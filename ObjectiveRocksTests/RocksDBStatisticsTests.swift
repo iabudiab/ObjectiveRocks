@@ -13,7 +13,7 @@ class RocksDBStatisticsTests : RocksDBTests {
 	func testSwift_Statistics() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})
@@ -26,7 +26,7 @@ class RocksDBStatisticsTests : RocksDBTests {
 	func testSwift_Statistics_Ticker() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})
@@ -44,7 +44,7 @@ class RocksDBStatisticsTests : RocksDBTests {
 	func testSwift_Statistics_Histogram() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})

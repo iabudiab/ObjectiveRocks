@@ -16,7 +16,7 @@
 
 - (void)testColumnFamilies_List
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 	[_rocks close];
@@ -29,7 +29,7 @@
 
 - (void)testColumnFamilies_Create
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -47,7 +47,7 @@
 
 - (void)testColumnFamilies_Drop
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -65,7 +65,7 @@
 
 - (void)testColumnFamilies_Open
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
 	}];
@@ -91,7 +91,7 @@
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseDescending];
 	}];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -111,7 +111,7 @@
 
 - (void)testColumnFamilies_Open_ComparatorMismatch
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
 	}];
@@ -137,7 +137,7 @@
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
 	}];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -146,7 +146,7 @@
 
 - (void)testColumnFamilies_CRUD
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -165,7 +165,7 @@
 	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -205,7 +205,7 @@
 	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 		options.createMissingColumnFamilies = YES;
 	}];
@@ -246,7 +246,7 @@
 	[descriptor addDefaultColumnFamilyWithOptions:nil];
 	[descriptor addColumnFamilyWithName:@"new_cf" andOptions:nil];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 		options.createIfMissing = YES;
 		options.createMissingColumnFamilies = YES;
 	}];

@@ -25,23 +25,6 @@
 ///--------------------------------
 
 /**
- Intializes a DB instance with the given path.
-
- @discussion This method initializes the DB with the default Column Family, uses the
- default DB and Column Family settings, and does not setup key/value encoders.
-
- @param path The path where the DB resides.
- @return The newly-intializad DB instance with the given path and default settings.
-
- @see RocksDBOptions
- @see RocksDBColumnFamily
-
- @warning When opening a DB in a read-write mode, you need to specify all Column Families 
- that currently exist in the DB.
- */
-- (instancetype)initWithPath:(NSString *)path;
-
-/**
  Intializes a DB instance with the given path and configured with the given options.
 
  @discussion This method initializes the DB with the default Column Family and allows for
@@ -59,8 +42,8 @@
  @warning When opening a DB in a read-write mode, you need to specify all Column Families
  that currently exist in the DB.
  */
-- (instancetype)initWithPath:(NSString *)path
-				andDBOptions:(void (^)(RocksDBOptions *options))options;
++ (instancetype)databaseAtPath:(NSString *)path
+				  andDBOptions:(void (^)(RocksDBOptions *options))options;
 
 /** 
  Intializes a DB instance and opens the defined Column Families.
@@ -84,9 +67,59 @@
  @warning When opening a DB in a read-write mode, you need to specify all Column Families
  that currently exist in the DB.
  */
-- (instancetype)initWithPath:(NSString *)path
-			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
++ (instancetype)databaseAtPath:(NSString *)path
+				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
+
+#ifndef ROCKSDB_LITE
+
+/**
+ Intializes a DB instance for read-only with the given path and configured with the given options.
+
+ @discussion This method initializes the DB for read-only mode with the default Column Family and
+ allows for configuring the DB via the RocksDBOptions block. The block gets a single  argument, an
+ instance of `RocksDBOptions`, which is initialized with the default values and passed for
+ further tuning. If the options block is `nil`, then default settings will be used.
+
+ All DB interfaces that modify data, like put/delete, will return error. In read-only mode no
+ compactions will happen.
+
+ @param path The file path of the DB.
+ @param options A block with a single argument, an instance of `RocksDBOptions`.
+ @return The newly-intialized DB instance with the given path and options.
+
+ @see RocksDBOptions
+ */
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+							 andDBOptions:(void (^)(RocksDBOptions *options))options;
+
+/**
+ Intializes a DB instance for read-only and opens the defined Column Families.
+
+ @param path The file path of the database.
+ @param descriptor The descriptor holds the names and the options of the existing Column Families
+ in the DB.
+ @param options A block with a single argument, an instance of `RocksDBDatabaseOptions`, which can
+ be used to tune the DB configuration.
+ @return The newly-intialized DB instance with the given path and database options. Furthermore, the
+ DB instance also opens the defined Column Families.
+
+ @see RocksDBColumnFamily
+ @see RocksDBColumnFamilyDescriptor
+ @see RocksDBOptions
+ @see RocksDBDatabaseOptions
+
+ @remark The `RocksDBDatabaseOptions` differs from the `RocksDBOptions` as it holds only database-wide
+ configuration settings.
+
+ @warning When opening DB with read only, it is possible to specify only a subset of column families 
+ in the database that should be opened. However, default column family must specified.
+ */
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
+
+#endif
 
 /** @brief Closes the database instance */
 - (void)close;

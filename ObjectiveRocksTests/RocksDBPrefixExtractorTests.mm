@@ -18,7 +18,7 @@
 
 - (void)testPrefixExtractor_FixedLength
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:3];
 
@@ -73,7 +73,7 @@
 		return [[key1 substringFromIndex:2] compare:[key2 substringFromIndex:2]];
 	}];
 
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = cmp;
 		options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];

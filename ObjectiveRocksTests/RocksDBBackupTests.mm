@@ -16,7 +16,7 @@
 
 - (void)testBackup_Create
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -37,7 +37,7 @@
 
 - (void)testBackup_BackupInfo
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -63,7 +63,7 @@
 
 - (void)testBackup_BackupInfo_Multiple
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -92,7 +92,7 @@
 
 - (void)testBackup_PurgeBackups
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -122,7 +122,7 @@
 
 - (void)testBackup_DeleteBackup
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -152,7 +152,7 @@
 
 - (void)testBackup_Restore
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -172,7 +172,7 @@
 
 	[backupEngine restoreBackupToDestinationPath:_restorePath error:nil];
 
-	RocksDB *backupRocks = [[RocksDB alloc] initWithPath:_restorePath];
+	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], Data(@"value 2"));
@@ -183,7 +183,7 @@
 
 - (void)testBackup_Restore_Specific
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -202,7 +202,7 @@
 
 	[backupEngine restoreBackupWithId:1 toDestinationPath:_restorePath error:nil];
 
-	RocksDB *backupRocks = [[RocksDB alloc] initWithPath:_restorePath];
+	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], nil);
@@ -212,7 +212,7 @@
 
 	[backupEngine restoreBackupWithId:2 toDestinationPath:_restorePath error:nil];
 
-	backupRocks = [[RocksDB alloc] initWithPath:_restorePath];
+	backupRocks = [RocksDB databaseAtPath:_restorePath];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], Data(@"value 2"));

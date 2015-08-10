@@ -11,7 +11,7 @@ import XCTest
 class RocksDBWriteBatchTests : RocksDBTests {
 
 	func testSwift_WriteBatch_Perform() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -28,7 +28,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Perform_DeleteOps() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -47,7 +47,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Perform_ClearOps() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -68,7 +68,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Apply() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -87,7 +87,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Apply_DeleteOps() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -108,7 +108,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Apply_MergeOps() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = RocksDBMergeOperator(name: "merge", andBlock: { (key, existing, value) -> AnyObject! in
 				var result: NSMutableString = ""
@@ -136,7 +136,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Apply_ClearOps() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -159,7 +159,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Count() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -191,7 +191,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	}
 
 	func testSwift_WriteBatch_Encoded() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.keyType = .NSString
 			options.valueType = .NSString

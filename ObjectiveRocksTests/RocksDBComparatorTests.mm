@@ -16,7 +16,7 @@
 
 - (void)testComparator_Native_Bytewise_Ascending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseAscending];
 	}];
@@ -66,7 +66,7 @@
 
 - (void)testComparator_Native_Bytewise_Descending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseDescending];
 	}];
@@ -120,7 +120,7 @@
 
 - (void)testComparator_StringCompare_Ascending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareAscending];
 		options.keyType = RocksDBTypeNSString;
@@ -147,7 +147,7 @@
 
 - (void)testComparator_StringCompare_Descending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorStringCompareDescending];
 		options.keyType = RocksDBTypeNSString;
@@ -174,7 +174,7 @@
 
 - (void)testComparator_Number_Ascending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorNumberAscending];
 
@@ -214,7 +214,7 @@
 
 - (void)testComparator_Number_Descending
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorNumberDescending];
 

@@ -16,12 +16,12 @@
 
 - (void)testDB_Open_ErrorIfExists
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 	[_rocks close];
 
-	RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.errorIfExists = YES;
 	}];
 
@@ -30,7 +30,7 @@
 
 - (void)testDB_CRUD
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 	[_rocks setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
@@ -60,7 +60,7 @@
 
 - (void)testDB_CRUD_Encoded
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.keyType = RocksDBTypeNSString;
 		options.valueType = RocksDBTypeNSString;

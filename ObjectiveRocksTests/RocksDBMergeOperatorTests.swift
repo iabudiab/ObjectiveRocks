@@ -23,7 +23,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			return NSData(bytes: &result, length: sizeof(UInt64))
 		}
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
 		})
@@ -49,7 +49,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			return result
 		}
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
 			options.keyType = .NSString
@@ -89,7 +89,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			}
 		}
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
 			options.keyType = .NSString
@@ -140,7 +140,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 				return existing as! NSMutableDictionary
 			})
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
 			options.keyType = .NSString

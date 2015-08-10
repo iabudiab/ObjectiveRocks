@@ -12,7 +12,7 @@ import XCTest
 class RocksDBPropertiesTests : RocksDBTests {
 
 	func testSwift_Properties() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.maxWriteBufferNumber = 10;
 			options.minWriteBufferNumberToMerge = 10;
@@ -32,7 +32,7 @@ class RocksDBPropertiesTests : RocksDBTests {
 		descriptor.addDefaultColumnFamilyWithOptions(nil)
 		descriptor.addColumnFamilyWithName("new_cf", andOptions: nil)
 
-		rocks = RocksDB(path: path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(path, columnFamilies: descriptor, andDatabaseOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.createMissingColumnFamilies = true
 		})

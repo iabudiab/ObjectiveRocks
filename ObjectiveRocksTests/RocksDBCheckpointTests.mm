@@ -16,7 +16,7 @@
 
 - (void)testCheckpoint
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -32,7 +32,7 @@
 
 	[_rocks close];
 
-	_rocks = [[RocksDB alloc] initWithPath:_chekpointPath_1 andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_chekpointPath_1 andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -41,7 +41,7 @@
 
 	[_rocks close];
 
-	_rocks = [[RocksDB alloc] initWithPath:_chekpointPath_2 andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_chekpointPath_2 andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 

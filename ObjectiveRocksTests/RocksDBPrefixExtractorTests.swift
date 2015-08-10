@@ -11,7 +11,7 @@ import XCTest
 class RocksDBPrefixExtractorTests : RocksDBTests {
 
 	func testSwift_PrefixExtractor_FixedLength() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.prefixExtractor = RocksDBPrefixExtractor(type: .FixedLength, length: 3)
 			options.keyType = .NSString;
@@ -76,7 +76,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			}
 		}
 
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.comparator = cmp
 			options.prefixExtractor = RocksDBPrefixExtractor(type: .FixedLength, length: 2)

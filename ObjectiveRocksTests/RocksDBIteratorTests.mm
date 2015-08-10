@@ -16,7 +16,7 @@
 
 - (void)testDB_Iterator
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -38,7 +38,7 @@
 
 - (void)testDB_Iterator_Seek
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -82,7 +82,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -104,7 +104,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys_Reverse
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -126,7 +126,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys_RangeStart
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -149,7 +149,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys_RangeEnd
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -172,7 +172,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys_RangeStartEnd
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -195,7 +195,7 @@
 
 - (void)testDB_Iterator_EnumerateKeys_Encoded
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.keyType = RocksDBTypeNSString;
 		options.valueType = RocksDBTypeNSString;
@@ -219,7 +219,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -242,7 +242,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues_Reverse
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -265,7 +265,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues_RangeStart
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -291,7 +291,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues_RangeEnd
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -317,7 +317,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues_RangeStartEnd
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -344,7 +344,7 @@
 
 - (void)testDB_Iterator_EnumerateKeysAndValues_Encoded
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.keyType = RocksDBTypeNSString;
 		options.valueType = RocksDBTypeNSString;

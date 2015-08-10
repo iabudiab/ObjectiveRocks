@@ -11,9 +11,9 @@ import XCTest
 class RocksDBSnapshotTests : RocksDBTests {
 
 	func testSwift_Snapshot() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-		})
+		});
 
 		rocks.setData(Data("value 1"), forKey: Data("key 1"))
 		rocks.setData(Data("value 2"), forKey: Data("key 2"))
@@ -36,7 +36,7 @@ class RocksDBSnapshotTests : RocksDBTests {
 	}
 
 	func testSwift_Snapshot_Iterator() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -72,7 +72,7 @@ class RocksDBSnapshotTests : RocksDBTests {
 	}
 
 	func testSwift_Snapshot_SequenceNumber() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 

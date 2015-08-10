@@ -16,7 +16,7 @@
 
 - (void)testWriteBatch_Perform
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -34,7 +34,7 @@
 
 - (void)testWriteBatch_Perform_DeleteOps
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -54,7 +54,7 @@
 
 - (void)testWriteBatch_Perform_ClearOps
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -76,7 +76,7 @@
 
 - (void)testWriteBatch_Apply
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -96,7 +96,7 @@
 
 - (void)testWriteBatch_Apply_DeleteOps
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -118,7 +118,7 @@
 
 - (void)testWriteBatch_Apply_MergeOps
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = [RocksDBMergeOperator operatorWithName:@"merge" andBlock:^id(id key, id existingValue, id value) {
 			NSMutableString *result = [NSMutableString string];
@@ -147,7 +147,7 @@
 
 - (void)testWriteBatch_Apply_ClearOps
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -171,7 +171,7 @@
 
 - (void)testWriteBatch_Count
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 	}];
 
@@ -204,7 +204,7 @@
 
 - (void)testWriteBatch_Encoded
 {
-	_rocks = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.keyType = RocksDBTypeNSString;
 		options.valueType = RocksDBTypeNSString;

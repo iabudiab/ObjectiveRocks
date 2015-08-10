@@ -88,49 +88,83 @@
 
 #pragma mark - Lifecycle
 
-- (instancetype)initWithPath:(NSString *)path
++ (instancetype)databaseAtPath:(NSString *)path andDBOptions:(void (^)(RocksDBOptions *))optionsBlock
 {
-	return [self initWithPath:path andDBOptions:nil];
-}
+	RocksDB *rocks = [[RocksDB alloc] initWithPath:path];
 
-- (instancetype)initWithPath:(NSString *)path andDBOptions:(void (^)(RocksDBOptions *))optionsBlock
-{
-	self = [super init];
-	if (self) {
-		_path = [path copy];
-		_options = [RocksDBOptions new];
-		if (optionsBlock) {
-			optionsBlock(_options);
-		}
-
-		if ([self openColumnFamilies:nil] == NO) {
-			return nil;
-		}
-		[self setDefaultReadOptions:nil andWriteOptions:nil];
+	if (optionsBlock) {
+		optionsBlock(rocks.options);
 	}
-	return self;
+
+	if ([rocks openDatabaseReadOnly:NO] == NO) {
+		return nil;
+	}
+	return rocks;
 }
 
-- (instancetype)initWithPath:(NSString *)path
++ (instancetype)databaseAtPath:(NSString *)path
 			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))optionsBlock
 {
+	RocksDB *rocks = [[RocksDB alloc] initWithPath:path];
+
+	RocksDBDatabaseOptions *dbOptions = [RocksDBDatabaseOptions new];
+	if (optionsBlock) {
+		optionsBlock(dbOptions);
+	}
+	rocks.options.databaseOptions = dbOptions;
+
+	if ([rocks openColumnFamilies:descriptor readOnly:NO] == NO) {
+		return nil;
+	}
+	return rocks;
+}
+
+#ifndef ROCKSDB_LITE
+
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+							 andDBOptions:(void (^)(RocksDBOptions *options))optionsBlock
+{
+	RocksDB *rocks = [[RocksDB alloc] initWithPath:path];
+
+	if (optionsBlock) {
+		optionsBlock(rocks.options);
+	}
+
+	if ([rocks openDatabaseReadOnly:YES] == NO) {
+		return nil;
+	}
+	return rocks;
+}
+
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+						 columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+					 andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))optionsBlock
+{
+	RocksDB *rocks = [[RocksDB alloc] initWithPath:path];
+
+	RocksDBDatabaseOptions *dbOptions = [RocksDBDatabaseOptions new];
+	if (optionsBlock) {
+		optionsBlock(dbOptions);
+	}
+	rocks.options.databaseOptions = dbOptions;
+
+	if ([rocks openColumnFamilies:descriptor readOnly:YES] == NO) {
+		return nil;
+	}
+	return rocks;
+}
+
+#endif
+
+- (instancetype)initWithPath:(NSString *)path
+{
 	self = [super init];
 	if (self) {
 		_path = [path copy];
-
-		RocksDBDatabaseOptions *dbOptions = [RocksDBDatabaseOptions new];
-		if (optionsBlock) {
-			optionsBlock(dbOptions);
-		}
-
 		_options = [RocksDBOptions new];
-		_options.databaseOptions = dbOptions;
-
-		if ([self openColumnFamilies:descriptor] == NO) {
-			return nil;
-		}
-		[self setDefaultReadOptions:nil andWriteOptions:nil];
+		_readOptions = [RocksDBReadOptions new];
+		_writeOptions = [RocksDBWriteOptions new];
 	}
 	return self;
 }
@@ -159,14 +193,38 @@
 
 #pragma mark - Open
 
-- (BOOL)openColumnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+- (BOOL)openDatabaseReadOnly:(BOOL)readOnly
 {
 	rocksdb::Status status;
-	if (descriptor == nil) {
-		status = rocksdb::DB::Open(_options.options, _path.UTF8String, &_db);
+	if (readOnly) {
+		status = rocksdb::DB::OpenForReadOnly(_options.options, _path.UTF8String, &_db);
 	} else {
-		std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies = descriptor.columnFamilies;
-		_columnFamilyHandles = new std::vector<rocksdb::ColumnFamilyHandle *>;
+		status = rocksdb::DB::Open(_options.options, _path.UTF8String, &_db);
+	}
+
+	if (!status.ok()) {
+		NSLog(@"Error opening database: %@", [RocksDBError errorWithRocksStatus:status]);
+		[self close];
+		return NO;
+	}
+	_columnFamily = _db->DefaultColumnFamily();
+
+	return YES;
+}
+
+- (BOOL)openColumnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor readOnly:(BOOL)readOnly
+{
+	rocksdb::Status status;
+	std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies = descriptor.columnFamilies;
+	_columnFamilyHandles = new std::vector<rocksdb::ColumnFamilyHandle *>;
+
+	if (readOnly) {
+		status = rocksdb::DB::OpenForReadOnly(_options.options,
+											  _path.UTF8String,
+											  *columnFamilies,
+											  _columnFamilyHandles,
+											  &_db);
+	} else {
 		status = rocksdb::DB::Open(_options.options,
 								   _path.UTF8String,
 								   *columnFamilies,

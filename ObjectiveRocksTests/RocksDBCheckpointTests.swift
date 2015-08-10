@@ -11,7 +11,7 @@ import XCTest
 class RocksDBCheckpointTests : RocksDBTests {
 
 	func testSwift_Checkpoint() {
-		rocks = RocksDB(path: self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -27,7 +27,7 @@ class RocksDBCheckpointTests : RocksDBTests {
 
 		rocks.close()
 
-		rocks = RocksDB(path: self.checkpointPath1, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.checkpointPath1, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
@@ -36,7 +36,7 @@ class RocksDBCheckpointTests : RocksDBTests {
 
 		rocks.close()
 
-		rocks = RocksDB(path: self.checkpointPath2, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.databaseAtPath(self.checkpointPath2, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
 
