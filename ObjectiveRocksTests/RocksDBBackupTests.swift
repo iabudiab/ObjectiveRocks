@@ -161,7 +161,7 @@ class RocksDBBackupTests : RocksDBTests {
 
 		backupEngine.restoreBackupToDestinationPath(self.restorePath, error: nil)
 
-		let backupRocks = RocksDB.databaseAtPath(restorePath)
+		let backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
 		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
 		XCTAssertEqual(backupRocks.dataForKey(Data("key 2")), Data("value 2"))
@@ -190,7 +190,7 @@ class RocksDBBackupTests : RocksDBTests {
 
 		backupEngine.restoreBackupWithId(1, toDestinationPath: self.restorePath, error: nil)
 
-		var backupRocks = RocksDB.databaseAtPath(restorePath)
+		var backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
 		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
 		XCTAssertNil(backupRocks.dataForKey(Data("key 2")))
@@ -200,7 +200,7 @@ class RocksDBBackupTests : RocksDBTests {
 
 		backupEngine.restoreBackupWithId(2, toDestinationPath: self.restorePath, error: nil)
 
-		backupRocks = RocksDB.databaseAtPath(restorePath)
+		backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
 		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
 		XCTAssertEqual(backupRocks.dataForKey(Data("key 2")), Data("value 2"))

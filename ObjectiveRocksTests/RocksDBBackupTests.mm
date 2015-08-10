@@ -172,7 +172,7 @@
 
 	[backupEngine restoreBackupToDestinationPath:_restorePath error:nil];
 
-	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath];
+	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], Data(@"value 2"));
@@ -202,7 +202,7 @@
 
 	[backupEngine restoreBackupWithId:1 toDestinationPath:_restorePath error:nil];
 
-	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath];
+	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], nil);
@@ -212,7 +212,7 @@
 
 	[backupEngine restoreBackupWithId:2 toDestinationPath:_restorePath error:nil];
 
-	backupRocks = [RocksDB databaseAtPath:_restorePath];
+	backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1")], Data(@"value 1"));
 	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2")], Data(@"value 2"));
