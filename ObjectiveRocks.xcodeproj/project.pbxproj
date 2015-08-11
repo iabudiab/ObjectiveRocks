@@ -93,7 +93,6 @@
 		624C226C1AF02B1B006DC8FA /* instrumented_mutex.cc in Sources */ = {isa = PBXBuildFile; fileRef = 624C22691AF02B1B006DC8FA /* instrumented_mutex.cc */; };
 		6251A3731B783DA7009BABD5 /* RocksDBReadOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6251A3721B783DA7009BABD5 /* RocksDBReadOnlyTests.m */; };
 		6251A3751B783DBC009BABD5 /* RocksDBReadOnlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6251A3741B783DBC009BABD5 /* RocksDBReadOnlyTests.swift */; };
-		625F8F1D1A59C3EB007796BA /* RocksDBProperties.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1B1A59C3EB007796BA /* RocksDBProperties.mm */; };
 		625F8F1F1A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */; };
 		625F8F231A59CF82007796BA /* RocksDBCheckpoint.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F221A59CF82007796BA /* RocksDBCheckpoint.mm */; };
 		625F8F251A59D11D007796BA /* RocksDBCheckpointTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F241A59D11D007796BA /* RocksDBCheckpointTests.mm */; };
@@ -2621,7 +2620,6 @@
 				62A8AFC41A58C30E0069B4C8 /* stringappend2.cc in Sources */,
 				622DB86A1A7EA2310026C73F /* thread_status_updater_debug.cc in Sources */,
 				62A8AFC51A58C30E0069B4C8 /* table_properties_collector.cc in Sources */,
-				625F8F1D1A59C3EB007796BA /* RocksDBProperties.mm in Sources */,
 				62A8AFC61A58C30E0069B4C8 /* sync_point.cc in Sources */,
 				62A8AFC71A58C30E0069B4C8 /* plain_table_factory.cc in Sources */,
 				62A8AFC81A58C30E0069B4C8 /* thread_local.cc in Sources */,

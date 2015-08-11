@@ -14,7 +14,10 @@
 #import "RocksDBWriteOptions.h"
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
+
+#ifndef ROCKSDB_LITE
 #import "RocksDBProperties.h"
+#endif
 
 @class RocksDBColumnFamily;
 @class RocksDBSnapshot;

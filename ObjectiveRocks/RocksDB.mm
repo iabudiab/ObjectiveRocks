@@ -334,6 +334,8 @@
 	}
 }
 
+#ifndef ROCKSDB_LITE
+
 #pragma mark - Peroperties
 
 - (NSString *)valueForProperty:(RocksDBProperty)property
@@ -361,6 +363,8 @@
 	}
 	return value;
 }
+
+#endif
 
 #pragma mark - Write Operations
 
