@@ -53,12 +53,12 @@
 			}];
 
 		case RocksDBComparatorNumberAscending:
-			return [[self alloc] initWithName:@"objectiverocks.key.length.asc" andBlock:^int(id key1, id key2) {
+			return [[self alloc] initWithName:@"objectiverocks.number.asc" andBlock:^int(id key1, id key2) {
 				return [key1 compare:key2];
 			}];
 
 		case RocksDBComparatorNumberDescending:
-			return [[self alloc] initWithName:@"objectiverocks.key.length.desc" andBlock:^int(id key1, id key2) {
+			return [[self alloc] initWithName:@"objectiverocks.number.desc" andBlock:^int(id key1, id key2) {
 				return [key1 compare:key2] * -1;
 			}];
 	}
