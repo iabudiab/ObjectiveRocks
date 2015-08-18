@@ -19,12 +19,20 @@
  */
 @interface RocksDBColumnFamily : RocksDB
 
-- (instancetype)initWithPath:(NSString *)path __attribute__((unavailable("Create column family via a RocksDB instance")));
-- (instancetype)initWithPath:(NSString *)path
-				andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
-- (instancetype)initWithPath:(NSString *)path
-			  columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-		  andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
++ (instancetype)databaseAtPath:(NSString *)path
+				  andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
++ (instancetype)databaseAtPath:(NSString *)path
+				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+
+#ifndef ROCKSDB_LITE
+
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+							 andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
++ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
+						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+#endif
 
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path __attribute__((unavailable("Use the superclass RocksDB instead")));
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
