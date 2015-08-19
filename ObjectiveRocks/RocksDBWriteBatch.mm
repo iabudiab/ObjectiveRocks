@@ -7,35 +7,56 @@
 //
 
 #import "RocksDBWriteBatch.h"
+#import "RocksDBWriteBatch+Private.h"
 #import "RocksDBColumnFamily.h"
 #import "RocksDBColumnFamily+Private.h"
 #import "RocksDBSlice.h"
 
+#import <rocksdb/write_batch_base.h>
 #import <rocksdb/write_batch.h>
 
 @interface RocksDBWriteBatch ()
 {
-	RocksDBEncodingOptions *_encodingOptions;
-	rocksdb::WriteBatch _writeBatch;
 	rocksdb::ColumnFamilyHandle *_columnFamily;
+	RocksDBEncodingOptions *_encodingOptions;
 }
-@property (nonatomic, readonly) rocksdb::WriteBatch writeBatch;
+@property (nonatomic, assign) rocksdb::WriteBatchBase *writeBatchBase;
 @end
 
 @implementation RocksDBWriteBatch
-@synthesize writeBatch = _writeBatch;
+@synthesize writeBatchBase = _writeBatchBase;
 
 #pragma mark - Lifecycle
 
 - (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-				  andEncodingOptions:(RocksDBEncodingOptions *)options
+					  andEncodingOptions:(RocksDBEncodingOptions *)options
+{
+	return [self initWithNativeWriteBatch:new rocksdb::WriteBatch()
+							 columnFamily:columnFamily
+					   andEncodingOptions:options];
+}
+
+- (instancetype)initWithNativeWriteBatch:(rocksdb::WriteBatchBase *)writeBatchBase
+							columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+					  andEncodingOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
+		_writeBatchBase = writeBatchBase;
 		_columnFamily = columnFamily;
 		_encodingOptions = options;
 	}
 	return self;
+}
+
+- (void)dealloc
+{
+	@synchronized(self) {
+		if (_writeBatchBase != nullptr) {
+			delete _writeBatchBase;
+			_writeBatchBase = nullptr;
+		}
+	}
 }
 
 #pragma mark - Put
@@ -65,9 +86,9 @@
 			handle = columnFamily.columnFamily;
 		}
 
-		_writeBatch.Put(handle,
-						SliceFromData(aKey),
-						SliceFromData(data));
+		_writeBatchBase->Put(handle,
+							 SliceFromData(aKey),
+							 SliceFromData(data));
 	}
 }
 
@@ -109,9 +130,10 @@
 		if (columnFamily != nil) {
 			handle = columnFamily.columnFamily;
 		}
-		_writeBatch.Merge(handle,
-						  SliceFromData(aKey),
-						  SliceFromData(data));
+
+		_writeBatchBase->Merge(handle,
+							   SliceFromData(aKey),
+							   SliceFromData(data));
 	}
 }
 
@@ -140,8 +162,9 @@
 		if (columnFamily != nil) {
 			handle = columnFamily.columnFamily;
 		}
-		_writeBatch.Delete(handle,
-						   SliceFromData(aKey));
+
+		_writeBatchBase->Delete(handle,
+								SliceFromData(aKey));
 	}
 }
 
@@ -150,31 +173,31 @@
 - (void)putLogData:(NSData *)logData;
 {
 	if (logData != nil) {
-		_writeBatch.PutLogData(SliceFromData(logData));
+		_writeBatchBase->PutLogData(SliceFromData(logData));
 	}
 }
 
 - (void)clear
 {
-	_writeBatch.Clear();
+	_writeBatchBase->Clear();
 }
 
 #pragma mark - Meta
 
 - (int)count
 {
-	return _writeBatch.Count();
+	return _writeBatchBase->GetWriteBatch()->Count();
 }
 
 - (NSData *)data
 {
-	std::string rep = _writeBatch.Data();
+	std::string rep = _writeBatchBase->GetWriteBatch()->Data();
 	return DataFromSlice(rocksdb::Slice(rep));
 }
 
 - (size_t)dataSize
 {
-	return _writeBatch.GetDataSize();
+	return _writeBatchBase->GetWriteBatch()->GetDataSize();
 }
 
 @end

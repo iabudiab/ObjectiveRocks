@@ -463,6 +463,8 @@
 		62F4AA7E1A6AAFD700489D6C /* RocksDBColumnFamilyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F4AA7D1A6AAFD700489D6C /* RocksDBColumnFamilyTests.swift */; };
 		62F4AA7F1A6AAFD700489D6C /* RocksDBColumnFamilyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62F4AA7D1A6AAFD700489D6C /* RocksDBColumnFamilyTests.swift */; };
 		62F4AA801A6AAFE500489D6C /* RocksDBColumnFamilyMetadataTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 627FBE761A61E0AA0038696A /* RocksDBColumnFamilyMetadataTests.mm */; };
+		62F8C5FF1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F8C5FE1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm */; };
+		62F8C6001B85386A00E2577F /* RocksDBIndexedWriteBatch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F8C5FE1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm */; };
 		62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */; };
 /* End PBXBuildFile section */
 
@@ -1142,6 +1144,8 @@
 		62F3ED5A1A574F7500EBFEBF /* RocksDBTableFactory.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBTableFactory.mm; sourceTree = "<group>"; };
 		62F4AA7B1A6AAF9A00489D6C /* RocksDBColumnFamilyMetadataTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocksDBColumnFamilyMetadataTests.swift; sourceTree = "<group>"; };
 		62F4AA7D1A6AAFD700489D6C /* RocksDBColumnFamilyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocksDBColumnFamilyTests.swift; sourceTree = "<group>"; };
+		62F8C5FD1B85386A00E2577F /* RocksDBIndexedWriteBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBIndexedWriteBatch.h; sourceTree = "<group>"; };
+		62F8C5FE1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBIndexedWriteBatch.mm; sourceTree = "<group>"; };
 		62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBackupTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1415,6 +1419,8 @@
 			children = (
 				623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */,
 				623FE74F1A2D2ED500E68421 /* RocksDBWriteBatch.mm */,
+				62F8C5FD1B85386A00E2577F /* RocksDBIndexedWriteBatch.h */,
+				62F8C5FE1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm */,
 			);
 			name = "Write Batch";
 			sourceTree = "<group>";
@@ -2361,6 +2367,7 @@
 				62EE2CD51A1ABA2000486C31 /* block_prefix_index.cc in Sources */,
 				623FE7501A2D2ED500E68421 /* RocksDBWriteBatch.mm in Sources */,
 				62EE2CC31A1ABA2000486C31 /* adaptive_table_factory.cc in Sources */,
+				62F8C5FF1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm in Sources */,
 				624C22571AF0195F006DC8FA /* flashcache.cc in Sources */,
 				62EE2CF91A1ABA2000486C31 /* plain_table_key_coding.cc in Sources */,
 				62AEF9BB1A1D5DA900E63E89 /* RocksDBOptions.mm in Sources */,
@@ -2615,6 +2622,7 @@
 				62A8AFC01A58C30E0069B4C8 /* perf_context.cc in Sources */,
 				62A8AFC11A58C30E0069B4C8 /* env.cc in Sources */,
 				624C22641AF01CA7006DC8FA /* experimental.cc in Sources */,
+				62F8C6001B85386A00E2577F /* RocksDBIndexedWriteBatch.mm in Sources */,
 				62A8AFC21A58C30E0069B4C8 /* version_builder.cc in Sources */,
 				62A8AFC31A58C30E0069B4C8 /* env_posix.cc in Sources */,
 				62A8AFC41A58C30E0069B4C8 /* stringappend2.cc in Sources */,

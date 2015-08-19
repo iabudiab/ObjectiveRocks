@@ -723,8 +723,8 @@
 	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 
 	batchBlock(writeBatch, writeOptions);
-	rocksdb::WriteBatch batch = writeBatch.writeBatch;
-	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
+	rocksdb::WriteBatch *batch = writeBatch.writeBatchBase->GetWriteBatch();
+	rocksdb::Status status = _db->Write(writeOptions.options, batch);
 
 	if (!status.ok()) {
 		NSError *temp = [RocksDBError errorWithRocksStatus:status];
@@ -748,8 +748,8 @@
 		writeOptionsBlock(writeOptions);
 	}
 
-	rocksdb::WriteBatch batch = writeBatch.writeBatch;
-	rocksdb::Status status = _db->Write(writeOptions.options, &batch);
+	rocksdb::WriteBatch *batch = writeBatch.writeBatchBase->GetWriteBatch();
+	rocksdb::Status status = _db->Write(writeOptions.options, batch);
 
 	if (!status.ok()) {
 		NSError *temp = [RocksDBError errorWithRocksStatus:status];
