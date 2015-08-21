@@ -8,6 +8,8 @@
 
 #import "RocksDB.h"
 
+#import "RocksDBOptions+Private.h"
+
 #import "RocksDBColumnFamily.h"
 #import "RocksDBColumnFamily+Private.h"
 #import "RocksDBColumnFamilyMetaData+Private.h"
@@ -35,28 +37,6 @@
 
 @interface RocksDBColumnFamilyDescriptor (Private)
 @property (nonatomic, assign) std::vector<rocksdb::ColumnFamilyDescriptor> *columnFamilies;
-@end
-
-@interface RocksDBOptions (Private)
-@property (nonatomic, assign) rocksdb::Options options;
-@property (nonatomic, strong) RocksDBDatabaseOptions *databaseOptions;
-@property (nonatomic, strong) RocksDBColumnFamilyOptions *columnFamilyOption;
-@end
-
-@interface RocksDBDatabaseOptions (Private)
-@property (nonatomic, assign) rocksdb::DBOptions options;
-@end
-
-@interface RocksDBColumnFamilyOptions (Private)
-@property (nonatomic, assign) rocksdb::ColumnFamilyOptions options;
-@end
-
-@interface RocksDBReadOptions (Private)
-@property (nonatomic, assign) rocksdb::ReadOptions options;
-@end
-
-@interface RocksDBWriteOptions (Private)
-@property (nonatomic, assign) rocksdb::WriteOptions options;
 @end
 
 @interface RocksDB ()

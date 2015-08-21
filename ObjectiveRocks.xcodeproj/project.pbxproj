@@ -1147,6 +1147,7 @@
 		62F8C6051B85632500E2577F /* RocksDBIterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBIterator.h; sourceTree = "<group>"; };
 		62F8C6061B85632500E2577F /* RocksDBIterator.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBIterator.mm; sourceTree = "<group>"; };
 		62F9D8A11B86A74900C65860 /* RocksDBWriteBatchIterator+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBWriteBatchIterator+Private.h"; sourceTree = "<group>"; };
+		62F9D8A51B86AE8900C65860 /* RocksDBOptions+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBOptions+Private.h"; sourceTree = "<group>"; };
 		62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBackupTests.mm; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1256,6 +1257,7 @@
 			isa = PBXGroup;
 			children = (
 				6221B78A1A62970800D28BF5 /* RocksDB+Private.h */,
+				62F9D8A51B86AE8900C65860 /* RocksDBOptions+Private.h */,
 				6221B78E1A62973500D28BF5 /* RocksDBColumnFamily+Private.h */,
 				6221B7921A62976F00D28BF5 /* RocksDBColumnFamilyMetaData+Private.h */,
 				6221B7961A6298AD00D28BF5 /* RocksDBIterator+Private.h */,
