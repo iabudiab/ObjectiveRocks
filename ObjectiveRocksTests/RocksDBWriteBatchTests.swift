@@ -15,11 +15,11 @@ class RocksDBWriteBatchTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.performWriteBatch { (batch, options) -> Void in
+		rocks.performWriteBatch ({ (batch, options) -> Void in
 			batch.setData(Data("value 1"), forKey: Data("key 1"))
 			batch.setData(Data("value 2"), forKey: Data("key 2"))
 			batch.setData(Data("value 3"), forKey: Data("key 3"))
-		}
+		}, error: nil);
 
 		XCTAssertEqual(rocks.dataForKey(Data("key 1")), Data("value 1"));
 		XCTAssertEqual(rocks.dataForKey(Data("key 2")), Data("value 2"));
@@ -34,11 +34,11 @@ class RocksDBWriteBatchTests : RocksDBTests {
 
 		rocks.setData(Data("value 1"), forKey: Data("key 1"))
 
-		rocks.performWriteBatch { (batch, options) -> Void in
+		rocks.performWriteBatch ({ (batch, options) -> Void in
 			batch.deleteDataForKey(Data("key 1"))
 			batch.setData(Data("value 2"), forKey: Data("key 2"))
 			batch.setData(Data("value 3"), forKey: Data("key 3"))
-		}
+		}, error: nil);
 
 		XCTAssertNil(rocks.dataForKey(Data("Key 1")))
 		XCTAssertEqual(rocks.dataForKey(Data("key 2")), Data("value 2"));
@@ -53,13 +53,13 @@ class RocksDBWriteBatchTests : RocksDBTests {
 
 		rocks.setData(Data("value 1"), forKey: Data("key 1"))
 
-		rocks.performWriteBatch { (batch, options) -> Void in
+		rocks.performWriteBatch ({ (batch, options) -> Void in
 			batch.deleteDataForKey(Data("key 1"))
 			batch.setData(Data("value 2"), forKey: Data("key 2"))
 			batch.setData(Data("value 3"), forKey: Data("key 3"))
 			batch.clear()
 			batch.setData(Data("value 4"), forKey: Data("key 4"))
-		}
+			}, error: nil);
 
 		XCTAssertEqual(rocks.dataForKey(Data("key 1")), Data("value 1"));
 		XCTAssertNil(rocks.dataForKey(Data("Key 2")))
@@ -199,11 +199,11 @@ class RocksDBWriteBatchTests : RocksDBTests {
 
 		rocks.setData(Data("value 1"), forKey: Data("key 1"))
 
-		rocks.performWriteBatch { (batch, options) -> Void in
+		rocks.performWriteBatch ({ (batch, options) -> Void in
 			batch.setObject("value 2", forKey: "key 2")
 			batch.setObject("value 3", forKey: "key 3")
 			batch.deleteObjectForKey("value 1")
-		}
+		}, error: nil);
 
 		XCTAssertNil(rocks.objectForKey("Key 1"))
 		XCTAssertEqual(rocks.objectForKey("key 2") as! NSString, "value 2");

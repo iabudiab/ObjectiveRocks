@@ -13,6 +13,7 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 #import "RocksDBWriteBatch.h"
+#import "RocksDBIndexedWriteBatch.h"
 #import "RocksDBIterator.h"
 
 #ifndef ROCKSDB_LITE
@@ -729,17 +730,15 @@
 - (RocksDBWriteBatch *)writeBatch;
 
 /**
- Performs a write batch on this DB.
- 
- @discussion All the operations stored to the batch instance are written atomically to DB when the
- block is executed.
- 
- @param batch A block with `RocksDBWriteBatch` instance and `RocksDBWriteOptions` to configure the batch.
- @return `YES` if the operation succeeded, `NO` otherwise
+ Returns an instance of an indexed write batch, which can be used to perform a set of 
+ updates to the database atomically.
 
- @see RocksDBWriteBatch
+ @discussion The indexed write batch builds a searchable index, that can be read and 
+ iterated before applying it to the database.
+
+ @see RocksDBIndexedWriteBatch
  */
-- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch;
+- (RocksDBIndexedWriteBatch *)indexedWriteBatch;
 
 /**
  Performs a write batch on this DB.
@@ -754,6 +753,19 @@
  @see RocksDBWriteBatch
  */
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error;
+
+/**
+ Performs an indexed write batch on this DB.
+
+ @discussion All the operations stored to the batch instance are written atomically to DB when the
+ block is executed.
+
+ @param batch A block with `RocksDBIndexedWriteBatch` instance and `RocksDBWriteOptions` to configure the batch.
+ @return `YES` if the operation succeeded, `NO` otherwise
+
+ @see RocksDBIndexedWriteBatch
+ */
+- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error;
 
 /**
  Applies a write batch instance on this DB.

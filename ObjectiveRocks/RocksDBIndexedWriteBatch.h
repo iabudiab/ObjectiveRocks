@@ -12,6 +12,10 @@
 @class RocksDBColumnFamily;
 @class RocksDBReadOptions;
 
+/**
+ A `RocksDBIndexedWriteBatch` builds a binary searchable index for all the keys
+ inserted, which can be iterated via the `RocksDBWriteBatchIterator`.
+ */
 @interface RocksDBIndexedWriteBatch : RocksDBWriteBatch
 
 /**

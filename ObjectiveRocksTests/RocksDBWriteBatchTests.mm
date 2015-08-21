@@ -24,7 +24,7 @@
 		[batch setData:Data(@"Value 1") forKey:Data(@"Key 1")];
 		[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
 		[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
-	}];
+	} error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
@@ -44,7 +44,7 @@
 		[batch deleteDataForKey:Data(@"Key 1")];
 		[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
 		[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
-	}];
+	} error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], nil);
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
@@ -66,7 +66,7 @@
 		[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 		[batch clear];
 		[batch setData:Data(@"Value 4") forKey:Data(@"Key 4")];
-	}];
+	} error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], nil);
@@ -216,7 +216,7 @@
 		[batch setObject:@"Value 2" forKey:@"Key 2"];
 		[batch setObject:@"Value 3" forKey:@"Key 3"];
 		[batch deleteObjectForKey:@"Key 1"];
-	}];
+	} error:nil];
 
 	XCTAssertEqualObjects([_rocks objectForKey:@"Key 1"], nil);
 	XCTAssertEqualObjects([_rocks objectForKey:@"Key 2"], @"Value 2");

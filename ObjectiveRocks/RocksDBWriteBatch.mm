@@ -29,22 +29,22 @@
 #pragma mark - Lifecycle
 
 - (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					  andEncodingOptions:(RocksDBEncodingOptions *)options
+					  andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions
 {
 	return [self initWithNativeWriteBatch:new rocksdb::WriteBatch()
 							 columnFamily:columnFamily
-					   andEncodingOptions:options];
+					   andEncodingOptions:encodingOptions];
 }
 
 - (instancetype)initWithNativeWriteBatch:(rocksdb::WriteBatchBase *)writeBatchBase
 							columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					  andEncodingOptions:(RocksDBEncodingOptions *)options
+					  andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions
 {
 	self = [super init];
 	if (self) {
 		_writeBatchBase = writeBatchBase;
 		_columnFamily = columnFamily;
-		_encodingOptions = options;
+		_encodingOptions = encodingOptions;
 	}
 	return self;
 }

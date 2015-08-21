@@ -22,8 +22,9 @@
 
 @interface RocksDBIndexedWriteBatch ()
 {
+	rocksdb::DB *_db;
+	RocksDBReadOptions *_readOptions;
 	rocksdb::WriteBatchWithIndex *_writeBatchWithIndex;
-	RocksDB *database;
 }
 @end
 
@@ -31,13 +32,17 @@
 
 #pragma mark - Lifecycle 
 
-- (instancetype)initColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-			  andEncodingOptions:(RocksDBEncodingOptions *)options
+- (instancetype)initWithDBInstance:(rocksdb::DB *)db
+					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+					   readOptions:(RocksDBReadOptions *)readOptions
+				andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions
 {
 	self = [super initWithNativeWriteBatch:new rocksdb::WriteBatchWithIndex()
 							  columnFamily:columnFamily
-						andEncodingOptions:options];
+						andEncodingOptions:encodingOptions];
 	if (self) {
+		_db = db;
+		_readOptions = [readOptions copy];
 		_writeBatchWithIndex = static_cast<rocksdb::WriteBatchWithIndex *>(self.writeBatchBase);
 	}
 	return self;
@@ -53,7 +58,7 @@
 
 	std::string value;
 	rocksdb::Status status = _writeBatchWithIndex->GetFromBatch(columnFamilyHandle,
-																database.db->GetDBOptions(),
+																_db->GetDBOptions(),
 																SliceFromKey(aKey, self.encodingOptions, nil),
 																&value);
 	if (!status.ok()) {
@@ -72,7 +77,7 @@
 							  error:(NSError * __autoreleasing *)error
 						readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
 {
-	RocksDBReadOptions *readOptions = [database.readOptions copy];
+	RocksDBReadOptions *readOptions = [_readOptions copy];
 	if (readOptionsBlock) {
 		readOptionsBlock(readOptions);
 	}
@@ -80,7 +85,7 @@
 	rocksdb::ColumnFamilyHandle *columnFamilyHandle = columnFamily != nil ? columnFamily.columnFamily : nullptr;
 
 	std::string value;
-	rocksdb::Status status = _writeBatchWithIndex->GetFromBatchAndDB(database.db,
+	rocksdb::Status status = _writeBatchWithIndex->GetFromBatchAndDB(_db,
 																	 readOptions.options,
 																	 columnFamilyHandle,
 																	 SliceFromKey(aKey, self.encodingOptions, nil),

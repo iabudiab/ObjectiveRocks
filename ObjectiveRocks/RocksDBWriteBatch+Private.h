@@ -8,12 +8,14 @@
 
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIndexedWriteBatch.h"
-#import "RocksDBEncodingOptions.h"
 
 namespace rocksdb {
+	class DB;
 	class ColumnFamilyHandle;
 	class WriteBatchBase;
 }
+
+@class RocksDBEncodingOptions;
 
 /**
  This category is intended to hide all C++ types from the public interface in order to
@@ -45,7 +47,7 @@ namespace rocksdb {
  */
 - (instancetype)initWithNativeWriteBatch:(rocksdb::WriteBatchBase *)writeBatchBase
 							columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					  andEncodingOptions:(RocksDBEncodingOptions *)options;
+					  andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions;
 
 /**
  Initializes a new instance of a simple `RocksDBWriteBatch` with the given options and
@@ -58,6 +60,26 @@ namespace rocksdb {
  @see RocksDBEncodingOptions
  */
 - (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-				  andEncodingOptions:(RocksDBEncodingOptions *)options;
+				  andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions;
+
+@end
+
+@interface RocksDBIndexedWriteBatch (Private)
+
+/**
+ Initializes a new instance of a simple `RocksDBIndexedWriteBatch` with the given DB instance,
+ rocksdb::ColumnFamilyHandle instance and encoding options.
+
+ @param db The rocksdb::DB instance.
+ @param columnFamily The rocks::ColumnFamilyHandle instance.
+ @param options The Encoding options.
+ @return a newly-initialized instance of `RocksDBIndexedWriteBatch`.
+
+ @see RocksDBEncodingOptions
+ */
+- (instancetype)initWithDBInstance:(rocksdb::DB *)db
+					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
+					   readOptions:(RocksDBReadOptions *)readOptions
+				andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions;
 
 @end

@@ -687,19 +687,46 @@
 
 - (RocksDBWriteBatch *)writeBatch
 {
-	return [[RocksDBWriteBatch alloc] initWithColumnFamily:_columnFamily andEncodingOptions:(RocksDBEncodingOptions *)_options];
+	return [[RocksDBWriteBatch alloc] initWithColumnFamily:_columnFamily
+										andEncodingOptions:(RocksDBEncodingOptions *)_options];
+}
+
+- (RocksDBIndexedWriteBatch *)indexedWriteBatch
+{
+	return [[RocksDBIndexedWriteBatch alloc] initWithDBInstance:_db
+												   columnFamily:_columnFamily
+													readOptions:_readOptions
+											 andEncodingOptions:(RocksDBEncodingOptions *)_options];
 }
 
 - (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
-{
-	return [self performWriteBatch:batchBlock error:nil];
-}
-
-- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batchBlock error:(NSError **)error
+					error:(NSError * __autoreleasing *)error
 {
 	if (batchBlock == nil) return NO;
 
 	RocksDBWriteBatch *writeBatch = [self writeBatch];
+	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
+
+	batchBlock(writeBatch, writeOptions);
+	rocksdb::WriteBatch *batch = writeBatch.writeBatchBase->GetWriteBatch();
+	rocksdb::Status status = _db->Write(writeOptions.options, batch);
+
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+	return YES;
+}
+
+- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batchBlock
+						   error:(NSError * __autoreleasing *)error
+{
+	if (batchBlock == nil) return NO;
+
+	RocksDBIndexedWriteBatch *writeBatch = [self indexedWriteBatch];
 	RocksDBWriteOptions *writeOptions = [_writeOptions copy];
 
 	batchBlock(writeBatch, writeOptions);
