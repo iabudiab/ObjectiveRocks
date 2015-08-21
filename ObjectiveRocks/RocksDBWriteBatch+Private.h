@@ -8,6 +8,7 @@
 
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIndexedWriteBatch.h"
+#import "RocksDBEncodingOptions.h"
 
 namespace rocksdb {
 	class ColumnFamilyHandle;
@@ -22,6 +23,12 @@ namespace rocksdb {
 
 /** @brief The rocksdb::WriteBatchBase associated with this instance. */
 @property (nonatomic, readonly) rocksdb::WriteBatchBase *writeBatchBase;
+
+/** @brief The rocksdb::ColumnFamilyHandle associated with this instance. */
+@property (nonatomic, readonly) rocksdb::ColumnFamilyHandle *columnFamily;
+
+/** @brief The RocksDBEncodingOptions associated with this instance. */
+@property (nonatomic, readonly) RocksDBEncodingOptions *encodingOptions;
 
 /**
  Initializes a new instance of `RocksDBWriteBatch` with the given native rocksdb::WriteBatchBase 
@@ -43,30 +50,6 @@ namespace rocksdb {
 /**
  Initializes a new instance of a simple `RocksDBWriteBatch` with the given options and
  rocksdb::ColumnFamilyHandle instance.
-
- @param columnFamily The rocks::ColumnFamilyHandle instance.
- @param options The Encoding options.
- @return a newly-initialized instance of `RocksDBWriteBatch`.
-
- @see RocksDBEncodingOptions
- */
-- (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-				  andEncodingOptions:(RocksDBEncodingOptions *)options;
-
-@end
-
-/**
- This category is intended to hide all C++ types from the public interface in order to
- maintain a pure Objective-C API for Swift compatibility.
- */
-@interface RocksDBIndexedWriteBatch (Private)
-
-/**
- Initializes a new instance of `RocksDBIndexedWriteBatch` with the given options and
- rocksdb::ColumnFamilyHandle instance.
-
- @discussion `RocksDBIndexedWriteBatch` builds a binary searchable index for all 
- the keys inserted.
 
  @param columnFamily The rocks::ColumnFamilyHandle instance.
  @param options The Encoding options.
