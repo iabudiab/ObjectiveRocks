@@ -22,9 +22,9 @@
 		options.minWriteBufferNumberToMerge = 10;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyNumEntriesActiveMemtable], 0);
 	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyCurSizeActiveMemTable], 0);
@@ -42,12 +42,12 @@
 	}];
 
 	XCTAssertGreaterThanOrEqual([_rocks.columnFamilies[0] valueForIntProperty:RocksDBIntPropertyEstimatedNumKeys], 0);
-	XCTAssertNotNil([_rocks.columnFamilies[0] valueForProperty:RocksDBPropertyStats]);
-	XCTAssertNotNil([_rocks.columnFamilies[0] valueForProperty:RocksDBPropertySsTables]);
+	XCTAssertNotNil([(RocksDB *)_rocks.columnFamilies[0] valueForProperty:RocksDBPropertyStats]);
+	XCTAssertNotNil([(RocksDB *)_rocks.columnFamilies[0] valueForProperty:RocksDBPropertySsTables]);
 
 	XCTAssertGreaterThanOrEqual([_rocks.columnFamilies[1] valueForIntProperty:RocksDBIntPropertyEstimatedNumKeys], 0);
-	XCTAssertNotNil([_rocks.columnFamilies[1] valueForProperty:RocksDBPropertyStats]);
-	XCTAssertNotNil([_rocks.columnFamilies[1] valueForProperty:RocksDBPropertySsTables]);
+	XCTAssertNotNil([(RocksDB *)_rocks.columnFamilies[1] valueForProperty:RocksDBPropertyStats]);
+	XCTAssertNotNil([(RocksDB *)_rocks.columnFamilies[1] valueForProperty:RocksDBPropertySsTables]);
 }
 
 @end

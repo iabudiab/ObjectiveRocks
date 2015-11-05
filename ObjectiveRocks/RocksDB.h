@@ -249,15 +249,6 @@
 
  @param anObject The object for key.
  @param aKey The key for object.
- @return `YES` if the operation succeeded, `NO` otherwise
- */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey;
-
-/**
- Stores the given key-object pair into the DB.
-
- @param anObject The object for key.
- @param aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
@@ -291,20 +282,6 @@
  @see RocksDBWriteOptions
  */
 - (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Stores the given data object under the given data key in the DB.
-
- @param data The data for key.
- @param aKey The key for object.
- @return `YES` if the write succeeded, `NO` otherwise
-
- @see RocksDB setObject:forKey:
- @see RocksDB setObject:forKey:error:
- @see RocksDB setObject:forKey:writeOptions:
- @see RocksDB setObject:forKey:error:writeOptions:
- */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey;
 
 /**
  Stores the given data object under the given data key in the DB.
@@ -365,24 +342,9 @@
 ///--------------------------------
 
 
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey;
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error;
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Merges the given object with the existing data for the given key.
-
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator.
-
- @param anObject The object being merged.
- @param aKey The key for the object.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBMergeOperator
- */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey;
 
 /**
  Merges the given object with the existing data for the given key.
@@ -432,23 +394,6 @@
  */
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
-/**
- Merges the given data object with the existing data for the given key.
- 
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator.
-
- @param data The data being merged.
- @param aKey The key for the data.
- @return `YES` if the operation succeeded, `NO` otherwise
- 
- @see RocksDBMergeOperator
- @see RocksDB mergeObject:forKey:
- @see RocksDB mergeObject:forKey:error:
- @see RocksDB mergeObject:forKey:writeOptions:
- @see RocksDB mergeObject:forKey:error:writeOptions:
- */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey;
 
 /**
  Merges the given data object with the existing data for the given key.
@@ -512,14 +457,6 @@
  Returns the object for the given key.
 
  @peram aKey The key for object.
- @return The object for the given key.
-*/
-- (id)objectForKey:(id)aKey;
-
-/**
- Returns the object for the given key.
-
- @peram aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return The object for the given key.
  */
@@ -547,19 +484,6 @@
  @see RocksDBReadOptions
  */
 - (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
-
-/**
- Returns the data for the given key.
- 
- @peram aKey The key for data.
- @return The data object for the given key.
-
- @see RocksDB objectForKey:
- @see RocksDB objectForKey:error:
- @see RocksDB objectForKey:readOptions:
- @see RocksDB objectForKey:error:readOptions:
- */
-- (NSData *)dataForKey:(NSData *)aKey;
 
 /**
  Returns the data for the given key.
@@ -618,13 +542,6 @@
  Deletes the object for the given key.
 
  @peram aKey The key to delete.
- @return `YES` if the operation succeeded, `NO` otherwise
-*/
-- (BOOL)deleteObjectForKey:(id)aKey;
-/**
- Deletes the object for the given key.
-
- @peram aKey The key to delete.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
@@ -652,19 +569,6 @@
  @see RocksDBWriteOptions
  */
 - (BOOL)deleteObjectForKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Deletes the data for the given key.
-
- @peram aKey The key to delete.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDB deleteObjectForKey:
- @see RocksDB deleteObjectForKey:error:
- @see RocksDB deleteObjectForKey:readOptions:
- @see RocksDB deleteObjectForKey:error:readOptions:
- */
-- (BOOL)deleteDataForKey:(NSData *)aKey;
 
 /**
  Deletes the data for the given key.

@@ -26,10 +26,10 @@
 		[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 	} error:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], Data(@"Value 3"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], Data(@"Value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], nil);
 }
 
 - (void)testWriteBatch_Perform_DeleteOps
@@ -38,7 +38,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
 		[batch deleteDataForKey:Data(@"Key 1")];
@@ -46,10 +46,10 @@
 		[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 	} error:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], Data(@"Value 3"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], Data(@"Value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], nil);
 }
 
 - (void)testWriteBatch_Perform_ClearOps
@@ -58,7 +58,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
 		[batch deleteDataForKey:Data(@"Key 1")];
@@ -68,10 +68,10 @@
 		[batch setData:Data(@"Value 4") forKey:Data(@"Key 4")];
 	} error:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], Data(@"Value 4"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], Data(@"Value 4"));
 }
 
 - (void)testWriteBatch_Apply
@@ -88,10 +88,10 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], Data(@"Value 3"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], Data(@"Value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], nil);
 }
 
 - (void)testWriteBatch_Apply_DeleteOps
@@ -100,7 +100,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
@@ -110,10 +110,10 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], Data(@"Value 3"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], Data(@"Value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], nil);
 }
 
 - (void)testWriteBatch_Apply_MergeOps
@@ -131,7 +131,7 @@
 		}];
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
@@ -142,7 +142,7 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], Data(@"Value 2,Value 2 New"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2,Value 2 New"));
 }
 
 - (void)testWriteBatch_Apply_ClearOps
@@ -151,7 +151,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
@@ -163,10 +163,10 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1")], Data(@"Value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3")], nil);
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4")], Data(@"Value 4"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 3") error:nil], nil);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 4") error:nil], Data(@"Value 4"));
 }
 
 - (void)testWriteBatch_Count
@@ -175,7 +175,7 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1")];
+	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
 
 	RocksDBWriteBatch *batch = [_rocks writeBatch];
 
@@ -210,7 +210,7 @@
 		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"Value 1" forKey:@"Key 1"];
+	[_rocks setObject:@"Value 1" forKey:@"Key 1" error:nil];
 
 	[_rocks performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *options) {
 		[batch setObject:@"Value 2" forKey:@"Key 2"];
@@ -218,9 +218,9 @@
 		[batch deleteObjectForKey:@"Key 1"];
 	} error:nil];
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"Key 1"], nil);
-	XCTAssertEqualObjects([_rocks objectForKey:@"Key 2"], @"Value 2");
-	XCTAssertEqualObjects([_rocks objectForKey:@"Key 3"], @"Value 3");
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 1" error:nil], nil);
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 2" error:nil], @"Value 2");
+	XCTAssertEqualObjects([_rocks objectForKey:@"Key 3" error:nil], @"Value 3");
 }
 
 @end

@@ -41,16 +41,16 @@
 	}];
 
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1")], Data(@"value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2")], Data(@"value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 3")], Data(@"value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2") error:nil], Data(@"value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 3") error:nil], Data(@"value 3"));
 
-	[_rocks deleteDataForKey:Data(@"key 2")];
-	XCTAssertNil([_rocks dataForKey:Data(@"key 2")]);
+	[_rocks deleteDataForKey:Data(@"key 2") error:nil];
+	XCTAssertNil([_rocks dataForKey:Data(@"key 2") error:nil]);
 
 	NSError *error = nil;
 	BOOL ok = [_rocks deleteDataForKey:Data(@"key 2") error:&error];
@@ -73,16 +73,16 @@
 	}];
 
 
-	[_rocks setObject:@"value 1" forKey:@"key 1"];
-	[_rocks setObject:@"value 2" forKey:@"key 2"];
-	[_rocks setObject:@"value 3" forKey:@"key 3"];
+	[_rocks setObject:@"value 1" forKey:@"key 1" error:nil];
+	[_rocks setObject:@"value 2" forKey:@"key 2" error:nil];
+	[_rocks setObject:@"value 3" forKey:@"key 3" error:nil];
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 1"], @"value 1");
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 2"], @"value 2");
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 3"], @"value 3");
+	XCTAssertEqualObjects([_rocks objectForKey:@"key 1" error:nil], @"value 1");
+	XCTAssertEqualObjects([_rocks objectForKey:@"key 2" error:nil], @"value 2");
+	XCTAssertEqualObjects([_rocks objectForKey:@"key 3" error:nil], @"value 3");
 
-	[_rocks deleteObjectForKey:@"key 2"];
-	XCTAssertNil([_rocks objectForKey:@"key 2"]);
+	[_rocks deleteObjectForKey:@"key 2" error:nil];
+	XCTAssertNil([_rocks objectForKey:@"key 2" error:nil]);
 
 	NSError *error = nil;
 	BOOL ok = [_rocks deleteObjectForKey:@"key 2" error:&error];

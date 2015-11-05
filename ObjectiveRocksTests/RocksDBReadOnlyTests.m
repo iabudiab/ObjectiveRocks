@@ -38,7 +38,7 @@
 		options.createIfMissing = YES;
 	}];
 	XCTAssertNotNil(_rocks);
-	[_rocks setData:Data(@"data") forKey:Data(@"key")];
+	[_rocks setData:Data(@"data") forKey:Data(@"key") error:nil];
 	[_rocks close];
 
 	_rocks = [RocksDB databaseForReadOnlyAtPath:_path andDBOptions:nil];

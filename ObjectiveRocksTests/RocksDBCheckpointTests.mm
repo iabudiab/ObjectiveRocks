@@ -20,13 +20,13 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
 
 	RocksDBCheckpoint *checkpoint = [[RocksDBCheckpoint alloc] initWithDatabase:_rocks];
 
 	[checkpoint createCheckpointAtPath:_chekpointPath_1 error:nil];
 
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
 
 	[checkpoint createCheckpointAtPath:_chekpointPath_2 error:nil];
 
@@ -36,8 +36,8 @@
 		options.createIfMissing = YES;
 	}];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1")], Data(@"value 1"));
-	XCTAssertNil([_rocks dataForKey:Data(@"key 2")]);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
+	XCTAssertNil([_rocks dataForKey:Data(@"key 2") error:nil]);
 
 	[_rocks close];
 
@@ -45,8 +45,8 @@
 		options.createIfMissing = YES;
 	}];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1")], Data(@"value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2")], Data(@"value 2"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2") error:nil], Data(@"value 2"));
 }
 
 @end

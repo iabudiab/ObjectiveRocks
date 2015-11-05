@@ -150,13 +150,13 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"df_value") forKey:Data(@"df_key1")];
-	[_rocks setData:Data(@"df_value") forKey:Data(@"df_key2")];
+	[_rocks setData:Data(@"df_value") forKey:Data(@"df_key1") error:nil];
+	[_rocks setData:Data(@"df_value") forKey:Data(@"df_key2") error:nil];
 
 	RocksDBColumnFamily *columnFamily = [_rocks createColumnFamilyWithName:@"new_cf" andOptions:nil];
 
-	[columnFamily setData:Data(@"cf_value") forKey:Data(@"cf_key1")];
-	[columnFamily setData:Data(@"cf_value") forKey:Data(@"cf_key2")];
+	[columnFamily setData:Data(@"cf_value") forKey:Data(@"cf_key1") error:nil];
+	[columnFamily setData:Data(@"cf_value") forKey:Data(@"cf_key2") error:nil];
 
 	[columnFamily close];
 	[_rocks close];
@@ -172,28 +172,28 @@
 	RocksDBColumnFamily *defaultColumnFamily = _rocks.columnFamilies[0];
 	RocksDBColumnFamily *newColumnFamily = _rocks.columnFamilies[1];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"df_key1")], Data(@"df_value"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"df_key2")], Data(@"df_value"));
-	XCTAssertNil([_rocks dataForKey:Data(@"cf_key1")]);
-	XCTAssertNil([_rocks dataForKey:Data(@"cf_key2")]);
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"df_key1") error:nil], Data(@"df_value"));
+	XCTAssertEqualObjects([_rocks dataForKey:Data(@"df_key2") error:nil], Data(@"df_value"));
+	XCTAssertNil([_rocks dataForKey:Data(@"cf_key1") error:nil]);
+	XCTAssertNil([_rocks dataForKey:Data(@"cf_key2") error:nil]);
 
-	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key1")], Data(@"df_value"));
-	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key2")], Data(@"df_value"));
+	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key1") error:nil], Data(@"df_value"));
+	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key2") error:nil], Data(@"df_value"));
 
-	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"cf_key1")]);
-	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"cf_key2")]);
+	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"cf_key1") error:nil]);
+	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"cf_key2") error:nil]);
 
-	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key1")], Data(@"cf_value"));
-	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key2")], Data(@"cf_value"));
+	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key1") error:nil], Data(@"cf_value"));
+	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key2") error:nil], Data(@"cf_value"));
 
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key1")]);
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key2")]);
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key1") error:nil]);
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key2") error:nil]);
 
-	[newColumnFamily deleteDataForKey:Data(@"cf_key1")];
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"cf_key1")]);
+	[newColumnFamily deleteDataForKey:Data(@"cf_key1") error:nil];
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"cf_key1") error:nil]);
 
-	[newColumnFamily deleteDataForKey:Data(@"cf_key1")];
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"cf_key1")]);
+	[newColumnFamily deleteDataForKey:Data(@"cf_key1") error:nil];
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"cf_key1") error:nil]);
 
 	[defaultColumnFamily close];
 	[newColumnFamily close];
@@ -213,7 +213,7 @@
 	RocksDBColumnFamily *defaultColumnFamily = _rocks.columnFamilies[0];
 	RocksDBColumnFamily *newColumnFamily = _rocks.columnFamilies[1];
 
-	[newColumnFamily setData:Data(@"xyz_value") forKey:Data(@"xyz")];
+	[newColumnFamily setData:Data(@"xyz_value") forKey:Data(@"xyz") error:nil];
 
 	RocksDBWriteBatch *batch = [newColumnFamily writeBatch];
 
@@ -225,16 +225,16 @@
 
 	[_rocks applyWriteBatch:batch withWriteOptions:nil];
 
-	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key")], Data(@"df_value"));
-	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"df_key1")]);
-	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"df_key2")]);
+	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key") error:nil], Data(@"df_value"));
+	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"df_key1") error:nil]);
+	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"df_key2") error:nil]);
 
-	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key1")], Data(@"cf_value1"));
-	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key2")], Data(@"cf_value2"));
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key")]);
+	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key1") error:nil], Data(@"cf_value1"));
+	XCTAssertEqualObjects([newColumnFamily dataForKey:Data(@"cf_key2") error:nil], Data(@"cf_value2"));
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"df_key") error:nil]);
 
-	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"xyz")]);
-	XCTAssertNil([newColumnFamily dataForKey:Data(@"xyz")]);
+	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"xyz") error:nil]);
+	XCTAssertNil([newColumnFamily dataForKey:Data(@"xyz") error:nil]);
 
 	[defaultColumnFamily close];
 	[newColumnFamily close];
@@ -254,11 +254,11 @@
 	RocksDBColumnFamily *defaultColumnFamily = _rocks.columnFamilies[0];
 	RocksDBColumnFamily *newColumnFamily = _rocks.columnFamilies[1];
 
-	[defaultColumnFamily setData:Data(@"df_value1") forKey:Data(@"df_key1")];
-	[defaultColumnFamily setData:Data(@"df_value2") forKey:Data(@"df_key2")];
+	[defaultColumnFamily setData:Data(@"df_value1") forKey:Data(@"df_key1") error:nil];
+	[defaultColumnFamily setData:Data(@"df_value2") forKey:Data(@"df_key2") error:nil];
 
-	[newColumnFamily setData:Data(@"cf_value1") forKey:Data(@"cf_key1")];
-	[newColumnFamily setData:Data(@"cf_value2") forKey:Data(@"cf_key2")];
+	[newColumnFamily setData:Data(@"cf_value1") forKey:Data(@"cf_key1") error:nil];
+	[newColumnFamily setData:Data(@"cf_value2") forKey:Data(@"cf_key2") error:nil];
 
 	RocksDBIterator *dfIterator = [defaultColumnFamily iterator];
 

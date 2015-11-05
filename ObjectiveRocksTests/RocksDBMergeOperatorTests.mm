@@ -36,13 +36,13 @@
 	}];
 
 	uint64_t value = 1;
-	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1")];
+	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1") error:nil];
 
 	value = 5;
-	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1")];
+	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1") error:nil];
 
 	uint64_t res;
-	Val([_rocks dataForKey:Data(@"Key 1")], res);
+	Val([_rocks dataForKey:Data(@"Key 1") error:nil], res);
 
 	XCTAssertTrue(res == 6);
 }
@@ -75,12 +75,12 @@
 		};
 	}];
 
-	[_rocks mergeObject:@(100.541) forKey:@"Key 1"];
+	[_rocks mergeObject:@(100.541) forKey:@"Key 1" error:nil];
 
-	[_rocks mergeObject:@(200.125) forKey:@"Key 1"];
+	[_rocks mergeObject:@(200.125) forKey:@"Key 1" error:nil];
 
 
-	XCTAssertEqualWithAccuracy([[_rocks objectForKey:@"Key 1"] floatValue], 300.666, 0.0001);
+	XCTAssertEqualWithAccuracy([[_rocks objectForKey:@"Key 1" error:nil] floatValue], 300.666, 0.0001);
 }
 
 - (void)testAssociativeMergeOperator_DictionaryPut_Encoded
@@ -103,17 +103,17 @@
 		options.valueType = RocksDBTypeNSJSONSerializable;
 	}];
 
-	[_rocks setObject:@{@"Key 1": @"Value 1"} forKey:@"Dict Key"];
+	[_rocks setObject:@{@"Key 1": @"Value 1"} forKey:@"Dict Key" error:nil];
 	
-	[_rocks mergeObject:@{@"Key 1": @"Value 1 New"} forKey:@"Dict Key"];
+	[_rocks mergeObject:@{@"Key 1": @"Value 1 New"} forKey:@"Dict Key" error:nil];
 
-	[_rocks mergeObject:@{@"Key 2": @"Value 2"} forKey:@"Dict Key"];
+	[_rocks mergeObject:@{@"Key 2": @"Value 2"} forKey:@"Dict Key" error:nil];
 
-	[_rocks mergeObject:@{@"Key 3": @"Value 3"} forKey:@"Dict Key"];
+	[_rocks mergeObject:@{@"Key 3": @"Value 3"} forKey:@"Dict Key" error:nil];
 
-	[_rocks mergeObject:@{@"Key 4": @"Value 4"} forKey:@"Dict Key"];
+	[_rocks mergeObject:@{@"Key 4": @"Value 4"} forKey:@"Dict Key" error:nil];
 
-	[_rocks mergeObject:@{@"Key 5": @"Value 5"} forKey:@"Dict Key"];
+	[_rocks mergeObject:@{@"Key 5": @"Value 5"} forKey:@"Dict Key" error:nil];
 
 	NSDictionary *expected = @{@"Key 1" : @"Value 1 New",
 							   @"Key 2" : @"Value 2",
@@ -121,7 +121,7 @@
 							   @"Key 4" : @"Value 4",
 							   @"Key 5" : @"Value 5"};
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key"], expected);
+	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key" error:nil], expected);
 }
 
 - (void)testMergeOperator_DictionaryUpdate_Encoded
@@ -159,18 +159,18 @@
 							 @"Key 2" : @"Value 2",
 							 @"Key 3" : @"Value 3"};
 
-	[_rocks setObject:object forKey:@"Dict Key"];
+	[_rocks setObject:object forKey:@"Dict Key" error:nil];
 
-	[_rocks mergeOperation:@"Key 1:UPDATE:Value X" forKey:@"Dict Key"];
-	[_rocks mergeOperation:@"Key 4:INSERT:Value 4" forKey:@"Dict Key"];
-	[_rocks mergeOperation:@"Key 2:DELETE" forKey:@"Dict Key"];
-	[_rocks mergeOperation:@"Key 1:UPDATE:Value 1 New" forKey:@"Dict Key"];
+	[_rocks mergeOperation:@"Key 1:UPDATE:Value X" forKey:@"Dict Key" error:nil];
+	[_rocks mergeOperation:@"Key 4:INSERT:Value 4" forKey:@"Dict Key" error:nil];
+	[_rocks mergeOperation:@"Key 2:DELETE" forKey:@"Dict Key" error:nil];
+	[_rocks mergeOperation:@"Key 1:UPDATE:Value 1 New" forKey:@"Dict Key" error:nil];
 
 	NSDictionary *expected = @{@"Key 1" : @"Value 1 New",
 							   @"Key 3" : @"Value 3",
 							   @"Key 4" : @"Value 4"};
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key"], expected);
+	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key" error:nil], expected);
 }
 
 @end

@@ -21,9 +21,9 @@
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseAscending];
 	}];
 
-	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1")];
-	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2")];
-	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3")];
+	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1") error:nil];
+	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2") error:nil];
+	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3") error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
@@ -71,9 +71,9 @@
 		options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorBytewiseDescending];
 	}];
 
-	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1")];
-	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2")];
-	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3")];
+	[_rocks setData:Data(@"abc1") forKey:Data(@"abc1") error:nil];
+	[_rocks setData:Data(@"abc2") forKey:Data(@"abc2") error:nil];
+	[_rocks setData:Data(@"abc3") forKey:Data(@"abc3") error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
@@ -131,7 +131,7 @@
 	for (int i = 0; i < 10000; i++) {
 		NSString *str = [NSString stringWithFormat:@"A%d", i];
 		[expected addObject:str];
-		[_rocks setData:Data(str) forKey:Data(str)];
+		[_rocks setData:Data(str) forKey:Data(str) error:nil];
 	}
 
 	/* Expected Array: [A0, A1, A10, A100, A1000, A1001, A1019, A102, A1020, ...] */
@@ -158,7 +158,7 @@
 	for (int i = 0; i < 10000; i++) {
 		NSString *str = [NSString stringWithFormat:@"A%d", i];
 		[expected addObject:str];
-		[_rocks setData:Data(str) forKey:Data(str)];
+		[_rocks setData:Data(str) forKey:Data(str) error:nil];
 	}
 
 	/* Expected Array: [A9999, A9998 .. A9990, A999, A9989, ...] */
@@ -192,10 +192,10 @@
 
 	for (int i = 0; i < 10000; i++) {
 		u_int32_t r = arc4random_uniform(UINT32_MAX);
-		if ([_rocks objectForKey:@(r)] != nil) {
+		if ([_rocks objectForKey:@(r) error:nil] != nil) {
 			i--;
 		} else {
-			[_rocks setObject:Data(@"value") forKey:@(r)];
+			[_rocks setObject:Data(@"value") forKey:@(r) error:nil];
 		}
 	}
 
@@ -232,10 +232,10 @@
 
 	for (int i = 0; i < 10000; i++) {
 		u_int32_t r = arc4random_uniform(UINT32_MAX);
-		if ([_rocks objectForKey:@(r)] != nil) {
+		if ([_rocks objectForKey:@(r) error:nil] != nil) {
 			i--;
 		} else {
-			[_rocks setObject:Data(@"value") forKey:@(r)];
+			[_rocks setObject:Data(@"value") forKey:@(r) error:nil];
 		}
 	}
 

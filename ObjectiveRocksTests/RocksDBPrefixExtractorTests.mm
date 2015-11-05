@@ -26,11 +26,11 @@
 		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"x" forKey:@"100A"];
-	[_rocks setObject:@"x" forKey:@"100B"];
+	[_rocks setObject:@"x" forKey:@"100A" error:nil];
+	[_rocks setObject:@"x" forKey:@"100B" error:nil];
 
-	[_rocks setObject:@"x" forKey:@"101A"];
-	[_rocks setObject:@"x" forKey:@"101B"];
+	[_rocks setObject:@"x" forKey:@"101A" error:nil];
+	[_rocks setObject:@"x" forKey:@"101B" error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
@@ -89,14 +89,14 @@
 		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"x" forKey:@"1010"];
-	[_rocks setObject:@"x" forKey:@"4211"];
-	[_rocks setObject:@"x" forKey:@"1012"];
-	[_rocks setObject:@"x" forKey:@"5313"];
-	[_rocks setObject:@"x" forKey:@"1020"];
-	[_rocks setObject:@"x" forKey:@"4221"];
-	[_rocks setObject:@"x" forKey:@"1022"];
-	[_rocks setObject:@"x" forKey:@"5323"];
+	[_rocks setObject:@"x" forKey:@"1010" error:nil];
+	[_rocks setObject:@"x" forKey:@"4211" error:nil];
+	[_rocks setObject:@"x" forKey:@"1012" error:nil];
+	[_rocks setObject:@"x" forKey:@"5313" error:nil];
+	[_rocks setObject:@"x" forKey:@"1020" error:nil];
+	[_rocks setObject:@"x" forKey:@"4221" error:nil];
+	[_rocks setObject:@"x" forKey:@"1022" error:nil];
+	[_rocks setObject:@"x" forKey:@"5323" error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 

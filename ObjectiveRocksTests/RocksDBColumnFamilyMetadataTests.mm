@@ -28,11 +28,11 @@
 	RocksDBColumnFamily *defaultColumnFamily = _rocks.columnFamilies[0];
 	RocksDBColumnFamily *newColumnFamily = _rocks.columnFamilies[1];
 
-	[defaultColumnFamily setData:Data(@"df_value1") forKey:Data(@"df_key1")];
-	[defaultColumnFamily setData:Data(@"df_value2") forKey:Data(@"df_key2")];
+	[defaultColumnFamily setData:Data(@"df_value1") forKey:Data(@"df_key1") error:nil];
+	[defaultColumnFamily setData:Data(@"df_value2") forKey:Data(@"df_key2") error:nil];
 
-	[newColumnFamily setData:Data(@"cf_value1") forKey:Data(@"cf_key1")];
-	[newColumnFamily setData:Data(@"cf_value2") forKey:Data(@"cf_key2")];
+	[newColumnFamily setData:Data(@"cf_value1") forKey:Data(@"cf_key1") error:nil];
+	[newColumnFamily setData:Data(@"cf_value2") forKey:Data(@"cf_key2") error:nil];
 
 	RocksDBColumnFamilyMetaData *defaultMetadata = defaultColumnFamily.columnFamilyMetaData;
 	XCTAssertNotNil(defaultMetadata);

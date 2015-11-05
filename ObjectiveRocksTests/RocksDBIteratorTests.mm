@@ -20,9 +20,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -42,8 +42,8 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
@@ -86,9 +86,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -108,9 +108,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -130,10 +130,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -153,10 +153,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -176,10 +176,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -201,9 +201,9 @@
 		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"value 1" forKey:@"Key 1"];
-	[_rocks setObject:@"value 2" forKey:@"Key 2"];
-	[_rocks setObject:@"value 3" forKey:@"Key 3"];
+	[_rocks setObject:@"value 1" forKey:@"Key 1" error:nil];
+	[_rocks setObject:@"value 2" forKey:@"Key 2" error:nil];
+	[_rocks setObject:@"value 3" forKey:@"Key 3" error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -223,9 +223,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -246,9 +246,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -269,10 +269,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -295,10 +295,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -321,10 +321,10 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1")];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2")];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3")];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4")];
+	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
@@ -350,9 +350,9 @@
 		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"value 1" forKey:@"Key 1"];
-	[_rocks setObject:@"value 2" forKey:@"Key 2"];
-	[_rocks setObject:@"value 3" forKey:@"Key 3"];
+	[_rocks setObject:@"value 1" forKey:@"Key 1" error:nil];
+	[_rocks setObject:@"value 2" forKey:@"Key 2" error:nil];
+	[_rocks setObject:@"value 3" forKey:@"Key 3" error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
