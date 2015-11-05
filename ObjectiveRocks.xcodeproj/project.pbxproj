@@ -2297,7 +2297,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0630;
+				LastUpgradeCheck = 0710;
 				ORGANIZATIONNAME = BrainCookie;
 				TargetAttributes = {
 					6299F8081A17B28200123F56 = {
@@ -2834,6 +2834,7 @@
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -2965,6 +2966,7 @@
 				);
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
@@ -2982,6 +2984,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
@@ -3058,6 +3061,7 @@
 				);
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -3072,6 +3076,7 @@
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
 				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
 			};
