@@ -1457,8 +1457,8 @@
 		6299F8001A17B28200123F56 = {
 			isa = PBXGroup;
 			children = (
-				6299F80B1A17B28200123F56 /* ObjectiveRocks */,
-				6299F8181A17B28200123F56 /* ObjectiveRocksTests */,
+				6299F80B1A17B28200123F56 /* Source */,
+				6299F8181A17B28200123F56 /* Tests */,
 				6299F80A1A17B28200123F56 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -1474,7 +1474,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		6299F80B1A17B28200123F56 /* ObjectiveRocks */ = {
+		6299F80B1A17B28200123F56 /* Source */ = {
 			isa = PBXGroup;
 			children = (
 				62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */,
@@ -1499,10 +1499,11 @@
 				62376BBC1A20EA4B00C85DFB /* Internal */,
 				62EE28FD1A1ABA1F00486C31 /* rocksdb */,
 			);
-			path = ObjectiveRocks;
+			name = Source;
+			path = Code;
 			sourceTree = "<group>";
 		};
-		6299F8181A17B28200123F56 /* ObjectiveRocksTests */ = {
+		6299F8181A17B28200123F56 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				621636191A631E4F00B132CE /* Swift */,
@@ -1525,7 +1526,7 @@
 				625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */,
 				6299F8191A17B28200123F56 /* Supporting Files */,
 			);
-			path = ObjectiveRocksTests;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		6299F8191A17B28200123F56 /* Supporting Files */ = {
@@ -2964,12 +2965,12 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/ObjectiveRocksTests-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -2982,12 +2983,12 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = ObjectiveRocksTests;
 				SDKROOT = macosx;
-				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/ObjectiveRocksTests-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -3059,11 +3060,11 @@
 					"DEBUG=1",
 					"$(inherited)",
 				);
-				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
-				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/ObjectiveRocksTests-iOS-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -3074,11 +3075,11 @@
 				CLANG_ENABLE_MODULES = YES;
 				EMBEDDED_CONTENT_CONTAINS_SWIFT = YES;
 				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
-				INFOPLIST_FILE = ObjectiveRocksTests/Info.plist;
+				INFOPLIST_FILE = Tests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "co.braincookie.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "ObjectiveRocksTests-iOS";
-				SWIFT_OBJC_BRIDGING_HEADER = "ObjectiveRocksTests/ObjectiveRocksTests-iOS-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "Tests/ObjectiveRocksTests-iOS-Bridging-Header.h";
 			};
 			name = Release;
 		};
