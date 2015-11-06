@@ -18,11 +18,11 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			options.valueType = .NSString;
 		})
 
-		rocks.setObject("x", forKey: "100A")
-		rocks.setObject("x", forKey: "100B")
+		try! rocks.setObject("x", forKey: "100A")
+		try! rocks.setObject("x", forKey: "100B")
 
-		rocks.setObject("x", forKey: "101A")
-		rocks.setObject("x", forKey: "101B")
+		try! rocks.setObject("x", forKey: "101A")
+		try! rocks.setObject("x", forKey: "101B")
 
 		let iterator = rocks.iterator()
 		let keys = NSMutableArray()
@@ -51,19 +51,19 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		iterator.seekToKey("1000")
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSString, "100A")
+		XCTAssertEqual(iterator.key() as? NSString, "100A")
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSString, "100B")
+		XCTAssertEqual(iterator.key() as? NSString, "100B")
 	}
 
 	func testSwift_PrefixExtractor_FixedLength_CustomComparator() {
 		// 1001 < 9910 < 2011 < 3412 ...
 		let cmp = RocksDBComparator(name: "cmp") { (key1, key2) -> Int32 in
-			var sub1: NSString = key1.substringFromIndex(2) as NSString
-			var sub2: NSString = key2.substringFromIndex(2) as NSString
+			let sub1: NSString = key1.substringFromIndex(2) as NSString
+			let sub2: NSString = key2.substringFromIndex(2) as NSString
 
 			let res = sub1.compare(sub2 as String)
 			switch res {
@@ -92,14 +92,14 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			})
 		})
 
-		rocks.setObject("x", forKey: "1010")
-		rocks.setObject("x", forKey: "4211")
-		rocks.setObject("x", forKey: "1012")
-		rocks.setObject("x", forKey: "5313")
-		rocks.setObject("x", forKey: "1020")
-		rocks.setObject("x", forKey: "4221")
-		rocks.setObject("x", forKey: "1022")
-		rocks.setObject("x", forKey: "5323")
+		try! rocks.setObject("x", forKey: "1010")
+		try! rocks.setObject("x", forKey: "4211")
+		try! rocks.setObject("x", forKey: "1012")
+		try! rocks.setObject("x", forKey: "5313")
+		try! rocks.setObject("x", forKey: "1020")
+		try! rocks.setObject("x", forKey: "4221")
+		try! rocks.setObject("x", forKey: "1022")
+		try! rocks.setObject("x", forKey: "5323")
 
 		let iterator = rocks.iterator()
 		let keys = NSMutableArray()

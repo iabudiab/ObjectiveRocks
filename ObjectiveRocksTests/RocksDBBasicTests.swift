@@ -34,21 +34,18 @@ class RocksDBBasicTests : RocksDBTests {
 			writeOptions.syncWrites = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
-		XCTAssertEqual(rocks.dataForKey(Data("key 1")), Data("value 1"));
-		XCTAssertEqual(rocks.dataForKey(Data("key 2")), Data("value 2"));
-		XCTAssertEqual(rocks.dataForKey(Data("key 3")), Data("value 3"));
+		XCTAssertEqual(try! rocks.dataForKey(Data("key 1")), Data("value 1"));
+		XCTAssertEqual(try! rocks.dataForKey(Data("key 2")), Data("value 2"));
+		XCTAssertEqual(try! rocks.dataForKey(Data("key 3")), Data("value 3"));
 
-		rocks.deleteDataForKey(Data("key 2"))
-		XCTAssertNil(rocks.dataForKey(Data("key 2")));
+		try! rocks.deleteDataForKey(Data("key 2"))
+		XCTAssertNil(try? rocks.dataForKey(Data("key 2")));
 
-		var error: NSError? = nil
-		var ok = rocks.deleteDataForKey(Data("key 2"), error:&error);
-		XCTAssertTrue(ok);
-		XCTAssertNil(error);
+		try! self.rocks.deleteDataForKey(Data("key 2"))
 	}
 
 	func testSwift_DB_CRUD_Encoded() {
@@ -64,21 +61,17 @@ class RocksDBBasicTests : RocksDBTests {
 				writeOptions.syncWrites = true
 		})
 
-		rocks.setObject("value 1", forKey: "key 1")
-		rocks.setObject("value 2", forKey: "key 2")
-		rocks.setObject("value 3", forKey: "key 3")
+		try! rocks.setObject("value 1", forKey: "key 1")
+		try! rocks.setObject("value 2", forKey: "key 2")
+		try! rocks.setObject("value 3", forKey: "key 3")
+		XCTAssertEqual(try! rocks.objectForKey("key 1") as? String, "value 1");
+		XCTAssertEqual(try! rocks.objectForKey("key 2") as? String, "value 2");
+		XCTAssertEqual(try! rocks.objectForKey("key 3") as? String, "value 3");
 
+		try! rocks.deleteObjectForKey("key 2")
+		let value = try? rocks.objectForKey("key 2")
+		XCTAssertNil(value);
 
-		XCTAssertEqual(rocks.objectForKey("key 1") as! NSString, "value 1");
-		XCTAssertEqual(rocks.objectForKey("key 2") as! NSString, "value 2");
-		XCTAssertEqual(rocks.objectForKey("key 3") as! NSString, "value 3");
-
-		rocks.deleteObjectForKey("key 2")
-		XCTAssertNil(rocks.objectForKey("key 2"));
-
-		var error: NSError? = nil
-		var ok = rocks.deleteObjectForKey("key 2", error:&error);
-		XCTAssertTrue(ok);
-		XCTAssertNil(error);
+		try! self.rocks.deleteObjectForKey("key 2")
 	}
 }

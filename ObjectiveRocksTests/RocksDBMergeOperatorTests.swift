@@ -29,12 +29,12 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 		})
 
 		var value: UInt64 = 1
-		rocks.mergeData(NumData(value), forKey: Data("key 1"))
+		try! rocks.mergeData(NumData(value), forKey: Data("key 1"))
 
 		value = 5
-		rocks.mergeData(NumData(value), forKey: Data("key 1"))
+		try! rocks.mergeData(NumData(value), forKey: Data("key 1"))
 
-		var res: UInt64 = Val(rocks.dataForKey(Data("key 1")))
+		let res: UInt64 = Val(try! rocks.dataForKey(Data("key 1")))
 
 		XCTAssertTrue(res == 6);
 	}
@@ -67,16 +67,16 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 					return Optional.None!
 				}
 
-				var value: Float = Val(data)
+				let value: Float = Val(data)
 				return NSNumber(float: value)
 			}
 		})
 
-		rocks.mergeObject(NSNumber(float: 100.541), forKey: "key 1")
-		rocks.mergeObject(NSNumber(float: 200.125), forKey: "key 1")
+		try! rocks.mergeObject(NSNumber(float: 100.541), forKey: "key 1")
+		try! rocks.mergeObject(NSNumber(float: 200.125), forKey: "key 1")
 
-		let result: Float = rocks.objectForKey("key 1").floatValue
-		XCTAssertEqualWithAccuracy(result, Float(300.666), Float(0.0001))
+		let result: Float = try! rocks.objectForKey("key 1").floatValue
+		XCTAssertEqualWithAccuracy(result, Float(300.666), accuracy: Float(0.0001))
 	}
 
 	func testSwift_AssociativeMergeOperator_DictionaryPut_Encoded() {
@@ -96,12 +96,12 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			options.valueType = .NSJSONSerializable
 		})
 
-		rocks.setObject(["key 1": "value 1"], forKey: "dict key")
-		rocks.mergeObject(["key 1": "value 1 new"], forKey: "dict key")
-		rocks.mergeObject(["key 2": "value 2"], forKey: "dict key")
-		rocks.mergeObject(["key 3": "value 3"], forKey: "dict key")
-		rocks.mergeObject(["key 4": "value 4"], forKey: "dict key")
-		rocks.mergeObject(["key 5": "value 5"], forKey: "dict key")
+		try! rocks.setObject(["key 1": "value 1"], forKey: "dict key")
+		try! rocks.mergeObject(["key 1": "value 1 new"], forKey: "dict key")
+		try! rocks.mergeObject(["key 2": "value 2"], forKey: "dict key")
+		try! rocks.mergeObject(["key 3": "value 3"], forKey: "dict key")
+		try! rocks.mergeObject(["key 4": "value 4"], forKey: "dict key")
+		try! rocks.mergeObject(["key 5": "value 5"], forKey: "dict key")
 
 		let expected: NSDictionary = ["key 1" : "value 1 new",
 			"key 2" : "value 2",
@@ -109,7 +109,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			"key 4" : "value 4",
 			"key 5" : "value 5"]
 
-		XCTAssertEqual(rocks.objectForKey("dict key") as! NSDictionary, expected)
+		XCTAssertEqual(try! rocks.objectForKey("dict key") as! NSDictionary, expected)
 	}
 
 	func testSwift_MergeOperator_DictionaryUpdate_Encoded() {
@@ -127,7 +127,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			fullMergeBlock: {
 				(key, existing, operands) -> NSMutableDictionary! in
 
-				var dict: NSMutableDictionary = existing as! NSMutableDictionary
+				let dict: NSMutableDictionary = existing as! NSMutableDictionary
 				for op in operands as NSArray {
 					let comp: NSArray = op.componentsSeparatedByString(":")
 					let action: NSString = comp[1] as! NSString
@@ -151,17 +151,17 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 			"key 2" : "value 2",
 			"key 3" : "value 3"]
 
-		rocks.setObject(object, forKey: "dict key")
+		try! rocks.setObject(object, forKey: "dict key")
 
-		rocks.mergeOperation("key 1:UPDATE:value X", forKey: "dict key")
-		rocks.mergeOperation("key 4:INSERT:value 4", forKey: "dict key")
-		rocks.mergeOperation("key 2:DELETE", forKey: "dict key")
-		rocks.mergeOperation("key 1:UPDATE:value 1 new", forKey: "dict key")
+		try! rocks.mergeOperation("key 1:UPDATE:value X", forKey: "dict key")
+		try! rocks.mergeOperation("key 4:INSERT:value 4", forKey: "dict key")
+		try! rocks.mergeOperation("key 2:DELETE", forKey: "dict key")
+		try! rocks.mergeOperation("key 1:UPDATE:value 1 new", forKey: "dict key")
 
 		let expected = ["key 1" : "value 1 new",
 			"key 3" : "value 3",
 			"key 4" : "value 4"];
 
-		XCTAssertEqual(rocks.objectForKey("dict key") as! NSDictionary, expected)
+		XCTAssertEqual(try! rocks.objectForKey("dict key") as! NSDictionary, expected)
 	}
 }

@@ -9,6 +9,23 @@
 import Foundation
 import XCTest
 
+public func AssertThrows(message: String = "Expression did not throw",
+	_ function: String = __FUNCTION__,
+	_ file: String = __FILE__,
+	_ line: UInt = __LINE__,
+	expression: () throws -> Void)
+{
+	var thrown: NSError? = nil
+	do {
+		try expression()
+	} catch {
+		thrown = error as NSError
+	}
+
+	let completeMessage = "\(message) in function: \(function)"
+	XCTAssertNotNil(thrown, completeMessage, file: file, line: line)
+}
+
 public func Data(x: String) -> NSData {
 	return x.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
 }
@@ -52,7 +69,7 @@ class RocksDBTests : XCTestCase {
 	override func setUp() {
 		super.setUp()
 		let bundle = NSBundle(forClass: self.dynamicType)
-		path = bundle.bundlePath.stringByAppendingPathComponent("ObjectiveRocks")
+		path = (bundle.bundlePath as NSString).stringByAppendingPathComponent("ObjectiveRocks")
 		backupPath = path.stringByAppendingString("Backup")
 		restorePath = path.stringByAppendingString("Restore")
 		checkpointPath1 = path.stringByAppendingString("Snapshot1")
@@ -70,10 +87,12 @@ class RocksDBTests : XCTestCase {
 	}
 
 	func cleanupDatabase() {
-		NSFileManager.defaultManager().removeItemAtPath(path, error: nil)
-		NSFileManager.defaultManager().removeItemAtPath(backupPath, error: nil)
-		NSFileManager.defaultManager().removeItemAtPath(restorePath, error: nil)
-		NSFileManager.defaultManager().removeItemAtPath(checkpointPath1, error: nil)
-		NSFileManager.defaultManager().removeItemAtPath(checkpointPath2, error: nil)
+		do {
+			try NSFileManager.defaultManager().removeItemAtPath(path)
+			try NSFileManager.defaultManager().removeItemAtPath(backupPath)
+			try NSFileManager.defaultManager().removeItemAtPath(restorePath)
+			try NSFileManager.defaultManager().removeItemAtPath(checkpointPath1)
+			try NSFileManager.defaultManager().removeItemAtPath(checkpointPath2)
+		} catch {}
 	}
 }

@@ -23,11 +23,11 @@ class RocksDBColumnFamilyMetadataTests : RocksDBTests {
 		let defaultColumnFamily = rocks.columnFamilies()[0] as! RocksDBColumnFamily
 		let newColumnFamily = rocks.columnFamilies()[1] as! RocksDBColumnFamily
 
-		defaultColumnFamily.setData(Data("df_value1"), forKey: Data("df_key1"))
-		defaultColumnFamily.setData(Data("df_value2"), forKey: Data("df_key2"))
+		try! defaultColumnFamily.setData(Data("df_value1"), forKey: Data("df_key1"))
+		try! defaultColumnFamily.setData(Data("df_value2"), forKey: Data("df_key2"))
 
-		newColumnFamily.setData(Data("cf_value1"), forKey: Data("cf_key1"))
-		newColumnFamily.setData(Data("cf_value2"), forKey: Data("cf_key2"))
+		try! newColumnFamily.setData(Data("cf_value1"), forKey: Data("cf_key1"))
+		try! newColumnFamily.setData(Data("cf_value2"), forKey: Data("cf_key2"))
 
 		let defaultMetadata = defaultColumnFamily.columnFamilyMetaData()
 		XCTAssertNotNil(defaultMetadata);

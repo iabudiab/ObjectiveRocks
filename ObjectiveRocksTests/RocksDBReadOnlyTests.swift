@@ -31,26 +31,24 @@ class RocksDBReadOnlyTests : RocksDBTests {
 			options.createIfMissing = true;
 		});
 		XCTAssertNotNil(rocks);
-		rocks.setData(Data("data"), forKey: Data("key"))
+		try! rocks.setData(Data("data"), forKey: Data("key"))
 		rocks.close()
 
 		rocks = RocksDB.databaseForReadOnlyAtPath(path, andDBOptions:nil)
 
-		var error: NSError? = nil;
-		rocks.dataForKey(Data("key"), error: &error)
-		XCTAssertNil(error);
+		try! rocks.dataForKey(Data("key"))
 
-		error = nil;
-		rocks.setData(Data("data"), forKey:Data("key"), error:&error);
-		XCTAssertNotNil(error);
+		AssertThrows {
+			try self.rocks.setData(Data("data"), forKey:Data("key"))
+		}
 
-		error = nil;
-		rocks.deleteDataForKey(Data("key"), error:&error);
-		XCTAssertNotNil(error);
+		AssertThrows {
+			try self.rocks.deleteDataForKey(Data("key"))
+		}
 
-		error = nil;
-		rocks.mergeData(Data("data"), forKey:Data("key"), error:&error);
-		XCTAssertNotNil(error);
+		AssertThrows {
+			try self.rocks.mergeData(Data("data"), forKey:Data("key"))
+		}
 	}
 
 }

@@ -15,13 +15,13 @@ class RocksDBBackupTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
@@ -34,13 +34,13 @@ class RocksDBBackupTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
@@ -61,14 +61,16 @@ class RocksDBBackupTests : RocksDBTests {
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
 
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! backupEngine.createBackupForDatabase(rocks)
+
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+
+		try! backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
@@ -89,18 +91,21 @@ class RocksDBBackupTests : RocksDBTests {
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		do {
+			try backupEngine.createBackupForDatabase(rocks)
+		} catch _ {
+		}
 
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try!  backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
-		backupEngine.purgeOldBackupsKeepingLast(2, error: nil)
+		try! backupEngine.purgeOldBackupsKeepingLast(2)
 
 		let backupInfo = backupEngine.backupInfo()
 
@@ -118,18 +123,18 @@ class RocksDBBackupTests : RocksDBTests {
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try!  backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
-		backupEngine.deleteBackupWithId(2, error: nil)
+		try!  backupEngine.deleteBackupWithId(2)
 
 		let backupInfo = backupEngine.backupInfo()
 
@@ -145,27 +150,27 @@ class RocksDBBackupTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try!  backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 10"), forKey: Data("key 1"))
-		rocks.setData(Data("value 20"), forKey: Data("key 2"))
-		rocks.setData(Data("value 30"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 10"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 20"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 30"), forKey: Data("key 3"))
 
 		rocks.close()
 
-		backupEngine.restoreBackupToDestinationPath(self.restorePath, error: nil)
+		try! backupEngine.restoreBackupToDestinationPath(self.restorePath)
 
 		let backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 2")), Data("value 2"))
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 3")), Data("value 3"))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 2")), Data("value 2"))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 3")), Data("value 3"))
 
 		backupRocks.close()
 	}
@@ -177,34 +182,35 @@ class RocksDBBackupTests : RocksDBTests {
 
 		let backupEngine = RocksDBBackupEngine(path: self.backupPath)
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		backupEngine.createBackupForDatabase(rocks, error: nil)
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! backupEngine.createBackupForDatabase(rocks)
 
 		rocks.close()
 
-		backupEngine.restoreBackupWithId(1, toDestinationPath: self.restorePath, error: nil)
+		try!  backupEngine.restoreBackupWithId(1, toDestinationPath: self.restorePath)
 
 		var backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
-		XCTAssertNil(backupRocks.dataForKey(Data("key 2")))
-		XCTAssertNil(backupRocks.dataForKey(Data("key 3")))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
+
+		XCTAssertNil(try? backupRocks.dataForKey(Data("key 2")))
+		XCTAssertNil(try? backupRocks.dataForKey(Data("key 3")))
 
 		backupRocks.close()
 
-		backupEngine.restoreBackupWithId(2, toDestinationPath: self.restorePath, error: nil)
+		try! backupEngine.restoreBackupWithId(2, toDestinationPath: self.restorePath)
 
 		backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 1")), Data("value 1"))
-		XCTAssertEqual(backupRocks.dataForKey(Data("key 2")), Data("value 2"))
-		XCTAssertNil(backupRocks.dataForKey(Data("key 3")))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
+		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 2")), Data("value 2"))
+		XCTAssertNil(try? backupRocks.dataForKey(Data("key 3")))
 
 		backupRocks.close()
 	}

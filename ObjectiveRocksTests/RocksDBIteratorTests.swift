@@ -15,9 +15,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -37,22 +37,22 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
 
 		let iterator = rocks.iterator()
 
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("key 1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("value 1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("key 1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("value 1"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("key 2"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("value 2"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("key 2"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("value 2"))
 
 		iterator.next()
 
@@ -62,15 +62,15 @@ class RocksDBIteratorTests : RocksDBTests {
 		iterator.previous()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("key 1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("value 1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("key 1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("value 1"))
 
 		iterator.seekToFirst()
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("key 2"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("value 2"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("key 2"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("value 2"))
 
 		iterator.close()
 	}
@@ -80,9 +80,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -103,9 +103,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -125,10 +125,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -150,10 +150,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -175,10 +175,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -202,9 +202,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.valueType = .NSString
 		})
 
-		rocks.setObject("value 1", forKey: "key 1")
-		rocks.setObject("value 2", forKey: "key 2")
-		rocks.setObject("value 3", forKey: "key 3")
+		try! rocks.setObject("value 1", forKey: "key 1")
+		try! rocks.setObject("value 2", forKey: "key 2")
+		try! rocks.setObject("value 3", forKey: "key 3")
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -224,9 +224,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -247,9 +247,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -270,10 +270,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -296,10 +296,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -322,10 +322,10 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
-		rocks.setData(Data("value 4"), forKey: Data("key 4"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 4"), forKey: Data("key 4"))
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
@@ -350,9 +350,9 @@ class RocksDBIteratorTests : RocksDBTests {
 			options.valueType = .NSString
 		})
 
-		rocks.setObject("value 1", forKey: "key 1")
-		rocks.setObject("value 2", forKey: "key 2")
-		rocks.setObject("value 3", forKey: "key 3")
+		try! rocks.setObject("value 1", forKey: "key 1")
+		try! rocks.setObject("value 2", forKey: "key 2")
+		try! rocks.setObject("value 3", forKey: "key 3")
 
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()

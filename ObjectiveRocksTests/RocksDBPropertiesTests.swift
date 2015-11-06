@@ -18,9 +18,9 @@ class RocksDBPropertiesTests : RocksDBTests {
 			options.minWriteBufferNumberToMerge = 10;
 		})
 
-		rocks.setData(Data("value 1"), forKey: Data("key 1"))
-		rocks.setData(Data("value 2"), forKey: Data("key 2"))
-		rocks.setData(Data("value 3"), forKey: Data("key 3"))
+		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data("value 2"), forKey: Data("key 2"))
+		try! rocks.setData(Data("value 3"), forKey: Data("key 3"))
 
 		XCTAssertGreaterThan(rocks.valueForIntProperty(.NumEntriesActiveMemtable), 0 as UInt64);
 		XCTAssertGreaterThan(rocks.valueForIntProperty(.CurSizeActiveMemTable), 0 as UInt64);

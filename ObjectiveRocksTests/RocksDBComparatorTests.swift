@@ -16,29 +16,29 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseAscending)
 		})
 
-		rocks.setData(Data("abc1"), forKey: Data("abc1"))
-		rocks.setData(Data("abc2"), forKey: Data("abc2"))
-		rocks.setData(Data("abc3"), forKey: Data("abc3"))
+		try! rocks.setData(Data("abc1"), forKey: Data("abc1"))
+		try! rocks.setData(Data("abc2"), forKey: Data("abc2"))
+		try! rocks.setData(Data("abc3"), forKey: Data("abc3"))
 
 		let iterator = rocks.iterator()
 
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc2"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
 
 		iterator.next()
 
@@ -47,14 +47,14 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
 
 		iterator.seekToKey(Data("abc"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
 
 		iterator.close()
 	}
@@ -65,29 +65,29 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
 		})
 
-		rocks.setData(Data("abc1"), forKey: Data("abc1"))
-		rocks.setData(Data("abc2"), forKey: Data("abc2"))
-		rocks.setData(Data("abc3"), forKey: Data("abc3"))
+		try! rocks.setData(Data("abc1"), forKey: Data("abc1"))
+		try! rocks.setData(Data("abc2"), forKey: Data("abc2"))
+		try! rocks.setData(Data("abc3"), forKey: Data("abc3"))
 
 		let iterator = rocks.iterator()
 
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc2"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
 
 		iterator.next()
 
@@ -96,8 +96,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
 
 		iterator.seekToKey(Data("abc"))
 
@@ -106,8 +106,8 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToKey(Data("abc999"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as! NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as! NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
 
 		iterator.close()
 	}
@@ -117,14 +117,15 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
 			options.keyType = .NSString
+			options.valueType = .NSString
 		})
 
 		let expected = NSMutableArray()
 
-		for i in 0...10000 {
+		for i in 0..<10000 {
 			let str = NSString(format: "a%d", i)
 			expected.addObject(str)
-			rocks.setObject(str, forKey: str)
+			try! rocks.setObject(str, forKey: str)
 		}
 
 		/* Expected Array: [A0, A1, A10, A100, A1000, A1001, A1019, A102, A1020, ...] */
@@ -134,7 +135,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		var idx = 0
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertEqual(key as! NSString, expected[idx] as! NSString)
+			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
 			idx++
 		}
 	}
@@ -144,14 +145,15 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.createIfMissing = true
 			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareDescending)
 			options.keyType = .NSString
+			options.valueType = .NSString
 		})
 
 		let expected = NSMutableArray()
 
-		for i in 0...10000 {
+		for i in 0..<10000 {
 			let str = NSString(format: "a%d", i)
 			expected.addObject(str)
-			rocks.setObject(str, forKey: str)
+			try! rocks.setObject(str, forKey: str)
 		}
 
 		/* Expected Array: [A9999, A9998 .. A9990, A999, A9989, ...] */
@@ -161,7 +163,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		var idx = 9999
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertEqual(key as! NSString, expected[idx] as! NSString)
+			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
 			idx--
 		}
 	}
@@ -172,15 +174,15 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.NumberAscending)
 			options.keyEncoder = {
 				(number) -> NSData in
-				var r: NSInteger = number.unsignedIntegerValue
-				return NSData(bytes: &r, length: sizeof(NSInteger))
+				var r: UInt = number.unsignedIntegerValue
+				return NSData(bytes: &r, length: sizeof(UInt))
 			}
 			options.keyDecoder = {
 				(data) -> AnyObject in
 				if (data == nil) {
 					return Optional.None!
 				}
-				var r: NSInteger = 0
+				var r: UInt = 0
 				data.getBytes(&r, length: sizeof(NSInteger))
 				return NSNumber(unsignedInteger: r)
 			}
@@ -189,8 +191,9 @@ class RocksDBComparatorTests : RocksDBTests {
 		var i = 0
 		while i < 10000 {
 			let r = arc4random_uniform(UINT32_MAX);
-			if (rocks.objectForKey(NSNumber(unsignedInt: r)) == nil) {
-				rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
+			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
+			if value as? NSData == nil {
+				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
 				i++
 			}
 		}
@@ -215,15 +218,15 @@ class RocksDBComparatorTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.NumberDescending)
 			options.keyEncoder = {
 				(number) -> NSData in
-				var r: NSInteger = number.unsignedIntegerValue
-				return NSData(bytes: &r, length: sizeof(NSInteger))
+				var r: UInt = number.unsignedIntegerValue
+				return NSData(bytes: &r, length: sizeof(UInt))
 			}
 			options.keyDecoder = {
 				(data) -> AnyObject in
 				if (data == nil) {
 					return Optional.None!
 				}
-				var r: NSInteger = 0
+				var r: UInt = 0
 				data.getBytes(&r, length: sizeof(NSInteger))
 				return NSNumber(unsignedInteger: r)
 			}
@@ -232,8 +235,9 @@ class RocksDBComparatorTests : RocksDBTests {
 		var i = 0
 		while i < 10000 {
 			let r = arc4random_uniform(UINT32_MAX);
-			if (rocks.objectForKey(NSNumber(unsignedInt: r)) == nil) {
-				rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
+			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
+			if value as? NSData == nil {
+				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
 				i++
 			}
 		}
