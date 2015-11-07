@@ -2306,11 +2306,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 624203C51BED64410043DD6F /* Build configuration list for PBXNativeTarget "ObjectiveRocks" */;
 			buildPhases = (
+				624204CC1BED69600043DD6F /* ShellScript */,
 				624203BB1BED64410043DD6F /* Sources */,
 				624203BC1BED64410043DD6F /* Frameworks */,
 				624203BE1BED64410043DD6F /* Resources */,
 				624203BD1BED64410043DD6F /* Headers */,
-				624204CC1BED69600043DD6F /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -2325,11 +2325,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 624F5D9D1BEE416D00497FEF /* Build configuration list for PBXNativeTarget "ObjectiveRocks-iOS" */;
 			buildPhases = (
+				624F5DC51BEE434700497FEF /* ShellScript */,
 				624F5D931BEE416D00497FEF /* Sources */,
 				624F5D941BEE416D00497FEF /* Frameworks */,
 				624F5D961BEE416D00497FEF /* Resources */,
 				624F5D951BEE416D00497FEF /* Headers */,
-				624F5DC51BEE434700497FEF /* ShellScript */,
 			);
 			buildRules = (
 			);
