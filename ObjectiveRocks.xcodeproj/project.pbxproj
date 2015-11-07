@@ -2392,7 +2392,6 @@
 					};
 					624F5D971BEE416D00497FEF = {
 						CreatedOnToolsVersion = 7.1;
-						DevelopmentTeam = YSGAPZW56W;
 					};
 					6299F8131A17B28200123F56 = {
 						CreatedOnToolsVersion = 6.1;
@@ -3003,6 +3002,7 @@
 		624F5D9E1BEE416D00497FEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -3040,6 +3040,7 @@
 		624F5D9F1BEE416D00497FEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
