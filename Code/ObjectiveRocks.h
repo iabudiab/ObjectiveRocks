@@ -2,14 +2,21 @@
 //  ObjectiveRocks.h
 //  ObjectiveRocks
 //
-//  Created by Iska on 20/11/14.
-//  Copyright (c) 2014 BrainCookie. All rights reserved.
+//  Created by Iska on 06/11/15.
+//  Copyright © 2015 BrainCookie. All rights reserved.
 //
+
+//! Project version number for ObjectiveRocks.
+extern double ObjectiveRocksVersionNumber;
+
+//! Project version string for ObjectiveRocks.
+extern const unsigned char ObjectiveRocksVersionString[];
 
 #import "RocksDB.h"
 
 #import "RocksDBColumnFamily.h"
 #import "RocksDBColumnFamilyDescriptor.h"
+#import "RocksDBColumnFamilyMetaData.h"
 
 #import "RocksDBIterator.h"
 #import "RocksDBPrefixExtractor.h"

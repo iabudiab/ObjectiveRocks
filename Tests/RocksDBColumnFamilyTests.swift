@@ -7,6 +7,7 @@
 //
 
 import XCTest
+import ObjectiveRocks
 
 class RocksDBColumnFamilyTests : RocksDBTests {
 

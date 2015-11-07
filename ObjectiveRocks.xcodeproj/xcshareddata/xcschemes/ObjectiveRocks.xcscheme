@@ -14,8 +14,8 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "6299F8081A17B28200123F56"
-               BuildableName = "libObjectiveRocks.a"
+               BlueprintIdentifier = "624203BF1BED64410043DD6F"
+               BuildableName = "ObjectiveRocks.framework"
                BlueprintName = "ObjectiveRocks"
                ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
             </BuildableReference>
@@ -42,8 +42,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6299F8081A17B28200123F56"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624203BF1BED64410043DD6F"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>
@@ -64,8 +64,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6299F8081A17B28200123F56"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624203BF1BED64410043DD6F"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>
@@ -82,8 +82,8 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "6299F8081A17B28200123F56"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624203BF1BED64410043DD6F"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>

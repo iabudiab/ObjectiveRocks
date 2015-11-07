@@ -6,6 +6,7 @@
 
 #import "RocksDBColumnFamily.h"
 #import "RocksDBColumnFamilyDescriptor.h"
+#import "RocksDBColumnFamilyMetaData.h"
 
 #import "RocksDBIterator.h"
 #import "RocksDBPrefixExtractor.h"

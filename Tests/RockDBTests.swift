@@ -8,6 +8,7 @@
 
 import Foundation
 import XCTest
+import ObjectiveRocks
 
 public func AssertThrows(message: String = "Expression did not throw",
 	_ function: String = __FUNCTION__,

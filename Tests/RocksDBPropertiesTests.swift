@@ -6,8 +6,8 @@
 //  Copyright (c) 2015 BrainCookie. All rights reserved.
 //
 
-import Foundation
 import XCTest
+import ObjectiveRocks
 
 class RocksDBPropertiesTests : RocksDBTests {
 

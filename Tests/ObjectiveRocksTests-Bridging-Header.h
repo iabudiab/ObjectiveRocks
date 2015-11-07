@@ -2,52 +2,51 @@
 //  Use this file to import your target's public headers that you would like to expose to Swift.
 //
 
-#import <Foundation/Foundation.h>
+#import <ObjectiveRocks/RocksDB.h>
 
-#import "RocksDB.h"
+#import <ObjectiveRocks/RocksDBColumnFamily.h>
+#import <ObjectiveRocks/RocksDBColumnFamilyDescriptor.h>
+#import <ObjectiveRocks/RocksDBColumnFamilyMetaData.h>
 
-#import "RocksDBColumnFamily.h"
-#import "RocksDBColumnFamilyDescriptor.h"
+#import <ObjectiveRocks/RocksDBIterator.h>
+#import <ObjectiveRocks/RocksDBPrefixExtractor.h>
 
-#import "RocksDBIterator.h"
-#import "RocksDBPrefixExtractor.h"
+#import <ObjectiveRocks/RocksDBWriteBatch.h>
 
-#import "RocksDBWriteBatch.h"
+#import <ObjectiveRocks/RocksDBComparator.h>
 
-#import "RocksDBComparator.h"
+#import <ObjectiveRocks/RocksDBOptions.h>
+#import <ObjectiveRocks/RocksDBEncodingOptions.h>
+#import <ObjectiveRocks/RocksDBDatabaseOptions.h>
+#import <ObjectiveRocks/RocksDBColumnFamilyOptions.h>
+#import <ObjectiveRocks/RocksDBWriteOptions.h>
+#import <ObjectiveRocks/RocksDBReadOptions.h>
+#import <ObjectiveRocks/RocksDBTableFactory.h>
+#import <ObjectiveRocks/RocksDBBlockBasedTableOptions.h>
+#import <ObjectiveRocks/RocksDBCache.h>
+#import <ObjectiveRocks/RocksDBFilterPolicy.h>
+#import <ObjectiveRocks/RocksDBMemTableRepFactory.h>
+#import <ObjectiveRocks/RocksDBEnv.h>
 
-#import "RocksDBOptions.h"
-#import "RocksDBEncodingOptions.h"
-#import "RocksDBDatabaseOptions.h"
-#import "RocksDBColumnFamilyOptions.h"
-#import "RocksDBWriteOptions.h"
-#import "RocksDBReadOptions.h"
-#import "RocksDBTableFactory.h"
-#import "RocksDBBlockBasedTableOptions.h"
-#import "RocksDBCache.h"
-#import "RocksDBFilterPolicy.h"
-#import "RocksDBMemTableRepFactory.h"
-#import "RocksDBEnv.h"
+#import <ObjectiveRocks/RocksDBSnapshot.h>
 
-#import "RocksDBSnapshot.h"
+#import <ObjectiveRocks/RocksDBMergeOperator.h>
 
-#import "RocksDBMergeOperator.h"
+#import <ObjectiveRocks/RocksDBTypes.h>
 
-#import "RocksDBTypes.h"
+#import <ObjectiveRocks/RocksDBColumnFamilyMetadata.h>
 
-#import "RocksDBColumnFamilyMetadata.h"
+#import <ObjectiveRocks/RocksDBPlainTableOptions.h>
+#import <ObjectiveRocks/RocksDBCuckooTableOptions.h>
 
-#import "RocksDBPlainTableOptions.h"
-#import "RocksDBCuckooTableOptions.h"
+#import <ObjectiveRocks/RocksDBThreadStatus.h>
 
-#import "RocksDBThreadStatus.h"
+#import <ObjectiveRocks/RocksDBCheckpoint.h>
 
-#import "RocksDBCheckpoint.h"
+#import <ObjectiveRocks/RocksDBStatistics.h>
+#import <ObjectiveRocks/RocksDBStatisticsHistogram.h>
 
-#import "RocksDBStatistics.h"
-#import "RocksDBStatisticsHistogram.h"
+#import <ObjectiveRocks/RocksDBBackupEngine.h>
+#import <ObjectiveRocks/RocksDBBackupInfo.h>
 
-#import "RocksDBBackupEngine.h"
-#import "RocksDBBackupInfo.h"
-
-#import "RocksDBProperties.h"
+#import <ObjectiveRocks/RocksDBProperties.h>
