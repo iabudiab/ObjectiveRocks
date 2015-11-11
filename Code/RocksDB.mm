@@ -348,11 +348,6 @@
 
 #pragma mark - Write Operations
 
-- (BOOL)setObject:(id)anObject forKey:(id)aKey
-{
-	return [self setObject:anObject forKey:aKey error:nil];
-}
-
 - (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError * __autoreleasing *)error
 {
 	return [self setObject:anObject forKey:aKey error:error writeOptions:nil];
@@ -382,11 +377,6 @@
 				  forKey:keyData
 				   error:error
 			writeOptions:writeOptionsBlock];
-}
-
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey
-{
-	return [self setData:data forKey:aKey error:nil];
 }
 
 - (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
@@ -426,11 +416,6 @@
 
 #pragma mark - Merge Operations
 
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey
-{
-	return [self mergeOperation:aMerge forKey:aKey error:nil];
-}
-
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error
 {
 	return [self mergeOperation:aMerge forKey:aKey error:error writeOptions:nil];
@@ -455,11 +440,6 @@
 	return [self mergeData:[aMerge dataUsingEncoding:NSUTF8StringEncoding]
 					forKey:keyData
 			  writeOptions:writeOptionsBlock];
-}
-
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey
-{
-	return [self mergeObject:anObject forKey:aKey error:nil];
 }
 
 - (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error
@@ -491,11 +471,6 @@
 					forKey:keyData
 					 error:error
 			  writeOptions:writeOptionsBlock];
-}
-
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey
-{
-	return [self mergeData:data forKey:aKey error:nil];
 }
 
 - (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error
@@ -536,11 +511,6 @@
 
 #pragma mark - Read Operations
 
-- (id)objectForKey:(id)aKey
-{
-	return [self objectForKey:aKey error:nil];
-}
-
 - (id)objectForKey:(id)aKey error:(NSError **)error
 {
 	return [self objectForKey:aKey error:error readOptions:nil];
@@ -567,11 +537,6 @@
 						readOptions:readOptionsBlock];
 
 	return DecodeValueData(aKey, data, (RocksDBEncodingOptions *)_options, error);
-}
-
-- (NSData *)dataForKey:(NSData *)aKey
-{
-	return [self dataForKey:aKey error:nil];
 }
 
 - (NSData *)dataForKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
@@ -611,11 +576,6 @@
 
 #pragma mark - Delete Operations
 
-- (BOOL)deleteObjectForKey:(id)aKey
-{
-	return [self deleteObjectForKey:aKey error:nil];
-}
-
 - (BOOL)deleteObjectForKey:(id)aKey error:(NSError **)error
 {
 	return [self deleteObjectForKey:aKey error:error writeOptions:nil];
@@ -642,11 +602,6 @@
 	return [self deleteDataForKey:keyData
 							error:error
 					 writeOptions:writeOptionsBlock];
-}
-
-- (BOOL)deleteDataForKey:(NSData *)aKey
-{
-	return [self deleteDataForKey:aKey error:nil];
 }
 
 - (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * __autoreleasing *)error
