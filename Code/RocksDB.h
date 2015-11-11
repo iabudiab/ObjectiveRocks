@@ -261,27 +261,13 @@
 
  @param anObject The object for key.
  @param aKey The key for object.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this write operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBWriteOptions
- */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptionsBlock;
-
-/**
- Stores the given key-object pair into the DB.
-
- @discussion
-
- @param anObject The object for key.
- @param aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this write operation.
  @return `YES` if the operation succeeded, `NO` otherwise
 
  @see RocksDBWriteOptions
  */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 /**
  Stores the given data object under the given data key in the DB.
@@ -305,23 +291,6 @@
 
  @param data The data for key.
  @param aKey The key for object.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this write operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDB setObject:forKey:
- @see RocksDB setObject:forKey:error:
- @see RocksDB setObject:forKey:writeOptions:
- @see RocksDB setObject:forKey:error:writeOptions:
- */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Stores the given data object under the given data key in the DB.
-
- @discussion This method can be used to configure single write operations bypassing the defaults.
-
- @param data The data for key.
- @param aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this write operation.
  @return `YES` if the operation succeeded, `NO` otherwise
@@ -331,7 +300,7 @@
  @see RocksDB setObject:forKey:writeOptions:
  @see RocksDB setObject:forKey:error:writeOptions:
  */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 @end
 
@@ -343,8 +312,7 @@
 
 
 - (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error;
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 /**
  Merges the given object with the existing data for the given key.
@@ -366,22 +334,6 @@
 
  @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
  by the user-provided merge operator.
- This method can be used to configure single merge operations bypassing the defaults.
-
- @param anObject The object being merged.
- @param aKey The key for the object.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this merge operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBMergeOperator
- */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Merges the given object with the existing data for the given key.
-
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator.
  This method can be used to configure single write operations bypassing the defaults.
 
  @param anObject The object being merged.
@@ -392,7 +344,7 @@
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error ;
 
 
 /**
@@ -415,23 +367,6 @@
 
  @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
  by the user-provided merge operator. 
- This method can be used to configure single merge operations bypassing the defaults.
-
- @param data The data being merged.
- @param aKey The key for the data.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this merge operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBMergeOperator
- @see RocksDBWriteOptions
- */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Merges the given data object with the existing data for the given key.
-
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator. 
  This method can be used to configure single write operations bypassing the defaults.
 
  @param data The data being merged.
@@ -443,7 +378,7 @@
  @see RocksDBMergeOperator
  @see RocksDBWriteOptions
  */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 @end
 
@@ -466,24 +401,13 @@
  Returns the object for the given key.
 
  @peram aKey The key for object.
- @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
- @return The object for the given key.
-
- @see RocksDBReadOptions
- */
--(id)objectForKey:(id)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
-
-/**
- Returns the object for the given key.
-
- @peram aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
  @return The object for the given key.
 
  @see RocksDBReadOptions
  */
-- (id)objectForKey:(id)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (id)objectForKey:(id)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError **)error;
 
 /**
  Returns the data for the given key.
@@ -503,21 +427,6 @@
  Returns the data for the given key.
 
  @peram aKey The key for data.
- @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
- @return The data object for the given key.
-
- @see RocksDBReadOptions
- @see RocksDB objectForKey:
- @see RocksDB objectForKey:error:
- @see RocksDB objectForKey:readOptions:
- @see RocksDB objectForKey:error:readOptions:
- */
-- (NSData *)dataForKey:(NSData *)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
-
-/**
- Returns the data for the given key.
-
- @peram aKey The key for data.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
  @return The data object for the given key.
@@ -528,7 +437,7 @@
  @see RocksDB objectForKey:readOptions:
  @see RocksDB objectForKey:error:readOptions:
  */
-- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (NSData *)dataForKey:(NSData *)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError **)error;
 
 @end
 
@@ -551,24 +460,13 @@
  Deletes the object for the given key.
 
  @peram aKey The key to delete.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this delete operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBWriteOptions
- */
-- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Deletes the object for the given key.
-
- @peram aKey The key to delete.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this delete operation.
  @return `YES` if the operation succeeded, `NO` otherwise
 
  @see RocksDBWriteOptions
  */
-- (BOOL)deleteObjectForKey:(id)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error ;
 
 /**
  Deletes the data for the given key.
@@ -588,21 +486,6 @@
  Deletes the data for the given key.
 
  @peram aKey The key to delete.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this delete operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBWriteOptions
- @see RocksDB deleteObjectForKey:
- @see RocksDB deleteObjectForKey:error:
- @see RocksDB deleteObjectForKey:readOptions:
- @see RocksDB deleteObjectForKey:error:readOptions:
- */
-- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Deletes the data for the given key.
-
- @peram aKey The key to delete.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this delete operation.
  @return `YES` if the operation succeeded, `NO` otherwise
@@ -613,7 +496,7 @@
  @see RocksDB deleteObjectForKey:readOptions:
  @see RocksDB deleteObjectForKey:error:readOptions:
  */
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 @end
 
@@ -678,21 +561,6 @@
  and then applying it when needed.
 
  @param writeBatch The write batch instance to apply.
- @param writeOptions The write options to configure this batch.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBWriteBatch
- @see RocksDBWriteOptions
- */
-- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
-
-/**
- Applies a write batch instance on this DB.
-
- @discussion In contrast to the block-based approach, this method allows for building the batch separately
- and then applying it when needed.
-
- @param writeBatch The write batch instance to apply.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param writeOptions The write options to configure this batch.
  @return `YES` if the operation succeeded, `NO` otherwise
@@ -700,7 +568,7 @@
  @see RocksDBWriteBatch
  @see RocksDBWriteOptions
  */
-- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
 
 @end
 

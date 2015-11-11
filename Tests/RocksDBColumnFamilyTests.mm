@@ -223,7 +223,7 @@
 	[batch deleteDataForKey:Data(@"xyz") inColumnFamily:defaultColumnFamily];
 	[batch deleteDataForKey:Data(@"xyz")];
 
-	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+	[_rocks applyWriteBatch:batch writeOptions:nil error:nil];
 
 	XCTAssertEqualObjects([defaultColumnFamily dataForKey:Data(@"df_key") error:nil], Data(@"df_value"));
 	XCTAssertNil([defaultColumnFamily dataForKey:Data(@"df_key1") error:nil]);

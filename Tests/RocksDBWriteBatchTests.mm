@@ -86,7 +86,7 @@
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
 	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 
-	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+	[_rocks applyWriteBatch:batch writeOptions:nil error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
@@ -108,7 +108,7 @@
 	[batch setData:Data(@"Value 2") forKey:Data(@"Key 2")];
 	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 
-	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+	[_rocks applyWriteBatch:batch writeOptions:nil error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], nil);
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
@@ -140,7 +140,7 @@
 	[batch setData:Data(@"Value 3") forKey:Data(@"Key 3")];
 	[batch mergeData:Data(@"Value 2 New") forKey:Data(@"Key 2")];
 
-	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+	[_rocks applyWriteBatch:batch writeOptions:nil error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2,Value 2 New"));
 }
@@ -161,7 +161,7 @@
 	[batch clear];
 	[batch setData:Data(@"Value 4") forKey:Data(@"Key 4")];
 
-	[_rocks applyWriteBatch:batch withWriteOptions:nil];
+	[_rocks applyWriteBatch:batch writeOptions:nil error:nil];
 
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
 	XCTAssertEqualObjects([_rocks dataForKey:Data(@"Key 2") error:nil], nil);

@@ -220,7 +220,7 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		batch.deleteDataForKey(Data("xyz"), inColumnFamily:defaultColumnFamily)
 		batch.deleteDataForKey(Data("xyz"))
 
-		rocks.applyWriteBatch(batch, withWriteOptions:nil)
+		try! rocks.applyWriteBatch(batch, writeOptions:nil)
 
 		XCTAssertEqual(try! defaultColumnFamily.dataForKey(Data("df_key")), Data("df_value"))
 		XCTAssertNil(try? defaultColumnFamily.dataForKey(Data("df_key1")))
