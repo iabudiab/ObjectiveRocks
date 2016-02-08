@@ -286,7 +286,6 @@
 		624F5DBC1BEE41F700497FEF /* RocksDBMemTableRepFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 625F8F271A59D7B1007796BA /* RocksDBMemTableRepFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DBD1BEE41F700497FEF /* RocksDBSnapshot.h in Headers */ = {isa = PBXBuildFile; fileRef = 620494851A3284A800A0E950 /* RocksDBSnapshot.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DBE1BEE41F700497FEF /* RocksDBSnapshotUnavailable.h in Headers */ = {isa = PBXBuildFile; fileRef = 628C51C71A3BD08500B96F8F /* RocksDBSnapshotUnavailable.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		624F5DBF1BEE41F700497FEF /* RocksDBCheckpoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 625F8F211A59CF82007796BA /* RocksDBCheckpoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DC01BEE41F700497FEF /* RocksDBMergeOperator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62EEC4B51A34FEE100624DA2 /* RocksDBMergeOperator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DC61BEE437C00497FEF /* RocksDB.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F80E1A17B28200123F56 /* RocksDB.mm */; };
 		624F5DC81BEE437C00497FEF /* RocksDBTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = 62451AC91A4BAEC000AF11C8 /* RocksDBTypes.m */; };
@@ -2277,7 +2276,6 @@
 				624F5DBC1BEE41F700497FEF /* RocksDBMemTableRepFactory.h in Headers */,
 				624F5DBD1BEE41F700497FEF /* RocksDBSnapshot.h in Headers */,
 				624F5DBE1BEE41F700497FEF /* RocksDBSnapshotUnavailable.h in Headers */,
-				624F5DBF1BEE41F700497FEF /* RocksDBCheckpoint.h in Headers */,
 				624F5DC01BEE41F700497FEF /* RocksDBMergeOperator.h in Headers */,
 				621C6D971BEE4A4600044CB1 /* RocksDBStatistics.h in Headers */,
 				621C6D981BEE4A4600044CB1 /* RocksDBStatisticsHistogram.h in Headers */,
