@@ -2,9 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:ObjectiveRocks.playground">
+      location = "group:ObjectiveRocks.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ObjectiveRocks.xcodeproj">
+      location = "group:ObjectiveRocks.playground">
    </FileRef>
 </Workspace>
