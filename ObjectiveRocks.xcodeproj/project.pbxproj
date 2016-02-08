@@ -428,7 +428,6 @@
 		624F5EA91BEE44E800497FEF /* statistics.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B831A1ABA2000486C31 /* statistics.cc */; };
 		624F5EAA1BEE44E800497FEF /* status.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B861A1ABA2000486C31 /* status.cc */; };
 		624F5EAB1BEE44E900497FEF /* string_util.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B8A1A1ABA2000486C31 /* string_util.cc */; };
-		624F5EAC1BEE44E900497FEF /* sst_dump_tool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62451AD41A4BD61700AF11C8 /* sst_dump_tool.cc */; };
 		624F5EAD1BEE44E900497FEF /* sync_point.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B8D1A1ABA2000486C31 /* sync_point.cc */; };
 		624F5EAF1BEE44E900497FEF /* testutil.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B921A1ABA2000486C31 /* testutil.cc */; };
 		624F5EB01BEE44E900497FEF /* thread_local.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62EE2B941A1ABA2000486C31 /* thread_local.cc */; };
@@ -486,6 +485,7 @@
 		629416631A69DFB000AA0498 /* RocksDBPrefixExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629416621A69DFB000AA0498 /* RocksDBPrefixExtractorTests.swift */; };
 		629416641A69DFB000AA0498 /* RocksDBPrefixExtractorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 629416621A69DFB000AA0498 /* RocksDBPrefixExtractorTests.swift */; };
 		6299F8561A17B7AD00123F56 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
+		62A26A3D1C694B7F00DDE27E /* sst_dump_tool.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62451AD41A4BD61700AF11C8 /* sst_dump_tool.cc */; };
 		62A37D141A632316003F6095 /* RocksDBIteratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A37D131A632316003F6095 /* RocksDBIteratorTests.swift */; };
 		62A37D151A632316003F6095 /* RocksDBIteratorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62A37D131A632316003F6095 /* RocksDBIteratorTests.swift */; };
 		62A8B0481A58C40A0069B4C8 /* RocksDBBasicTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6299F8551A17B7AD00123F56 /* RocksDBBasicTests.mm */; };
@@ -2384,7 +2384,7 @@
 			attributes = {
 				LastSwiftMigration = 0700;
 				LastSwiftUpdateCheck = 0700;
-				LastUpgradeCheck = 0710;
+				LastUpgradeCheck = 0720;
 				ORGANIZATIONNAME = BrainCookie;
 				TargetAttributes = {
 					624203BF1BED64410043DD6F = {
@@ -2805,8 +2805,7 @@
 				624F5EA51BEE44E800497FEF /* rate_limiter.cc in Sources */,
 				624F5EA61BEE44E800497FEF /* skiplistrep.cc in Sources */,
 				624F5EA71BEE44E800497FEF /* slice.cc in Sources */,
-				624F5EAC1BEE44E900497FEF /* sst_dump_tool.cc in Sources */,
-				624F5EAC1BEE44E900497FEF /* sst_dump_tool.cc in Sources */,
+				62A26A3D1C694B7F00DDE27E /* sst_dump_tool.cc in Sources */,
 				624F5EA91BEE44E800497FEF /* statistics.cc in Sources */,
 				624F5EAA1BEE44E800497FEF /* status.cc in Sources */,
 				624F5EAB1BEE44E900497FEF /* string_util.cc in Sources */,
