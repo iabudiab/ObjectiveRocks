@@ -25,6 +25,7 @@
 
 @interface RocksDB : NSObject
 
+#pragma mark - Initializing the database
 ///--------------------------------
 /// @name Initializing the database
 ///--------------------------------
@@ -156,6 +157,7 @@
 
 @interface RocksDB (ColumnFamilies)
 
+#pragma mark - Column Family Management
 ///--------------------------------
 /// @name Column Family Management
 ///--------------------------------
@@ -206,6 +208,7 @@
 
 @interface RocksDB (Properties)
 
+#pragma mark - Database properties
 ///--------------------------------
 /// @name Database properties
 ///--------------------------------
@@ -240,6 +243,7 @@
 
 @interface RocksDB (WriteOps)
 
+#pragma mark - Write operations
 ///--------------------------------
 /// @name Write operations
 ///--------------------------------
@@ -306,6 +310,7 @@
 
 @interface RocksDB (MergeOps)
 
+#pragma mark - Merge operations
 ///--------------------------------
 /// @name Merge operations
 ///--------------------------------
@@ -384,6 +389,7 @@
 
 @interface RocksDB (ReadOps)
 
+#pragma mark - Read operations
 ///--------------------------------
 /// @name Read operations
 ///--------------------------------
@@ -443,6 +449,7 @@
 
 @interface RocksDB (DeleteOps)
 
+#pragma mark - Delete operations
 ///--------------------------------
 /// @name Delete operations
 ///--------------------------------
@@ -502,6 +509,7 @@
 
 @interface RocksDB (WriteBatch)
 
+#pragma mark - Atomic Writes
 ///--------------------------------
 /// @name Atomic Writes
 ///--------------------------------
@@ -578,6 +586,7 @@
 
 @interface RocksDB (Iterator)
 
+#pragma mark - Database Iterator
 ///--------------------------------
 /// @name Database Iterator
 ///--------------------------------
@@ -606,6 +615,7 @@
 
 @interface RocksDB (Snapshot)
 
+#pragma mark - Database Snapshot
 ///--------------------------------
 /// @name Database Snapshot
 ///--------------------------------
