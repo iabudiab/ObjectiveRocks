@@ -130,8 +130,6 @@
 		624F5DA81BEE41F500497FEF /* RocksDBIterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F8C6051B85632500E2577F /* RocksDBIterator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DA91BEE41F500497FEF /* RocksDBPrefixExtractor.h in Headers */ = {isa = PBXBuildFile; fileRef = 6236E2551A4DD25000A81ED6 /* RocksDBPrefixExtractor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DAA1BEE41F500497FEF /* RocksDBWriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 623FE74E1A2D2ED500E68421 /* RocksDBWriteBatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		624F5DAB1BEE41F500497FEF /* RocksDBIndexedWriteBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F8C5FD1B85386A00E2577F /* RocksDBIndexedWriteBatch.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		624F5DAC1BEE41F500497FEF /* RocksDBWriteBatchIterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F8C6011B853ABA00E2577F /* RocksDBWriteBatchIterator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DAD1BEE41F600497FEF /* RocksDBComparator.h in Headers */ = {isa = PBXBuildFile; fileRef = 623224AA1A2116A400FB6625 /* RocksDBComparator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DAE1BEE41F600497FEF /* RocksDBOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 62AEF9B91A1D5DA900E63E89 /* RocksDBOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		624F5DAF1BEE41F600497FEF /* RocksDBEncodingOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 620629611A50ECCA001DEDC4 /* RocksDBEncodingOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -156,8 +154,6 @@
 		624F5DCD1BEE437C00497FEF /* RocksDBIterator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F8C6061B85632500E2577F /* RocksDBIterator.mm */; };
 		624F5DCE1BEE437C00497FEF /* RocksDBPrefixExtractor.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E2561A4DD25000A81ED6 /* RocksDBPrefixExtractor.mm */; };
 		624F5DCF1BEE437C00497FEF /* RocksDBWriteBatch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623FE74F1A2D2ED500E68421 /* RocksDBWriteBatch.mm */; };
-		624F5DD01BEE437C00497FEF /* RocksDBIndexedWriteBatch.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F8C5FE1B85386A00E2577F /* RocksDBIndexedWriteBatch.mm */; };
-		624F5DD11BEE437C00497FEF /* RocksDBWriteBatchIterator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62F8C6021B853ABA00E2577F /* RocksDBWriteBatchIterator.mm */; };
 		624F5DD21BEE437C00497FEF /* RocksDBComparator.mm in Sources */ = {isa = PBXBuildFile; fileRef = 623224AB1A2116A400FB6625 /* RocksDBComparator.mm */; };
 		624F5DD31BEE437C00497FEF /* RocksDBOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62AEF9BA1A1D5DA900E63E89 /* RocksDBOptions.mm */; };
 		624F5DD41BEE437C00497FEF /* RocksDBEncodingOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 620629621A50ECCA001DEDC4 /* RocksDBEncodingOptions.mm */; };
@@ -2895,13 +2891,11 @@
 				628B4BF11D03125900E2D828 /* version_builder.h in Headers */,
 				628B4EF71D03125A00E2D828 /* FbsonWriter.h in Headers */,
 				628B4CC31D03125900E2D828 /* transaction_db_mutex.h in Headers */,
-				624F5DAB1BEE41F500497FEF /* RocksDBIndexedWriteBatch.h in Headers */,
 				628B4F691D03125A00E2D828 /* autovector.h in Headers */,
 				628B4CCF1D03125900E2D828 /* write_batch_base.h in Headers */,
 				628B502F1D03125A00E2D828 /* stop_watch.h in Headers */,
 				628B4BB71D03125900E2D828 /* memtable_allocator.h in Headers */,
 				628B4E3B1D03125900E2D828 /* likely.h in Headers */,
-				624F5DAC1BEE41F500497FEF /* RocksDBWriteBatchIterator.h in Headers */,
 				628B4C1B1D03125900E2D828 /* write_thread.h in Headers */,
 				628B4BED1D03125900E2D828 /* transaction_log_impl.h in Headers */,
 				628B4EAD1D03125A00E2D828 /* get_context.h in Headers */,
@@ -3573,9 +3567,7 @@
 				628B50A11D03125A00E2D828 /* options_util.cc in Sources */,
 				628B4E831D03125900E2D828 /* block_prefix_index.cc in Sources */,
 				628B4ED51D03125A00E2D828 /* plain_table_reader.cc in Sources */,
-				624F5DD01BEE437C00497FEF /* RocksDBIndexedWriteBatch.mm in Sources */,
 				628B50811D03125A00E2D828 /* flashcache.cc in Sources */,
-				624F5DD11BEE437C00497FEF /* RocksDBWriteBatchIterator.mm in Sources */,
 				628B4E9F1D03125A00E2D828 /* flush_block_policy.cc in Sources */,
 				628B50DD1D03125A00E2D828 /* transaction_util.cc in Sources */,
 				628B4FF91D03125A00E2D828 /* options_builder.cc in Sources */,
