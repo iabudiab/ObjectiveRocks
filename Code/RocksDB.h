@@ -7,10 +7,13 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import "RocksDBColumnFamilyDescriptor.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
+#import "RocksDBCompactRangeOptions.h"
+
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
 
@@ -638,6 +641,27 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBReadOptions
  */
 - (RocksDBSnapshot *)snapshotWithReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions;
+
+#pragma mark - Compaction
+///--------------------------------
+/// @name Database Compaction
+///--------------------------------
+
+/**
+ Compacts the underlying storage for the specified key range [begin, end].
+ 
+ A `nil` start key is treated as a key before all keys, and a `nil` end key is treated as a key
+ after all keys in the database. Thus, in order to compact the entire database, the `RocksDBOpenRange` can be used.
+
+ @param range The key range for the compcation.
+ @param options The options for the compact range operation.
+ @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
+ @return `YES` if the operation succeeded, `NO` otherwise.
+
+ @see RocksDBKeyRange
+ @see RocksDBCompactRangeOptions
+ */
+- (BOOL)compactRange:(RocksDBKeyRange *)range withOptions:(nullable void (^)(RocksDBCompactRangeOptions *options))options error:(NSError * _Nullable *)error;
 
 @end
 

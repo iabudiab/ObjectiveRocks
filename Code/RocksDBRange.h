@@ -15,9 +15,9 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @interface RocksDBKeyRange : NSObject
 
-/* @breif Start key, inclusive */
+/* @breif Start key */
 @property (nonatomic, strong, nullable) id start;
-/* @breif End key, exclusive */
+/* @breif End key */
 @property (nonatomic, strong, nullable) id end;
 
 /**

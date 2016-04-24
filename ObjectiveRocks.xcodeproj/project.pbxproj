@@ -202,12 +202,12 @@
 		62662E961B8FCBA0008B4EF5 /* RocksDBIndexedWriteBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62662E951B8FCBA0008B4EF5 /* RocksDBIndexedWriteBatch.swift */; };
 		62662E971B8FCBA0008B4EF5 /* RocksDBIndexedWriteBatch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62662E951B8FCBA0008B4EF5 /* RocksDBIndexedWriteBatch.swift */; };
 		62685CB91A2E600A009401B1 /* RocksDBWriteBatchTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62685CB81A2E600A009401B1 /* RocksDBWriteBatchTests.mm */; };
-		6273A50E1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A50C1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h */; };
-		6273A50F1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A50C1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h */; };
+		6273A50E1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A50C1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6273A50F1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A50C1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6273A5101D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6273A50D1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm */; };
 		6273A5111D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6273A50D1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm */; };
-		6273A5131D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A5121D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h */; };
-		6273A5141D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A5121D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h */; };
+		6273A5131D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A5121D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		6273A5141D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6273A5121D0C647E00CF8BF1 /* RocksDBCompactRangeOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		628B4AF61D03125900E2D828 /* auto_roll_logger.cc in Sources */ = {isa = PBXBuildFile; fileRef = 628B47641D03125800E2D828 /* auto_roll_logger.cc */; };
 		628B4AF71D03125900E2D828 /* auto_roll_logger.cc in Sources */ = {isa = PBXBuildFile; fileRef = 628B47641D03125800E2D828 /* auto_roll_logger.cc */; };
 		628B4AF81D03125900E2D828 /* auto_roll_logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 628B47651D03125800E2D828 /* auto_roll_logger.h */; };

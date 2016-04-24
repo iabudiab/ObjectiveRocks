@@ -18,6 +18,9 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
 
+
+#import "RocksDBCompactRangeOptions+Private.h"
+
 #import "RocksDBIterator+Private.h"
 #import "RocksDBWriteBatch+Private.h"
 
@@ -724,6 +727,32 @@
 
 	RocksDBSnapshot *snapshot = [[RocksDBSnapshot alloc] initWithDBInstance:_db columnFamily:_columnFamily andReadOptions:readOptions];
 	return snapshot;
+}
+
+#pragma mark - Compaction
+
+- (BOOL)compactRange:(RocksDBKeyRange *)range
+		 withOptions:(void (^)(RocksDBCompactRangeOptions *options))optionsBlock
+			   error:(NSError * __autoreleasing *)error
+{
+	RocksDBCompactRangeOptions *rangeOptions = [RocksDBCompactRangeOptions new];
+	if (optionsBlock) {
+		optionsBlock(rangeOptions);
+	}
+
+	rocksdb::Slice startSlice = SliceFromKey(range.start, (RocksDBEncodingOptions *)_options, nil);
+	rocksdb::Slice endSlice = SliceFromKey(range.end, (RocksDBEncodingOptions *)_options, nil);
+
+	rocksdb::Status status = _db->CompactRange(rangeOptions.options, _columnFamily, &startSlice, &endSlice);
+
+	if (!status.ok()) {
+		NSError *temp = [RocksDBError errorWithRocksStatus:status];
+		if (error && *error == nil) {
+			*error = temp;
+		}
+		return NO;
+	}
+	return YES;
 }
 
 @end
