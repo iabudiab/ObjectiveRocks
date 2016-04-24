@@ -191,6 +191,10 @@
 		624F5EE51BEE456200497FEF /* RocksDBSlice.h in Headers */ = {isa = PBXBuildFile; fileRef = 623D3C201A37C4FF00389207 /* RocksDBSlice.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		6251A3731B783DA7009BABD5 /* RocksDBReadOnlyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6251A3721B783DA7009BABD5 /* RocksDBReadOnlyTests.m */; };
 		6251A3751B783DBC009BABD5 /* RocksDBReadOnlyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6251A3741B783DBC009BABD5 /* RocksDBReadOnlyTests.swift */; };
+		625EF4971D0C3A960058ACDA /* RocksDBRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 625EF4951D0C3A960058ACDA /* RocksDBRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		625EF4981D0C3A960058ACDA /* RocksDBRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 625EF4951D0C3A960058ACDA /* RocksDBRange.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		625EF4991D0C3A960058ACDA /* RocksDBRange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625EF4961D0C3A960058ACDA /* RocksDBRange.mm */; };
+		625EF49A1D0C3A960058ACDA /* RocksDBRange.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625EF4961D0C3A960058ACDA /* RocksDBRange.mm */; };
 		625F8F1F1A59C9B3007796BA /* RocksDBPropertiesTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */; };
 		625F8F251A59D11D007796BA /* RocksDBCheckpointTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 625F8F241A59D11D007796BA /* RocksDBCheckpointTests.mm */; };
 		62662E931B8FCA8C008B4EF5 /* RocksDBIndexedWriteBatchTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 62662E921B8FCA8C008B4EF5 /* RocksDBIndexedWriteBatchTests.m */; };
@@ -1096,6 +1100,8 @@
 		624F5D981BEE416D00497FEF /* ObjectiveRocks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ObjectiveRocks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6251A3721B783DA7009BABD5 /* RocksDBReadOnlyTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RocksDBReadOnlyTests.m; sourceTree = "<group>"; };
 		6251A3741B783DBC009BABD5 /* RocksDBReadOnlyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RocksDBReadOnlyTests.swift; sourceTree = "<group>"; };
+		625EF4951D0C3A960058ACDA /* RocksDBRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBRange.h; sourceTree = "<group>"; };
+		625EF4961D0C3A960058ACDA /* RocksDBRange.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBRange.mm; sourceTree = "<group>"; };
 		625F8F1A1A59C3EB007796BA /* RocksDBProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RocksDBProperties.h; sourceTree = "<group>"; };
 		625F8F1B1A59C3EB007796BA /* RocksDBProperties.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBProperties.mm; sourceTree = "<group>"; };
 		625F8F1E1A59C9B3007796BA /* RocksDBPropertiesTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBPropertiesTests.mm; sourceTree = "<group>"; };
@@ -2460,6 +2466,8 @@
 				62AEF9B81A1D5CF000E63E89 /* ObjectiveRocks.h */,
 				6299F80C1A17B28200123F56 /* RocksDB.h */,
 				6299F80E1A17B28200123F56 /* RocksDB.mm */,
+				625EF4951D0C3A960058ACDA /* RocksDBRange.h */,
+				625EF4961D0C3A960058ACDA /* RocksDBRange.mm */,
 				625F8F1A1A59C3EB007796BA /* RocksDBProperties.h */,
 				625F8F1B1A59C3EB007796BA /* RocksDBProperties.mm */,
 				62451AC81A4BAEC000AF11C8 /* RocksDBTypes.h */,
@@ -2735,6 +2743,7 @@
 				628B4E421D03125900E2D828 /* port_posix.h in Headers */,
 				628B505E1D03125A00E2D828 /* xfunc.h in Headers */,
 				628B4B781D03125900E2D828 /* file_indexer.h in Headers */,
+				625EF4971D0C3A960058ACDA /* RocksDBRange.h in Headers */,
 				628B4E761D03125900E2D828 /* block_based_table_reader.h in Headers */,
 				624203EB1BED64F90043DD6F /* RocksDBStatistics.h in Headers */,
 				628B4CBE1D03125900E2D828 /* transaction.h in Headers */,
@@ -2931,6 +2940,7 @@
 				628B4B131D03125900E2D828 /* compaction.h in Headers */,
 				628B50251D03125A00E2D828 /* sst_file_manager_impl.h in Headers */,
 				628B4E2F1D03125900E2D828 /* hash_skiplist_rep.h in Headers */,
+				625EF4981D0C3A960058ACDA /* RocksDBRange.h in Headers */,
 				628B4CA11D03125900E2D828 /* convenience.h in Headers */,
 				624F5DB01BEE41F600497FEF /* RocksDBDatabaseOptions.h in Headers */,
 				628B504D1D03125A00E2D828 /* thread_posix.h in Headers */,
@@ -3380,6 +3390,7 @@
 				628B4E241D03125900E2D828 /* hash_cuckoo_rep.cc in Sources */,
 				628B4FA01D03125A00E2D828 /* env_hdfs.cc in Sources */,
 				628B4B4C1D03125900E2D828 /* db_iter.cc in Sources */,
+				625EF4991D0C3A960058ACDA /* RocksDBRange.mm in Sources */,
 				628B4B3A1D03125900E2D828 /* db_impl.cc in Sources */,
 				628B4B961D03125900E2D828 /* internal_stats.cc in Sources */,
 				628B4BFA1D03125900E2D828 /* version_set.cc in Sources */,
@@ -3619,6 +3630,7 @@
 				628B4BEF1D03125900E2D828 /* version_builder.cc in Sources */,
 				628B4FDF1D03125A00E2D828 /* logging.cc in Sources */,
 				628B50691D03125A00E2D828 /* checkpoint.cc in Sources */,
+				625EF49A1D0C3A960058ACDA /* RocksDBRange.mm in Sources */,
 				628B4EDF1D03125A00E2D828 /* table_properties.cc in Sources */,
 				628B4BE51D03125900E2D828 /* table_properties_collector.cc in Sources */,
 				624F5DD81BEE437C00497FEF /* RocksDBReadOptions.mm in Sources */,

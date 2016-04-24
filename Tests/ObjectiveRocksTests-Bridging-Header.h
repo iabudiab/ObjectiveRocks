@@ -6,7 +6,6 @@
 
 #import <ObjectiveRocks/RocksDBColumnFamily.h>
 #import <ObjectiveRocks/RocksDBColumnFamilyDescriptor.h>
-#import <ObjectiveRocks/RocksDBColumnFamilyMetaData.h>
 
 #import <ObjectiveRocks/RocksDBIterator.h>
 #import <ObjectiveRocks/RocksDBPrefixExtractor.h>
@@ -33,6 +32,7 @@
 #import <ObjectiveRocks/RocksDBMergeOperator.h>
 
 #import <ObjectiveRocks/RocksDBTypes.h>
+#import <ObjectiveRocks/RocksDBRange.h>
 
 #import <ObjectiveRocks/RocksDBColumnFamilyMetadata.h>
 

@@ -11,14 +11,6 @@
 
 #import <rocksdb/iterator.h>
 
-#pragma mark - Iterator Key Range
-
-static RocksDBIteratorKeyRange *RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil);
-
-@implementation RocksDBIteratorKeyRange
-
-@end
-
 #pragma mark - Iterator
 
 @interface RocksDBIterator ()
@@ -110,19 +102,19 @@ static RocksDBIteratorKeyRange *RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil
 
 - (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:^(id key, id value, BOOL *stop) {
+	[self enumerateKeysAndValuesInRange:RocksDBOpenRange reverse:NO usingBlock:^(id key, id value, BOOL *stop) {
 		block(key, stop);
 	}];
 }
 
 - (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
-	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
+	[self enumerateKeysAndValuesInRange:RocksDBOpenRange reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
 		block(key, stop);
 	}];
 }
 
-- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
+- (void)enumerateKeysInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block
 {
 	[self enumerateKeysAndValuesInRange:range reverse:reverse usingBlock:^(id key, id value, BOOL *stop) {
 		block(key, stop);
@@ -133,15 +125,15 @@ static RocksDBIteratorKeyRange *RocksDBEmptyRange = RocksDBMakeKeyRange(nil, nil
 
 - (void)enumerateKeysAndValuesUsingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
-	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:NO usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBOpenRange reverse:NO usingBlock:block];
 }
 
 - (void)enumerateKeysAndValuesInReverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
-	[self enumerateKeysAndValuesInRange:RocksDBEmptyRange reverse:reverse usingBlock:block];
+	[self enumerateKeysAndValuesInRange:RocksDBOpenRange reverse:reverse usingBlock:block];
 }
 
-- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
+- (void)enumerateKeysAndValuesInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block
 {
 	BOOL stop = NO;
 

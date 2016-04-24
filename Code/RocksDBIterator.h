@@ -8,31 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "RocksDBEncodingOptions.h"
-
-/**
- Represents a range of keys.
- */
-@interface RocksDBIteratorKeyRange : NSObject
-
-/* @breif Start key, inclusive */
-@property (nonatomic, strong) id start;
-/* @breif End key, exclusive */
-@property (nonatomic, strong) id end;
-
-@end
-
-/**
- Creates a new RocksDBIteratorKeyRange from the specified values.
-
- @return RocksDBIteratorKeyRange with start and end keys.
- */
-NS_INLINE RocksDBIteratorKeyRange * RocksDBMakeKeyRange(id start, id end) {
-	RocksDBIteratorKeyRange *range = [RocksDBIteratorKeyRange new];
-	range.start = start;
-	range.end = end;
-
-	return range;
-}
+#import "RocksDBRange.h"
 
 /**
  An iterator over the sorted DB keys. Supports iteration in the natural sort order, the reverse order, and prefix seek.
@@ -122,7 +98,7 @@ NS_INLINE RocksDBIteratorKeyRange * RocksDBMakeKeyRange(id start, id end) {
 
  @see RocksDBIteratorKeyRange
  */
-- (void)enumerateKeysInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
 
 /**
  Executes a given block for each key-value pair in the iterator.
@@ -146,7 +122,7 @@ NS_INLINE RocksDBIteratorKeyRange * RocksDBMakeKeyRange(id start, id end) {
  @parame reverse BOOL indicating whether to enumerate in the reverse order.
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysAndValuesInRange:(RocksDBIteratorKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
 
 /**
  Executes a given block for each key with the given prefix in the iterator.
