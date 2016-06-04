@@ -130,14 +130,14 @@ class RocksDBComparatorTests : RocksDBTests {
 		}
 
 		/* Expected Array: [A0, A1, A10, A100, A1000, A1001, A1019, A102, A1020, ...] */
-		expected.sortUsingSelector(Selector("compare:"))
+		expected.sortUsingSelector(#selector(NSString.compare(_:)))
 
 		let iterator = rocks.iterator()
 		var idx = 0
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
 			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
-			idx++
+			idx += 1
 		}
 	}
 
@@ -158,14 +158,14 @@ class RocksDBComparatorTests : RocksDBTests {
 		}
 
 		/* Expected Array: [A9999, A9998 .. A9990, A999, A9989, ...] */
-		expected.sortUsingSelector(Selector("compare:"))
+		expected.sortUsingSelector(#selector(NSNumber.compare(_:)))
 
 		let iterator = rocks.iterator()
 		var idx = 9999
 
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
 			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
-			idx--
+			idx -= 1
 		}
 	}
 
@@ -195,7 +195,7 @@ class RocksDBComparatorTests : RocksDBTests {
 			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
 			if value as? NSData == nil {
 				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
-				i++
+				i += 1
 			}
 		}
 
@@ -207,7 +207,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
 			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedAscending)
 			lastKey = key as! NSNumber
-			count++
+			count += 1
 		}
 
 		XCTAssertEqual(count, 10000);
@@ -239,7 +239,7 @@ class RocksDBComparatorTests : RocksDBTests {
 			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
 			if value as? NSData == nil {
 				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
-				i++
+				i += 1
 			}
 		}
 
@@ -251,7 +251,7 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
 			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedDescending)
 			lastKey = key as! NSNumber
-			count++
+			count += 1
 		}
 
 		XCTAssertEqual(count, 10000);

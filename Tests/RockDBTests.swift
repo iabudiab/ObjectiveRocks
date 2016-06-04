@@ -11,10 +11,10 @@ import XCTest
 import ObjectiveRocks
 
 public func AssertThrows(message: String = "Expression did not throw",
-	_ function: String = __FUNCTION__,
-	_ file: String = __FILE__,
-	_ line: UInt = __LINE__,
-	expression: () throws -> Void)
+                         _ function: String = #function,
+                           _ file: StaticString = #file,
+                             _ line: UInt = #line,
+                               expression: () throws -> Void)
 {
 	var thrown: NSError? = nil
 	do {

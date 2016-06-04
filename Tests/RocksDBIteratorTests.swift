@@ -23,8 +23,10 @@ class RocksDBIteratorTests : RocksDBTests {
 		let actual = NSMutableArray()
 		let iterator = rocks.iterator()
 
-		for iterator.seekToFirst(); iterator.isValid(); iterator.next() {
+		iterator.seekToFirst()
+		while iterator.isValid() {
 			actual.addObject(Str(iterator.key() as! NSData))
+			iterator.next()
 		}
 
 		let expected = [ "key 1", "key 2", "key 3" ]

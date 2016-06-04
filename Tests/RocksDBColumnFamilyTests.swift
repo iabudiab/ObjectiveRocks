@@ -261,9 +261,11 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 
 		let actual = NSMutableArray()
 
-		for dfIterator.seekToFirst(); dfIterator.isValid(); dfIterator.next() {
+		dfIterator.seekToFirst()
+		while dfIterator.isValid() {
 			actual.addObject(Str(dfIterator.key() as! NSData))
 			actual.addObject(Str(dfIterator.value() as! NSData))
+			dfIterator.next()
 		}
 
 		var expected = [ "df_key1", "df_value1", "df_key2", "df_value2" ]
@@ -275,9 +277,11 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 
 		actual.removeAllObjects()
 
-		for cfIterator.seekToFirst(); cfIterator.isValid(); cfIterator.next() {
+		cfIterator.seekToFirst()
+		while cfIterator.isValid() {
 			actual.addObject(Str(cfIterator.key() as! NSData))
 			actual.addObject(Str(cfIterator.value() as! NSData))
+			cfIterator.next()
 		}
 
 		expected = [ "cf_key1", "cf_value1", "cf_key2", "cf_value2" ]
