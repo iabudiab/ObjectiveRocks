@@ -21,6 +21,9 @@ typedef NS_ENUM(uint32_t, RocksDBTickerType)
 	/** @brief Number of blocks added to block cache. */
 	RocksDBTickerBlockCacheAdd,
 
+	/** @brief Number of failures when adding blocks to block cache. */
+	RocksDBTickerBlockCacheFailure,
+
 	/** @brief  # of times cache miss when accessing index block 
 	 from block cache. */
 	RocksDBTickerBlockCacheIndexMiss,
@@ -44,6 +47,12 @@ typedef NS_ENUM(uint32_t, RocksDBTickerType)
 	/** @brief # of times cache hit when accessing data block 
 	 from block cache.  */
 	RocksDBTickerBlockCacheDataHit,
+
+	/** @brief Number of bytes read from cache. */
+	RocksDBTickerBlockCacheBytesRead,
+
+	/** @brief Number of bytes written to cache. */
+	RocksDBTickerBlockCacheBytesWrite,
 
 	/** @brief # of times bloom filter has avoided file reads. */
 	RocksDBTickerBloomFilterUseful,
@@ -89,6 +98,28 @@ typedef NS_ENUM(uint32_t, RocksDBTickerType)
 
 	/** @brief Number of bytes read. */
 	RocksDBTickerBytesRead,
+
+	/** @brief Number of calls to `seek`. */
+	RocksDBTickerNumberDBSeek,
+
+	/** @brief Number of calls to `next`. */
+	RocksDBTickerNumberDBNext,
+
+	/** @brief Number of calls to `previous`. */
+	RocksDBTickerNumberDBPrevious,
+
+	/** @brief Number of calls to `seek` that returned data. */
+	RocksDBTickerNumberDBSeekFound,
+
+	/** @brief Number of calls to `next` that returned data. */
+	RocksDBTickerNumberDBNextFound,
+
+	/** @brief Number of calls to `previous` that returned data. */
+	RocksDBTickerNumberDBPreviousFound,
+
+	/** @brief The number of uncompressed bytes read from an iterator. 
+	 Includes size of key and value. */
+	RocksDBTickerIterBytesRead,
 
 	/** @brief Number of file closes. */
 	RocksDBTickerNoFileCloses,
@@ -167,6 +198,12 @@ typedef NS_ENUM(uint32_t, RocksDBTickerType)
 	/** @brief Number of hits in the compressed block cache. */
 	RocksDBTickerBlockCacheCompressedHit,
 
+	/** @brief Number of blocks added to comopressed block cache. */
+	RocksDBTickerBlockCacheCompressedAdd,
+
+	/** @brief Number of failures when adding blocks to compressed block cache. */
+	RocksDBTickerBlockCacheCompressedAddFailure,
+
 	/** @brief Number of times WAL sync is done. */
 	RocksDBTickerWalFileSynced,
 
@@ -216,6 +253,12 @@ typedef NS_ENUM(uint32_t, RocksDBTickerType)
 
 	/** @brief The total time of the filter operation. */
 	RocksDBTickerFilterOperationTotalTime,
+
+	/** @brief Total row cache hits. */
+	RocksDBTickerRowCacheHit,
+
+	/** @brief Total row cache misses. */
+	RocksDBTickerRowCacheMiss
 };
 
 /** @brief An enum for the Histogram Types. */
@@ -280,6 +323,18 @@ typedef NS_ENUM(uint32_t, RocksDBHistogramType)
 
 	/** @brief  */
 	RocksDBHistogramWriteStall,
+
+	/** @brief The number of subcompactions actually scheduled during a compaction. */
+	RocksDBHistogramNumCompactionsScheduled,
+
+	/* @brief Distribution of bytes read in each operations. */
+	RocksDBHistogramBytesPerRead,
+
+	/* @brief Distribution of bytes written in each operations. */
+	RocksDBHistogramBytesPerWrite,
+
+	/* @brief Distribution of bytes via multiget in each operations. */
+	RocksDBHistogramBytesPerMultiGet
 };
 
 /**
