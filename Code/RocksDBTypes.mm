@@ -1,5 +1,5 @@
 //
-//  RocksDBTypes.m
+//  RocksDBTypes.mm
 //  ObjectiveRocks
 //
 //  Created by Iska on 25/12/14.
