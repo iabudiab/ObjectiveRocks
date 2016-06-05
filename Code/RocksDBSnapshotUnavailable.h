@@ -49,3 +49,6 @@ NA_SELECTOR(- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksD
 NA_SELECTOR(- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error) \
 NA_SELECTOR(- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch withWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
 NA_SELECTOR(- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch error:(NSError **)error writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions) \
+\
+NA_SELECTOR(- (RocksDBIndexedWriteBatch *)indexedWriteBatch) \
+NA_SELECTOR(- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error) \
