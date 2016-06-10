@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "RocksDBColumnFamilyDescriptor.h"
-#import "RocksDBColumnFamilyMetaData.h"
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -16,6 +15,7 @@
 #import "RocksDBIterator.h"
 
 #ifndef ROCKSDB_LITE
+#import "RocksDBColumnFamilyMetaData.h"
 #import "RocksDBIndexedWriteBatch.h"
 #import "RocksDBProperties.h"
 #endif

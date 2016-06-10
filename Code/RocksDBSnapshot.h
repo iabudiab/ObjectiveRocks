@@ -40,13 +40,13 @@
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
+- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData UNAVAILABLE("Column Family API not available");
 #endif
 
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path UNAVAILABLE("Column Family API not available");
 
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock UNAVAILABLE("Column Family API not available");
-- (RocksDBColumnFamilyMetaData *)columnFamilyMetaData UNAVAILABLE("Column Family API not available");
 - (NSArray *)columnFamilies UNAVAILABLE("Column Family API not available");
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions

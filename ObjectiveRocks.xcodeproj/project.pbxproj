@@ -21,7 +21,6 @@
 		6216361B1A631F2900B132CE /* RocksDBStatisticsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6216361A1A631F2900B132CE /* RocksDBStatisticsTests.swift */; };
 		621C6D971BEE4A4600044CB1 /* RocksDBStatistics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A8B0631A58DD7D0069B4C8 /* RocksDBStatistics.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		621C6D981BEE4A4600044CB1 /* RocksDBStatisticsHistogram.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		621C6D991BEE4BA900044CB1 /* RocksDBColumnFamilyMetadata.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A74F841A603DDB00BAD95B /* RocksDBColumnFamilyMetadata.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6221B7A71A629E1B00D28BF5 /* RockDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6221B7A41A629B3600D28BF5 /* RockDBTests.swift */; };
 		6221B7A81A629E2700D28BF5 /* RockDBTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6221B7A41A629B3600D28BF5 /* RockDBTests.swift */; };
 		6236E25C1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */; };
@@ -3043,7 +3042,6 @@
 				628B50EB1D03125A00E2D828 /* write_batch_with_index_internal.h in Headers */,
 				628B50871D03125A00E2D828 /* geodb_impl.h in Headers */,
 				628B500B1D03125A00E2D828 /* perf_context_imp.h in Headers */,
-				621C6D991BEE4BA900044CB1 /* RocksDBColumnFamilyMetadata.h in Headers */,
 				628B4AF91D03125900E2D828 /* auto_roll_logger.h in Headers */,
 				628B4CA91D03125900E2D828 /* flashcache.h in Headers */,
 				628B50631D03125A00E2D828 /* xxhash.h in Headers */,
