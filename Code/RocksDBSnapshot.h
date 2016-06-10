@@ -59,4 +59,10 @@
 SNAPSHOT_PUT_MERGE_DELETE_SELECTORS
 #undef NA_SELECTOR
 
+#ifndef ROCKSDB_LITE
+#define NA_SELECTOR(sel) sel UNAVAILABLE("Snapshot is read-only");
+SNAPSHOT_WRITE_BATCH_SELECTORS
+#undef NA_SELECTOR
+#endif
+
 @end
