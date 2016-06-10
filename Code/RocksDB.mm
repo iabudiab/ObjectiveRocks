@@ -166,6 +166,11 @@
 			_columnFamilyHandles = nullptr;
 		}
 
+		if (_columnFamily != nullptr) {
+			delete _columnFamily;
+			_columnFamily = nullptr;
+		}
+
 		if (_db != nullptr) {
 			delete _db;
 			_db = nullptr;
