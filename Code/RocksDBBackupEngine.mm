@@ -13,9 +13,20 @@
 #include <rocksdb/db.h>
 #include <rocksdb/utilities/backupable_db.h>
 
-@interface RocksDB (Private)
+#pragma mark - Informal Protocols
+
+@interface RocksDB ()
 @property (nonatomic, assign) rocksdb::DB *db;
 @end
+
+@interface RocksDBBackupInfo ()
+@property (nonatomic, assign) uint32_t backupId;
+@property (nonatomic, assign) int64_t timestamp;
+@property (nonatomic, assign) uint64_t size;
+@property (nonatomic, assign) uint32_t numberFiles;
+@end
+
+#pragma mark - Impl
 
 @interface RocksDBBackupEngine ()
 {

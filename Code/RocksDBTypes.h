@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The predefined supported types */
 typedef NS_ENUM(NSUInteger, RocksDBType)
 {
@@ -55,3 +57,5 @@ typedef NS_ENUM(NSUInteger, RocksDBType)
 + (id (^)(id, NSData *))valueDecoderForType:(RocksDBType)type;
 
 @end
+
+NS_ASSUME_NONNULL_END

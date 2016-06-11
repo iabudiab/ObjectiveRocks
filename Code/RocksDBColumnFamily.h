@@ -9,6 +9,8 @@
 #import "RocksDB.h"
 #import	"RocksDBOptions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Column Families provide a way to logically partition the database. Each key-value pair in RocksDB is associated 
  with exactly one Column Family. If there is no Column Family specified, key-value pair is associated with Column 
@@ -20,23 +22,23 @@
 @interface RocksDBColumnFamily : RocksDB
 
 + (instancetype)databaseAtPath:(NSString *)path
-				  andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+				  andDBOptions:(nullable void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 + (instancetype)databaseAtPath:(NSString *)path
 				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+			andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 
 #ifndef ROCKSDB_LITE
 
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
-							 andDBOptions:(void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+							 andDBOptions:(nullable void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
+					   andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 #endif
 
 + (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path __attribute__((unavailable("Use the superclass RocksDB instead")));
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
-										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock __attribute__((unavailable("Use the superclass RocksDB instead")));
+										 andOptions:(nullable void (^)(RocksDBColumnFamilyOptions *options))optionsBlock __attribute__((unavailable("Use the superclass RocksDB instead")));
 
 /**
  @breaf Drops this Column Family form the DB instance it is associated with.
@@ -44,3 +46,5 @@
 - (void)drop;
 
 @end
+
+NS_ASSUME_NONNULL_END

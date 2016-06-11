@@ -8,7 +8,17 @@
 
 #import "RocksDBStatisticsHistogram.h"
 
+@interface RocksDBStatisticsHistogram ()
+@property (nonatomic, copy) NSString *ticker;
+@property (nonatomic, assign) double median;
+@property (nonatomic, assign) double percentile95;
+@property (nonatomic, assign) double percentile99;
+@property (nonatomic, assign) double average;
+@property (nonatomic, assign) double standardDeviation;
+@end
+
 @implementation RocksDBStatisticsHistogram
+@synthesize ticker, median, percentile95, percentile99, average, standardDeviation;
 
 - (NSString *)description
 {

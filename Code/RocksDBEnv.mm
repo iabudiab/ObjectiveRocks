@@ -15,12 +15,27 @@
 #import <rocksdb/env.h>
 #import <rocksdb/thread_status.h>
 
+#pragma mark - Informal Protocols
+
 @interface RocksDBEnv ()
 {
 	rocksdb::Env *_env;
 }
 @property (nonatomic, assign) rocksdb::Env *env;
 @end
+
+#if ROCKSDB_USING_THREAD_STATUS
+@interface RocksDBThreadStatus ()
+@property (nonatomic, assign) uint64_t threadId;
+@property (nonatomic, assign) RocksDBThreadType threadType;
+@property (nonatomic, copy) NSString *databaseName;
+@property (nonatomic, copy) NSString *columnFamilyname;
+@property (nonatomic, assign) RocksDBOperationType operationType;
+@property (nonatomic, assign) RocksDBStateType stateType;
+@end
+#endif
+
+#pragma mark - Impl
 
 @implementation RocksDBEnv
 @synthesize env = _env;

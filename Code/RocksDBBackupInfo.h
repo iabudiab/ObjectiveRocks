@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Holds information about a database backup.
  */
@@ -16,21 +18,23 @@
 /**
  @brief The backup ID.
  */
-@property (nonatomic, assign) uint32_t backupId;
+@property (nonatomic, assign, readonly) uint32_t backupId;
 
 /**
  @brief The timestamp when the backup was created.
  */
-@property (nonatomic, assign) int64_t timestamp;
+@property (nonatomic, assign, readonly) int64_t timestamp;
 
 /**
  @brief The size of the backup in bytes.
  */
-@property (nonatomic, assign) uint64_t size;
+@property (nonatomic, assign, readonly) uint64_t size;
 
 /**
  @brief The number of files in the backup.
  */
-@property (nonatomic, assign) uint32_t numberFiles;
+@property (nonatomic, assign, readonly) uint32_t numberFiles;
 
 @end
+
+NS_ASSUME_NONNULL_END

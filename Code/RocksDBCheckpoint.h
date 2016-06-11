@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RocksDB.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  A checkpoint is an openable Snapshot of a database at a point in time. The `RocksDBCheckpoint` is used to
  create such Snapshots for a given DB.
@@ -31,6 +33,8 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the checkpoint was created, `NO` otherwise.
  */
-- (BOOL)createCheckpointAtPath:(NSString *)path error:(NSError **)error;
+- (BOOL)createCheckpointAtPath:(NSString *)path error:(NSError * _Nullable *)error;
 
 @end
+
+NS_ASSUME_NONNULL_END

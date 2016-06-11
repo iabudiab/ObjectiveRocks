@@ -8,6 +8,7 @@
 
 #import "RocksDBIterator.h"
 
+NS_ASSUME_NONNULL_BEGIN
 
 typedef NS_ENUM(NSUInteger, RocksDBWriteBatchEntryType)
 {
@@ -94,3 +95,5 @@ typedef NS_ENUM(NSUInteger, RocksDBWriteBatchEntryType)
 - (void)reverseEnumerateEntriesUsingBlock:(void (^)(RocksDBWriteBatchEntry *entry, BOOL *stop))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

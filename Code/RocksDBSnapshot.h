@@ -11,6 +11,8 @@
 #import "RocksDBReadOptions.h"
 #import "RocksDBSnapshotUnavailable.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  The `RocksDBSnapshot` provides a consistent read-only view over the state of the key-value store.
  */
@@ -66,3 +68,5 @@ SNAPSHOT_WRITE_BATCH_SELECTORS
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END

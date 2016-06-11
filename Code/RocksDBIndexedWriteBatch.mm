@@ -74,8 +74,8 @@
 
 - (id)objectForKeyIncludingDatabase:(id)aKey
 					 inColumnFamily:(RocksDBColumnFamily *)columnFamily
-							  error:(NSError * __autoreleasing *)error
 						readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptionsBlock
+							  error:(NSError * __autoreleasing *)error
 {
 	RocksDBReadOptions *readOptions = [_readOptions copy];
 	if (readOptionsBlock) {

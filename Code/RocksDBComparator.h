@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  An enum defining the built-in Comparators.
  */
@@ -58,3 +60,5 @@ typedef NS_ENUM(NSUInteger, RocksDBComparatorType)
 - (instancetype)initWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

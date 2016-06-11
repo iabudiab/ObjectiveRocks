@@ -169,11 +169,12 @@ class RocksDBBackupTests : RocksDBTests {
 
 		let backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 2")), Data("value 2"))
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 3")), Data("value 3"))
+		XCTAssertNotNil(backupRocks)
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 1")), Data("value 1"))
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 2")), Data("value 2"))
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 3")), Data("value 3"))
 
-		backupRocks.close()
+		backupRocks?.close()
 	}
 
 	func testSwift_Backup_Restore_Specific() {
@@ -198,21 +199,22 @@ class RocksDBBackupTests : RocksDBTests {
 
 		var backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 1")), Data("value 1"))
 
-		XCTAssertNil(try? backupRocks.dataForKey(Data("key 2")))
-		XCTAssertNil(try? backupRocks.dataForKey(Data("key 3")))
+		XCTAssertNil(try? backupRocks?.dataForKey(Data("key 2")))
+		XCTAssertNil(try? backupRocks?.dataForKey(Data("key 3")))
 
-		backupRocks.close()
+		backupRocks?.close()
 
 		try! backupEngine.restoreBackupWithId(2, toDestinationPath: self.restorePath)
 
 		backupRocks = RocksDB.databaseAtPath(restorePath, andDBOptions: nil)
 
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 1")), Data("value 1"))
-		XCTAssertEqual(try! backupRocks.dataForKey(Data("key 2")), Data("value 2"))
-		XCTAssertNil(try? backupRocks.dataForKey(Data("key 3")))
+		XCTAssertNotNil(backupRocks)
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 1")), Data("value 1"))
+		XCTAssertEqual(try! backupRocks?.dataForKey(Data("key 2")), Data("value 2"))
+		XCTAssertNil(try? backupRocks?.dataForKey(Data("key 3")))
 
-		backupRocks.close()
+		backupRocks?.close()
 	}
 }

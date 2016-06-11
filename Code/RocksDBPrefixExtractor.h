@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Constants for the built-in prefix extractors.
  */
@@ -51,3 +53,5 @@ typedef NS_ENUM(NSUInteger, RocksDBPrefixType)
 			validPrefixBlock:(BOOL (^)(id prefix))validPrefixBlock;
 
 @end
+
+NS_ASSUME_NONNULL_END

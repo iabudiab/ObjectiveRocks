@@ -20,6 +20,8 @@
 #import "RocksDBProperties.h"
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class RocksDBColumnFamily;
 @class RocksDBSnapshot;
 
@@ -48,8 +50,8 @@
  @warning When opening a DB in a read-write mode, you need to specify all Column Families
  that currently exist in the DB.
  */
-+ (instancetype)databaseAtPath:(NSString *)path
-				  andDBOptions:(void (^)(RocksDBOptions *options))options;
++ (nullable instancetype)databaseAtPath:(NSString *)path
+						   andDBOptions:(nullable void (^)(RocksDBOptions *options))options;
 
 /** 
  Intializes a DB instance and opens the defined Column Families.
@@ -73,9 +75,9 @@
  @warning When opening a DB in a read-write mode, you need to specify all Column Families
  that currently exist in the DB.
  */
-+ (instancetype)databaseAtPath:(NSString *)path
-				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
++ (nullable instancetype)databaseAtPath:(NSString *)path
+						 columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+					 andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options;
 
 #ifndef ROCKSDB_LITE
 
@@ -99,8 +101,8 @@
  @remark Opening a non-existing database in read-only mode wont have any effect, even
  if `createIfMissing` option is set.
  */
-+ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
-							 andDBOptions:(void (^)(RocksDBOptions *options))options;
++ (nullable instancetype)databaseForReadOnlyAtPath:(NSString *)path
+									  andDBOptions:(nullable void (^)(RocksDBOptions *options))options;
 
 /**
  Intializes a DB instance for read-only and opens the defined Column Families.
@@ -130,9 +132,9 @@
  @remark When opening DB with read only, it is possible to specify only a subset of column families 
  in the database that should be opened. However, default column family must specified.
  */
-+ (instancetype)databaseForReadOnlyAtPath:(NSString *)path
-						   columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
-					   andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options;
++ (nullable instancetype)databaseForReadOnlyAtPath:(NSString *)path
+									columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
+								andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options;
 
 #endif
 
@@ -150,8 +152,8 @@
  @see RocksDBReadOptions
  @see RocksDBWriteOptions
  */
-- (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
-			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+- (void)setDefaultReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
+			  andWriteOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
 
 @end
 
@@ -183,8 +185,8 @@
  @see RocksDBColumnFamily
  @see RocksDBColumnFamilyOptions
  */
-- (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
-										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))options;
+- (nullable RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
+												  andOptions:(nullable void (^)(RocksDBColumnFamilyOptions *options))options;
 
 /** @brief Returns an array */
 - (NSArray *)columnFamilies;
@@ -223,7 +225,7 @@
 
  @warning Not available in RocksDB Lite.
  */
-- (NSString *)valueForProperty:(RocksDBProperty)property;
+- (nullable NSString *)valueForProperty:(RocksDBProperty)property;
 
 /**
  Returns the integer value for the given int property name.
@@ -256,7 +258,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError **)error;
+- (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError * _Nullable *)error;
 
 /**
  Stores the given key-object pair into the DB.
@@ -271,7 +273,7 @@
 
  @see RocksDBWriteOptions
  */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 /**
  Stores the given data object under the given data key in the DB.
@@ -286,7 +288,7 @@
  @see RocksDB setObject:forKey:writeOptions:
  @see RocksDB setObject:forKey:error:writeOptions:
  */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Stores the given data object under the given data key in the DB.
@@ -304,7 +306,7 @@
  @see RocksDB setObject:forKey:writeOptions:
  @see RocksDB setObject:forKey:error:writeOptions:
  */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 @end
 
@@ -316,8 +318,8 @@
 ///--------------------------------
 
 
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError **)error;
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError * _Nullable *)error;
+- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 /**
  Merges the given object with the existing data for the given key.
@@ -332,7 +334,7 @@
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError **)error;
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError * _Nullable *)error;
 
 /**
  Merges the given object with the existing data for the given key.
@@ -349,7 +351,7 @@
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error ;
+- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error ;
 
 
 /**
@@ -365,7 +367,7 @@
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError **)error;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Merges the given data object with the existing data for the given key.
@@ -383,7 +385,7 @@
  @see RocksDBMergeOperator
  @see RocksDBWriteOptions
  */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 @end
 
@@ -401,7 +403,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return The object for the given key.
  */
-- (id)objectForKey:(id)aKey error:(NSError **)error;
+- (nullable id)objectForKey:(id)aKey error:(NSError * _Nullable *)error;
 
 /**
  Returns the object for the given key.
@@ -413,7 +415,7 @@
 
  @see RocksDBReadOptions
  */
-- (id)objectForKey:(id)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError **)error;
+- (nullable id)objectForKey:(id)aKey readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError * _Nullable *)error;
 
 /**
  Returns the data for the given key.
@@ -427,7 +429,7 @@
  @see RocksDB objectForKey:readOptions:
  @see RocksDB objectForKey:error:readOptions:
  */
-- (NSData *)dataForKey:(NSData *)aKey error:(NSError **)error;
+- (nullable NSData *)dataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Returns the data for the given key.
@@ -443,7 +445,7 @@
  @see RocksDB objectForKey:readOptions:
  @see RocksDB objectForKey:error:readOptions:
  */
-- (NSData *)dataForKey:(NSData *)aKey readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError **)error;
+- (nullable NSData *)dataForKey:(NSData *)aKey readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError * _Nullable *)error;
 
 @end
 
@@ -461,7 +463,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
-- (BOOL)deleteObjectForKey:(id)aKey error:(NSError **)error;
+- (BOOL)deleteObjectForKey:(id)aKey error:(NSError * _Nullable *)error;
 
 /**
  Deletes the object for the given key.
@@ -473,7 +475,7 @@
 
  @see RocksDBWriteOptions
  */
-- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error ;
+- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error ;
 
 /**
  Deletes the data for the given key.
@@ -487,7 +489,7 @@
  @see RocksDB deleteObjectForKey:readOptions:
  @see RocksDB deleteObjectForKey:error:readOptions:
  */
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError **)error;
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Deletes the data for the given key.
@@ -503,7 +505,7 @@
  @see RocksDB deleteObjectForKey:readOptions:
  @see RocksDB deleteObjectForKey:error:readOptions:
  */
-- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 @end
 
@@ -536,7 +538,7 @@
 
  @see RocksDBWriteBatch
  */
-- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error;
+- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError * _Nullable *)error;
 
 /**
  Applies a write batch instance on this DB.
@@ -552,7 +554,7 @@
  @see RocksDBWriteBatch
  @see RocksDBWriteOptions
  */
-- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError **)error;
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
 #ifndef ROCKSDB_LITE
 
@@ -578,7 +580,7 @@
 
  @see RocksDBIndexedWriteBatch
  */
-- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError **)error;
+- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError * _Nullable *)error;
 
 #endif
 
@@ -609,7 +611,7 @@
  @see RocksDBIterator
  @see RocksDBReadOptions
  */
-- (RocksDBIterator *)iteratorWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (RocksDBIterator *)iteratorWithReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions;
 
 @end
 
@@ -635,6 +637,8 @@
  @see RocksDBSnapshot
  @see RocksDBReadOptions
  */
-- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
+- (RocksDBSnapshot *)snapshotWithReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions;
 
 @end
+
+NS_ASSUME_NONNULL_END

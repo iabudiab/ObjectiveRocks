@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The type of a thread. */
 typedef NS_ENUM(int, RocksDBThreadType)
 {
@@ -49,23 +51,26 @@ typedef NS_ENUM(int, RocksDBStateType)
 @interface RocksDBThreadStatus : NSObject
 
 /** @brief An unique ID for the thread. */
-@property (nonatomic, assign) uint64_t threadId;
+@property (nonatomic, assign, readonly) uint64_t threadId;
 
 /** @brief The type of the thread. */
-@property (nonatomic, assign) RocksDBThreadType threadType;
+@property (nonatomic, assign, readonly) RocksDBThreadType threadType;
 
 /** @brief The name of the DB instance where the thread is currently involved with. 
  It would be set to empty string if the thread does not involve in any DB operation. */
-@property (nonatomic, strong) NSString *databaseName;
+@property (nonatomic, copy, readonly) NSString *databaseName;
 
 /** @brief The name of the column family where the thread is currently It would be set 
  to empty string if the thread does not involve in any column family. */
-@property (nonatomic, strong) NSString *columnFamilyname;
+@property (nonatomic, copy, readonly) NSString *columnFamilyname;
 
 /** @brief The operation (high-level action) that the current thread is involved. */
-@property (nonatomic, assign) RocksDBOperationType operationType;
+@property (nonatomic, assign, readonly) RocksDBOperationType operationType;
 
 /** @brief The state (lower-level action) that the current thread is involved. */
-@property (nonatomic, assign) RocksDBStateType stateType;
+@property (nonatomic, assign, readonly) RocksDBStateType stateType;
 
 @end
+
+NS_ASSUME_NONNULL_END
+

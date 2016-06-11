@@ -12,9 +12,9 @@ import ObjectiveRocks
 class RocksDBMergeOperatorTests : RocksDBTests {
 
 	func testSwift_AssociativeMergeOperator() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject! in
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
 			var prev: UInt64 = 0
-			if (existing != nil) {
+			if let existing = existing {
 				existing.getBytes(&prev, length: sizeof(UInt64))
 			}
 			var plus: UInt64 = 0
@@ -41,9 +41,9 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 	}
 
 	func testSwift_AssociativeMergeOperator_NumberAdd_Encoded() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject! in
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
 			var val = value.floatValue
-			if (existing != nil) {
+			if let existing = existing {
 				val = val + existing.floatValue
 			}
 			let result: NSNumber = NSNumber(float: val)
@@ -81,13 +81,13 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 	}
 
 	func testSwift_AssociativeMergeOperator_DictionaryPut_Encoded() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject! in
-			if (existing != nil) {
-				existing.addEntriesFromDictionary(value as! [NSObject : AnyObject])
-				return existing
-			} else {
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
+			guard let existing = existing else {
 				return value
 			}
+
+			existing.addEntriesFromDictionary(value as! [NSObject : AnyObject])
+			return existing
 		}
 
 		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in

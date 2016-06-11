@@ -17,9 +17,9 @@
 {
 	self = [super init];
 	if (self) {
-		self.size = metadata.size;
-		self.fileCount = metadata.file_count;
-		self.name = [NSString stringWithCString:metadata.name.c_str() encoding:NSUTF8StringEncoding];
+		self->_size = metadata.size;
+		self->_fileCount = metadata.file_count;
+		self->_name = [NSString stringWithCString:metadata.name.c_str() encoding:NSUTF8StringEncoding];
 		NSMutableArray *levels = [NSMutableArray array];
 		for (auto it = std::begin(metadata.levels); it != std::end(metadata.levels); ++it) {
 			RocksDBLevelFileMetaData *levelMetaData = [[RocksDBLevelFileMetaData alloc] initWithLevelMetaData:*it];
@@ -38,8 +38,8 @@
 {
 	self = [super init];
 	if (self) {
-		self.level = metadata.level;
-		self.size = metadata.size;
+		self->_level = metadata.level;
+		self->_size = metadata.size;
 
 		NSMutableArray *sstFiles = [NSMutableArray array];
 		for (auto it = std::begin(metadata.files); it != std::end(metadata.files); ++it) {
@@ -59,14 +59,14 @@
 {
 	self = [super init];
 	if (self) {
-		self.size = metadata.size;
-		self.name = [NSString stringWithCString:metadata.name.c_str() encoding:NSUTF8StringEncoding];
-		self.dbPath = [NSString stringWithCString:metadata.db_path.c_str() encoding:NSUTF8StringEncoding];
-		self.smallestSeqno = metadata.smallest_seqno;
-		self.largestSeqno = metadata.largest_seqno;
-		self.smallestKey = [NSString stringWithCString:metadata.smallestkey.c_str() encoding:NSUTF8StringEncoding];
-		self.largestKey = [NSString stringWithCString:metadata.largestkey.c_str() encoding:NSUTF8StringEncoding];
-		self.beingCompacted = metadata.being_compacted;
+		self->_size = metadata.size;
+		self->_name = [NSString stringWithCString:metadata.name.c_str() encoding:NSUTF8StringEncoding];
+		self->_dbPath = [NSString stringWithCString:metadata.db_path.c_str() encoding:NSUTF8StringEncoding];
+		self->_smallestSeqno = metadata.smallest_seqno;
+		self->_largestSeqno = metadata.largest_seqno;
+		self->_smallestKey = [NSString stringWithCString:metadata.smallestkey.c_str() encoding:NSUTF8StringEncoding];
+		self->_largestKey = [NSString stringWithCString:metadata.largestkey.c_str() encoding:NSUTF8StringEncoding];
+		self->_beingCompacted = metadata.being_compacted;
 	}
 	return self;
 }

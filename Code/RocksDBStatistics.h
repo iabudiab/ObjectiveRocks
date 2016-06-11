@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RocksDBStatisticsHistogram.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** @brief An enum for the Ticker Types. */
 typedef NS_ENUM(uint32_t, RocksDBTickerType)
 {
@@ -366,3 +368,5 @@ typedef NS_ENUM(uint32_t, RocksDBHistogramType)
 - (NSString *)description;
 
 @end
+
+NS_ASSUME_NONNULL_END

@@ -30,7 +30,9 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		})
 
 		let columnFamily = rocks.createColumnFamilyWithName("new_cf", andOptions: nil)
-		columnFamily.close()
+
+		XCTAssertNotNil(columnFamily)
+		columnFamily?.close()
 		rocks.close()
 
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
@@ -46,8 +48,9 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		})
 
 		let columnFamily = rocks.createColumnFamilyWithName("new_cf", andOptions: nil)
-		columnFamily.drop()
-		columnFamily.close()
+		XCTAssertNotNil(columnFamily)
+		columnFamily?.drop()
+		columnFamily?.close()
 		rocks.close()
 
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
@@ -66,8 +69,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			(options) in
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
 		})
-
-		columnFamily.close()
+		XCTAssertNotNil(columnFamily)
+		columnFamily?.close()
 		rocks.close()
 
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
@@ -114,7 +117,8 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
 		})
 
-		columnFamily.close()
+		XCTAssertNotNil(columnFamily)
+		columnFamily?.close()
 		rocks.close()
 
 		let names = RocksDB.listColumnFamiliesInDatabaseAtPath(self.path)
@@ -148,12 +152,11 @@ class RocksDBColumnFamilyTests : RocksDBTests {
 		try! rocks.setData(Data("df_value"), forKey: Data("df_key2"))
 
 		let columnFamily = rocks.createColumnFamilyWithName("new_cf", andOptions:nil)
+		XCTAssertNotNil(columnFamily)
+		try! columnFamily?.setData(Data("cf_value"), forKey: Data("cf_key1"))
+		try! columnFamily?.setData(Data("cf_value"), forKey: Data("cf_key2"))
 
-		try! columnFamily.setData(Data("cf_value"), forKey: Data("cf_key1"))
-		try! columnFamily.setData(Data("cf_value"), forKey: Data("cf_key2"))
-
-
-		columnFamily.close()
+		columnFamily?.close()
 		rocks.close()
 
 		let descriptor = RocksDBColumnFamilyDescriptor()

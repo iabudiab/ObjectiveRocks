@@ -16,6 +16,8 @@
 #import "RocksDBPrefixExtractor.h"
 #import "RocksDBTypes.h"
 
+#pragma mark - Options
+
 /**
  A proxy object for `RocksDBDatabaseOptions` and `RocksDBColumnFamilyOptions`.
  */
@@ -35,6 +37,8 @@
 				 andColumnFamilyOptions:(RocksDBColumnFamilyOptions *)columnFamilyOptions;
 
 @end
+
+#pragma mark - Encoding Options
 
 /**
  Options to define how arbitrary objects (keys & values) should be converted to
@@ -72,6 +76,8 @@
 @property (nonatomic, assign) RocksDBType valueType;
 
 @end
+
+#pragma mark - DB Options
 
 /**
  Options to control the behavior of the DB.
@@ -146,6 +152,8 @@
 @property (nonatomic, assign) uint64_t bytesPerSync;
 
 @end
+
+#pragma mark - Column Family Options
 
 /**
  Options to control the behaviour of Column Families.
@@ -333,4 +341,3 @@
 @property (nonatomic, assign) uint32_t minPartialMergeOperands;
 
 @end
-

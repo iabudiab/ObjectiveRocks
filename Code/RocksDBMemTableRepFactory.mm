@@ -22,34 +22,34 @@
 
 + (instancetype)skipListRepFacotry
 {
-	return [[self alloc] initWithNatviceMemTableRepFactory:new rocksdb::SkipListFactory];
+	return [[self alloc] initWithNativeMemTableRepFactory:new rocksdb::SkipListFactory];
 }
 
 #ifndef ROCKSDB_LITE
 
 + (instancetype)vectorRepFactory
 {
-	return [[self alloc] initWithNatviceMemTableRepFactory:new rocksdb::VectorRepFactory];
+	return [[self alloc] initWithNativeMemTableRepFactory:new rocksdb::VectorRepFactory];
 }
 
 + (instancetype)hashSkipListRepFactory
 {
-	return [[self alloc] initWithNatviceMemTableRepFactory:rocksdb::NewHashSkipListRepFactory()];
+	return [[self alloc] initWithNativeMemTableRepFactory:rocksdb::NewHashSkipListRepFactory()];
 }
 
 + (instancetype)hashLinkListRepFactory
 {
-	return [[self alloc] initWithNatviceMemTableRepFactory:rocksdb::NewHashLinkListRepFactory()];
+	return [[self alloc] initWithNativeMemTableRepFactory:rocksdb::NewHashLinkListRepFactory()];
 }
 
 + (instancetype)hashCuckooRepFactoryWithWriteBufferSize:(size_t)writeBufferSize
 {
-	return [[self alloc] initWithNatviceMemTableRepFactory:rocksdb::NewHashCuckooRepFactory(writeBufferSize)];
+	return [[self alloc] initWithNativeMemTableRepFactory:rocksdb::NewHashCuckooRepFactory(writeBufferSize)];
 }
 
 #endif
 
-- (instancetype)initWithNatviceMemTableRepFactory:(rocksdb::MemTableRepFactory *)factory
+- (instancetype)initWithNativeMemTableRepFactory:(rocksdb::MemTableRepFactory *)factory
 {
 	self = [super init];
 	if (self) {

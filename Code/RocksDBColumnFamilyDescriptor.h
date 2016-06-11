@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "RocksDBColumnFamilyOptions.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 extern NSString * const RocksDBDefaultColumnFamilyName;
 
 /**
@@ -25,7 +27,7 @@ extern NSString * const RocksDBDefaultColumnFamilyName;
 
  @see RocksDBColumnFamilyOptions
  */
-- (void)addDefaultColumnFamilyWithOptions:(void (^)(RocksDBColumnFamilyOptions *options))options;
+- (void)addDefaultColumnFamilyWithOptions:(nullable void (^)(RocksDBColumnFamilyOptions *options))options;
 
 /**
  Adds a Column Family to this descriptor instance with the given name and options.
@@ -35,6 +37,8 @@ extern NSString * const RocksDBDefaultColumnFamilyName;
 
  @see RocksDBColumnFamilyOptions
  */
-- (void)addColumnFamilyWithName:(NSString *)name andOptions:(void (^)(RocksDBColumnFamilyOptions *options))options;
+- (void)addColumnFamilyWithName:(NSString *)name andOptions:(nullable void (^)(RocksDBColumnFamilyOptions *options))options;
 
 @end
+
+NS_ASSUME_NONNULL_END

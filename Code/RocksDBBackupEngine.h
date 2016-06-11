@@ -10,6 +10,8 @@
 
 #import "RocksDB.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  The `RocksDBBackupEngine` provides backup and restore functionality for RocksDB. Backups are incremental and
  each backup receives an ID, which can be used to restore that specific backup. Backups can also be deleted to
@@ -32,7 +34,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the backup succeeded, `NO` otherwise.
  */
-- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError **)error;
+- (BOOL)createBackupForDatabase:(RocksDB *)database error:(NSError * _Nullable *)error;
 
 /**
  Restores the latest backup of this Backup Engine to the given destination path.
@@ -41,7 +43,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the restore succeeded, `NO` otherwise.
  */
-- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError **)error;
+- (BOOL)restoreBackupToDestinationPath:(NSString *)destination error:(NSError * _Nullable *)error;
 
 /**
  Restores the backup with the given ID in this Backup Engine to the given destination path.
@@ -51,7 +53,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the restore succeeded, `NO` otherwise.
  */
-- (BOOL)restoreBackupWithId:(uint32_t)backupId toDestinationPath:(NSString *)destination error:(NSError **)error;
+- (BOOL)restoreBackupWithId:(uint32_t)backupId toDestinationPath:(NSString *)destination error:(NSError * _Nullable *)error;
 
 /**
  Deleted all backups from this Backup Engine keeping the last N backups.
@@ -60,7 +62,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the purge succeeded, `NO` otherwise.
  */
-- (BOOL)purgeOldBackupsKeepingLast:(uint32_t)countBackups error:(NSError **)error;
+- (BOOL)purgeOldBackupsKeepingLast:(uint32_t)countBackups error:(NSError * _Nullable *)error;
 
 /**
  Deletes a specific backup from this Backup Engine.
@@ -69,7 +71,7 @@
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the delete succeeded, `NO` otherwise.
  */
-- (BOOL)deleteBackupWithId:(uint32_t)backupId error:(NSError **)error;
+- (BOOL)deleteBackupWithId:(uint32_t)backupId error:(NSError * _Nullable *)error;
 
 /**
  Returns a list of backups in this Backup Engine together with information on timestamp of the backups
@@ -87,3 +89,5 @@
 - (void)close;
 
 @end
+
+NS_ASSUME_NONNULL_END

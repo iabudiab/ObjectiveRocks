@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  The metadata that describes a Column Family.
  */
@@ -16,17 +18,17 @@
 /** 
  @brief The size of this Column Family in bytes, which is equal to the sum of the file size of its "levels".
  */
-@property (nonatomic, assign) uint64_t size;
+@property (nonatomic, readonly) uint64_t size;
 
 /**
  @brief The number of files in this Clumn Family.
  */
-@property (nonatomic, assign) size_t fileCount;
+@property (nonatomic, readonly) size_t fileCount;
 
 /**
  @brief The name of the Column Family.
  */
-@property (nonatomic, assign) NSString *name;
+@property (nonatomic, strong, readonly) NSString *name;
 
 /**
  @brief The metadata of all levels in this Column Family.
@@ -43,12 +45,12 @@
 /**
  @brief The level which this meta data describes.
  */
-@property (nonatomic, assign) const int level;
+@property (nonatomic, readonly) int level;
 
 /** 
  @brief The size of this level in bytes, which is equal to the sum of the file size of its "files".
  */
-@property (nonatomic, assign) const uint64_t size;
+@property (nonatomic, readonly) uint64_t size;
 
 /**
  @brief The metadata of all sst files in this level.
@@ -65,41 +67,43 @@
 /**
  @brief File size in bytes.
  */
-@property (nonatomic, assign) uint64_t size;
+@property (nonatomic, readonly) uint64_t size;
 
 /**
  @brief The name of the file.
  */
-@property (nonatomic, assign) NSString *name;
+@property (nonatomic, strong, readonly) NSString *name;
 
 /**
  @brief The full path where the file locates.
  */
-@property (nonatomic, assign) NSString *dbPath;
+@property (nonatomic, strong, readonly) NSString *dbPath;
 
 /**
  @brief Smallest sequence number in file.
  */
-@property (nonatomic, assign) uint64_t smallestSeqno;
+@property (nonatomic, readonly) uint64_t smallestSeqno;
 
 /**
  @brief Largest sequence number in file.
  */
-@property (nonatomic, assign) uint64_t largestSeqno;
+@property (nonatomic, readonly) uint64_t largestSeqno;
 
 /**
  @brief Smallest user defined key in the file.
  */
-@property (nonatomic, assign) NSString *smallestKey;
+@property (nonatomic, strong, readonly) NSString *smallestKey;
 
 /**
  @brief Largest user defined key in the file.
  */
-@property (nonatomic, assign) NSString *largestKey;
+@property (nonatomic, strong, readonly)  NSString *largestKey;
 
 /**
  @brief `true` if the file is currently being compacted.
  */
-@property (nonatomic, assign) bool beingCompacted;
+@property (nonatomic, readonly) bool beingCompacted;
 
 @end
+
+NS_ASSUME_NONNULL_END

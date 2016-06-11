@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  All file operations (and other operating system calls) issued by the RocksDB implementation are routed through an
  `RocksDBEnv` object. Currently `RocksDBEnv` only exposes the high & low priority thread pool parameters.
@@ -41,3 +43,5 @@
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END

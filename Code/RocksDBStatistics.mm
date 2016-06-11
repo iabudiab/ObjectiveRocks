@@ -10,12 +10,25 @@
 
 #import <rocksdb/statistics.h>
 
+#pragma mark - Informal Protocols
+
 @interface RocksDBStatistics ()
 {
 	std::shared_ptr<rocksdb::Statistics> _statistics;
 }
 @property (nonatomic, assign) std::shared_ptr<rocksdb::Statistics> statistics;
 @end
+
+@interface RocksDBStatisticsHistogram ()
+@property (nonatomic, copy) NSString *ticker;
+@property (nonatomic, assign) double median;
+@property (nonatomic, assign) double percentile95;
+@property (nonatomic, assign) double percentile99;
+@property (nonatomic, assign) double average;
+@property (nonatomic, assign) double standardDeviation;
+@end
+
+#pragma mark - Impl
 
 @implementation RocksDBStatistics
 @synthesize statistics = _statistics;

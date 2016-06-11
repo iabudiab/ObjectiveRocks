@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** 
  A Merge operator is an atomic Read-Modify-Write operation in RocksDB.
  */
@@ -26,7 +28,7 @@
  @return A newly-initialized instance of the Merge Operator.
  */
 + (instancetype)operatorWithName:(NSString *)name
-						andBlock:(id (^)(id key, id existingValue, id value))block;
+						andBlock:(id (^)(id key, id _Nullable existingValue, id value))block;
 
 /**
  Initializes a new instance of a generic merge operator.
@@ -51,7 +53,9 @@
  @return A newly-initialized instance of the Merge Operator.
  */
 + (instancetype)operatorWithName:(NSString *)name
-			   partialMergeBlock:(NSString * (^)(id key, NSString *leftOperand, NSString *rightOperand))partialMergeBlock
-				  fullMergeBlock:(id (^)(id key, id existingValue, NSArray *operandList))fullMergeBlock;
+			   partialMergeBlock:(NSString * _Nullable (^)(id key, NSString *leftOperand, NSString *rightOperand))partialMergeBlock
+				  fullMergeBlock:(id _Nullable (^)(id key, id _Nullable existingValue, NSArray *operandList))fullMergeBlock;
 
 @end
+
+NS_ASSUME_NONNULL_END

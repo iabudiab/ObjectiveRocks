@@ -9,6 +9,8 @@
 #import "RocksDBWriteBatch.h"
 #import "RocksDBWriteBatchIterator.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 @class RocksDBColumnFamily;
 @class RocksDBReadOptions;
 
@@ -33,9 +35,9 @@
 
  @see RocksDBColumnFamily
  */
-- (id)objectForKey:(id)aKey
+- (nullable id)objectForKey:(id)aKey
 	inColumnFamily:(RocksDBColumnFamily *)columnFamily
-			 error:(NSError **)error;
+			 error:(NSError * _Nullable *)error;
 
 /**
  Returns the object for the given key.
@@ -51,18 +53,17 @@
 
  @param aKey The key for object.
  @param columnFamily The column family from which the data should be read.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
+ @param error If an error occurs, upon return contains an `NSError` object that describes åthe problem.
  @return The object for the given key.
 
  @see RocksDBColumnFamily
  @see RocksDBReadOptions
  */
-- (id)objectForKeyIncludingDatabase:(id)aKey
-					 inColumnFamily:(RocksDBColumnFamily *)columnFamily
-							  error:(NSError **)error
-						readOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions;
-
+- (nullable id)objectForKeyIncludingDatabase:(id)aKey
+							  inColumnFamily:(RocksDBColumnFamily *)columnFamily
+								 readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
+									   error:(NSError * _Nullable *)error;
 /**
  Creates and returns an iterator over this indexed write batch.
 
@@ -77,3 +78,5 @@
 - (RocksDBWriteBatchIterator *)iterator;
 
 @end
+
+NS_ASSUME_NONNULL_END

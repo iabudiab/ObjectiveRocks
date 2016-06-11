@@ -10,6 +10,8 @@
 #import "RocksDBEncodingOptions.h"
 #import "RocksDBRange.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  An iterator over the sorted DB keys. Supports iteration in the natural sort order, the reverse order, and prefix seek.
  */
@@ -139,3 +141,5 @@
 - (void)enumerateKeysAndValuesWithPrefix:(id)prefix usingBlock:(void (^)(id key, id value, BOOL *stop))block;
 
 @end
+
+NS_ASSUME_NONNULL_END

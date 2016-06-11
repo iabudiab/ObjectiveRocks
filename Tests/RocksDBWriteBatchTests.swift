@@ -111,7 +111,7 @@ class RocksDBWriteBatchTests : RocksDBTests {
 	func testSwift_WriteBatch_Apply_MergeOps() {
 		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.mergeOperator = RocksDBMergeOperator(name: "merge", andBlock: { (key, existing, value) -> AnyObject! in
+			options.mergeOperator = RocksDBMergeOperator(name: "merge", andBlock: { (key, existing, value) -> AnyObject in
 				let result: NSMutableString = ""
 				if let existingValue = existing as? NSData {
 					result.setString(Str(existingValue) as String)

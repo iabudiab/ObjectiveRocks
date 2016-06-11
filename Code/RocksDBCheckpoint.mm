@@ -47,7 +47,7 @@
 
 #pragma mark - Checkpoint Create
 
-- (BOOL)createCheckpointAtPath:(NSString *)path error:(NSError **)error
+- (BOOL)createCheckpointAtPath:(NSString *)path error:(NSError * __autoreleasing *)error
 {
 	rocksdb::Status status = _checkpoint->CreateCheckpoint(path.UTF8String);
 
