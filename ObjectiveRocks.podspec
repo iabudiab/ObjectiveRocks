@@ -53,6 +53,10 @@ Pod::Spec.new do |s|
 
   s.exclude_files = 
     'rocksdb/port/dirent.h',
+    'rocksdb/port/win/**',
+    'rocksdb/hdfs/**',
+    'rocksdb/java/**',
+    'rocksdb/tools/**',
     'rocksdb/**/*bench*',
     'rocksdb/**/*mock*',
     'rocksdb/**/*test*'
