@@ -69,17 +69,18 @@ Pod::Spec.new do |s|
     'Code/RocksDBThreadStatus.{h,mm}',
     'Code/RocksDBWriteBatchIterator.{h,mm}'
 
- s.xcconfig = { 
-   'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/ObjectiveRocks/rocksdb" "${PODS_ROOT}/ObjectiveRocks/rocksdb/include"',
-   'GCC_INPUT_FILETYPE' => 'sourcecode.cpp.objcpp'
- }
+  s.xcconfig = {
+    'GCC_PREPROCESSOR_DEFINITIONS' => 'NDEBUG=1 OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1',
+    'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/ObjectiveRocks/rocksdb" "${PODS_ROOT}/ObjectiveRocks/rocksdb/include"',
+    'GCC_INPUT_FILETYPE' => 'sourcecode.cpp.objcpp'
+  }
 
-  s.osx.xcconfig = { 
-    'GCC_PREPROCESSOR_DEFINITIONS' => 'OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1 ROCKSDB_USING_THREAD_STATUS=1'
+  s.osx.xcconfig = {
+    'GCC_PREPROCESSOR_DEFINITIONS' => 'ROCKSDB_USING_THREAD_STATUS=1'
   }
 
   s.ios.xcconfig = { 
-    'GCC_PREPROCESSOR_DEFINITIONS' => 'OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1 ROCKSDB_LITE=1 IOS_CROSS_COMPILE=1 NROCKSDB_THREAD_STATUS=1'
+    'GCC_PREPROCESSOR_DEFINITIONS' => 'ROCKSDB_LITE=1 IOS_CROSS_COMPILE=1 NROCKSDB_THREAD_STATUS=1'
   }
 
 end
