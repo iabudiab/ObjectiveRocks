@@ -35,7 +35,7 @@ NS_ASSUME_NONNULL_BEGIN
 				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 			andDatabaseOptions:(void (^)(RocksDBDatabaseOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 							 andDBOptions:(void (^)(RocksDBOptions *options))options UNAVAILABLE("Create a snapshot via a DB instance");
@@ -61,7 +61,7 @@ NS_ASSUME_NONNULL_BEGIN
 SNAPSHOT_PUT_MERGE_DELETE_SELECTORS
 #undef NA_SELECTOR
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 #define NA_SELECTOR(sel) sel UNAVAILABLE("Snapshot is read-only");
 SNAPSHOT_WRITE_BATCH_SELECTORS
 #undef NA_SELECTOR

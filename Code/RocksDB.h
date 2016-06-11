@@ -17,7 +17,7 @@
 #import "RocksDBWriteBatch.h"
 #import "RocksDBIterator.h"
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 #import "RocksDBColumnFamilyMetaData.h"
 #import "RocksDBIndexedWriteBatch.h"
 #import "RocksDBProperties.h"
@@ -82,7 +82,7 @@ NS_ASSUME_NONNULL_BEGIN
 						 columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 					 andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options;
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 /**
  Intializes a DB instance for read-only with the given path and configured with the given options.
@@ -194,7 +194,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** @brief Returns an array */
 - (NSArray *)columnFamilies;
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 /**
  Returns the Meta Data object for the Column Family associated with this instance.
@@ -209,7 +209,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 @interface RocksDB (Properties)
 
@@ -559,7 +559,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 /**
  Returns an instance of an indexed write batch, which can be used to perform a set of

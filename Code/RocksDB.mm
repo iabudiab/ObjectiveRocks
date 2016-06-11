@@ -105,7 +105,7 @@
 	return rocks;
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 							 andDBOptions:(void (^)(RocksDBOptions *options))optionsBlock
@@ -288,7 +288,7 @@
 	return _columnFamilies;
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 - (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
 {
@@ -317,7 +317,7 @@
 	}
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 #pragma mark - Peroperties
 
@@ -654,7 +654,7 @@
 	return YES;
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 - (RocksDBIndexedWriteBatch *)indexedWriteBatch
 {

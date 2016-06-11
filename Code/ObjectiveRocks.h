@@ -43,7 +43,7 @@ extern const unsigned char ObjectiveRocksVersionString[];
 
 #import "RocksDBTypes.h"
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 #import "RocksDBColumnFamilyMetadata.h"
 

@@ -27,7 +27,7 @@ NS_ASSUME_NONNULL_BEGIN
 				columnFamilies:(RocksDBColumnFamilyDescriptor *)descriptor
 			andDatabaseOptions:(nullable void (^)(RocksDBDatabaseOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 							 andDBOptions:(nullable void (^)(RocksDBOptions *options))options __attribute__((unavailable("Create column family via a RocksDB instance")));

@@ -25,7 +25,7 @@
 	return [[self alloc] initWithNativeMemTableRepFactory:new rocksdb::SkipListFactory];
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 + (instancetype)vectorRepFactory
 {

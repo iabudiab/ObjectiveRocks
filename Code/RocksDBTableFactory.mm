@@ -14,7 +14,7 @@
 @property (nonatomic, assign) rocksdb::BlockBasedTableOptions options;
 @end
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 @interface RocksDBPlainTableOptions ()
 @property (nonatomic, assign) rocksdb::PlainTableOptions options;
@@ -49,7 +49,7 @@
 	return instance;
 }
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 + (instancetype)plainTableFactoryWithOptions:(void (^)(RocksDBPlainTableOptions *options))optionsBlock
 {

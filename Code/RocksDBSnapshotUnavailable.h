@@ -30,7 +30,7 @@ NA_SELECTOR(- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(void (^)(RocksDBWr
 NA_SELECTOR(- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * _Nullable *)error) \
 NA_SELECTOR(- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error) \
 
-#ifndef ROCKSDB_LITE
+#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
 
 #define SNAPSHOT_WRITE_BATCH_SELECTORS \
 NA_SELECTOR(- (RocksDBWriteBatch *)writeBatch) \
