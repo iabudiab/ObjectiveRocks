@@ -2,7 +2,7 @@
 
 ObjectiveRocks is an Objective-C wrapper of Facebook's [RocksDB](https://github.com/facebook/rocksdb) - A Persistent Key-Value Store for Flash and RAM Storage.
 
-[![Build Status](https://travis-ci.org/iabudiab/ObjectiveRocks.svg?branch=master)](https://travis-ci.org/iabudiab/ObjectiveRocks)
+[![Build Status](https://travis-ci.org/iabudiab/ObjectiveRocks.svg?branch=develop)](https://travis-ci.org/iabudiab/ObjectiveRocks)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 <!-- [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ObjectiveRocks.svg?style=flat)](https://cocoapods.org/pods/ObjectiveRocks)
 [![CocoaDocs](https://img.shields.io/cocoapods/metrics/doc-percent/ObjectiveRocks.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks)
