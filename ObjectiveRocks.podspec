@@ -6,7 +6,7 @@ Pod::Spec.new do |s|
   s.homepage          = 'https://github.com/iabudiab/ObjectiveRocks'
   s.author            = 'iabudiab'
   s.social_media_url  = 'https://twitter.com/_iabudiab'
-  s.source            = { :git => 'https://github.com/iabudiab/ObjectiveRocks.git', :branch => 'release/0.6.0', :submodules => true }
+  s.source            = { :git => 'https://github.com/iabudiab/ObjectiveRocks.git', :tag => s.version, :submodules => true }
 
   s.ios.deployment_target = '8.0'
   s.osx.deployment_target = '10.10'
