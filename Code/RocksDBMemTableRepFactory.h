@@ -19,7 +19,7 @@
  */
 + (instancetype)skipListRepFacotry;
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 /**
  Creates MemTableReps that are backed by an std::vector.

@@ -12,6 +12,8 @@ extern double ObjectiveRocksVersionNumber;
 //! Project version string for ObjectiveRocks.
 extern const unsigned char ObjectiveRocksVersionString[];
 
+#import <TargetConditionals.h>
+
 #import "RocksDB.h"
 
 #import "RocksDBColumnFamily.h"
@@ -43,7 +45,7 @@ extern const unsigned char ObjectiveRocksVersionString[];
 
 #import "RocksDBTypes.h"
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 #import "RocksDBColumnFamilyMetadata.h"
 

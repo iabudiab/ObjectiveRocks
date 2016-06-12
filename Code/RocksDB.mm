@@ -12,12 +12,10 @@
 
 #import "RocksDBColumnFamily.h"
 #import "RocksDBColumnFamily+Private.h"
-#import "RocksDBColumnFamilyMetaData+Private.h"
 
 #import "RocksDBOptions.h"
 #import "RocksDBReadOptions.h"
 #import "RocksDBWriteOptions.h"
-
 
 #import "RocksDBCompactRangeOptions+Private.h"
 
@@ -34,7 +32,10 @@
 #include <rocksdb/slice.h>
 #include <rocksdb/options.h>
 
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
+#import "RocksDBColumnFamilyMetaData+Private.h"
 #import "RocksDBProperties.h"
+#endif
 
 #pragma mark -
 
@@ -105,7 +106,7 @@
 	return rocks;
 }
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 + (instancetype)databaseForReadOnlyAtPath:(NSString *)path
 							 andDBOptions:(void (^)(RocksDBOptions *options))optionsBlock
@@ -288,7 +289,7 @@
 	return _columnFamilies;
 }
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 - (RocksDBColumnFamilyMetaData *)columnFamilyMetaData
 {
@@ -317,7 +318,7 @@
 	}
 }
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 #pragma mark - Peroperties
 
@@ -654,7 +655,7 @@
 	return YES;
 }
 
-#if !defined(ROCKSDB_LITE) && !defined(TARGET_OS_IPHONE)
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
 - (RocksDBIndexedWriteBatch *)indexedWriteBatch
 {
