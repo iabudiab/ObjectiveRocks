@@ -34,6 +34,7 @@
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 #import "RocksDBColumnFamilyMetaData+Private.h"
+#import "RocksDBIndexedWriteBatch+Private.h"
 #import "RocksDBProperties.h"
 #endif
 
