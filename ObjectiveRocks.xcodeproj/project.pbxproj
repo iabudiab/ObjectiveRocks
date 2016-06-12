@@ -179,7 +179,6 @@
 		624F5ED91BEE456100497FEF /* RocksDB+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6221B78A1A62970800D28BF5 /* RocksDB+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		624F5EDA1BEE456100497FEF /* RocksDBOptions+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F9D8A51B86AE8900C65860 /* RocksDBOptions+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		624F5EDB1BEE456100497FEF /* RocksDBColumnFamily+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6221B78E1A62973500D28BF5 /* RocksDBColumnFamily+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
-		624F5EDC1BEE456100497FEF /* RocksDBColumnFamilyMetaData+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6221B7921A62976F00D28BF5 /* RocksDBColumnFamilyMetaData+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		624F5EDD1BEE456100497FEF /* RocksDBIterator+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6221B7961A6298AD00D28BF5 /* RocksDBIterator+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		624F5EDE1BEE456100497FEF /* RocksDBWriteBatch+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 6221B79A1A6298F800D28BF5 /* RocksDBWriteBatch+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		624F5EDF1BEE456200497FEF /* RocksDBWriteBatchIterator+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 62F9D8A11B86A74900C65860 /* RocksDBWriteBatchIterator+Private.h */; settings = {ATTRIBUTES = (Private, ); }; };
@@ -3051,7 +3050,6 @@
 				624F5EDA1BEE456100497FEF /* RocksDBOptions+Private.h in Headers */,
 				624F5EDB1BEE456100497FEF /* RocksDBColumnFamily+Private.h in Headers */,
 				628B4EE31D03125A00E2D828 /* table_reader.h in Headers */,
-				624F5EDC1BEE456100497FEF /* RocksDBColumnFamilyMetaData+Private.h in Headers */,
 				628B4E731D03125900E2D828 /* block_based_table_factory.h in Headers */,
 				628B4FB51D03125A00E2D828 /* file_util.h in Headers */,
 				628B50D51D03125A00E2D828 /* transaction_impl.h in Headers */,
