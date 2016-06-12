@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'ObjectiveRocks'
-  s.version           = '0.5.0'
+  s.version           = '0.6.0'
   s.summary           = 'Objective-C wrapper of RocksDB - A Persistent Key-Value Store for Flash and RAM Storage.'
   s.license           = 'MIT'
   s.homepage          = 'https://github.com/iabudiab/ObjectiveRocks'
@@ -43,14 +43,6 @@ Pod::Spec.new do |s|
     'rocksdb/utilities/**/*.{h,cc}',
     'Code/*.{h,mm,cpp}'
 
-  s.private_header_files =
-    'rocksdb/**/*.h',
-    'rocksdb/include/**/*.h',
-    'Code/*Callback*.h',
-    'Code/*Private*.h',
-    'Code/RocksDBError.h',
-    'Code/RocksDBSlice.h'
-
   s.exclude_files = 
     'rocksdb/port/dirent.h',
     'rocksdb/port/win/**',
@@ -62,16 +54,32 @@ Pod::Spec.new do |s|
     'rocksdb/**/*test*'
 
   s.ios.exclude_files = 
-    'Code/RocksDBBackupEngine.{h,mm}',
-    'Code/RocksDBBackupInfo.{h,mm}',
-    'Code/RocksDBCheckpoint.{h,mm}',
-    'Code/RocksDBColumnFamilyMetadata.{h,mm}',
-    'Code/RocksDBCuckooTableOptions.{h,mm}',
-    'Code/RocksDBIndexedWriteBatch.{h,mm}',
-    'Code/RocksDBPlainTableOptions.{h,mm}',
-    'Code/RocksDBProperties.{h,mm}',
-    'Code/RocksDBThreadStatus.{h,mm}',
-    'Code/RocksDBWriteBatchIterator.{h,mm}'
+    'Code/RocksDBBackupEngine*.{h,mm}',
+    'Code/RocksDBBackupInfo*.{h,mm}',
+    'Code/RocksDBCheckpoint*.{h,mm}',
+    'Code/RocksDBColumnFamilyMetadata*.{h,mm}',
+    'Code/RocksDBCuckooTableOptions*.{h,mm}',
+    'Code/RocksDBIndexedWriteBatch*.{h,mm}',
+    'Code/RocksDBPlainTableOptions*.{h,mm}',
+    'Code/RocksDBProperties*.{h,mm}',
+    'Code/RocksDBThreadStatus*.{h,mm}',
+    'Code/RocksDBWriteBatchIterator*.{h,mm}'
+
+  s.private_header_files =
+    'rocksdb/db/*.h',
+    'rocksdb/include/**/*.h',
+    'rocksdb/memtable/*.h',
+    'rocksdb/port/*.h',
+    'rocksdb/table/*.h',
+    'rocksdb/third-party/fbson/*.h',
+    'rocksdb/third-party/flashcache/*.h',
+    'rocksdb/util/*.h',
+    'rocksdb/utilities/**/*.h',
+    'rocksdb/include/**/*.h',
+    'Code/*Callback*.h',
+    'Code/*Private*.h',
+    'Code/RocksDBError.h',
+    'Code/RocksDBSlice.h'
 
   s.xcconfig = {
     'GCC_PREPROCESSOR_DEFINITIONS' => 'NDEBUG=1 OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1',

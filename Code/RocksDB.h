@@ -29,9 +29,10 @@ NS_ASSUME_NONNULL_BEGIN
 @class RocksDBColumnFamily;
 @class RocksDBSnapshot;
 
+#pragma mark - Initializing the database
+
 @interface RocksDB : NSObject
 
-#pragma mark - Initializing the database
 ///--------------------------------
 /// @name Initializing the database
 ///--------------------------------
@@ -161,9 +162,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Column Family Management
+
 @interface RocksDB (ColumnFamilies)
 
-#pragma mark - Column Family Management
 ///--------------------------------
 /// @name Column Family Management
 ///--------------------------------
@@ -212,9 +214,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
+#pragma mark - Database properties
+
 @interface RocksDB (Properties)
 
-#pragma mark - Database properties
 ///--------------------------------
 /// @name Database properties
 ///--------------------------------
@@ -247,9 +250,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 #endif
 
+#pragma mark - Write operations
+
 @interface RocksDB (WriteOps)
 
-#pragma mark - Write operations
 ///--------------------------------
 /// @name Write operations
 ///--------------------------------
@@ -314,9 +318,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Merge operations
+
 @interface RocksDB (MergeOps)
 
-#pragma mark - Merge operations
 ///--------------------------------
 /// @name Merge operations
 ///--------------------------------
@@ -393,9 +398,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Read operations
+
 @interface RocksDB (ReadOps)
 
-#pragma mark - Read operations
 ///--------------------------------
 /// @name Read operations
 ///--------------------------------
@@ -453,9 +459,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Delete operations
+
 @interface RocksDB (DeleteOps)
 
-#pragma mark - Delete operations
 ///--------------------------------
 /// @name Delete operations
 ///--------------------------------
@@ -513,9 +520,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Atomic Writes
+
 @interface RocksDB (WriteBatch)
 
-#pragma mark - Atomic Writes
 ///--------------------------------
 /// @name Atomic Writes
 ///--------------------------------
@@ -590,9 +598,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Database Iterator
+
 @interface RocksDB (Iterator)
 
-#pragma mark - Database Iterator
 ///--------------------------------
 /// @name Database Iterator
 ///--------------------------------
@@ -619,9 +628,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @end
 
+#pragma mark - Database Snapshot
+
 @interface RocksDB (Snapshot)
 
-#pragma mark - Database Snapshot
 ///--------------------------------
 /// @name Database Snapshot
 ///--------------------------------
@@ -643,14 +653,19 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (RocksDBSnapshot *)snapshotWithReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions;
 
+@end
+
 #pragma mark - Compaction
+
+@interface RocksDB (Compaction)
+
 ///--------------------------------
 /// @name Database Compaction
 ///--------------------------------
 
 /**
  Compacts the underlying storage for the specified key range [begin, end].
- 
+
  A `nil` start key is treated as a key before all keys, and a `nil` end key is treated as a key
  after all keys in the database. Thus, in order to compact the entire database, the `RocksDBOpenRange` can be used.
 

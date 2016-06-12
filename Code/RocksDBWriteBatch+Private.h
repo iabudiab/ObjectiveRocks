@@ -7,7 +7,6 @@
 //
 
 #import "RocksDBWriteBatch.h"
-#import "RocksDBIndexedWriteBatch.h"
 
 namespace rocksdb {
 	class DB;
@@ -61,25 +60,5 @@ namespace rocksdb {
  */
 - (instancetype)initWithColumnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
 				  andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions;
-
-@end
-
-@interface RocksDBIndexedWriteBatch (Private)
-
-/**
- Initializes a new instance of a simple `RocksDBIndexedWriteBatch` with the given DB instance,
- rocksdb::ColumnFamilyHandle instance and encoding options.
-
- @param db The rocksdb::DB instance.
- @param columnFamily The rocks::ColumnFamilyHandle instance.
- @param options The Encoding options.
- @return a newly-initialized instance of `RocksDBIndexedWriteBatch`.
-
- @see RocksDBEncodingOptions
- */
-- (instancetype)initWithDBInstance:(rocksdb::DB *)db
-					  columnFamily:(rocksdb::ColumnFamilyHandle *)columnFamily
-					   readOptions:(RocksDBReadOptions *)readOptions
-				andEncodingOptions:(RocksDBEncodingOptions *)encodingOptions;
 
 @end
