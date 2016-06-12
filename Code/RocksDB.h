@@ -643,6 +643,10 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (RocksDBSnapshot *)snapshotWithReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions;
 
+@end
+
+@interface RocksDB (Compaction)
+
 #pragma mark - Compaction
 ///--------------------------------
 /// @name Database Compaction
@@ -650,7 +654,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Compacts the underlying storage for the specified key range [begin, end].
- 
+
  A `nil` start key is treated as a key before all keys, and a `nil` end key is treated as a key
  after all keys in the database. Thus, in order to compact the entire database, the `RocksDBOpenRange` can be used.
 
