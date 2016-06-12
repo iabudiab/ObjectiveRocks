@@ -2,6 +2,13 @@
 
 ObjectiveRocks is an Objective-C wrapper of Facebook's [RocksDB](https://github.com/facebook/rocksdb) - A Persistent Key-Value Store for Flash and RAM Storage.
 
+[![Build Status](https://travis-ci.org/iabudiab/ObjectiveRocks.svg?branch=release/0.9.0)](https://travis-ci.org/iabudiab/ObjectiveRocks)
+[![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ObjectiveRocks.svg?style=flat)](https://cocoapods.org/pods/ObjectiveRocks)
+[![CocoaDocs](https://img.shields.io/cocoapods/metrics/doc-percent/HTMLKit.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks)
+[![Platform](https://img.shields.io/cocoapods/p/ObjectiveRocks.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks)
+[![License MIT](https://img.shields.io/badge/license-MIT-4481C7.svg?style=flat)](https://opensource.org/licenses/MIT)
+
 #Quick Overview
 
 RocksDB is a key-value store, where the keys and values are arbitrarily-sized byte streams. The keys are ordered within the key value store according to a specified comparator function. RocksDB supports atomic reads and writes, snapshots, iteration and features many configuration options.
@@ -44,6 +51,8 @@ ObjectiveRocks incldues two targets, for iOS and OSX. The iOS target builds the 
 
 These features are only available in OSX:
 
+* Column Family Metadata
+* Write Batch with Index
 * Plain and Cuckoo Table Factories
 * Vector, HashSkipList, HashLinkList and HashCuckoo Memtable Rep Factories
 * Database Backups
@@ -62,7 +71,7 @@ Clone the repository and add ObjectiveRocks as a sub-project in Xcode. Notice th
 To open a database you have to specify its location:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db"];
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db"];
 ...
 [db close];
 ```
@@ -70,7 +79,7 @@ RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db"];
 RocksDB features many configuration settings, that can be specified when opening the database. ObjectiveRocks offers a blocks-based initializer for this purpose, for example:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 	options.maxOpenFiles = 3000;
 	options.writeBufferSize = 64 * 1024 * 1024;
@@ -83,7 +92,7 @@ The [configuration guide](#configuration), *currently in progress*, lists all cu
 A more production ready setup could look like this:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 
 	options.maxOpenFiles = 50000;
@@ -109,7 +118,7 @@ RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDB
 Once you have a `RocksDB` instance you can create and drop column families on the fly:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db"];
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:...];
 
 RocksDBColumnFamily *columnFamily = [db createColumnFamilyWithName:@"new_column_family" andOptions:^(RocksDBColumnFamilyOptions *options) {
 	// Options for the new column family
@@ -135,7 +144,7 @@ RocksDBColumnFamilyDescriptor *descriptor = [RocksDBColumnFamilyDescriptor new];
 	// Options for the stuff_column_family
 }];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" columnFamilies:descriptor andDatabaseOptions:^(RocksDBDatabaseOptions *options) {
 	// Database options here
 }];
 
@@ -151,7 +160,7 @@ RocksDBColumnFamily *stuffColumnFamily = columnFamilies[1];
 The database provides three basic methods, `Put`, `Get`, and `Delete` to store/query data. Keys and values in RocksDB are arbitrary byte arrays:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 }];
 
@@ -169,7 +178,7 @@ Since working with `NSData` objects is cumbersome, ObjectiveRocks offers an easy
 
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 
 	options.keyEncoder = ^NSData * (id key) {
@@ -204,7 +213,7 @@ The `valueEncoder` and `valueDecoder` blocks take the `key` as first parameter t
 ObjectiveRocks provides built-in support for some common key/value types. So the previous example can be written like this:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 
 	options.keyType = RocksDBTypeNSString;
@@ -405,7 +414,7 @@ RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
 `RocksDBIterator` supports iterating inside a key-prefix by providing a `RocksDBPrefixExtractor`. One such extractor is built-in and it extracts a fixed-length prefix for each key:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 	options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];
 
@@ -498,7 +507,7 @@ RocksDBCheckpoint *checkpoint = [[RocksDBCheckpoint alloc] initWithDatabase:db];
 NSError *error = nil;
 [checkpoint createCheckpointAtPath:@"path/to/checkpoint" error:&error];
 
-RocksDB *db2 = [[RocksDB alloc] initWithPath:@"path/to/checkpoint"];
+RocksDB *db2 = [RocksDB databaseAtPath:@"path/to/checkpoint"];
 ...
 [db close];
 [db2 close];
@@ -517,7 +526,7 @@ RocksDBComparator *localizedKeys = [[RocksDBComparator alloc] initWithName:@"Loc
 	return [key1 localizedCaseInsensitiveCompare:key2];
 ];
 	
-RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 	options.comparator = localizedKeys;
 }];
 ```
@@ -529,7 +538,7 @@ RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions 
 ObjectiveRocks features some built-in comparators, which can be used like this:
 
 ```objective-c
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.comparator = [RocksDBComparator comaparatorWithType:RocksDBComparatorNumberAscending];
 }];
 ```
@@ -567,7 +576,7 @@ RocksDBMergeOperator *arrayAppend = [RocksDBMergeOperator operatorWithName:@"Arr
 	}
 }];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.mergeOperator = arrayAppend;
 	options.keyType = RocksDBTypeNSString;
 	options.valueType = RocksDBTypeNSJSONSerializable;
@@ -617,7 +626,7 @@ RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operato
 	}
 ];
 	
-RocksDB *db = [[RocksDB alloc] initWithPath:_path andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 	options.mergeOperator = mergeOp;
 
@@ -650,7 +659,7 @@ The `RocksDBEnv` allows for modifying the thread pool for backgrond jobs. RocksD
 
 ```objective-c
 RocksDBEnv *dbEnv = [RocksDBEnv envWithLowPriorityThreadCount:12 andHighPriorityThreadCount:4];
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.env = dbEnv;
 }];
 
@@ -684,7 +693,7 @@ RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"
 backupEngine restoreBackupToDestinationPath:@"path/to/db" error:nil];
 backupEngine close];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db"];
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db"];
 ...
 [db2 close];
 ```
@@ -730,7 +739,7 @@ You can collect those statistics by creating and setting the `RocksDBStatistics`
 ```objective-c
 RocksDBStatistics *dbStatistics = [RocksDBStatistics new];
 
-RocksDB *db = [[RocksDB alloc] initWithPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.statistics = dbStatistics;
 }];
 ...

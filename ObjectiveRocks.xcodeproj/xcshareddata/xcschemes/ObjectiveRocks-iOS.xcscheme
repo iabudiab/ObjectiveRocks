@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Scheme
-   LastUpgradeVersion = "0630"
+   LastUpgradeVersion = "0720"
    version = "1.3">
    <BuildAction
       parallelizeBuildables = "YES"
@@ -14,19 +14,34 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "62A8AF961A58C30E0069B4C8"
-               BuildableName = "libObjectiveRocks.a"
+               BlueprintIdentifier = "624F5D971BEE416D00497FEF"
+               BuildableName = "ObjectiveRocks.framework"
                BlueprintName = "ObjectiveRocks-iOS"
+               ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "62A8B0441A58C40A0069B4C8"
+               BuildableName = "ObjectiveRocksTests-iOS.xctest"
+               BlueprintName = "ObjectiveRocksTests-iOS"
                ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      buildConfiguration = "Debug">
+      codeCoverageEnabled = "YES">
       <Testables>
          <TestableReference
             skipped = "NO">
@@ -42,27 +57,30 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62A8AF961A58C30E0069B4C8"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624F5D971BEE416D00497FEF"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks-iOS"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
+      <AdditionalOptions>
+      </AdditionalOptions>
    </TestAction>
    <LaunchAction
+      buildConfiguration = "Debug"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62A8AF961A58C30E0069B4C8"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624F5D971BEE416D00497FEF"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks-iOS"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>
@@ -71,16 +89,16 @@
       </AdditionalOptions>
    </LaunchAction>
    <ProfileAction
+      buildConfiguration = "Release"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
-      buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "62A8AF961A58C30E0069B4C8"
-            BuildableName = "libObjectiveRocks.a"
+            BlueprintIdentifier = "624F5D971BEE416D00497FEF"
+            BuildableName = "ObjectiveRocks.framework"
             BlueprintName = "ObjectiveRocks-iOS"
             ReferencedContainer = "container:ObjectiveRocks.xcodeproj">
          </BuildableReference>
