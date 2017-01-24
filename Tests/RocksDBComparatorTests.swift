@@ -12,34 +12,34 @@ import ObjectiveRocks
 class RocksDBComparatorTests : RocksDBTests {
 
 	func testSwift_Comparator_Native_Bytewise_Ascending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseAscending)
+			options.comparator = RocksDBComparator.comaparator(with: .bytewiseAscending)
 		})
 
-		try! rocks.setData(Data("abc1"), forKey: Data("abc1"))
-		try! rocks.setData(Data("abc2"), forKey: Data("abc2"))
-		try! rocks.setData(Data("abc3"), forKey: Data("abc3"))
+		try! rocks.setData(Data.from(string: "abc1"), forKey: Data.from(string: "abc1"))
+		try! rocks.setData(Data.from(string: "abc2"), forKey: Data.from(string: "abc2"))
+		try! rocks.setData(Data.from(string: "abc3"), forKey: Data.from(string: "abc3"))
 
 		let iterator = rocks.iterator()
 
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc1"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc1"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc2"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc3"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc3"))
 
 		iterator.next()
 
@@ -48,47 +48,47 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc3"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc3"))
 
-		iterator.seekToKey(Data("abc"))
+		iterator.seek(toKey: Data.from(string: "abc"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc1"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc1"))
 
 		iterator.close()
 	}
 
 	func testSwift_Comparator_Native_Bytewise_Descending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.BytewiseDescending)
+			options.comparator = RocksDBComparator.comaparator(with: .bytewiseDescending)
 		})
 
-		try! rocks.setData(Data("abc1"), forKey: Data("abc1"))
-		try! rocks.setData(Data("abc2"), forKey: Data("abc2"))
-		try! rocks.setData(Data("abc3"), forKey: Data("abc3"))
+		try! rocks.setData(Data.from(string: "abc1"), forKey: Data.from(string: "abc1"))
+		try! rocks.setData(Data.from(string: "abc2"), forKey: Data.from(string: "abc2"))
+		try! rocks.setData(Data.from(string: "abc3"), forKey: Data.from(string: "abc3"))
 
 		let iterator = rocks.iterator()
 
 		iterator.seekToFirst()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc3"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc3"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc2"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc2"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc2"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc2"))
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc1"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc1"))
 
 		iterator.next()
 
@@ -97,115 +97,115 @@ class RocksDBComparatorTests : RocksDBTests {
 		iterator.seekToLast()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc1"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc1"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc1"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc1"))
 
-		iterator.seekToKey(Data("abc"))
+		iterator.seek(toKey: Data.from(string: "abc"))
 
 		XCTAssertFalse(iterator.isValid())
 
-		iterator.seekToKey(Data("abc999"))
+		iterator.seek(toKey: Data.from(string: "abc999"))
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSData, Data("abc3"))
-		XCTAssertEqual(iterator.value() as? NSData, Data("abc3"))
+		XCTAssertEqual(iterator.key() as? Data, Data.from(string: "abc3"))
+		XCTAssertEqual(iterator.value() as? Data, Data.from(string: "abc3"))
 
 		iterator.close()
 	}
 
 	func testSwift_Comparator_StringCompare_Ascending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareAscending)
-			options.keyType = .NSString
-			options.valueType = .NSString
+			options.comparator = RocksDBComparator.comaparator(with: .stringCompareAscending)
+			options.keyType = .nsString
+			options.valueType = .nsString
 		})
 
 		let expected = NSMutableArray()
 
 		for i in 0..<10000 {
 			let str = NSString(format: "a%d", i)
-			expected.addObject(str)
+			expected.add(str)
 			try! rocks.setObject(str, forKey: str)
 		}
 
 		/* Expected Array: [A0, A1, A10, A100, A1000, A1001, A1019, A102, A1020, ...] */
-		expected.sortUsingSelector(#selector(NSString.compare(_:)))
+		expected.sort(using: #selector(NSString.compare(_:)))
 
 		let iterator = rocks.iterator()
 		var idx = 0
 
-		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
+		iterator.enumerateKeys { (key, stop) -> Void in
 			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
 			idx += 1
 		}
 	}
 
 	func testSwift_Comparator_StringCompare_Descending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.StringCompareDescending)
-			options.keyType = .NSString
-			options.valueType = .NSString
+			options.comparator = RocksDBComparator.comaparator(with: .stringCompareDescending)
+			options.keyType = .nsString
+			options.valueType = .nsString
 		})
 
 		let expected = NSMutableArray()
 
 		for i in 0..<10000 {
 			let str = NSString(format: "a%d", i)
-			expected.addObject(str)
+			expected.add(str)
 			try! rocks.setObject(str, forKey: str)
 		}
 
 		/* Expected Array: [A9999, A9998 .. A9990, A999, A9989, ...] */
-		expected.sortUsingSelector(#selector(NSNumber.compare(_:)))
+		expected.sort(using: #selector(NSNumber.compare(_:)))
 
 		let iterator = rocks.iterator()
 		var idx = 9999
 
-		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
+		iterator.enumerateKeys { (key, stop) -> Void in
 			XCTAssertEqual(key as? NSString, expected[idx] as? NSString)
 			idx -= 1
 		}
 	}
 
 	func testSwift_Comparator_Number_Ascending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.NumberAscending)
+			options.comparator = RocksDBComparator.comaparator(with: .numberAscending)
 			options.keyEncoder = {
-				(number) -> NSData in
-				var r: UInt = number.unsignedIntegerValue
-				return NSData(bytes: &r, length: sizeof(UInt))
+				(number) -> Data in
+				var r: UInt = number.uintValue
+				return Data(bytes: UnsafePointer<UInt8>(&r), count: MemoryLayout<UInt>.size)
 			}
 			options.keyDecoder = {
 				(data) -> AnyObject in
 				if (data == nil) {
-					return Optional.None!
+					return Optional.none!
 				}
 				var r: UInt = 0
-				data.getBytes(&r, length: sizeof(NSInteger))
-				return NSNumber(unsignedInteger: r)
+				data?.copyBytes(to: &UInt8(r), count: MemoryLayout<NSInteger>.size)
+				return NSNumber(value: r as UInt)
 			}
 		})
 
 		var i = 0
 		while i < 10000 {
 			let r = arc4random_uniform(UINT32_MAX);
-			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
-			if value as? NSData == nil {
-				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
+			let value = try? rocks.object(forKey: NSNumber(value: r as UInt32))
+			if value as? Data == nil {
+				try! rocks.setObject(Data.from(string: "value"), forKey: NSNumber(value: r as UInt32))
 				i += 1
 			}
 		}
 
 		var count = 0
-		var lastKey: NSNumber = NSNumber(unsignedInteger: 0)
+		var lastKey: NSNumber = NSNumber(value: 0 as UInt)
 
 		let iterator = rocks.iterator()
 
-		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedAscending)
+		iterator.enumerateKeys { (key, stop) -> Void in
+			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .orderedAscending)
 			lastKey = key as! NSNumber
 			count += 1
 		}
@@ -214,42 +214,42 @@ class RocksDBComparatorTests : RocksDBTests {
 	}
 
 	func testSwift_Comparator_Number_Decending() {
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
-			options.comparator = RocksDBComparator.comaparatorWithType(.NumberDescending)
+			options.comparator = RocksDBComparator.comaparator(with: .numberDescending)
 			options.keyEncoder = {
-				(number) -> NSData in
-				var r: UInt = number.unsignedIntegerValue
-				return NSData(bytes: &r, length: sizeof(UInt))
+				(number) -> Data in
+				var r: UInt = number.uintValue
+				return Data(bytes: UnsafePointer<UInt8>(&r), count: MemoryLayout<UInt>.size)
 			}
 			options.keyDecoder = {
 				(data) -> AnyObject in
 				if (data == nil) {
-					return Optional.None!
+					return Optional.none!
 				}
 				var r: UInt = 0
-				data.getBytes(&r, length: sizeof(NSInteger))
-				return NSNumber(unsignedInteger: r)
+				data?.copyBytes(to: &UInt8(r), count: MemoryLayout<NSInteger>.size)
+				return NSNumber(value: r as UInt)
 			}
 		})
 
 		var i = 0
 		while i < 10000 {
 			let r = arc4random_uniform(UINT32_MAX);
-			let value = try? rocks.objectForKey(NSNumber(unsignedInt: r))
-			if value as? NSData == nil {
-				try! rocks.setObject(Data("value"), forKey: NSNumber(unsignedInt: r))
+			let value = try? rocks.object(forKey: NSNumber(value: r as UInt32))
+			if value as? Data == nil {
+				try! rocks.setObject(Data.from(string: "value"), forKey: NSNumber(value: r as UInt32))
 				i += 1
 			}
 		}
 
 		var count = 0
-		var lastKey: NSNumber = NSNumber(unsignedInt: UINT32_MAX)
+		var lastKey: NSNumber = NSNumber(value: UINT32_MAX as UInt32)
 
 		let iterator = rocks.iterator()
 
-		iterator.enumerateKeysUsingBlock { (key, stop) -> Void in
-			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .OrderedDescending)
+		iterator.enumerateKeys { (key, stop) -> Void in
+			XCTAssertTrue(lastKey.compare(key as! NSNumber) == .orderedDescending)
 			lastKey = key as! NSNumber
 			count += 1
 		}

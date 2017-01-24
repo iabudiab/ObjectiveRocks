@@ -14,12 +14,12 @@ class RocksDBStatisticsTests : RocksDBTests {
 	func testSwift_Statistics() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})
 
-		try! rocks.setData(Data("value 1"), forKey: Data("key 1"))
+		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
 
 		XCTAssertNotNil(statistics.description);
 	}
@@ -27,25 +27,25 @@ class RocksDBStatisticsTests : RocksDBTests {
 	func testSwift_Statistics_Ticker() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})
 
-		try! rocks.setData(Data("abcd"), forKey: Data("abcd"))
+		try! rocks.setData(Data.from(string: "abcd"), forKey: Data.from(string: "abcd"))
 
-		XCTAssertEqual(statistics.countForTicker(RocksDBTickerType.BytesRead), 0 as UInt64);
-		XCTAssertGreaterThan(statistics.countForTicker(RocksDBTickerType.BytesWritten), 0 as UInt64);
+		XCTAssertEqual(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
+		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesWritten), 0 as UInt64);
 
-		try! rocks.dataForKey(Data("abcd"))
+		try! rocks.data(forKey: Data.from(string: "abcd"))
 
-		XCTAssertGreaterThan(statistics.countForTicker(RocksDBTickerType.BytesRead), 0 as UInt64);
+		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
 	}
 
 	func testSwift_Statistics_Histogram() {
 		let statistics = RocksDBStatistics()
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.statistics = statistics;
 		})
@@ -55,9 +55,9 @@ class RocksDBStatisticsTests : RocksDBTests {
 			try! rocks.setData(Data(str as String), forKey: Data(str as String))
 		}
 
-		try! rocks.dataForKey(Data("a42"))
+		try! rocks.data(forKey: Data.from(string: "a42"))
 
-		let dbGetHistogram = statistics.histogramDataForType(RocksDBHistogramType.DBGet)
+		let dbGetHistogram = statistics.histogramData(for: RocksDBHistogramType.dbGet)
 
 		XCTAssertNotNil(dbGetHistogram);
 		XCTAssertGreaterThan(dbGetHistogram.median, 0.0);
