@@ -28,11 +28,13 @@ class RocksDBBasicTests : RocksDBTests {
 		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 		})
-		rocks.setDefaultReadOptions({ (readOptions) -> Void in
-			readOptions.fillCache = true
-			readOptions.verifyChecksums = true
-		}, andWriteOptions: { (writeOptions) -> Void in
-			writeOptions.syncWrites = true
+		rocks.setDefault(
+			readOptions: { (readOptions) -> Void in
+				readOptions.fillCache = true
+				readOptions.verifyChecksums = true
+		},
+			writeOptions: { (writeOptions) -> Void in
+				writeOptions.syncWrites = true
 		})
 
 		try! rocks.setData("value 1", forKey: "key 1")

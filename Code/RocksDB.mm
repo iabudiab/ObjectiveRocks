@@ -305,7 +305,7 @@
 
 #pragma mark - Read/Write Options
 
-- (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *))readOptionsBlock andWriteOptions:(void (^)(RocksDBWriteOptions *))writeOptionsBlock
+- (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *))readOptionsBlock writeOptions:(void (^)(RocksDBWriteOptions *))writeOptionsBlock
 {
 	_readOptions = [RocksDBReadOptions new];
 	_writeOptions = [RocksDBWriteOptions new];

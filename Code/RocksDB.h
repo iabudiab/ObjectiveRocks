@@ -158,7 +158,7 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBWriteOptions
  */
 - (void)setDefaultReadOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
-			  andWriteOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions;
+			  writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions NS_SWIFT_NAME(setDefault(readOptions:writeOptions:));
 
 @end
 
