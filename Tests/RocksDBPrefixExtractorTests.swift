@@ -87,7 +87,7 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			options.memtablePrefixBloomProbes = 6;
 
 			options.tableFacotry = RocksDBTableFactory.blockBasedTableFactory(options: { (options) -> Void in
-				options?.filterPolicy = RocksDBFilterPolicy.bloomFilterPolicy(withBitsPerKey: 10, useBlockBasedBuilder: true)
+				options.filterPolicy = RocksDBFilterPolicy.bloomFilterPolicy(withBitsPerKey: 10, useBlockBasedBuilder: true)
 			})
 		})
 
