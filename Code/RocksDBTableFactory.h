@@ -14,6 +14,8 @@
 #import "RocksDBCuckooTableOptions.h"
 #endif
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** A factory for the TableFactory objects. */
 @interface RocksDBTableFactory : NSObject
 
@@ -47,3 +49,5 @@
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END

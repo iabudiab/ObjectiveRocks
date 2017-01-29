@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  Defines a filter policy for keys.
  */
@@ -31,3 +33,5 @@
 + (instancetype)bloomFilterPolicyWithBitsPerKey:(int)bitsPerKey useBlockBasedBuilder:(BOOL)useBlockBasedBuilder;
 
 @end
+
+NS_ASSUME_NONNULL_END

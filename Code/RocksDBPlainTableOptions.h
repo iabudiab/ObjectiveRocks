@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(char, PlainTableEncodingType)
 {
 	PlainTableEncodingPlain,
@@ -74,3 +76,5 @@ typedef NS_ENUM(char, PlainTableEncodingType)
 @property (nonatomic, assign) BOOL storeIndexInFile;
 
 @end
+
+NS_ASSUME_NONNULL_END

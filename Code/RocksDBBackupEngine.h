@@ -10,6 +10,8 @@
 
 #import "RocksDB.h"
 
+@class RocksDBBackupInfo;
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -81,7 +83,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBBackupInfo
  */
-- (NSArray *)backupInfo;
+- (NSArray<RocksDBBackupInfo *> *)backupInfo;
 
 /**
  @brief Closes this Backup Engine instance.
