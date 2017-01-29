@@ -1,30 +1,41 @@
 //: Playground - noun: a place where people can play
 
 import Cocoa
-import XCPlayground
+import PlaygroundSupport
 import ObjectiveRocks
 
-XCPlaygroundPage.currentPage.needsIndefiniteExecution = true
+PlaygroundPage.current.needsIndefiniteExecution = true
 
-let url = XCPlaygroundSharedDataDirectoryURL.URLByAppendingPathComponent("Rocks")
-try NSFileManager.defaultManager().removeItemAtPath(url.path!)
+let url = PlaygroundSupport.playgroundSharedDataDirectory.appendingPathComponent("Rocks")
+try FileManager.default.removeItem(atPath: url.path)
 
-let rocks = RocksDB.databaseAtPath(url.path) { options in
-	options.createIfMissing = true
-	options.keyType = .NSString
-	options.valueEncoder = { key, number in
-		var value: Int = (number as! NSNumber).integerValue
-		return NSData(bytes: &value, length: sizeof(Int))
+extension Data: ExpressibleByStringLiteral {
+	public init(stringLiteral value: String) {
+		self = value.data(using: .utf8)!
 	}
-	options.valueDecoder = { key, data in
-		var value: Int = 0
-		data.getBytes(&value, length: sizeof(Int))
-		return NSNumber(integer: value)
+
+	public init(extendedGraphemeClusterLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+
+	public init(unicodeScalarLiteral value: String) {
+		self = value.data(using: .utf8)!
 	}
 }
 
-guard rocks != nil else {
-	XCPlaygroundPage.currentPage.finishExecution()
+extension Data: ExpressibleByIntegerLiteral {
+	public init(integerLiteral value: Int) {
+		var value = value
+		self.init(buffer: UnsafeBufferPointer(start: &value, count: 1))
+	}
+}
+
+let rocks = RocksDB.database(atPath: url.path) { options in
+	options.createIfMissing = true
+}
+
+guard let rocks = rocks else {
+	PlaygroundPage.current.finishExecution()
 }
 
 try rocks.performWriteBatch { batch, writeOptions -> Void in
@@ -41,15 +52,17 @@ try rocks.performWriteBatch { batch, writeOptions -> Void in
 	batch.setData(1, forKey: "0009")
 }
 
-rocks.iterator().enumerateKeysWithPrefix("000") { key, stop -> Void in
+rocks.iterator().enumerateKeys(withPrefix: "000") { key, stop -> Void in
 	do {
-		let value = try rocks.objectForKey(key)
+		let data = try rocks.data(forKey: key)
+		let value: Int = data.withUnsafeBytes { $0.pointee }
+		print(value)
 
-		if value.integerValue > 10 {
+		if value > 10 {
 			var shouldStop: ObjCBool = true
-			stop.initialize(shouldStop)
+			stop.initialize(to: shouldStop)
 		}
 	} catch {}
 }
 
-XCPlaygroundPage.currentPage.finishExecution()
+PlaygroundPage.current.finishExecution()
