@@ -19,7 +19,7 @@ class RocksDBStatisticsTests : RocksDBTests {
 			options.statistics = statistics;
 		})
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
+		try! rocks.setData("value 1", forKey: "key 1")
 
 		XCTAssertNotNil(statistics.description);
 	}
@@ -32,12 +32,12 @@ class RocksDBStatisticsTests : RocksDBTests {
 			options.statistics = statistics;
 		})
 
-		try! rocks.setData(Data.from(string: "abcd"), forKey: Data.from(string: "abcd"))
+		try! rocks.setData("abcd", forKey: "abcd")
 
 		XCTAssertEqual(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
 		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesWritten), 0 as UInt64);
 
-		try! rocks.data(forKey: Data.from(string: "abcd"))
+		try! rocks.data(forKey: "abcd")
 
 		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
 	}
@@ -51,11 +51,11 @@ class RocksDBStatisticsTests : RocksDBTests {
 		})
 
 		for i in 0...10000 {
-			let str = NSString(format: "a%d", i)
-			try! rocks.setData(Data(str as String), forKey: Data(str as String))
+			let str = String(format: "a%d", i)
+			try! rocks.setData(str.data, forKey: str.data)
 		}
 
-		try! rocks.data(forKey: Data.from(string: "a42"))
+		try! rocks.data(forKey: "a42")
 
 		let dbGetHistogram = statistics.histogramData(for: RocksDBHistogramType.dbGet)
 

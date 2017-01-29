@@ -15,21 +15,19 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.prefixExtractor = RocksDBPrefixExtractor(type: .fixedLength, length: 3)
-			options.keyType = .nsString;
-			options.valueType = .nsString;
 		})
 
-		try! rocks.setObject("x", forKey: "100A")
-		try! rocks.setObject("x", forKey: "100B")
+		try! rocks.setData("x", forKey: "100A")
+		try! rocks.setData("x", forKey: "100B")
 
-		try! rocks.setObject("x", forKey: "101A")
-		try! rocks.setObject("x", forKey: "101B")
+		try! rocks.setData("x", forKey: "101A")
+		try! rocks.setData("x", forKey: "101B")
 
 		let iterator = rocks.iterator()
-		let keys = NSMutableArray()
+		var keys = [String]()
 
 		iterator.enumerateKeys(withPrefix: "100", using: { (key, stop) -> Void in
-			keys.add(key)
+			keys.append(String(data: key, encoding: .utf8)!)
 		})
 
 		XCTAssertEqual(keys.count, 2);
@@ -38,10 +36,10 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 
 		XCTAssertEqual(keys, expected);
 
-		keys.removeAllObjects()
+		keys.removeAll()
 
 		iterator.enumerateKeys(withPrefix: "101", using: { (key, stop) -> Void in
-			keys.add(key)
+			keys.append(String(data: key, encoding: .utf8)!)
 		})
 
 		XCTAssertEqual(keys.count, 2);
@@ -52,21 +50,24 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		iterator.seek(toKey: "1000")
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSString, "100A")
+		XCTAssertEqual(iterator.key(), "100A".data)
 
 		iterator.next()
 
 		XCTAssertTrue(iterator.isValid())
-		XCTAssertEqual(iterator.key() as? NSString, "100B")
+		XCTAssertEqual(iterator.key(), "100B".data)
 	}
 
 	func testSwift_PrefixExtractor_FixedLength_CustomComparator() {
 		// 1001 < 9910 < 2011 < 3412 ...
 		let cmp = RocksDBComparator(name: "cmp") { (key1, key2) -> Int32 in
-			let sub1: NSString = (key1 as AnyObject).substring(from: 2) as NSString
-			let sub2: NSString = (key2 as AnyObject).substring(from: 2) as NSString
+			let str1 = String(data: key1, encoding: .utf8)!
+			let str2 = String(data: key2, encoding: .utf8)!
 
-			let res = sub1.compare(sub2 as String)
+			let sub1 = str1.substring(from: str1.index(str1.startIndex, offsetBy: 1))
+			let sub2 = str2.substring(from: str2.index(str2.startIndex, offsetBy: 1))
+
+			let res = sub1.compare(sub2)
 			switch res {
 			case .orderedAscending:
 					return -1
@@ -81,32 +82,29 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			options.createIfMissing = true
 			options.comparator = cmp
 			options.prefixExtractor = RocksDBPrefixExtractor(type: .fixedLength, length: 2)
-			options.keyType = .nsString;
-			options.valueType = .nsString;
 
 			options.memtablePrefixBloomBits = 100000000;
 			options.memtablePrefixBloomProbes = 6;
 
-			options.tableFacotry = RocksDBTableFactory.blockBasedTableFactory(options: {
-				(options) -> Void in
+			options.tableFacotry = RocksDBTableFactory.blockBasedTableFactory(options: { (options) -> Void in
 				options?.filterPolicy = RocksDBFilterPolicy.bloomFilterPolicy(withBitsPerKey: 10, useBlockBasedBuilder: true)
 			})
 		})
 
-		try! rocks.setObject("x", forKey: "1010")
-		try! rocks.setObject("x", forKey: "4211")
-		try! rocks.setObject("x", forKey: "1012")
-		try! rocks.setObject("x", forKey: "5313")
-		try! rocks.setObject("x", forKey: "1020")
-		try! rocks.setObject("x", forKey: "4221")
-		try! rocks.setObject("x", forKey: "1022")
-		try! rocks.setObject("x", forKey: "5323")
+		try! rocks.setData("x", forKey: "1010")
+		try! rocks.setData("x", forKey: "4211")
+		try! rocks.setData("x", forKey: "1012")
+		try! rocks.setData("x", forKey: "5313")
+		try! rocks.setData("x", forKey: "1020")
+		try! rocks.setData("x", forKey: "4221")
+		try! rocks.setData("x", forKey: "1022")
+		try! rocks.setData("x", forKey: "5323")
 
 		let iterator = rocks.iterator()
-		let keys = NSMutableArray()
+		var keys = [String]()
 
 		iterator.enumerateKeys(withPrefix: "10", using: { (key, stop) -> Void in
-			keys.add(key)
+			keys.append(String(data: key, encoding: .utf8)!)
 		})
 
 		XCTAssertEqual(keys.count, 4);
@@ -115,10 +113,10 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 
 		XCTAssertEqual(keys, expected);
 
-		keys.removeAllObjects()
+		keys.removeAll()
 
 		iterator.enumerateKeys(withPrefix: "42", using: { (key, stop) -> Void in
-			keys.add(key)
+			keys.append(String(data: key, encoding: .utf8)!)
 		})
 
 		XCTAssertEqual(keys.count, 2);
@@ -126,11 +124,10 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 		expected = ["4211", "4221"]
 		XCTAssertEqual(keys, expected);
 
-
-		keys.removeAllObjects()
+		keys.removeAll()
 
 		iterator.enumerateKeys(withPrefix: "53", using: { (key, stop) -> Void in
-			keys.add(key)
+			keys.append(String(data: key, encoding: .utf8)!)
 		})
 
 		XCTAssertEqual(keys.count, 2);

@@ -16,24 +16,24 @@ class RocksDBSnapshotTests : RocksDBTests {
 			options.createIfMissing = true
 		});
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
-		try! rocks.setData(Data.from(string: "value 2"), forKey: Data.from(string: "key 2"))
-		try! rocks.setData(Data.from(string: "value 3"), forKey: Data.from(string: "key 3"))
+		try! rocks.setData("value 1", forKey: "key 1")
+		try! rocks.setData("value 2", forKey: "key 2")
+		try! rocks.setData("value 3", forKey: "key 3")
 
 		let snapshot = rocks.snapshot()
 
-		try! rocks.deleteData(forKey: Data.from(string: "key 1"))
-		try! rocks.setData(Data.from(string: "value 4"), forKey: Data.from(string: "key 4"))
+		try! rocks.deleteData(forKey: "key 1")
+		try! rocks.setData("value 4", forKey: "key 4")
 
-		XCTAssertEqual(try! snapshot.data(forKey: Data.from(string: "key 1")), Data.from(string: "value 1"));
-		XCTAssertEqual(try! snapshot.data(forKey: Data.from(string: "key 2")), Data.from(string: "value 2"));
-		XCTAssertEqual(try! snapshot.data(forKey: Data.from(string: "key 3")), Data.from(string: "value 3"));
-		XCTAssertNil(try? snapshot.data(forKey: Data.from(string: "Key 4")))
+		XCTAssertEqual(try! snapshot.data(forKey: "key 1"), "value 1".data)
+		XCTAssertEqual(try! snapshot.data(forKey: "key 2"), "value 2".data)
+		XCTAssertEqual(try! snapshot.data(forKey: "key 3"), "value 3".data)
+		XCTAssertNil(try? snapshot.data(forKey: "Key 4"))
 
 		snapshot.close()
 
-		XCTAssertNil(try? snapshot.data(forKey: Data.from(string: "Key 1")))
-		XCTAssertEqual(try! snapshot.data(forKey: Data.from(string: "key 4")), Data.from(string: "value 4"));
+		XCTAssertNil(try? snapshot.data(forKey: "Key 1"))
+		XCTAssertEqual(try! snapshot.data(forKey: "key 4"), "value 4".data)
 	}
 
 	func testSwift_Snapshot_Iterator() {
@@ -41,19 +41,19 @@ class RocksDBSnapshotTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
-		try! rocks.setData(Data.from(string: "value 2"), forKey: Data.from(string: "key 2"))
-		try! rocks.setData(Data.from(string: "value 3"), forKey: Data.from(string: "key 3"))
+		try! rocks.setData("value 1", forKey: "key 1")
+		try! rocks.setData("value 2", forKey: "key 2")
+		try! rocks.setData("value 3", forKey: "key 3")
 
 		let snapshot = rocks.snapshot()
 
-		try! rocks.deleteData(forKey: Data.from(string: "key 1"))
-		try! rocks.setData(Data.from(string: "value 4"), forKey: Data.from(string: "key 4"))
+		try! rocks.deleteData(forKey: "key 1")
+		try! rocks.setData("value 4", forKey: "key 4")
 
-		let actual: NSMutableArray = []
+		var actual = [String]()
 		var iterator = snapshot.iterator()
 		iterator.enumerateKeys { (key, stop) -> Void in
-			actual.add(Str(key as! Data))
+			actual.append(String(data: key, encoding: .utf8)!)
 		}
 
 		var expected = [ "key 1", "key 2", "key 3" ]
@@ -61,11 +61,11 @@ class RocksDBSnapshotTests : RocksDBTests {
 
 		snapshot.close()
 
-		actual.removeAllObjects()
+		actual.removeAll()
 
 		iterator = snapshot.iterator()
 		iterator.enumerateKeys { (key, stop) -> Void in
-			actual.add(Str(key as! Data))
+			actual.append(String(data: key, encoding: .utf8)!)
 		}
 
 		expected = [ "key 2", "key 3", "key 4" ]
@@ -77,13 +77,13 @@ class RocksDBSnapshotTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
+		try! rocks.setData("value 1", forKey: "key 1")
 		let snapshot1 = rocks.snapshot()
 
-		try! rocks.setData(Data.from(string: "value 2"), forKey: Data.from(string: "key 2"))
+		try! rocks.setData("value 2", forKey: "key 2")
 		let snapshot2 = rocks.snapshot()
 
-		try! rocks.setData(Data.from(string: "value 3"), forKey: Data.from(string: "key 3"))
+		try! rocks.setData("value 3", forKey: "key 3")
 		let snapshot3 = rocks.snapshot()
 
 		XCTAssertEqual(snapshot1.sequenceNumber(), 1 as UInt64)

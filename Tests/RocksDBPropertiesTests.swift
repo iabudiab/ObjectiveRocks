@@ -18,9 +18,9 @@ class RocksDBPropertiesTests : RocksDBTests {
 			options.minWriteBufferNumberToMerge = 10;
 		})
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
-		try! rocks.setData(Data.from(string: "value 2"), forKey: Data.from(string: "key 2"))
-		try! rocks.setData(Data.from(string: "value 3"), forKey: Data.from(string: "key 3"))
+		try! rocks.setData("value 1".data, forKey: "key 1".data)
+		try! rocks.setData("value 2".data, forKey: "key 2".data)
+		try! rocks.setData("value 3".data, forKey: "key 3".data)
 
 		XCTAssertGreaterThan(rocks.value(for: .numEntriesActiveMemtable), 0 as UInt64);
 		XCTAssertGreaterThan(rocks.value(for: .curSizeActiveMemTable), 0 as UInt64);
@@ -37,12 +37,12 @@ class RocksDBPropertiesTests : RocksDBTests {
 			options.createMissingColumnFamilies = true
 		})
 
-		XCTAssertGreaterThanOrEqual((rocks.columnFamilies()[0] as AnyObject).value(for: .estimatedNumKeys), 0 as UInt64);
-		XCTAssertNotNil((rocks.columnFamilies()[0] as AnyObject).value(for: .stats));
-		XCTAssertNotNil((rocks.columnFamilies()[0] as AnyObject).value(for: .ssTables));
+		XCTAssertGreaterThanOrEqual((rocks.columnFamilies()[0]).value(for: .estimatedNumKeys), 0 as UInt64);
+		XCTAssertNotNil((rocks.columnFamilies()[0]).value(for: .stats));
+		XCTAssertNotNil((rocks.columnFamilies()[0]).value(for: .ssTables));
 
-		XCTAssertGreaterThanOrEqual((rocks.columnFamilies()[1] as AnyObject).value(for: .estimatedNumKeys), 0 as UInt64);
-		XCTAssertNotNil((rocks.columnFamilies()[1] as AnyObject).value(for: .stats));
-		XCTAssertNotNil((rocks.columnFamilies()[1] as AnyObject).value(for: .ssTables));
+		XCTAssertGreaterThanOrEqual((rocks.columnFamilies()[1]).value(for: .estimatedNumKeys), 0 as UInt64);
+		XCTAssertNotNil((rocks.columnFamilies()[1]).value(for: .stats));
+		XCTAssertNotNil((rocks.columnFamilies()[1]).value(for: .ssTables));
 	}
 }

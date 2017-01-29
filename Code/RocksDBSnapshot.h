@@ -45,17 +45,17 @@ NS_ASSUME_NONNULL_BEGIN
 - (RocksDBColumnFamilyMetaData *)columnFamilyMetaData UNAVAILABLE("Column Family API not available");
 #endif
 
-+ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path UNAVAILABLE("Column Family API not available");
++ (NSArray<NSString *> *)listColumnFamiliesInDatabaseAtPath:(NSString *)path UNAVAILABLE("Column Family API not available");
 
 - (RocksDBColumnFamily *)createColumnFamilyWithName:(NSString *)name
 										 andOptions:(void (^)(RocksDBColumnFamilyOptions *options))optionsBlock UNAVAILABLE("Column Family API not available");
-- (NSArray *)columnFamilies UNAVAILABLE("Column Family API not available");
+- (NSArray<RocksDBColumnFamily *> *)columnFamilies UNAVAILABLE("Column Family API not available");
 
 - (void)setDefaultReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions
 			  andWriteOptions:(void (^)(RocksDBWriteOptions *writeOptions))writeOptions UNAVAILABLE("Specify options when creating snapshot via DB instance");
 
 - (RocksDBSnapshot *)snapshot UNAVAILABLE("Yo Dawg, Snapshot in Snapshot ... ");
-- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions  UNAVAILABLE("Yo Dawg, Snapshot in Snapshot ... ");
+- (RocksDBSnapshot *)snapshotWithReadOptions:(void (^)(RocksDBReadOptions *readOptions))readOptions UNAVAILABLE("Yo Dawg, Snapshot in Snapshot ... ");
 
 #define NA_SELECTOR(sel) sel UNAVAILABLE("Snapshot is read-only");
 SNAPSHOT_PUT_MERGE_DELETE_SELECTORS

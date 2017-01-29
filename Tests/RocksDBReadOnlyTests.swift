@@ -32,23 +32,23 @@ class RocksDBReadOnlyTests : RocksDBTests {
 			options.createIfMissing = true;
 		});
 		XCTAssertNotNil(rocks);
-		try! rocks.setData(Data.from(string: "data"), forKey: Data.from(string: "key"))
+		try! rocks.setData("data", forKey: "key")
 		rocks.close()
 
 		rocks = RocksDB.databaseForReadOnly(atPath: path, andDBOptions:nil)
 
-		try! rocks.data(forKey: Data.from(string: "key"))
+		try! rocks.data(forKey: "key")
 
 		AssertThrows {
-			try self.rocks.setData(Data.from(string: "data"), forKey:Data.from(string: "key"))
+			try self.rocks.setData("data", forKey:"key")
 		}
 
 		AssertThrows {
-			try self.rocks.deleteData(forKey: Data.from(string: "key"))
+			try self.rocks.deleteData(forKey: "key")
 		}
 
 		AssertThrows {
-			try self.rocks.merge(Data.from(string: "data"), forKey:Data.from(string: "key"))
+			try self.rocks.merge("data", forKey:"key")
 		}
 	}
 

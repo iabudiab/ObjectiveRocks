@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBEnv.h"
-#import "RocksDBStatistics.h"
+
+@class RocksDBEnv;
+@class RocksDBStatistics;
 
 /** @brief The DB log level. */
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)

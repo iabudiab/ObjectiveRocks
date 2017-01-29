@@ -16,16 +16,16 @@ NS_ASSUME_NONNULL_BEGIN
 @interface RocksDBKeyRange : NSObject
 
 /* @breif Start key */
-@property (nonatomic, strong, nullable) id start;
+@property (nonatomic, strong, nullable) NSData * start;
 /* @breif End key */
-@property (nonatomic, strong, nullable) id end;
+@property (nonatomic, strong, nullable) NSData * end;
 
 /**
  Creates a new RocksDBKeyRange from the specified values.
 
  @return RocksDBKeyRange with start and end keys.
  */
-- (instancetype)initWithStart:(__nullable id)start end:(__nullable id)end;
+- (instancetype)initWithStart:(nullable NSData *)start end:(nullable NSData *)end;
 
 @end
 
@@ -34,7 +34,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return RocksDBKeyRange with start and end keys.
  */
-NS_INLINE RocksDBKeyRange * RocksDBMakeKeyRange(__nullable id start, __nullable id end)
+NS_INLINE RocksDBKeyRange * RocksDBMakeKeyRange(NSData * _Nullable start, NSData * _Nullable end)
 {
 	return [[RocksDBKeyRange alloc] initWithStart:start end:end];
 }

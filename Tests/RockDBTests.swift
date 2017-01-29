@@ -10,6 +10,30 @@ import Foundation
 import XCTest
 import ObjectiveRocks
 
+// MARK:- Extension
+
+extension Data: ExpressibleByStringLiteral {
+	public init(stringLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+
+	public init(extendedGraphemeClusterLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+
+	public init(unicodeScalarLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+}
+
+extension String {
+	var data: Data {
+		return self.data(using: .utf8)!
+	}
+}
+
+// MARK:- Util
+
 public func AssertThrows(_ message: String = "Expression did not throw",
                          _ function: String = #function,
                          _ file: StaticString = #file,
@@ -27,38 +51,7 @@ public func AssertThrows(_ message: String = "Expression did not throw",
 	XCTAssertNotNil(thrown, completeMessage, file: file, line: line)
 }
 
-extension Data {
-
-	static func from(string: String) -> Data {
-		return string.data(using: String.Encoding.utf8, allowLossyConversion: false)!
-	}
-
-	func toString() -> NSString {
-		return NSString(data: self, encoding: String.Encoding.utf8.rawValue)!
-	}
-
-	init<T>(from value: T) {
-		let count = MemoryLayout.size(ofValue: value)
-		var value = value
-		self.init(buffer: UnsafeBufferPointer(start: &value, count: count))
-	}
-
-	func to<T>(type: T.Type) -> T {
-		return self.withUnsafeBytes { $0.pointee }
-	}
-}
-
-//public func Val(_ data: Data) -> UInt64 {
-//	var val: UInt64 = 0
-//	(data as NSData).getBytes(&val, length: MemoryLayout<UInt64>.size)
-//	return val
-//}
-//
-//public func Val(_ data: Data) -> Float {
-//	var val: Float = 0
-//	(data as NSData).getBytes(&val, length: MemoryLayout<Float>.size)
-//	return val
-//}
+// MARK:- Base
 
 class RocksDBTests : XCTestCase {
 

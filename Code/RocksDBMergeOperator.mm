@@ -7,7 +7,6 @@
 //
 
 #import "RocksDBMergeOperator.h"
-#import "RocksDBEncodingOptions.h"
 #import "RocksDBSlice.h"
 #import "RocksDBCallbackAssociativeMergeOperator.h"
 #import "RocksDBCallbackMergeOperator.h"
@@ -19,11 +18,9 @@
 
 @interface RocksDBMergeOperator ()
 {
-	RocksDBEncodingOptions *_encodingOptions;
 	NSString *_name;
 	rocksdb::MergeOperator *_mergeOperator;
 }
-@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, copy) NSString *name;
 @property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
@@ -32,13 +29,13 @@
 
 @interface RocksDBAssociativeMergeOperator : RocksDBMergeOperator
 {
-	id (^ _associativeMergeBlock)(id, id existingValue, id value);
+	NSData * (^ _associativeMergeBlock)(NSData *, NSData *existingValue, NSData *value);
 }
 @end
 
 @implementation RocksDBAssociativeMergeOperator
 
-- (instancetype)initWithName:(NSString *)name andBlock:(id (^)(id, id, id))block
+- (instancetype)initWithName:(NSString *)name andBlock:(NSData * (^)(NSData *, NSData *, NSData *))block
 {
 	self = [super init];
 	if (self) {
@@ -68,13 +65,12 @@ bool trampoline(void* instance,
 	  withExistingValue:(const rocksdb::Slice *)existingSlice
 			   andValue:(const rocksdb::Slice &)valueSlice
 {
-	id key = DecodeKeySlice(keySlice, self.encodingOptions, nil);
-	id previous = (existingSlice == nullptr) ? nil : DecodeValueSlice(key, *existingSlice, self.encodingOptions, nil);
-	id value = DecodeValueSlice(key, valueSlice, self.encodingOptions, nil);
+	NSData *key = DataFromSlice(keySlice);
+	NSData *previous = (existingSlice == nullptr) ? nil : DataFromSlice(*existingSlice);
+	NSData *value = DataFromSlice(valueSlice);
 
-	id mergeResult = _associativeMergeBlock ? _associativeMergeBlock(key, previous, value): nil;
-
-	return EncodeValue(key, mergeResult, self.encodingOptions, nil);
+	NSData *mergeResult = _associativeMergeBlock ? _associativeMergeBlock(key, previous, value): nil;
+	return mergeResult;
 }
 
 @end
@@ -83,16 +79,16 @@ bool trampoline(void* instance,
 
 @interface RocksDBGenericMergeOperator : RocksDBMergeOperator
 {
-	NSString * (^ _partialMergeBlock)(id key, NSString *leftOperand, NSString *rightOperand);
-	id (^ _fullMergeBlock)(id key, id existingValue, NSArray *operandList);
+	NSData * (^ _partialMergeBlock)(NSData * key, NSData *leftOperand, NSData *rightOperand);
+	NSData * (^ _fullMergeBlock)(NSData * key, NSData * existingValue, NSArray<NSData *> *operandList);
 }
 @end
 
 @implementation RocksDBGenericMergeOperator
 
 - (instancetype)initWithName:(NSString *)name
-		   partialMergeBlock:(NSString * (^)(id key, NSString *leftOperand, NSString *rightOperand))partialMergeBlock
-			  fullMergeBlock:(id (^)(id key, id existingValue, NSArray *operandList))fullMergeBlock
+		   partialMergeBlock:(NSData * (^)(NSData *key, NSData *leftOperand, NSData *rightOperand))partialMergeBlock
+			  fullMergeBlock:(NSData * (^)(NSData *key, NSData *existingValue, NSArray<NSData *> *operandList))fullMergeBlock
 {
 	self = [super init];
 	if (self) {
@@ -126,13 +122,12 @@ bool trampolinePartialMerge(void* instance,
 			   withLeftOperand:(const rocksdb::Slice &)leftSlice
 			   andRightOperand:(const rocksdb::Slice &)rightSlice
 {
-	id key = DecodeKeySlice(keySlice, self.encodingOptions, nil);
-	id left = DecodeValueSlice(key, leftSlice, self.encodingOptions, nil);
-	id right = DecodeValueSlice(key, rightSlice, self.encodingOptions, nil);
+	NSData *key = DataFromSlice(keySlice);
+	NSData *left = DataFromSlice(leftSlice);
+	NSData *right = DataFromSlice(rightSlice);
 
-	NSString * mergeResult = _partialMergeBlock ? _partialMergeBlock(key, left, right): nil;
-
-	return [mergeResult dataUsingEncoding:NSUTF8StringEncoding];
+	NSData *mergeResult = _partialMergeBlock ? _partialMergeBlock(key, left, right): nil;
+	return mergeResult;
 }
 
 bool trampolineFullMerge(void* instance,
@@ -158,21 +153,20 @@ bool trampolineFullMerge(void* instance,
 		  withExistingValue:(const rocksdb::Slice *)existingSlice
 			 andOperandList:(const std::deque<std::string> &)operand_list
 {
-	id key = DecodeKeySlice(keySlice, self.encodingOptions, nil);
-	id previous = (existingSlice == nullptr) ? nil : DecodeValueSlice(key, *existingSlice, self.encodingOptions, nil);
+	NSData *key = DataFromSlice(keySlice);
+	NSData *previous = (existingSlice == nullptr) ? nil : DataFromSlice(*existingSlice);
 
 	NSMutableArray *operands = [NSMutableArray arrayWithCapacity:operand_list.size()];
 
 	for (const auto &value : operand_list) {
-		id decoded = [NSString stringWithCString:value.c_str() encoding:NSUTF8StringEncoding];
-		if (decoded != nil) {
-			[operands addObject:decoded];
+		NSData *data = DataFromSlice(rocksdb::Slice(value));
+		if (data != nil) {
+			[operands addObject:data];
 		}
 	}
 
-	id mergeResult = _fullMergeBlock ? _fullMergeBlock(key, previous, operands) : nil;
-
-	return EncodeValue(key, mergeResult, self.encodingOptions, nil);;
+	NSData *mergeResult = _fullMergeBlock ? _fullMergeBlock(key, previous, operands) : nil;
+	return mergeResult;
 }
 
 @end
@@ -181,17 +175,16 @@ bool trampolineFullMerge(void* instance,
 
 @implementation RocksDBMergeOperator
 @synthesize name = _name;
-@synthesize encodingOptions = _encodingOptions;
 @synthesize mergeOperator = _mergeOperator;
 
-+ (instancetype)operatorWithName:(NSString *)name andBlock:(id (^)(id, id, id))block
++ (instancetype)operatorWithName:(NSString *)name andBlock:(NSData * (^)(NSData *, NSData *, NSData *))block
 {
 	return [[RocksDBAssociativeMergeOperator alloc] initWithName:name andBlock:block];
 }
 
 + (instancetype)operatorWithName:(NSString *)name
-			   partialMergeBlock:(NSString * (^)(id key, NSString *leftOperand, NSString *rightOperand))partialMergeBlock
-				  fullMergeBlock:(id (^)(id key, id existingValue, NSArray *operandList))fullMergeBlock
+			   partialMergeBlock:(NSData * (^)(NSData * key, NSData *leftOperand, NSData *rightOperand))partialMergeBlock
+				  fullMergeBlock:(NSData * (^)(NSData *key, NSData *existingValue, NSArray<NSData *> *operandList))fullMergeBlock
 {
 	return [[RocksDBGenericMergeOperator alloc] initWithName:name partialMergeBlock:partialMergeBlock fullMergeBlock:fullMergeBlock];
 }

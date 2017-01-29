@@ -10,6 +10,10 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
+@class RocksDBColumnFamilyMetaData;
+@class RocksDBLevelFileMetaData;
+@class RocksDBSstFileMetaData;
+
 /**
  The metadata that describes a Column Family.
  */
@@ -33,7 +37,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @brief The metadata of all levels in this Column Family.
  */
-@property (nonatomic, strong, readonly) NSArray *levels;
+@property (nonatomic, strong, readonly) NSArray<RocksDBLevelFileMetaData *> *levels;
 
 @end
 
@@ -55,7 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  @brief The metadata of all sst files in this level.
  */
-@property (nonatomic, strong, readonly) NSArray *files;
+@property (nonatomic, strong, readonly) NSArray<RocksDBSstFileMetaData *> *files;
 
 @end
 

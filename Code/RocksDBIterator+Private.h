@@ -23,12 +23,8 @@ namespace rocksdb {
  rocksdb::Iterator instance.
 
  @param iterator The rocks::Iterator instance.
- @param options The Encoding options.
  @return a newly-initialized instance of `RocksDBIterator`.
-
- @see RocksDBEncodingOptions
  */
-- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator
-				andEncodingOptions:(RocksDBEncodingOptions *)options;
+- (instancetype)initWithDBIterator:(rocksdb::Iterator *)iterator;
 
 @end

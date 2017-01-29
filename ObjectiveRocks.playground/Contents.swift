@@ -28,17 +28,17 @@ guard rocks != nil else {
 }
 
 try rocks.performWriteBatch { batch, writeOptions -> Void in
-	batch.setObject(-10, forKey: "0001")
-	batch.setObject(9, forKey: "0011")
-	batch.setObject(-8, forKey: "0002")
-	batch.setObject(7, forKey: "0003")
-	batch.setObject(-6, forKey: "0012")
-	batch.setObject(5, forKey: "0004")
-	batch.setObject(-4, forKey: "0005")
-	batch.setObject(3, forKey: "0006")
-	batch.setObject(-2, forKey: "0007")
-	batch.setObject(11, forKey: "0008")
-	batch.setObject(1, forKey: "0009")
+	batch.setData(-10, forKey: "0001")
+	batch.setData(9, forKey: "0011")
+	batch.setData(-8, forKey: "0002")
+	batch.setData(7, forKey: "0003")
+	batch.setData(-6, forKey: "0012")
+	batch.setData(5, forKey: "0004")
+	batch.setData(-4, forKey: "0005")
+	batch.setData(3, forKey: "0006")
+	batch.setData(-2, forKey: "0007")
+	batch.setData(11, forKey: "0008")
+	batch.setData(1, forKey: "0009")
 }
 
 rocks.iterator().enumerateKeysWithPrefix("000") { key, stop -> Void in

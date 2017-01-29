@@ -20,9 +20,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
@@ -41,9 +41,9 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
@@ -69,13 +69,13 @@
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
 	[_rocks close];
@@ -98,13 +98,13 @@
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
 	[_rocks close];
@@ -128,13 +128,13 @@
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
 	[_rocks close];
@@ -156,17 +156,17 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 10") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 20") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 30") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 10".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 20".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 30".data forKey:@"key 3".data error:nil];
 
 	[_rocks close];
 
@@ -174,9 +174,9 @@
 
 	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2") error:nil], Data(@"value 2"));
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 3") error:nil], Data(@"value 3"));
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 1".data error:nil], @"value 1".data);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 2".data error:nil], @"value 2".data);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 3".data error:nil], @"value 3".data);
 
 	[backupRocks close];
 }
@@ -189,13 +189,13 @@
 
 	RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:_backupPath];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 	[backupEngine createBackupForDatabase:_rocks error:nil];
 
 	[_rocks close];
@@ -204,9 +204,9 @@
 
 	RocksDB *backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2") error:nil], nil);
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 3") error:nil], nil);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 1".data error:nil], @"value 1".data);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 2".data error:nil], nil);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 3".data error:nil], nil);
 
 	[backupRocks close];
 
@@ -214,9 +214,9 @@
 
 	backupRocks = [RocksDB databaseAtPath:_restorePath andDBOptions:nil];
 
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 2") error:nil], Data(@"value 2"));
-	XCTAssertEqualObjects([backupRocks dataForKey:Data(@"key 3") error:nil], nil);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 1".data error:nil], @"value 1".data);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 2".data error:nil], @"value 2".data);
+	XCTAssertEqualObjects([backupRocks dataForKey:@"key 3".data error:nil], nil);
 
 	[backupRocks close];
 }

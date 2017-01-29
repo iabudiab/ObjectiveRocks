@@ -7,7 +7,6 @@
 //
 
 #import "RocksDBPrefixExtractor.h"
-#import "RocksDBEncodingOptions.h"
 #import "RocksDBSlice.h"
 #import "RocksDBCallbackSliceTransform.h"
 
@@ -16,21 +15,18 @@
 
 @interface RocksDBPrefixExtractor ()
 {
-	RocksDBEncodingOptions *_encodingOptions;
 	NSString *_name;
 	const rocksdb::SliceTransform *_sliceTransform;
 
-	id (^ _transformBlock)(id key);
-	BOOL (^ _prefixCandidateBlock)(id key);
-	BOOL (^ _validPrefixBlock)(id prefix);
+	NSData * (^ _transformBlock)(NSData *key);
+	BOOL (^ _prefixCandidateBlock)(NSData * key);
+	BOOL (^ _validPrefixBlock)(NSData *prefix);
 }
-@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, strong) NSString *name;
 @property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
 @end
 
 @implementation RocksDBPrefixExtractor
-@synthesize encodingOptions = _encodingOptions;
 @synthesize name = _name;
 @synthesize sliceTransform = _sliceTransform;
 
@@ -55,9 +51,9 @@
 }
 
 - (instancetype)initWithName:(NSString *)name
-			  transformBlock:(id (^)(id key))transformBlock
-		prefixCandidateBlock:(BOOL (^)(id key))prefixCandidateBlock
-			validPrefixBlock:(BOOL (^)(id prefix))validPrefixBlock
+			  transformBlock:(NSData * (^)(NSData *key))transformBlock
+		prefixCandidateBlock:(BOOL (^)(NSData *key))prefixCandidateBlock
+			validPrefixBlock:(BOOL (^)(NSData *prefix))validPrefixBlock
 {
 	self = [super init];
 	if (self) {
@@ -91,9 +87,9 @@ rocksdb::Slice trampolineTransform(void* instance, const rocksdb::Slice& src)
 
 - (NSData *)transformKey:(const rocksdb::Slice &)keySlice
 {
-	id key = DecodeKeySlice(keySlice, _encodingOptions, nil);
-	id transformed = _transformBlock(key);
-	return EncodeKey(transformed, _encodingOptions, nil);
+	NSData *key = DataFromSlice(keySlice);
+	NSData * transformed = _transformBlock(key);
+	return transformed;
 }
 
 bool trampolineInDomain(void* instance, const rocksdb::Slice& src)
@@ -103,7 +99,7 @@ bool trampolineInDomain(void* instance, const rocksdb::Slice& src)
 
 - (BOOL)isKeyPrefixCandidate:(const rocksdb::Slice &)keySlice
 {
-	id key = DecodeKeySlice(keySlice, _encodingOptions, nil);
+	NSData *key = DataFromSlice(keySlice);
 	return _prefixCandidateBlock(key);
 }
 
@@ -114,8 +110,8 @@ bool trampolineInRange(void* instance, const rocksdb::Slice& dst)
 
 - (BOOL)isPrefixValid:(const rocksdb::Slice &)prefixSlice
 {
-	id prefix = DecodeKeySlice(prefixSlice, _encodingOptions, nil);
-	return _prefixCandidateBlock(prefix);
+	NSData *prefix = DataFromSlice(prefixSlice);
+	return _validPrefixBlock(prefix);
 }
 
 @end

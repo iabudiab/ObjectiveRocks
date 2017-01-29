@@ -21,23 +21,20 @@
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:3];
-
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"x" forKey:@"100A" error:nil];
-	[_rocks setObject:@"x" forKey:@"100B" error:nil];
+	[_rocks setData:@"x".data forKey:@"100A".data error:nil];
+	[_rocks setData:@"x".data forKey:@"100B".data error:nil];
 
-	[_rocks setObject:@"x" forKey:@"101A" error:nil];
-	[_rocks setObject:@"x" forKey:@"101B" error:nil];
+	[_rocks setData:@"x".data forKey:@"101A".data error:nil];
+	[_rocks setData:@"x".data forKey:@"101B".data error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
 
 	NSMutableArray *keys = [NSMutableArray array];
-	[iterator enumerateKeysWithPrefix:@"100" usingBlock:^(id key, BOOL *stop) {
-		[keys addObject:key];
+	[iterator enumerateKeysWithPrefix:@"100".data usingBlock:^(NSData *key, BOOL *stop) {
+		[keys addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	XCTAssertEqual(keys.count, 2);
@@ -46,8 +43,8 @@
 	XCTAssertEqualObjects(keys, expected);
 
 	keys = [NSMutableArray array];
-	[iterator enumerateKeysWithPrefix:@"101" usingBlock:^(id key, BOOL *stop) {
-		[keys addObject:key];
+	[iterator enumerateKeysWithPrefix:@"101".data usingBlock:^(NSData *key, BOOL *stop) {
+		[keys addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	XCTAssertEqual(keys.count, 2);
@@ -55,22 +52,24 @@
 	expected = @[@"101A", @"101B"];
 	XCTAssertEqualObjects(keys, expected);
 
-	[iterator seekToKey:@"1000"];
+	[iterator seekToKey:@"1000".data];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, @"100A");
+	XCTAssertEqualObjects(iterator.key, @"100A".data);
 
 	[iterator next];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, @"100B");
+	XCTAssertEqualObjects(iterator.key, @"100B".data);
 }
 
 - (void)testPrefixExtractor_FixedLength_CustomComparator
 {
 	// 1001 < 9910 < 2011 < 3412 ...
-	RocksDBComparator *cmp = [[RocksDBComparator alloc] initWithName:@"cmp" andBlock:^int(id key1, id key2) {
-		return [[key1 substringFromIndex:2] compare:[key2 substringFromIndex:2]];
+	RocksDBComparator *cmp = [[RocksDBComparator alloc] initWithName:@"cmp" andBlock:^int(NSData *key1, NSData *key2) {
+		NSString *str1 = [[NSString alloc] initWithData:key1];
+		NSString *str2 = [[NSString alloc] initWithData:key2];
+		return [[str1 substringFromIndex:2] compare:[str2 substringFromIndex:2]];
 	}];
 
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
@@ -84,25 +83,22 @@
 		options.tableFacotry = [RocksDBTableFactory blockBasedTableFactoryWithOptions:^(RocksDBBlockBasedTableOptions *options) {
 			options.filterPolicy = [RocksDBFilterPolicy bloomFilterPolicyWithBitsPerKey:10 useBlockBasedBuilder:YES];
 		}];
-
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSString;
 	}];
 
-	[_rocks setObject:@"x" forKey:@"1010" error:nil];
-	[_rocks setObject:@"x" forKey:@"4211" error:nil];
-	[_rocks setObject:@"x" forKey:@"1012" error:nil];
-	[_rocks setObject:@"x" forKey:@"5313" error:nil];
-	[_rocks setObject:@"x" forKey:@"1020" error:nil];
-	[_rocks setObject:@"x" forKey:@"4221" error:nil];
-	[_rocks setObject:@"x" forKey:@"1022" error:nil];
-	[_rocks setObject:@"x" forKey:@"5323" error:nil];
+	[_rocks setData:@"x".data forKey:@"1010".data error:nil];
+	[_rocks setData:@"x".data forKey:@"4211".data error:nil];
+	[_rocks setData:@"x".data forKey:@"1012".data error:nil];
+	[_rocks setData:@"x".data forKey:@"5313".data error:nil];
+	[_rocks setData:@"x".data forKey:@"1020".data error:nil];
+	[_rocks setData:@"x".data forKey:@"4221".data error:nil];
+	[_rocks setData:@"x".data forKey:@"1022".data error:nil];
+	[_rocks setData:@"x".data forKey:@"5323".data error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
 	NSMutableArray *keys = [NSMutableArray array];
-	[iterator enumerateKeysWithPrefix:@"10" usingBlock:^(id key, BOOL *stop) {
-		[keys addObject:key];
+	[iterator enumerateKeysWithPrefix:@"10".data usingBlock:^(NSData *key, BOOL *stop) {
+		[keys addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	XCTAssertEqual(keys.count, 4);
@@ -111,8 +107,8 @@
 	XCTAssertEqualObjects(keys, expected);
 
 	keys = [NSMutableArray array];
-	[iterator enumerateKeysWithPrefix:@"42" usingBlock:^(id key, BOOL *stop) {
-		[keys addObject:key];
+	[iterator enumerateKeysWithPrefix:@"42".data usingBlock:^(NSData *key, BOOL *stop) {
+		[keys addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	XCTAssertEqual(keys.count, 2);
@@ -121,8 +117,8 @@
 	XCTAssertEqualObjects(keys, expected);
 
 	keys = [NSMutableArray array];
-	[iterator enumerateKeysWithPrefix:@"53" usingBlock:^(id key, BOOL *stop) {
-		[keys addObject:key];
+	[iterator enumerateKeysWithPrefix:@"53".data usingBlock:^(NSData *key, BOOL *stop) {
+		[keys addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	XCTAssertEqual(keys.count, 2);

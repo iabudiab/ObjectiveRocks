@@ -21,8 +21,8 @@ typedef NS_ENUM(NSUInteger, RocksDBWriteBatchEntryType)
 @interface RocksDBWriteBatchEntry : NSObject
 
 @property (nonatomic, readonly) RocksDBWriteBatchEntryType type;
-@property (nonatomic, readonly) id key;
-@property (nonatomic, readonly) id value;
+@property (nonatomic, readonly) NSData *key;
+@property (nonatomic, readonly) NSData *value;
 
 @end
 
@@ -57,7 +57,7 @@ typedef NS_ENUM(NSUInteger, RocksDBWriteBatchEntryType)
 
  @param aKey The key to position the tartaritartor at.
  */
-- (void)seekToKey:(id)aKey;
+- (void)seekToKey:(NSData *)aKey;
 
 /**
  Moves to the next entry in the source. After this call, `isValid` is

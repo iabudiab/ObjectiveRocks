@@ -27,7 +27,6 @@ extern const unsigned char ObjectiveRocksVersionString[];
 #import "RocksDBComparator.h"
 
 #import "RocksDBOptions.h"
-#import "RocksDBEncodingOptions.h"
 #import "RocksDBDatabaseOptions.h"
 #import "RocksDBColumnFamilyOptions.h"
 #import "RocksDBWriteOptions.h"
@@ -42,8 +41,6 @@ extern const unsigned char ObjectiveRocksVersionString[];
 #import "RocksDBSnapshot.h"
 
 #import "RocksDBMergeOperator.h"
-
-#import "RocksDBTypes.h"
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 

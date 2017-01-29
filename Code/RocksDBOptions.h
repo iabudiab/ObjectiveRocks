@@ -7,14 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
-
 #import "RocksDBDatabaseOptions.h"
-#import "RocksDBEncodingOptions.h"
 #import "RocksDBColumnFamilyOptions.h"
-#import "RocksDBComparator.h"
-#import "RocksDBMergeOperator.h"
-#import "RocksDBPrefixExtractor.h"
-#import "RocksDBTypes.h"
+
+@class RocksDBComparator;
+@class RocksDBMergeOperator;
+@class RocksDBPrefixExtractor;
 
 #pragma mark - Options
 
@@ -35,45 +33,6 @@
  */
 - (instancetype)initWithDatabaseOptions:(RocksDBDatabaseOptions *)dbOptions
 				 andColumnFamilyOptions:(RocksDBColumnFamilyOptions *)columnFamilyOptions;
-
-@end
-
-#pragma mark - Encoding Options
-
-/**
- Options to define how arbitrary objects (keys & values) should be converted to
- NSData and vise versa.
- */
-@interface RocksDBOptions (Encoding)
-
-/** @brief 
- A block to convert `id` keys to NSData objects.
- */
-@property (nonatomic, copy) NSData * (^ keyEncoder)(id key);
-
-/** @brief
- A block to convert NSData objects to the corresponding `id` key.
- */
-@property (nonatomic, copy) id (^ keyDecoder)(NSData *data);
-
-/** @brief 
- A block to convert `id` values to NSData objects. The block takes two 
- parameters, the key-value pair to allow multiplexing.
- */
-@property (nonatomic, copy) NSData * (^ valueEncoder)(id key, id value);
-
-/** @brief A block to convert NSData objects to the corresponding value. */
-@property (nonatomic, copy) id (^ valueDecoder)(id key, NSData *data);
-
-/** @brief Use a predefined type for the keys.
- @see RocksDBTypes
- */
-@property (nonatomic, assign) RocksDBType keyType;
-
-/** @brief Use a predefined type for the values.
- @see RocksDBTypes
- */
-@property (nonatomic, assign) RocksDBType valueType;
 
 @end
 
@@ -109,12 +68,12 @@
 
 /** @brief Number of open files that can be used by the DB.
  The default is 5000. */
-@property (nonatomic, assign) int  maxOpenFiles;
+@property (nonatomic, assign) int maxOpenFiles;
 
 /** @brief Once write-ahead logs exceed this size, column families whose 
  memtables are  backed by the oldest live WAL file will be forced to flush.
  The default is 0. */
-@property (nonatomic, assign) uint64_t  maxWriteAheadLogSize;
+@property (nonatomic, assign) uint64_t maxWriteAheadLogSize;
 
 /** @brief If non-nil, metrics about database operations will be collected.
  Statistics objects should not be shared between DB instances. 

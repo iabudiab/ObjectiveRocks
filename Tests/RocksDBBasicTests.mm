@@ -41,51 +41,19 @@
 	}];
 
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 1") error:nil], Data(@"value 1"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 2") error:nil], Data(@"value 2"));
-	XCTAssertEqualObjects([_rocks dataForKey:Data(@"key 3") error:nil], Data(@"value 3"));
+	XCTAssertEqualObjects([_rocks dataForKey:@"key 1".data error:nil], @"value 1".data);
+	XCTAssertEqualObjects([_rocks dataForKey:@"key 2".data error:nil], @"value 2".data);
+	XCTAssertEqualObjects([_rocks dataForKey:@"key 3".data error:nil], @"value 3".data);
 
-	[_rocks deleteDataForKey:Data(@"key 2") error:nil];
-	XCTAssertNil([_rocks dataForKey:Data(@"key 2") error:nil]);
-
-	NSError *error = nil;
-	BOOL ok = [_rocks deleteDataForKey:Data(@"key 2") error:&error];
-	XCTAssertTrue(ok);
-	XCTAssertNil(error);
-}
-
-- (void)testDB_CRUD_Encoded
-{
-	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSString;
-	}];
-	[_rocks setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
-		readOptions.fillCache = YES;
-		readOptions.verifyChecksums = YES;
-	} andWriteOptions:^(RocksDBWriteOptions *writeOptions) {
-		writeOptions.syncWrites = YES;
-	}];
-
-
-	[_rocks setObject:@"value 1" forKey:@"key 1" error:nil];
-	[_rocks setObject:@"value 2" forKey:@"key 2" error:nil];
-	[_rocks setObject:@"value 3" forKey:@"key 3" error:nil];
-
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 1" error:nil], @"value 1");
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 2" error:nil], @"value 2");
-	XCTAssertEqualObjects([_rocks objectForKey:@"key 3" error:nil], @"value 3");
-
-	[_rocks deleteObjectForKey:@"key 2" error:nil];
-	XCTAssertNil([_rocks objectForKey:@"key 2" error:nil]);
+	[_rocks deleteDataForKey:@"key 2".data error:nil];
+	XCTAssertNil([_rocks dataForKey:@"key 2".data error:nil]);
 
 	NSError *error = nil;
-	BOOL ok = [_rocks deleteObjectForKey:@"key 2" error:&error];
+	BOOL ok = [_rocks deleteDataForKey:@"key 2".data error:&error];
 	XCTAssertTrue(ok);
 	XCTAssertNil(error);
 }

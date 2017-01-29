@@ -16,13 +16,13 @@ class RocksDBCheckpointTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		try! rocks.setData(Data.from(string: "value 1"), forKey: Data.from(string: "key 1"))
+		try! rocks.setData("value 1", forKey: "key 1")
 
 		let checkpoint = RocksDBCheckpoint(database: rocks)
 
 		try! checkpoint.createCheckpoint(atPath: checkpointPath1)
 
-		try! rocks.setData(Data.from(string: "value 2"), forKey: Data.from(string: "key 2"))
+		try! rocks.setData("value 2", forKey: "key 2")
 
 		try! checkpoint.createCheckpoint(atPath: checkpointPath2)
 
@@ -32,8 +32,8 @@ class RocksDBCheckpointTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		XCTAssertEqual(try! rocks.data(forKey: Data.from(string: "key 1")), Data.from(string: "value 1"))
-		XCTAssertNil(try? rocks.data(forKey: Data.from(string: "key 2")))
+		XCTAssertEqual(try! rocks.data(forKey: "key 1"), "value 1".data)
+		XCTAssertNil(try? rocks.data(forKey: "key 2"))
 
 		rocks.close()
 
@@ -41,7 +41,7 @@ class RocksDBCheckpointTests : RocksDBTests {
 			options.createIfMissing = true
 		})
 
-		XCTAssertEqual(try! rocks.data(forKey: Data.from(string: "key 1")), Data.from(string: "value 1"))
-		XCTAssertEqual(try! rocks.data(forKey: Data.from(string: "key 2")), Data.from(string: "value 2"))
+		XCTAssertEqual(try! rocks.data(forKey: "key 1"), "value 1".data)
+		XCTAssertEqual(try! rocks.data(forKey: "key 2"), "value 2".data)
 	}
 }

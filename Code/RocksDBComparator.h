@@ -26,12 +26,6 @@ typedef NS_ENUM(NSUInteger, RocksDBComparatorType)
 
 	/** @brief Orders NSString keys in descending order via the compare selector. */
 	RocksDBComparatorStringCompareDescending,
-
-	/** @brief Orders NSNumber keys in ascending order via the compare selector.*/
-	RocksDBComparatorNumberAscending,
-
-	/** @brief Orders NSNumber keys in descending order via the compare selector. */
-	RocksDBComparatorNumberDescending
 };
 
 /**
@@ -57,7 +51,8 @@ typedef NS_ENUM(NSUInteger, RocksDBComparatorType)
  @param block The comparator block to apply on the keys in order to specify their order.
  @return a newly-initialized instance of a keys comparator.
  */
-- (instancetype)initWithName:(NSString *)name andBlock:(int (^)(id key1, id key2))block;
+- (instancetype)initWithName:(NSString *)name
+					andBlock:(int (^)(NSData *key1, NSData *key2))block;
 
 @end
 

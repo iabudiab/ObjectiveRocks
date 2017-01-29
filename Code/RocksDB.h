@@ -42,7 +42,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @discussion This method initializes the DB with the default Column Family and allows for
  configuring the DB via the RocksDBOptions block. The block gets a single  argument, an
- instance of `RocksDBOptions`, which is initialized with the default values and passed for 
+ instance of `RocksDBOptions`, which is initialized with the default values and passed for
  further tuning. If the options block is `nil`, then default settings will be used.
 
  @param path The file path of the DB.
@@ -58,11 +58,11 @@ NS_ASSUME_NONNULL_BEGIN
 + (nullable instancetype)databaseAtPath:(NSString *)path
 						   andDBOptions:(nullable void (^)(RocksDBOptions *options))options;
 
-/** 
+/**
  Intializes a DB instance and opens the defined Column Families.
 
  @param path The file path of the database.
- @param descriptor The descriptor holds the names and the options of the existing Column Families 
+ @param descriptor The descriptor holds the names and the options of the existing Column Families
  in the DB.
  @param options A block with a single argument, an instance of `RocksDBDatabaseOptions`, which can
  be used to tune the DB configuration.
@@ -102,7 +102,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return The newly-intialized DB instance with the given path and options.
 
  @see RocksDBOptions
- 
+
  @remark Opening a non-existing database in read-only mode wont have any effect, even
  if `createIfMissing` option is set.
  */
@@ -134,7 +134,7 @@ NS_ASSUME_NONNULL_BEGIN
  @remark Opening a non-existing database in read-only mode wont have any effect, even
  if `createIfMissing` option is set.
 
- @remark When opening DB with read only, it is possible to specify only a subset of column families 
+ @remark When opening DB with read only, it is possible to specify only a subset of column families
  in the database that should be opened. However, default column family must specified.
  */
 + (nullable instancetype)databaseForReadOnlyAtPath:(NSString *)path
@@ -146,7 +146,7 @@ NS_ASSUME_NONNULL_BEGIN
 /** @brief Closes the database instance */
 - (void)close;
 
-/** 
+/**
  Sets the default read & write options for all database operations.
 
  @param readOptions A block with an instance of `RocksDBReadOptions` which configures the behaviour of read
@@ -178,11 +178,11 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBColumnFamily
  */
-+ (NSArray *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
++ (NSArray<NSString *> *)listColumnFamiliesInDatabaseAtPath:(NSString *)path;
 
 /**
  Creates a new Column Family with the given name and options.
- 
+
  @param name The name of the new Column Family.
  @param options A block with a `RocksDBColumnFamilyOptions` instance for configuring the
  new Column Family.
@@ -195,7 +195,7 @@ NS_ASSUME_NONNULL_BEGIN
 												  andOptions:(nullable void (^)(RocksDBColumnFamilyOptions *options))options;
 
 /** @brief Returns an array */
-- (NSArray *)columnFamilies;
+- (NSArray<RocksDBColumnFamily *> *)columnFamilies;
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
@@ -266,7 +266,9 @@ NS_ASSUME_NONNULL_BEGIN
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey error:(NSError * _Nullable *)error;
+- (BOOL)setData:(NSData *)anObject
+		   forKey:(NSData *)aKey
+			error:(NSError * _Nullable *)error;
 
 /**
  Stores the given key-object pair into the DB.
@@ -281,40 +283,10 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBWriteOptions
  */
-- (BOOL)setObject:(id)anObject forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
-
-/**
- Stores the given data object under the given data key in the DB.
-
- @param data The data for key.
- @param aKey The key for object.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDB setObject:forKey:
- @see RocksDB setObject:forKey:error:
- @see RocksDB setObject:forKey:writeOptions:
- @see RocksDB setObject:forKey:error:writeOptions:
- */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey error:(NSError * _Nullable *)error;
-
-/**
- Stores the given data object under the given data key in the DB.
-
- @discussion This method can be used to configure single write operations bypassing the defaults.
-
- @param data The data for key.
- @param aKey The key for object.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this write operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDB setObject:forKey:
- @see RocksDB setObject:forKey:error:
- @see RocksDB setObject:forKey:writeOptions:
- @see RocksDB setObject:forKey:error:writeOptions:
- */
-- (BOOL)setData:(NSData *)data forKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
+- (BOOL)setData:(NSData *)anObject
+		   forKey:(NSData *)aKey
+	 writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions
+			error:(NSError * _Nullable *)error;
 
 @end
 
@@ -326,10 +298,6 @@ NS_ASSUME_NONNULL_BEGIN
 /// @name Merge operations
 ///--------------------------------
 
-
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey error:(NSError * _Nullable *)error;
-- (BOOL)mergeOperation:(NSString *)aMerge forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
-
 /**
  Merges the given object with the existing data for the given key.
 
@@ -343,7 +311,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey error:(NSError * _Nullable *)error;
+- (BOOL)mergeData:(NSData *)anObject
+		   forKey:(NSData *)aKey
+			error:(NSError * _Nullable *)error;
 
 /**
  Merges the given object with the existing data for the given key.
@@ -360,41 +330,10 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBMergeOperator
  */
-- (BOOL)mergeObject:(id)anObject forKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error ;
-
-
-/**
- Merges the given data object with the existing data for the given key.
-
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator.
-
- @param data The data being merged.
- @param aKey The key for the data.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBMergeOperator
- */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey error:(NSError * _Nullable *)error;
-
-/**
- Merges the given data object with the existing data for the given key.
-
- @discussion A merge is an atomic read-modify-write operation, whose semantics are defined
- by the user-provided merge operator. 
- This method can be used to configure single write operations bypassing the defaults.
-
- @param data The data being merged.
- @param aKey The key for the data.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this merge operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBMergeOperator
- @see RocksDBWriteOptions
- */
-- (BOOL)mergeData:(NSData *)data forKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
+- (BOOL)mergeData:(NSData *)anObject
+		   forKey:(NSData *)aKey
+	 writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions
+			error:(NSError * _Nullable *)error;
 
 @end
 
@@ -413,7 +352,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return The object for the given key.
  */
-- (nullable id)objectForKey:(id)aKey error:(NSError * _Nullable *)error;
+- (nullable NSData *)dataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Returns the object for the given key.
@@ -425,37 +364,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBReadOptions
  */
-- (nullable id)objectForKey:(id)aKey readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError * _Nullable *)error;
-
-/**
- Returns the data for the given key.
-
- @peram aKey The key for data.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @return The data object for the given key.
-
- @see RocksDB objectForKey:
- @see RocksDB objectForKey:error:
- @see RocksDB objectForKey:readOptions:
- @see RocksDB objectForKey:error:readOptions:
- */
-- (nullable NSData *)dataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
-
-/**
- Returns the data for the given key.
-
- @peram aKey The key for data.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @param readOptions A block with a `RocksDBReadOptions` instance for configuring this read operation.
- @return The data object for the given key.
- 
- @see RocksDBReadOptions
- @see RocksDB objectForKey:
- @see RocksDB objectForKey:error:
- @see RocksDB objectForKey:readOptions:
- @see RocksDB objectForKey:error:readOptions:
- */
-- (nullable NSData *)dataForKey:(NSData *)aKey readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions error:(NSError * _Nullable *)error;
+- (nullable NSData *)dataForKey:(NSData *)aKey
+					readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
+						  error:(NSError * _Nullable *)error;
 
 @end
 
@@ -474,7 +385,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
  @return `YES` if the operation succeeded, `NO` otherwise
  */
-- (BOOL)deleteObjectForKey:(id)aKey error:(NSError * _Nullable *)error;
+- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
 
 /**
  Deletes the object for the given key.
@@ -486,37 +397,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBWriteOptions
  */
-- (BOOL)deleteObjectForKey:(id)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error ;
-
-/**
- Deletes the data for the given key.
-
- @peram aKey The key to delete.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDB deleteObjectForKey:
- @see RocksDB deleteObjectForKey:error:
- @see RocksDB deleteObjectForKey:readOptions:
- @see RocksDB deleteObjectForKey:error:readOptions:
- */
-- (BOOL)deleteDataForKey:(NSData *)aKey error:(NSError * _Nullable *)error;
-
-/**
- Deletes the data for the given key.
-
- @peram aKey The key to delete.
- @param error If an error occurs, upon return contains an `NSError` object that describes the problem.
- @param writeOptions A block with a `RocksDBWriteOptions` instance for configuring this delete operation.
- @return `YES` if the operation succeeded, `NO` otherwise
-
- @see RocksDBWriteOptions
- @see RocksDB deleteObjectForKey:
- @see RocksDB deleteObjectForKey:error:
- @see RocksDB deleteObjectForKey:readOptions:
- @see RocksDB deleteObjectForKey:error:readOptions:
- */
-- (BOOL)deleteDataForKey:(NSData *)aKey writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
+- (BOOL)deleteDataForKey:(NSData *)aKey
+			writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions
+				   error:(NSError * _Nullable *)error;
 
 @end
 
@@ -531,7 +414,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Returns a write batch instance, which can be used to perform a set of updates to the database atomically.
 
- @discussion This batch instance can be applied at a later point to the DB, making it more flexible 
+ @discussion This batch instance can be applied at a later point to the DB, making it more flexible
  for “scattered” logic.
 
  @see RocksDBWriteBatch
@@ -550,7 +433,8 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBWriteBatch
  */
-- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError * _Nullable *)error;
+- (BOOL)performWriteBatch:(void (^)(RocksDBWriteBatch *batch, RocksDBWriteOptions *options))batch
+					error:(NSError * _Nullable *)error;
 
 /**
  Applies a write batch instance on this DB.
@@ -566,7 +450,9 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBWriteBatch
  @see RocksDBWriteOptions
  */
-- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions error:(NSError * _Nullable *)error;
+- (BOOL)applyWriteBatch:(RocksDBWriteBatch *)writeBatch
+		   writeOptions:(nullable void (^)(RocksDBWriteOptions *writeOptions))writeOptions
+				  error:(NSError * _Nullable *)error;
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 
@@ -592,7 +478,8 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBIndexedWriteBatch
  */
-- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch error:(NSError * _Nullable *)error;
+- (BOOL)performIndexedWriteBatch:(void (^)(RocksDBIndexedWriteBatch *batch, RocksDBWriteOptions *options))batch
+						   error:(NSError * _Nullable *)error;
 
 #endif
 
@@ -677,7 +564,9 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBKeyRange
  @see RocksDBCompactRangeOptions
  */
-- (BOOL)compactRange:(RocksDBKeyRange *)range withOptions:(nullable void (^)(RocksDBCompactRangeOptions *options))options error:(NSError * _Nullable *)error;
+- (BOOL)compactRange:(RocksDBKeyRange *)range
+		 withOptions:(nullable void (^)(RocksDBCompactRangeOptions *options))options
+			   error:(NSError * _Nullable *)error;
 
 @end
 
