@@ -51,16 +51,6 @@
 	_options.disableWAL = disableWriteAheadLog;
 }
 
-- (uint64_t)timeoutHint
-{
-	return _options.timeout_hint_us;
-}
-
-- (void)setTimeoutHint:(uint64_t)timeoutHint
-{
-	_options.timeout_hint_us = timeoutHint;
-}
-
 - (BOOL)ignoreMissingColumnFamilies
 {
 	return _options.ignore_missing_column_families;
