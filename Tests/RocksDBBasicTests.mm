@@ -36,10 +36,9 @@
 	[_rocks setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
 		readOptions.fillCache = YES;
 		readOptions.verifyChecksums = YES;
-	} andWriteOptions:^(RocksDBWriteOptions *writeOptions) {
+	} writeOptions:^(RocksDBWriteOptions *writeOptions) {
 		writeOptions.syncWrites = YES;
 	}];
-
 
 	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
 	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
