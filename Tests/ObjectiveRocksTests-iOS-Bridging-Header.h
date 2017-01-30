@@ -30,5 +30,4 @@
 
 #import <ObjectiveRocks/RocksDBMergeOperator.h>
 
-#import <ObjectiveRocks/RocksDBTypes.h>
 #import <ObjectiveRocks/RocksDBRange.h>
