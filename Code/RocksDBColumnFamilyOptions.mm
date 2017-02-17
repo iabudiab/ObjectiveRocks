@@ -181,16 +181,6 @@
 	return _options.level0_stop_writes_trigger;
 }
 
-- (void)setMaxMemCompactionLevel:(int)maxMemCompactionLevel
-{
-	_options.max_mem_compaction_level = maxMemCompactionLevel;
-}
-
-- (int)maxMemCompactionLevel
-{
-	return _options.max_mem_compaction_level;
-}
-
 - (void)setTargetFileSizeBase:(uint64_t)targetFileSizeBase
 {
 	_options.target_file_size_base = targetFileSizeBase;

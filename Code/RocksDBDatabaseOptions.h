@@ -11,6 +11,8 @@
 @class RocksDBEnv;
 @class RocksDBStatistics;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** @brief The DB log level. */
 typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 {
@@ -64,7 +66,7 @@ typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 
  @see RocksDBStatistics
  */
-@property (nonatomic, strong) RocksDBStatistics *statistics;
+@property (nonatomic, strong, nullable) RocksDBStatistics *statistics;
 
 /** @brief If true, then the contents of manifest and data files are not
  synced to stable storage.
@@ -94,3 +96,5 @@ typedef NS_ENUM(unsigned char, RocksDBLogLevel)
 @property (nonatomic, assign) uint64_t bytesPerSync;
 
 @end
+
+NS_ASSUME_NONNULL_END

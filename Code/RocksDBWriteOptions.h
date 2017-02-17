@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Options that control write operations. */
 @interface RocksDBWriteOptions : NSObject <NSCopying> 
 
@@ -29,3 +31,5 @@
 @property (nonatomic, assign) BOOL ignoreMissingColumnFamilies;
 
 @end
+
+NS_ASSUME_NONNULL_END

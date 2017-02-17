@@ -14,6 +14,8 @@
 @class RocksDBMergeOperator;
 @class RocksDBPrefixExtractor;
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** The DB compression type. */
 typedef NS_ENUM(char, RocksDBCompressionType)
 {
@@ -32,7 +34,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
  @see RocksDBComparator
  */
-@property (nonatomic, strong) RocksDBComparator *comparator;
+@property (nonatomic, strong, nullable) RocksDBComparator *comparator;
 
 /** @brief The client must provide a merge operator if Merge operation
  needs to be accessed.
@@ -44,7 +46,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
  @see RocksDBMergeOperator
  */
-@property (nonatomic, strong) RocksDBMergeOperator *mergeOperator;
+@property (nonatomic, strong, nullable) RocksDBMergeOperator *mergeOperator;
 
 /** @brief Amount of data to build up in memory (backed by an unsorted log
  on disk) before converting to a sorted on-disk file.
@@ -73,7 +75,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
  @see RocksDBPrefixExtractor
  */
-@property (nonatomic, strong) RocksDBPrefixExtractor *prefixExtractor;
+@property (nonatomic, strong, nullable) RocksDBPrefixExtractor *prefixExtractor;
 
 /** @brief Number of levels for this DB. */
 @property (nonatomic, assign) int numLevels;
@@ -88,10 +90,6 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
 /** @brief Maximum number of level-0 files. */
 @property (nonatomic, assign) int level0StopWritesTrigger;
-
-/** @brief Maximum level to which a new compacted memtable is pushed if it
- does not create overlap. */
-@property (nonatomic, assign) int maxMemCompactionLevel;
 
 /** @brief Target file size for compaction.
  Default: 2MB
@@ -166,7 +164,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
  @see RocksDBMemTableRepFactory
  */
-@property (nonatomic, strong) RocksDBMemTableRepFactory *memTableRepFactory;
+@property (nonatomic, strong, nullable) RocksDBMemTableRepFactory *memTableRepFactory;
 
 /** @brief This is a factory that provides TableFactory objects.
  Default: A block-based table factory that provides a default
@@ -175,10 +173,10 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 
  @see RocksDBTableFactory
  */
-@property (nonatomic, strong) RocksDBTableFactory *tableFacotry;
+@property (nonatomic, strong, nullable) RocksDBTableFactory *tableFacotry;
 
 /** @brief If prefixExtractor is set and bloom_bits is not 0, create prefix bloom
- for memtable
+ for memtable.
 
  @see RocksDBPrefixExtractor
  */
@@ -207,3 +205,5 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, assign) uint32_t minPartialMergeOperands;
 
 @end
+
+NS_ASSUME_NONNULL_END
