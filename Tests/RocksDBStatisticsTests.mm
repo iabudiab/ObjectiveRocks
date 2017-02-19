@@ -23,7 +23,7 @@
 		options.statistics = statistics;
 	}];
 
-	[_rocks setData:Data(@"abcd") forKey:Data(@"abcd") error:nil];
+	[_rocks setData:@"abcd".data forKey:@"abcd".data error:nil];
 
 	XCTAssertNotNil(statistics.description);
 }
@@ -37,12 +37,12 @@
 		options.statistics = statistics;
 	}];
 
-	[_rocks setData:Data(@"abcd") forKey:Data(@"abcd") error:nil];
+	[_rocks setData:@"abcd".data forKey:@"abcd".data error:nil];
 
 	XCTAssertEqual([statistics countForTicker:RocksDBTickerBytesRead], 0);
 	XCTAssertGreaterThan([statistics countForTicker:RocksDBTickerBytesWritten], 0);
 
-	[_rocks dataForKey:Data(@"abcd") error:nil];
+	[_rocks dataForKey:@"abcd".data error:nil];
 
 	XCTAssertGreaterThan([statistics countForTicker:RocksDBTickerBytesRead], 0);
 }
@@ -58,10 +58,10 @@
 
 	for (int i = 0; i < 10000; i++) {
 		NSString *str = [NSString stringWithFormat:@"a%d", i];
-		[_rocks setData:Data(str) forKey:Data(str) error:nil];
+		[_rocks setData:str.data forKey:str.data error:nil];
 	}
 
-	[_rocks dataForKey:Data(@"a42") error:nil];
+	[_rocks dataForKey:@"a42".data error:nil];
 
 	RocksDBStatisticsHistogram *dbGetHistogram = [statistics histogramDataForType:RocksDBHistogramDBGet];
 	XCTAssertNotNil(dbGetHistogram);

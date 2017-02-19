@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<playground version='5.0' target-platform='osx'>
-    <timeline fileName='timeline.xctimeline'/>
+<playground version='6.0' target-platform='osx' display-mode='raw' executeOnSourceChanges='false' timelineScrubberEnabled='true'>
+    <pages>
+        <page name='Intro'/>
+        <page name='Basics'/>
+        <page name='DB Options'/>
+        <page name='Iteration'/>
+        <page name='Prefix Seek'/>
+        <page name='Column Families'/>
+        <page name='Write Batch'/>
+    </pages>
 </playground>

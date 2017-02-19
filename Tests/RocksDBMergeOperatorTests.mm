@@ -8,112 +8,135 @@
 
 #import "RocksDBTests.h"
 
-@interface RocksDBMergeOperatorTests : RocksDBTests
+#pragma mark - Categories
 
+@interface NSNumber (DataConvertible)
+@end
+
+@implementation NSNumber (RocksDBDataConvertible)
+- (instancetype)initWithData:(NSData *)data
+{
+	double_t value;
+	[data getBytes:&value length:sizeof(value)];
+	return [self initWithDouble:value];
+}
+
+- (NSData *)data
+{
+	double_t value = self.doubleValue;
+	return [NSData dataWithBytes:&value length:sizeof(value)];
+}
+@end
+
+@interface NSDictionary (DataConvertible)
+@end
+
+@implementation NSDictionary (RocksDBDataConvertible)
+- (instancetype)initWithData:(NSData *)data
+{
+	NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil];
+	return [self initWithDictionary:dict];
+}
+
+- (NSData *)data
+{
+	return [NSJSONSerialization dataWithJSONObject:self options:0 error:nil];
+}
+@end
+
+#pragma mark - Tests
+
+@interface RocksDBMergeOperatorTests : RocksDBTests
 @end
 
 @implementation RocksDBMergeOperatorTests
 
 - (void)testAssociativeMergeOperator
 {
+	id block = ^NSData * (NSData *key, NSData *existingValue, NSData *value) {
+		NSNumber *prev = 0;
+		if (existingValue != nil) {
+			prev = [[NSNumber alloc] initWithData:existingValue];
+		}
+		NSNumber *plus = [[NSNumber alloc] initWithData:value];
+		NSNumber *result = [NSNumber numberWithUnsignedLongLong:
+							(prev.unsignedLongLongValue + plus.unsignedLongLongValue)];
+		return result.data;
+	};
+
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
-																  andBlock:^id (id key, id existingValue, id value) {
-																	  uint64_t prev = 0;
-																	  if (existingValue != nil) {
-																		  [existingValue getBytes:&prev length:sizeof(uint64_t)];
-																	  }
-
-																	  uint64_t plus;
-																	  [value getBytes:&plus length:sizeof(uint64_t)];
-
-																	  uint64_t result = prev + plus;
-																	  return [NSData dataWithBytes:&result length:sizeof(uint64_t)];
-																  }];
+																  andBlock:block];
 
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
 	}];
 
-	uint64_t value = 1;
-	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1") error:nil];
+	[_rocks mergeData:@(1).data forKey:@"Key 1".data error:nil];
 
-	value = 5;
-	[_rocks mergeData:NumData(value) forKey:Data(@"Key 1") error:nil];
+	[_rocks mergeData:@(5).data forKey:@"Key 1".data error:nil];
 
-	uint64_t res;
-	Val([_rocks dataForKey:Data(@"Key 1") error:nil], res);
-
-	XCTAssertTrue(res == 6);
+	NSNumber *res = [[NSNumber alloc] initWithData:[_rocks dataForKey:@"Key 1".data error:nil]];
+	XCTAssertEqual(res.unsignedLongLongValue, 6);
 }
 
-- (void)testAssociativeMergeOperator_NumberAdd_Encoded
+- (void)testAssociativeMergeOperator_NumberAdd
 {
+	id block = ^NSData *(NSData *key, NSData *existingValue, NSData *value) {
+		NSNumber *v1 = [[NSNumber alloc] initWithData:existingValue];
+		NSNumber *v2 = [[NSNumber alloc] initWithData:value];
+
+		NSNumber *result = [[NSNumber alloc] initWithFloat:(v1.floatValue + v2.floatValue)];
+		return result.data;
+	};
+
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
-																  andBlock:^id (id key, NSNumber *existingValue, NSNumber *value) {
-																	  NSNumber *result = @(existingValue.floatValue + value.floatValue);
-																	  return result;
-																  }];
+																  andBlock:block];
 
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
-
-		options.keyType = RocksDBTypeNSString;
-
-		options.valueEncoder = ^ NSData * (id key, id value) {
-			float val = [value floatValue];
-			NSData *data = [NSData dataWithBytes:&val length:sizeof(val)];
-			return data;
-		};
-		options.valueDecoder = ^ NSNumber * (id key, NSData * data) {
-			if (data == nil) return nil;
-
-			float value;
-			[data getBytes:&value length:sizeof(value)];
-			return @(value);
-		};
 	}];
 
-	[_rocks mergeObject:@(100.541) forKey:@"Key 1" error:nil];
+	[_rocks mergeData:@(100.541).data forKey:@"Key 1".data error:nil];
 
-	[_rocks mergeObject:@(200.125) forKey:@"Key 1" error:nil];
+	[_rocks mergeData:@(200.125).data forKey:@"Key 1".data error:nil];
 
-
-	XCTAssertEqualWithAccuracy([[_rocks objectForKey:@"Key 1" error:nil] floatValue], 300.666, 0.0001);
+	NSNumber *number = [[NSNumber alloc] initWithData:[_rocks dataForKey:@"Key 1".data error:nil]];
+	XCTAssertEqualWithAccuracy(number.floatValue, 300.666, 0.0001);
 }
 
-- (void)testAssociativeMergeOperator_DictionaryPut_Encoded
+- (void)testAssociativeMergeOperator_DictionaryPut
 {
+	id block = ^NSData *(NSData *key, NSData *existingValue, NSData *value) {
+		if (existingValue == nil) {
+			return value;
+		}
+		NSMutableDictionary *existing = [[NSMutableDictionary alloc] initWithData:existingValue];
+		NSDictionary *dict = [[NSMutableDictionary alloc] initWithData:value];
+		[existing addEntriesFromDictionary:dict];
+		return existing.data;
+	};
+
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
-																  andBlock:^id (id key, NSMutableDictionary *existingValue, id value) {
-																	  if (existingValue != nil) {
-																		  [existingValue addEntriesFromDictionary:value];
-																		  return existingValue;
-																	  } else {
-																		  return value;
-																	  }
-																  }];
+																  andBlock:block];
 
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
-
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSJSONSerializable;
 	}];
 
-	[_rocks setObject:@{@"Key 1": @"Value 1"} forKey:@"Dict Key" error:nil];
+	[_rocks setData:@{@"Key 1": @"Value 1"}.data forKey:@"Dict Key".data error:nil];
 	
-	[_rocks mergeObject:@{@"Key 1": @"Value 1 New"} forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@{@"Key 1": @"Value 1 New"}.data forKey:@"Dict Key".data error:nil];
 
-	[_rocks mergeObject:@{@"Key 2": @"Value 2"} forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@{@"Key 2": @"Value 2"}.data forKey:@"Dict Key".data error:nil];
 
-	[_rocks mergeObject:@{@"Key 3": @"Value 3"} forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@{@"Key 3": @"Value 3"}.data forKey:@"Dict Key".data error:nil];
 
-	[_rocks mergeObject:@{@"Key 4": @"Value 4"} forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@{@"Key 4": @"Value 4"}.data forKey:@"Dict Key".data error:nil];
 
-	[_rocks mergeObject:@{@"Key 5": @"Value 5"} forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@{@"Key 5": @"Value 5"}.data forKey:@"Dict Key".data error:nil];
 
 	NSDictionary *expected = @{@"Key 1" : @"Value 1 New",
 							   @"Key 2" : @"Value 2",
@@ -121,56 +144,63 @@
 							   @"Key 4" : @"Value 4",
 							   @"Key 5" : @"Value 5"};
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key" error:nil], expected);
+	NSDictionary *actual = [[NSDictionary alloc] initWithData:[_rocks dataForKey:@"Dict Key".data error:nil]];
+	XCTAssertEqualObjects(actual, expected);
 }
 
-- (void)testMergeOperator_DictionaryUpdate_Encoded
+- (void)testMergeOperator_DictionaryUpdate
 {
+	id partialMerge = ^NSData *(NSData * key, NSData *leftOperand, NSData *rightOperand) {
+		NSString *left = [[[NSString alloc] initWithData:leftOperand] componentsSeparatedByString:@":"][0];
+		NSString *right = [[[NSString alloc] initWithData:rightOperand] componentsSeparatedByString:@":"][0];
+		if ([left isEqualToString:right]) {
+			return rightOperand;
+		}
+		return nil;
+	};
+
+	id fullMerge = ^NSData *(NSData * key, NSData * _Nullable existingValue, NSArray<NSData *> *operandList) {
+		NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithData:existingValue];
+
+		for (NSData *op in operandList) {
+			NSArray *comp = [[[NSString alloc] initWithData:op] componentsSeparatedByString:@":"];
+			NSString *action = comp[1];
+			if	([action isEqualToString:@"DELETE"]) {
+				[dict removeObjectForKey:comp[0]];
+			} else {
+				dict[comp[0]] = comp[2];
+			}
+		}
+		return dict.data;
+	};
+
 	RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
-														 partialMergeBlock:^id(id key, NSString *leftOperand, NSString *rightOperand) {
-															 NSString *left = [leftOperand componentsSeparatedByString:@":"][0];
-															 NSString *right = [rightOperand componentsSeparatedByString:@":"][0];
-															 if ([left isEqualToString:right]) {
-																 return rightOperand;
-															 }
-															 return nil;
-														 } fullMergeBlock:^id(id key, NSMutableDictionary *existing, NSArray *operands) {
-															 for (NSString *op in operands) {
-																 NSArray *comp = [op componentsSeparatedByString:@":"];
-																 NSString *action = comp[1];
-																 if	([action isEqualToString:@"DELETE"]) {
-																	 [existing removeObjectForKey:comp[0]];
-																 } else {
-																	 existing[comp[0]] = comp[2];
-																 }
-															 }
-															 return existing;
-														 }];
-	
+														 partialMergeBlock:partialMerge
+															fullMergeBlock:fullMerge];
+
 	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 		options.createIfMissing = YES;
 		options.mergeOperator = mergeOp;
-
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSJSONSerializable;
 	}];
 
 	NSDictionary *object = @{@"Key 1" : @"Value 1",
 							 @"Key 2" : @"Value 2",
 							 @"Key 3" : @"Value 3"};
 
-	[_rocks setObject:object forKey:@"Dict Key" error:nil];
+	[_rocks setData:object.data forKey:@"Dict Key".data error:nil];
 
-	[_rocks mergeOperation:@"Key 1:UPDATE:Value X" forKey:@"Dict Key" error:nil];
-	[_rocks mergeOperation:@"Key 4:INSERT:Value 4" forKey:@"Dict Key" error:nil];
-	[_rocks mergeOperation:@"Key 2:DELETE" forKey:@"Dict Key" error:nil];
-	[_rocks mergeOperation:@"Key 1:UPDATE:Value 1 New" forKey:@"Dict Key" error:nil];
+	[_rocks mergeData:@"Key 1:UPDATE:Value X".data forKey:@"Dict Key".data error:nil];
+	[_rocks mergeData:@"Key 4:INSERT:Value 4".data forKey:@"Dict Key".data error:nil];
+	[_rocks mergeData:@"Key 2:DELETE".data forKey:@"Dict Key".data error:nil];
+	[_rocks mergeData:@"Key 1:UPDATE:Value 1 New".data forKey:@"Dict Key".data error:nil];
 
 	NSDictionary *expected = @{@"Key 1" : @"Value 1 New",
 							   @"Key 3" : @"Value 3",
 							   @"Key 4" : @"Value 4"};
 
-	XCTAssertEqualObjects([_rocks objectForKey:@"Dict Key" error:nil], expected);
+	NSDictionary *actual = [[NSDictionary alloc] initWithData:[_rocks dataForKey:@"Dict Key".data error:nil]];
+
+	XCTAssertEqualObjects(actual, expected);
 }
 
 @end

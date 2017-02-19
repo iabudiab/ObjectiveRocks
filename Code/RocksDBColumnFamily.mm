@@ -22,7 +22,7 @@
 		self.db = db;
 		self.columnFamily = columnFamily;
 		self.options = options;
-		[self setDefaultReadOptions:nil andWriteOptions:nil];
+		[self setDefaultReadOptions:nil writeOptions:nil];
 	}
 	return self;
 }

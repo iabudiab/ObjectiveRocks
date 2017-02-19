@@ -22,9 +22,9 @@
 		options.minWriteBufferNumberToMerge = 10;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyNumEntriesActiveMemtable], 0);
 	XCTAssertGreaterThan([_rocks valueForIntProperty:RocksDBIntPropertyCurSizeActiveMemTable], 0);

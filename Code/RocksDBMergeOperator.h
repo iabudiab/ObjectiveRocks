@@ -18,7 +18,7 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Initializes a new instance of an associative merge operator.
 
- @discussion This Merge Operator can be use for associative data:
+ This Merge Operator can be used for associative data:
 
  * The merge operands are formatted the same as the Put values, AND
  * It is okay to combine multiple operands into one (as long as they are in the same order)
@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
  @return A newly-initialized instance of the Merge Operator.
  */
 + (instancetype)operatorWithName:(NSString *)name
-						andBlock:(id (^)(id key, id _Nullable existingValue, id value))block;
+						andBlock:(NSData * (^)(NSData * key, NSData * _Nullable existingValue, NSData *value))block;
 
 /**
  Initializes a new instance of a generic merge operator.
@@ -53,8 +53,8 @@ NS_ASSUME_NONNULL_BEGIN
  @return A newly-initialized instance of the Merge Operator.
  */
 + (instancetype)operatorWithName:(NSString *)name
-			   partialMergeBlock:(NSString * _Nullable (^)(id key, NSString *leftOperand, NSString *rightOperand))partialMergeBlock
-				  fullMergeBlock:(id _Nullable (^)(id key, id _Nullable existingValue, NSArray *operandList))fullMergeBlock;
+			   partialMergeBlock:(NSData * _Nullable (^)(NSData * key, NSData *leftOperand, NSData *rightOperand))partialMergeBlock
+				  fullMergeBlock:(NSData * _Nullable (^)(NSData * key, NSData * _Nullable existingValue, NSArray<NSData *> *operandList))fullMergeBlock;
 
 @end
 

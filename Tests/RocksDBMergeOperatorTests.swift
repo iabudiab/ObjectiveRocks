@@ -9,160 +9,194 @@
 import XCTest
 import ObjectiveRocks
 
+protocol DataConvertible {
+	init?(data: Data)
+	var data: Data { get }
+}
+
+extension DataConvertible {
+	init?(data: Data) {
+		guard data.count == MemoryLayout<Self>.size else {
+			return nil
+		}
+		self = data.withUnsafeBytes { $0.pointee }
+	}
+	var data: Data {
+		var value = self
+		return Data(buffer: UnsafeBufferPointer(start: &value, count: 1))
+	}
+}
+
+extension Int : DataConvertible { }
+extension Double : DataConvertible { }
+
+extension Dictionary {
+
+	var data: Data {
+		return try! JSONSerialization.data(withJSONObject: self, options: [])
+	}
+
+	mutating func update(with dict: Dictionary<Key, Value>) {
+		for (key, value) in dict {
+			self.updateValue(value, forKey: key)
+		}
+	}
+}
+
+extension Dictionary {
+	static func from(data: Data) -> [String: Any] {
+		return try! JSONSerialization.jsonObject(with: data, options: .mutableContainers) as! [String: Any]
+	}
+}
+
 class RocksDBMergeOperatorTests : RocksDBTests {
 
 	func testSwift_AssociativeMergeOperator() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
-			var prev: UInt64 = 0
-			if let existing = existing {
-				existing.getBytes(&prev, length: sizeof(UInt64))
-			}
-			var plus: UInt64 = 0
-			value.getBytes(&plus, length: sizeof(UInt64))
 
-			var result: UInt64 = prev + plus
-			return NSData(bytes: &result, length: sizeof(UInt64))
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> Data in
+			let prev: Int
+			if let existing = existing {
+				prev = Int(data: existing) ?? 0
+			} else {
+				prev = 0
+			}
+
+			let plus = Int(data: value)!
+			return (prev + plus).data
 		}
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
 		})
 
-		var value: UInt64 = 1
-		try! rocks.mergeData(NumData(value), forKey: Data("key 1"))
+		try! rocks.merge(1.data, forKey: "key 1")
+		try! rocks.merge(5.data, forKey: "key 1")
 
-		value = 5
-		try! rocks.mergeData(NumData(value), forKey: Data("key 1"))
-
-		let res: UInt64 = Val(try! rocks.dataForKey(Data("key 1")))
-
-		XCTAssertTrue(res == 6);
+		let data = try! rocks.data(forKey: "key 1")
+		let res = Int(data: data)!
+		XCTAssertEqual(res, 6)
 	}
 
-	func testSwift_AssociativeMergeOperator_NumberAdd_Encoded() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
-			var val = value.floatValue
+	func testSwift_AssociativeMergeOperator_NumberAdd() {
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> Data in
+			let prev: Double
 			if let existing = existing {
-				val = val + existing.floatValue
+				prev = Double(data: existing) ?? 0
+			} else {
+				prev = 0
 			}
-			let result: NSNumber = NSNumber(float: val)
-			return result
+
+			let plus = Double(data: value)!
+			return (prev + plus).data
 		}
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
-			options.keyType = .NSString
-
-			options.valueEncoder = {
-				(key, value) -> NSData in
-				let val = value.floatValue
-				let data = NumData(val)
-				return data
-			}
-
-			options.valueDecoder = {
-				(key, data) -> NSNumber in
-				if (data == nil) {
-					return Optional.None!
-				}
-
-				let value: Float = Val(data)
-				return NSNumber(float: value)
-			}
 		})
 
-		try! rocks.mergeObject(NSNumber(float: 100.541), forKey: "key 1")
-		try! rocks.mergeObject(NSNumber(float: 200.125), forKey: "key 1")
+		try! rocks.merge(100.541.data, forKey: "key 1")
+		try! rocks.merge(200.125.data, forKey: "key 1")
 
-		let result: Float = try! rocks.objectForKey("key 1").floatValue
-		XCTAssertEqualWithAccuracy(result, Float(300.666), accuracy: Float(0.0001))
+		let data = try! rocks.data(forKey: "key 1")
+		let res = Double(data: data)!
+		XCTAssertEqualWithAccuracy(res, Double(300.666), accuracy: Double(0.0001))
 	}
 
-	func testSwift_AssociativeMergeOperator_DictionaryPut_Encoded() {
-		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> AnyObject in
+	func testSwift_AssociativeMergeOperator_DictionaryPut() {
+
+		let mergeOp = RocksDBMergeOperator(name: "operator") { (key, existing, value) -> Data in
 			guard let existing = existing else {
 				return value
 			}
 
-			existing.addEntriesFromDictionary(value as! [NSObject : AnyObject])
-			return existing
+			var dict = Dictionary<String, Any>.from(data: existing)
+			let new = Dictionary<String, Any>.from(data: value)
+			dict.update(with: new)
+			return dict.data
 		}
 
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
-			options.keyType = .NSString
-			options.valueType = .NSJSONSerializable
 		})
 
-		try! rocks.setObject(["key 1": "value 1"], forKey: "dict key")
-		try! rocks.mergeObject(["key 1": "value 1 new"], forKey: "dict key")
-		try! rocks.mergeObject(["key 2": "value 2"], forKey: "dict key")
-		try! rocks.mergeObject(["key 3": "value 3"], forKey: "dict key")
-		try! rocks.mergeObject(["key 4": "value 4"], forKey: "dict key")
-		try! rocks.mergeObject(["key 5": "value 5"], forKey: "dict key")
+		try! rocks.setData(["key 1": "value 1"].data, forKey: "dict key")
+		try! rocks.merge(["key 1": "value 1 new"].data, forKey: "dict key")
+		try! rocks.merge(["key 2": "value 2"].data, forKey: "dict key")
+		try! rocks.merge(["key 3": "value 3"].data, forKey: "dict key")
+		try! rocks.merge(["key 4": "value 4"].data, forKey: "dict key")
+		try! rocks.merge(["key 5": "value 5"].data, forKey: "dict key")
 
-		let expected: NSDictionary = ["key 1" : "value 1 new",
-			"key 2" : "value 2",
-			"key 3" : "value 3",
-			"key 4" : "value 4",
-			"key 5" : "value 5"]
+		let expected: [String: Any] = ["key 1" : "value 1 new",
+		                               "key 2" : "value 2",
+		                               "key 3" : "value 3",
+		                               "key 4" : "value 4",
+		                               "key 5" : "value 5"]
 
-		XCTAssertEqual(try! rocks.objectForKey("dict key") as! NSDictionary, expected)
+		let data = try! rocks.data(forKey: "dict key")
+		let actual = Dictionary<String, Any>.from(data: data)
+		for (key, value) in actual {
+			XCTAssertEqual(value as! String, expected[key] as! String)
+		}
 	}
 
-	func testSwift_MergeOperator_DictionaryUpdate_Encoded() {
-		let mergeOp = RocksDBMergeOperator(name: "operator", partialMergeBlock:
-			{
-				(key, leftOperand, rightOperand) -> String! in
-				let left: NSString = leftOperand.componentsSeparatedByString(":")[0]
-				let right: NSString = rightOperand.componentsSeparatedByString(":")[0]
-				if left.isEqualToString(right as String) {
-					return rightOperand
+	func testSwift_MergeOperator_DictionaryUpdate() {
+
+		let partial = { (key: Data, leftOperand: Data, rightOperand: Data) -> Data? in
+			let left = String(data: leftOperand, encoding: .utf8)!.components(separatedBy: ":")[0]
+			let right = String(data: rightOperand, encoding: .utf8)!.components(separatedBy: ":")[0]
+			if left == right {
+				return rightOperand
+			}
+			return nil
+		}
+
+		let full = { (key: Data, existing: Data?, operands: [Data]) -> Data? in
+			var dict: [String: Any] = [:]
+			if let existing = existing {
+				dict = Dictionary<String, Any>.from(data: existing)
+			}
+
+			for op in operands {
+				let comp = String(data: op, encoding: .utf8)!.components(separatedBy: ":")
+				let action = comp[1]
+				if action == "DELETE" {
+					dict.removeValue(forKey: comp[0])
+				} else {
+					dict[comp[0]] = comp[2]
 				}
-				return Optional.None!
+			}
+			return dict.data
+		}
 
-			},
-			fullMergeBlock: {
-				(key, existing, operands) -> NSMutableDictionary! in
+		let mergeOp = RocksDBMergeOperator(name: "operator", partialMerge: partial, fullMerge: full)
 
-				let dict: NSMutableDictionary = existing as! NSMutableDictionary
-				for op in operands as NSArray {
-					let comp: NSArray = op.componentsSeparatedByString(":")
-					let action: NSString = comp[1] as! NSString
-					if action.isEqualToString("DELETE") {
-						dict.removeObjectForKey(comp[0])
-					} else {
-						dict.setObject(comp[2], forKey: comp[0] as! NSString)
-					}
-				}
-				return existing as! NSMutableDictionary
-			})
-
-		rocks = RocksDB.databaseAtPath(self.path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true
 			options.mergeOperator = mergeOp
-			options.keyType = .NSString
-			options.valueType = .NSJSONSerializable
 		})
 
-		let object = ["key 1" : "value 1",
-			"key 2" : "value 2",
-			"key 3" : "value 3"]
+		let object: [String: Any] = ["key 1" : "value 1",
+		                             "key 2" : "value 2",
+		                             "key 3" : "value 3"]
 
-		try! rocks.setObject(object, forKey: "dict key")
+		try! rocks.setData(object.data, forKey: "dict key")
 
-		try! rocks.mergeOperation("key 1:UPDATE:value X", forKey: "dict key")
-		try! rocks.mergeOperation("key 4:INSERT:value 4", forKey: "dict key")
-		try! rocks.mergeOperation("key 2:DELETE", forKey: "dict key")
-		try! rocks.mergeOperation("key 1:UPDATE:value 1 new", forKey: "dict key")
+		try! rocks.merge("key 1:UPDATE:value X", forKey: "dict key")
+		try! rocks.merge("key 4:INSERT:value 4", forKey: "dict key")
+		try! rocks.merge("key 2:DELETE", forKey: "dict key")
+		try! rocks.merge("key 1:UPDATE:value 1 new", forKey: "dict key")
 
-		let expected = ["key 1" : "value 1 new",
-			"key 3" : "value 3",
-			"key 4" : "value 4"];
+		let expected: [String: Any] = ["key 1" : "value 1 new",
+		                               "key 3" : "value 3",
+		                               "key 4" : "value 4"];
 
-		XCTAssertEqual(try! rocks.objectForKey("dict key") as! NSDictionary, expected)
+		let data = try! rocks.data(forKey: "dict key")
+		let actual = Dictionary<String, Any>.from(data: data)
+		for (key, value) in actual {
+			XCTAssertEqual(value as! String, expected[key] as! String)
+		}
 	}
 }

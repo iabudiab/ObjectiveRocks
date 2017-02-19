@@ -15,7 +15,6 @@
 #import <ObjectiveRocks/RocksDBComparator.h>
 
 #import <ObjectiveRocks/RocksDBOptions.h>
-#import <ObjectiveRocks/RocksDBEncodingOptions.h>
 #import <ObjectiveRocks/RocksDBDatabaseOptions.h>
 #import <ObjectiveRocks/RocksDBColumnFamilyOptions.h>
 #import <ObjectiveRocks/RocksDBWriteOptions.h>
@@ -30,8 +29,6 @@
 #import <ObjectiveRocks/RocksDBSnapshot.h>
 
 #import <ObjectiveRocks/RocksDBMergeOperator.h>
-
-#import <ObjectiveRocks/RocksDBTypes.h>
 #import <ObjectiveRocks/RocksDBRange.h>
 
 #import <ObjectiveRocks/RocksDBColumnFamilyMetadata.h>

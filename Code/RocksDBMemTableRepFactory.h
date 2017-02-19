@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  A factory for MemTableRep objects
  */
@@ -55,3 +57,5 @@
 #endif
 
 @end
+
+NS_ASSUME_NONNULL_END

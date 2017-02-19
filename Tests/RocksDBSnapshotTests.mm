@@ -20,24 +20,24 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
-	[_rocks setData:Data(@"Value 2") forKey:Data(@"Key 2") error:nil];
-	[_rocks setData:Data(@"Value 3") forKey:Data(@"Key 3") error:nil];
+	[_rocks setData:@"Value 1".data forKey:@"Key 1".data error:nil];
+	[_rocks setData:@"Value 2".data forKey:@"Key 2".data error:nil];
+	[_rocks setData:@"Value 3".data forKey:@"Key 3".data error:nil];
 
 	RocksDBSnapshot *snapshot = [_rocks snapshot];
 
-	[_rocks deleteDataForKey:Data(@"Key 1") error:nil];
-	[_rocks setData:Data(@"Value 4") forKey:Data(@"Key 4") error:nil];
+	[_rocks deleteDataForKey:@"Key 1".data error:nil];
+	[_rocks setData:@"Value 4".data forKey:@"Key 4".data error:nil];
 
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 1") error:nil], Data(@"Value 1"));
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 2") error:nil], Data(@"Value 2"));
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 3") error:nil], Data(@"Value 3"));
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 4") error:nil], nil);
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 1".data error:nil], @"Value 1".data);
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 2".data error:nil], @"Value 2".data);
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 3".data error:nil], @"Value 3".data);
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 4".data error:nil], nil);
 
 	[snapshot close];
 
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 1") error:nil], nil);
-	XCTAssertEqualObjects([snapshot dataForKey:Data(@"Key 4") error:nil], Data(@"Value 4"));
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 1".data error:nil], nil);
+	XCTAssertEqualObjects([snapshot dataForKey:@"Key 4".data error:nil], @"Value 4".data);
 }
 
 - (void)testSnapshot_Iterator
@@ -46,20 +46,20 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
-	[_rocks setData:Data(@"Value 2") forKey:Data(@"Key 2") error:nil];
-	[_rocks setData:Data(@"Value 3") forKey:Data(@"Key 3") error:nil];
+	[_rocks setData:@"Value 1".data forKey:@"Key 1".data error:nil];
+	[_rocks setData:@"Value 2".data forKey:@"Key 2".data error:nil];
+	[_rocks setData:@"Value 3".data forKey:@"Key 3".data error:nil];
 
 	RocksDBSnapshot *snapshot = [_rocks snapshot];
 
-	[_rocks deleteDataForKey:Data(@"Key 1") error:nil];
-	[_rocks setData:Data(@"Value 4") forKey:Data(@"Key 4") error:nil];
+	[_rocks deleteDataForKey:@"Key 1".data error:nil];
+	[_rocks setData:@"Value 4".data forKey:@"Key 4".data error:nil];
 
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [snapshot iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysUsingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"Key 1", @"Key 2", @"Key 3" ];
@@ -69,8 +69,8 @@
 
 	[actual removeAllObjects];
 	iterator = [snapshot iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysUsingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	expected = @[ @"Key 2", @"Key 3", @"Key 4" ];
@@ -83,13 +83,13 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"Value 1") forKey:Data(@"Key 1") error:nil];
+	[_rocks setData:@"Value 1".data forKey:@"Key 1".data error:nil];
 	RocksDBSnapshot *snapshot1 = [_rocks snapshot];
 
-	[_rocks setData:Data(@"Value 2") forKey:Data(@"Key 2") error:nil];
+	[_rocks setData:@"Value 2".data forKey:@"Key 2".data error:nil];
 	RocksDBSnapshot *snapshot2 = [_rocks snapshot];
 
-	[_rocks setData:Data(@"Value 3") forKey:Data(@"Key 3") error:nil];
+	[_rocks setData:@"Value 3".data forKey:@"Key 3".data error:nil];
 	RocksDBSnapshot *snapshot3 = [_rocks snapshot];
 
 	XCTAssertEqual(snapshot1.sequenceNumber, 1);

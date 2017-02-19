@@ -48,9 +48,9 @@ typedef NS_ENUM(NSUInteger, RocksDBPrefixType)
  @return A newly-initialized instance of a prefix extractor.
  */
 - (instancetype)initWithName:(NSString *)name
-			  transformBlock:(id (^)(id key))transformBlock
-		prefixCandidateBlock:(BOOL (^)(id key))prefixCandidateBlock
-			validPrefixBlock:(BOOL (^)(id prefix))validPrefixBlock;
+			  transformBlock:(NSData * (^)(NSData *key))transformBlock
+		prefixCandidateBlock:(BOOL (^)(NSData *key))prefixCandidateBlock
+			validPrefixBlock:(BOOL (^)(NSData *prefix))validPrefixBlock;
 
 @end
 

@@ -23,12 +23,8 @@ namespace rocksdb {
  rocksdb::WBWIIterator instance.
 
  @param iterator The rocks::WBWIIterator instance.
- @param options The Encoding options.
  @return a newly-initialized instance of `RocksDBWriteBatchIterator`.
-
- @see RocksDBEncodingOptions
  */
-- (instancetype)initWithWriteBatchIterator:(rocksdb::WBWIIterator *)iterator
-						andEncodingOptions:(RocksDBEncodingOptions *)options;
+- (instancetype)initWithWriteBatchIterator:(rocksdb::WBWIIterator *)iterator;
 
 @end

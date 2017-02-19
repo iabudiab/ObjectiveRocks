@@ -35,9 +35,9 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBColumnFamily
  */
-- (nullable id)objectForKey:(id)aKey
-	inColumnFamily:(RocksDBColumnFamily *)columnFamily
-			 error:(NSError * _Nullable *)error;
+- (nullable NSData *)dataForKey:(NSData *)aKey
+				 inColumnFamily:(RocksDBColumnFamily *)columnFamily
+						  error:(NSError * _Nullable *)error;
 
 /**
  Returns the object for the given key.
@@ -60,10 +60,10 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBColumnFamily
  @see RocksDBReadOptions
  */
-- (nullable id)objectForKeyIncludingDatabase:(id)aKey
-							  inColumnFamily:(RocksDBColumnFamily *)columnFamily
-								 readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
-									   error:(NSError * _Nullable *)error;
+- (nullable NSData *)dataForKeyIncludingDatabase:(NSData *)aKey
+								  inColumnFamily:(RocksDBColumnFamily *)columnFamily
+									 readOptions:(nullable void (^)(RocksDBReadOptions *readOptions))readOptions
+										   error:(NSError * _Nullable *)error;
 /**
  Creates and returns an iterator over this indexed write batch.
 

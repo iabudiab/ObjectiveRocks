@@ -8,6 +8,9 @@
 
 #import "RocksDBDatabaseOptions.h"
 
+#import "RocksDBEnv.h"
+#import "RocksDBStatistics.h"
+
 #import <rocksdb/options.h>
 
 @interface RocksDBStatistics ()

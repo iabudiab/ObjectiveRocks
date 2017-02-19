@@ -7,7 +7,12 @@
 //
 
 #import "RocksDBColumnFamilyOptions.h"
-#import "RocksDBEncodingOptions.h"
+
+#import "RocksDBMemTableRepFactory.h"
+#import "RocksDBTableFactory.h"
+#import "RocksDBComparator.h"
+#import "RocksDBMergeOperator.h"
+#import "RocksDBPrefixExtractor.h"
 
 #import <rocksdb/options.h>
 #import <rocksdb/comparator.h>
@@ -19,17 +24,14 @@
 @class RocksDBOptions;
 
 @interface RocksDBComparator ()
-@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, assign) const rocksdb::Comparator *comparator;
 @end
 
 @interface RocksDBMergeOperator ()
-@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, assign) rocksdb::MergeOperator *mergeOperator;
 @end
 
 @interface RocksDBPrefixExtractor ()
-@property (nonatomic, strong) RocksDBEncodingOptions *encodingOptions;
 @property (nonatomic, assign) const rocksdb::SliceTransform *sliceTransform;
 @end
 
@@ -44,7 +46,6 @@
 @interface RocksDBColumnFamilyOptions ()
 {
 	rocksdb::ColumnFamilyOptions _options;
-	RocksDBEncodingOptions *_encodingOptions;
 
 	RocksDBComparator *_comparatorWrapper;
 	RocksDBMergeOperator *_mergeOperatorWrapper;
@@ -65,21 +66,9 @@
 {
 	self = [super init];
 	if (self) {
-		_encodingOptions = [RocksDBEncodingOptions new];
 		_options = rocksdb::ColumnFamilyOptions();
 	}
 	return self;
-}
-
-#pragma mark - Encoding Options
-
--(id) forwardingTargetForSelector:(SEL)aSelector
-{
-	if ([_encodingOptions respondsToSelector:aSelector]) {
-		return _encodingOptions;
-	}
-
-	return nil;
 }
 
 #pragma mark - Column Family Options
@@ -87,7 +76,6 @@
 - (void)setComparator:(RocksDBComparator *)comparator
 {
 	_comparatorWrapper = comparator;
-	_comparatorWrapper.encodingOptions = _encodingOptions;
 	_options.comparator = _comparatorWrapper.comparator;
 }
 
@@ -99,7 +87,6 @@
 - (void)setMergeOperator:(RocksDBMergeOperator *)mergeOperator
 {
 	_mergeOperatorWrapper = mergeOperator;
-	_mergeOperatorWrapper.encodingOptions = _encodingOptions;
 	_options.merge_operator.reset(_mergeOperatorWrapper.mergeOperator);
 }
 
@@ -151,7 +138,6 @@
 - (void)setPrefixExtractor:(RocksDBPrefixExtractor *)prefixExtractor
 {
 	_prefixExtractorWrapper = prefixExtractor;
-	_prefixExtractorWrapper.encodingOptions = _encodingOptions;
 	_options.prefix_extractor.reset(_prefixExtractorWrapper.sliceTransform);
 }
 
@@ -193,16 +179,6 @@
 - (int)level0StopWritesTrigger
 {
 	return _options.level0_stop_writes_trigger;
-}
-
-- (void)setMaxMemCompactionLevel:(int)maxMemCompactionLevel
-{
-	_options.max_mem_compaction_level = maxMemCompactionLevel;
-}
-
-- (int)maxMemCompactionLevel
-{
-	return _options.max_mem_compaction_level;
 }
 
 - (void)setTargetFileSizeBase:(uint64_t)targetFileSizeBase

@@ -8,6 +8,10 @@
 
 #import "RocksDBOptions.h"
 
+#import "RocksDBComparator.h"
+#import "RocksDBMergeOperator.h"
+#import "RocksDBPrefixExtractor.h"
+
 #import <rocksdb/options.h>
 #import <rocksdb/comparator.h>
 #import <rocksdb/merge_operator.h>

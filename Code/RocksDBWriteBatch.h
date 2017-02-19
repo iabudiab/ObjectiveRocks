@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBEncodingOptions.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -30,15 +29,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param anObject The object for key.
  @param aKey The key for object.
  */
-- (void)setObject:(id)anObject forKey:(id)aKey;
-
-/**
- Stores the given key-data pair into the Write Batch.
-
- @param data The data for key.
- @param aKey The key for object.
- */
-- (void)setData:(NSData *)data forKey:(NSData *)aKey;
+- (void)setData:(NSData *)anObject forKey:(NSData *)aKey;
 
 /**
  Stores the given key-object pair for the given Column Family into the Write Batch.
@@ -47,33 +38,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param aKey The key for object.
  @param columnFamily The column family where data should be written.
  */
-- (void)setObject:(id)anObject forKey:(id)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
-
-/**
- Stores the given key-data pair for the given Column Family into the Write Batch.
-
- @param data The data for key.
- @param aKey The key for object.
- @param columnFamily The column family where data should be written.
- */
-- (void)setData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
-
-/**
- Perform the merge operation in the Write Batch.
-
- @param aMerge A merge opration.
- @param aKey The key for the merge.
- */
-- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey;
-
-/**
- Perform the merge operation for the given Column Family in the Write Batch.
-
- @param aMerge A merge opration.
- @param aKey The key for the merge.
- @param columnFamily The column family where data should be merged.
- */
-- (void)mergeOperation:(NSString *)aMerge forKey:(id)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
+- (void)setData:(NSData *)anObject forKey:(NSData *)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
 
 /**
  Merges the given key-object pair into the Write Batch.
@@ -81,16 +46,7 @@ NS_ASSUME_NONNULL_BEGIN
  @param anObject The object for key.
  @param aKey The key for object.
  */
-- (void)mergeObject:(id)anObject forKey:(id)aKey;
-
-/**
- Merges the given key-object pair into the Write Batch.
-
- @param anObject The object for key.
- @param aKey The key for object.
- */
-- (void)mergeData:(NSData *)data forKey:(NSData *)aKey;
-
+- (void)mergeData:(NSData *)anObject forKey:(NSData *)aKey;
 
 /**
  Merges the given key-object pair for the given Column Family into the Write Batch.
@@ -99,26 +55,10 @@ NS_ASSUME_NONNULL_BEGIN
  @param aKey The key for object.
  @param columnFamily The column family where data should be written.
  */
-- (void)mergeObject:(id)anObject forKey:(id)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
-
-/**
- Merges the given key-data pair for the given Column Family into the Write Batch.
-
- @param data The data for key.
- @param aKey The key for object.
- @param columnFamily The column family where data should be written.
- */
-- (void)mergeData:(NSData *)data forKey:(NSData *)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
+- (void)mergeData:(NSData *)anObject forKey:(NSData *)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
 
 /**
  Deletes the object for the given key from this Write Batch.
-
- @param aKey The key to delete.
- */
-- (void)deleteObjectForKey:(id)aKey;
-
-/**
- Deletes the data for the given key from this Write Batch.
 
  @param aKey The key to delete.
  */
@@ -126,15 +66,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Deletes the object for the given key in the given Column Family from this Write Batch.
-
- @param data The data for key.
- @param aKey The key for object.
- @param columnFamily The column family from which the data should be deleted.
- */
-- (void)deleteObjectForKey:(id)aKey inColumnFamily:(nullable RocksDBColumnFamily *)columnFamily;
-
-/**
- Deletes the object for the given key in the given Column Family from the Write Batch.
 
  @param data The data for key.
  @param aKey The key for object.

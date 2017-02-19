@@ -9,7 +9,25 @@ ObjectiveRocks is an Objective-C wrapper of Facebook's [RocksDB](https://github.
 [![Platform](https://img.shields.io/cocoapods/p/ObjectiveRocks.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks) -->
 [![License MIT](https://img.shields.io/badge/license-MIT-4481C7.svg?style=flat)](https://opensource.org/licenses/MIT)
 
-#Quick Overview
+- [Quick Overview](#overview)
+- [Installation](#installation)
+- [Usage](#usage)
+- [Open & Close a DB Instance](#open--close-a-db-instance)
+- [Basic Operations](#basic-operations)
+- [Iteration](#iteration)
+- [Column Families](#column-families)
+- [Atomic Updates](#atomic-updates)
+- [Snapshot](#snapshot)
+- [Checkpoint](#checkpoint)
+- [Keys Comparator](#keys-comparator)
+- [Merge Operator](#merge-operator)
+- [Env & Thread Status](#env--thread-status)
+- [Backup & Restore](#backup--restore)
+- [Statistics](#statistics)
+- [Properties](#properties)
+- [Configuration](#configuration)
+
+# Quick Overview
 
 RocksDB is a key-value store, where the keys and values are arbitrarily-sized byte streams. The keys are ordered within the key value store according to a specified comparator function. RocksDB supports atomic reads and writes, snapshots, iteration and features many configuration options.
 
@@ -47,9 +65,9 @@ ObjectiveRocks has a pure Objective-C interface and can be used in Swift project
 
 ## RocksDB Lite
 
-ObjectiveRocks incldues two targets, for iOS and OSX. The iOS target builds the RocksDB Lite version, which doesn't include the complete feature set.
+ObjectiveRocks incldues two targets, for iOS and macOS. The iOS target builds the RocksDB Lite version, which doesn't include the complete feature set.
 
-These features are only available in OSX:
+These features are only available in macOS:
 
 * Column Family Metadata
 * Write Batch with Index
@@ -60,13 +78,51 @@ These features are only available in OSX:
 * Database Properties
 * Thread Status
 
-## Installation
+# Installation
 
-Clone the repository and add ObjectiveRocks as a sub-project in Xcode. Notice that ObjectiveRocks depends on RocksDB and includes it as a Git submodule.
+## Carthage
+
+[Carthage](https://github.com/Carthage/Carthage) is a decentralized dependency manager that builds your dependencies and provides you with binary frameworks.
+
+If you don't have Carthage yet, you can install it with Homebrew using the following command:
+
+```bash
+$ brew update
+$ brew install carthage
+```
+
+To add `ObjectiveRocks` as a dependency into your project using Carthage just add the following line in your `Cartfile`:
+
+```
+github "iabudiab/ObjectiveRocks"
+```
+
+Then run the following command to build the framework and drag the built `ObjectiveRocks.framework` into your Xcode project.
+
+```bash
+$ carthage update
+```
+
+## Manually
+
+1- Add `ObjectiveRocks` as git submodule
+
+```bash
+$ git submodule add https://github.com/iabudiab/ObjectiveRocks.git
+```
+
+2- Open the `ObjectiveRocks` folder and drag'n'drop the `ObjectiveRocks.xcodeproj` into the Project Navigator in Xcode to add it as a sub-project.
+
+3- In the General panel of your target add `ObjectiveRocks.framework` under the `Embedded Binaries` 
+
+> Notice that ObjectiveRocks depends on RocksDB and includes it as a Git submodule.
 
 # Usage
 
-## Open and close a database
+> The README will use the `NSString` notation in place of `NSData` keys and values for brevity!
+
+
+## Open & close a DB instance
 
 To open a database you have to specify its location:
 
@@ -76,18 +132,15 @@ RocksDB *db = [RocksDB databaseAtPath:@"path/to/db"];
 [db close];
 ```
 
-RocksDB features many configuration settings, that can be specified when opening the database. ObjectiveRocks offers a blocks-based initializer for this purpose, for example:
+`RocksDB` features many configuration settings, that can be specified when opening the database. `ObjectiveRocks` offers a blocks-based initializer for this purpose. The minimum configuration that you'll need is `createIfMissing` in order to create a new database if it doesn't already exist:
 
 ```objective-c
 RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
-	options.maxOpenFiles = 3000;
-	options.writeBufferSize = 64 * 1024 * 1024;
-	options.maxWriteBufferNumber = 3;
 }];
 ```
 
-The [configuration guide](#configuration), *currently in progress*, lists all currently available options along with their description.
+The [configuration guide](#configuration), lists all currently available options along with their description.
 
 A more production ready setup could look like this:
 
@@ -113,7 +166,201 @@ RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOption
 }];
 ```
 
-## Open Column Families
+## Basic Operations
+
+The database provides three basic operations, `Put`, `Get`, and `Delete` to store/query data. Keys and values in RocksDB are arbitrary byte arrays:
+
+```objective-c
+RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
+	options.createIfMissing = YES;
+}];
+
+NSData *data = [@"World" dataUsingEncoding:NSUTF8StringEncoding]
+NSData *key = [@"Hello" dataUsingEncoding:NSUTF8StringEncoding]
+
+[db storeData:data forKey:key];
+NSData *get = [db getDataForKey:key];
+[db deleteDataForKey:key];
+```
+
+### Read & Write Errors
+
+Database operations can be passed a `NSError` reference to check for any errors that have occurred:
+
+```objective-c
+NSError *error = nil;
+
+[db setObject:object forKey:key error:&error];
+NSMutableDictionary *dictionary = [db dataForKey:@"Hello" error:&error];
+[db deleteDataForKey:@"Hello" error:&error];
+```
+
+### Read & Write Options
+
+Each single read or write operation can be tuned via specific options:
+
+```objective-c
+[db setObject:anObject forKey:aKey writeOptions:^(RocksDBWriteOptions *writeOptions) {
+	writeOptions.syncWrites = YES;
+	writeOptions.disableWriteAheadLog = YES;
+	writeOptions.timeoutHint = 5;
+	writeOptions.ignoreMissingColumnFamilies = NO;
+}];
+
+[db dataForKey:aKey readOptions:^(RocksDBReadOptions *readOptions) {
+	readOptions.verifyChecksums = YES;
+	readOptions.fillCache = NO;
+}];
+```
+
+Default options can also be set on a `RocksDB` or `RocksDBColumnFamily` instance:
+
+```objective-c
+[db setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
+	readOptions.fillCache = YES;
+	readOptions.verifyChecksums = YES;
+} andWriteOptions:^(RocksDBWriteOptions *writeOptions) {
+	writeOptions.syncWrites = YES;
+	writeOptions.timeoutHint = 5;
+}];
+```
+
+You can read about the read and write options in the [configuration guide](#configuration)
+
+## Iteration
+
+Iteration is provided via the `RocksDBIterator` class.
+
+You can either iterate manually:
+
+```objective-c
+RocksDB *db = ...;
+RocksDBColumnFamily *stuffColumnFamily = .../
+
+RocksDBIterator *iterator = [db iterator];
+RocksDBIterator *cfIterator = [stuffColumnFamily iterator];
+
+// Alternatively, you can get an iterator with specific read options
+iterator = [db iteratorWithReadOptions:^(RocksDBReadOptions *readOptions) {
+	// Read options here
+}];
+
+for ([iterator seekToKey:@"start"]; [iterator isValid]; [iterator next]) {
+	NSLog(@"%@: %@", [iterator key], [iterator value]);
+	// Iterates all keys starting from key "start" 
+}
+```
+
+or use one of the provided enumeration-blocks:
+
+```objective-c
+[db setData:@"Value 1" forKey:@"A"];
+[db setData:@"Value 2" forKey:@"B"];
+[db setData:@"Value 3" forKey:@"C"];
+[db setData:@"Value 3" forKey:@"D"];
+
+RocksDBIterator *iterator = [db iterator];
+
+/* Keys Enumeration */
+[db enumerateKeysUsingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// A, B, C, D
+}];
+
+// reverse enumeration
+[db enumerateKeysInReverse:YES usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// D, C, B, A
+}];
+
+// Enumeration in a given key-range [start, end)
+RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
+
+[db enumerateKeysInRange:range reverse:NO usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@", key, [db dataForKey:key]);
+	// B, C
+}];
+
+/* Key-Value Enumeration */
+[db enumerateKeysAndValuesUsingBlock:^(NSData *key, NSData *value BOOL *stop) {
+	NSLog(@"%@:%@", key, value);
+	// A:1, B:2, C:3, D:4
+}];
+
+[db enumerateKeysAndValuesInReverse:YES usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@: %@", key, [db dataForKey:key]);
+	// D:4, C:3, B:2, A:1
+}];
+
+// Enumeration in a given key-range [start, end)
+RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
+
+[db enumerateKeysAndValuesInRange:range reverse:YES usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@:%@", key, [db dataForKey:key]);
+	// B:2, C:3
+}];
+```
+
+## Prefix-Seek Iteration
+
+`RocksDBIterator` supports iterating inside a key-prefix by providing a `RocksDBPrefixExtractor`. One such extractor is built-in and it extracts a fixed-length prefix for each key:
+
+```objective-c
+RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
+	options.createIfMissing = YES;
+	options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];
+}];
+
+[db setData:@"a" forKey:@"10.1"];
+[db setData:@"b" forKey:@"10.2"];
+[db setData:@"b" forKey:@"10.3"];
+[db setData:@"c" forKey:@"11.1"];
+[db setData:@"d" forKey:@"11.2"];
+[db setData:@"d" forKey:@"11.3"];
+
+RocksDBIterator *iterator = [db iterator];
+
+// Enumeration starts with the key that is Greater-Than-Or-Equal to a key
+// with the given "prefix" parameter
+[iterator enumerateKeysWithPrefix:@"10" usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// 10.1, 10.2, 10.3
+}];
+
+// .. so in this case the enumeration starts at key "10.2", even if "10.1" 
+// has the same prefix
+[iterator enumerateKeysWithPrefix:@"10.2" usingBlock:^(NSData *key, BOOL *stop) {
+	NSLog(@"%@", key);
+	// 10.2, 10.3
+}];
+```
+
+You can also define your own Prefix Extractor:
+
+```objective-c
+RocksDBPrefixExtractor *extractor = [[RocksDBPrefixExtractor alloc] initWithName:@"custom_prefix"
+	transformBlock:^id (NSData *key) {
+		// Apply your key transformation to extract the prefix part
+		id prefix = extractPrefixFromKey(key);
+		return prefix;
+	}
+	prefixCandidateBlock:^BOOL (NSData *key) {
+		// You can filter out keys that are not viable candidates for
+		// your custom prefix format, e.g. key length is smaller than
+		// the target prefix length
+		BOOL isCandidate = canExtractPrefixFromKey(key);
+		return isCandidate;
+	}
+	validPrefixBlock:^BOOL (NSData *prefix) {
+		// After a prefix is extracted you can perform extra
+		// checks here to verify that the prefix is valid
+		BOOL isValid = isExtractedPrefixValid(prefix);
+		return isValid;
+	}
+];
+```
+
+## Column Families
 
 Once you have a `RocksDB` instance you can create and drop column families on the fly:
 
@@ -155,127 +402,6 @@ RocksDBColumnFamily *stuffColumnFamily = columnFamilies[1];
 // the defaultColumnFamily instance to access the default column family
 ```
 
-## Basic Operations
-
-The database provides three basic methods, `Put`, `Get`, and `Delete` to store/query data. Keys and values in RocksDB are arbitrary byte arrays:
-
-```objective-c
-RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
-	options.createIfMissing = YES;
-}];
-
-NSData *data = [@"World" dataUsingEncoding:NSUTF8StringEncoding]
-NSData *key = [@"Hello" dataUsingEncoding:NSUTF8StringEncoding]
-
-[db storeData:data forKey:key];
-NSData *get = [db getDataForKey:key];
-[db deleteDataForKey:key];
-```
-
-## Key-Value Encoding/Decoding
-
-Since working with `NSData` objects is cumbersome, ObjectiveRocks offers an easy mechanism to encode/decode arbitrary objects to/from `NSData`. For example, if you have `NSString` keys and `NSDictionary` objects, you could define your own conversion blocks like this:
-
-
-```objective-c
-RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
-	options.createIfMissing = YES;
-
-	options.keyEncoder = ^NSData * (id key) {
-		return [key dataUsingEncoding:NSUTF8StringEncoding];
-	};
-	options.keyDecoder = ^id (NSData *data) {
-		return [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	};
-	options.valueEncoder = ^NSData * (id key, id value) {
-		return [NSJSONSerialization dataWithJSONObject:value
-											   options:0
-												 error:nil];
-	};
-	options.valueDecoder = ^id (id key, NSData *data) {
-		return [NSJSONSerialization JSONObjectWithData:data
-											   options:NSJSONReadingMutableContainers
-												 error:nil];
-	};
-}];
-
-NSDictionary *object = @{@"Objective": @"Rocks"};
-
-[db setObject:object forKey:@"Hello"];
-NSMutableDictionary *dictionary = [db objectForKey:@"Hello"];
-[db deleteObjectForKey:@"Hello"];
-```
-
-The `valueEncoder` and `valueDecoder` blocks take the `key` as first parameter to allow for multiplexing the conversion, i.e. storing different kinds of objects depending on the given `key`.
-
-## Built-In Encoding Types
-
-ObjectiveRocks provides built-in support for some common key/value types. So the previous example can be written like this:
-
-```objective-c
-RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
-	options.createIfMissing = YES;
-
-	options.keyType = RocksDBTypeNSString;
-	options.valueType = RocksDBTypeNSJSONSerializable;
-}];
-```
-
-The following types are currently supported:
-
-* `RocksDBTypeNSString` for NSString keys/values
-* `RocksDBTypeNSJSONSerializable` for keys/values that can be serialized via `NSJSONSerialization`, i.e. all object that have the following properties:
-	* The top level object is an NSArray or NSDictionary.
-	* All objects are instances of NSString, NSNumber, NSArray, NSDictionary, or NSNull.
-	* All dictionary keys are instances of NSString.
-	* Numbers are not NaN or infinity.
-
-> All further examples will use the `id`-based API assuming that the key-value encoders are in place
-
-### Read & Write Errors
-
-Database operations can be passed a `NSError` reference to check for any errors that have occurred:
-
-```objective-c
-NSError *error = nil;
-
-[db setObject:object forKey:key error:&error];
-NSMutableDictionary *dictionary = [db objectForKey:@"Hello" error:&error];
-[db deleteObjectForKey:@"Hello" error:&error];
-```
-
-### Read & Write Options
-
-Each single read or write operation can be tuned via specific options:
-
-```objective-c
-[db setObject:anObject forKey:aKey writeOptions:^(RocksDBWriteOptions *writeOptions) {
-	writeOptions.syncWrites = YES;
-	writeOptions.disableWriteAheadLog = YES;
-	writeOptions.timeoutHint = 5;
-	writeOptions.ignoreMissingColumnFamilies = NO;
-}];
-
-[db objectForKey:aKey readOptions:^(RocksDBReadOptions *readOptions) {
-	readOptions.verifyChecksums = YES;
-	readOptions.fillCache = NO;
-}];
-```
-
-Default options can also be set on a `RocksDB` or `RocksDBColumnFamily` instance:
-
-```objective-c
-[db setDefaultReadOptions:^(RocksDBReadOptions *readOptions) {
-	readOptions.fillCache = YES;
-	readOptions.verifyChecksums = YES;
-} andWriteOptions:^(RocksDBWriteOptions *writeOptions) {
-	writeOptions.syncWrites = YES;
-	writeOptions.timeoutHint = 5;
-}];
-```
-
-You can read about the read and write options in the [configuration guide](#configuration)
-
 ## Atomic Updates
 
 You can atomically apply a set of updates to the database using a `WriteBatch`. There are two ways to use a `WriteBatch`:
@@ -283,31 +409,31 @@ You can atomically apply a set of updates to the database using a `WriteBatch`. 
 * An inline block-based approach:
 
 ```objective-c
-[db setObject:@"Value 1" forKey:@"Key 1"];
+[db setData:@"Value 1" forKey:@"Key 1"];
 
 [db performWriteBatch:^(RocksDBWriteBatch *batch, RocksDBWriteOptions *writeOptions) {
-	[batch setObject:@"Value 2" forKey:@"Key 2"];
-	[batch setObject:@"Value 3" forKey:@"Key 3"];
-	[batch deleteObjectForKey:@"Key 1"];
+	[batch setData:@"Value 2" forKey:@"Key 2"];
+	[batch setData:@"Value 3" forKey:@"Key 3"];
+	[batch deleteDataForKey:@"Key 1"];
 }];
 ```
 
 * Via a `WriteBatch` instance, which may be more flexible for "scattered" logic:
 
 ```objective-c
-[db setObject:@"Value 1" forKey:@"Key 1"];
+[db setData:@"Value 1" forKey:@"Key 1"];
 
 RocksDBWriteBatch *batch = [db writeBatch];
-[batch setObject:@"Value 2" forKey:@"Key 2"];
-[batch setObject:@"Value 3" forKey:@"Key 3"];
-[batch deleteObjectForKey:@"Key 1"];
+[batch setData:@"Value 2" forKey:@"Key 2"];
+[batch setData:@"Value 3" forKey:@"Key 3"];
+[batch deleteDataForKey:@"Key 1"];
 ...
 [db applyWriteBatch:batch withWriteOptions:^(RocksDBWriteOptions *writeOptions) {
 	// Write options here
 }];
 ```
 
-The Write Batch object operates per default on the Column Family associated with the DB instance, which was used to create it. However, you can also specify the Column Family in a Write Batch associated with another one, in order to achieve an atomic write across multiple Column Families. In this case it doesn't matter on which instance you apply the batch:
+The Write Batch object operates per default on the Column Family associated with the DB instance, which was used to create it. However, you can also specify the Column Family, in order to achieve an atomic write across multiple Column Families. In this case it doesn't matter on which instance you apply the batch:
 
 ```objective-c
 RocksDB *db = ...;
@@ -319,8 +445,8 @@ RocksDBWriteBatch *batch = [db writeBatch];
 // Write Batch for stuffColumnFamily
 RocksDBWriteBatch *cfBatch = [stuffColumnFamily writeBatch];
 
-[batch setObject:@"Value 1" forKey:@"Key 1"];
-[batch setObject:@"Value 2" forKey:@"Key 2" inColumnFamily:stuffColumnFamily];
+[batch setData:@"Value 1" forKey:@"Key 1"];
+[batch setData:@"Value 2" forKey:@"Key 2" inColumnFamily:stuffColumnFamily];
 
 // You can apply the Write Batch object either on the DB instance
 // or the stuffColumnFamily instance.
@@ -335,148 +461,12 @@ RocksDBWriteBatch *cfBatch = [stuffColumnFamily writeBatch];
 */
 ```
 
-## Iteration
-
-Iteration is provided via the `RocksDBIterator` class.
-
-You can either iterate manually:
-
-```objective-c
-RocksDB *db = ...;
-RocksDBColumnFamily *stuffColumnFamily = .../
-
-RocksDBIterator *iterator = [db iterator];
-RocksDBIterator *cfIterator = [stuffColumnFamily iterator];
-
-// Alternatively, you can get an iterator with specific read options
-iterator = [db iteratorWithReadOptions:^(RocksDBReadOptions *readOptions) {
-	// Read options here
-}];
-
-for ([iterator seekToKey:@"start"]; [iterator isValid]; [iterator next]) {
-	NSLog(@"%@: %@", [iterator key], [iterator value]);
-	// Iterates all keys starting from key "start" 
-}
-```
-
-or use one of the provided enumeration-blocks:
-
-```objective-c
-[db setObject:@"Value 1" forKey:@"A"];
-[db setObject:@"Value 2" forKey:@"B"];
-[db setObject:@"Value 3" forKey:@"C"];
-[db setObject:@"Value 3" forKey:@"D"];
-
-RocksDBIterator *iterator = [db iterator];
-
-/* Keys Enumeration */
-[db enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@", key);
-	// A, B, C, D
-}];
-
-// reverse enumeration
-[db enumerateKeysInReverse:YES usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@", key);
-	// D, C, B, A
-}];
-
-// Enumeration in a given key-range [start, end)
-RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
-
-[db enumerateKeysInRange:range reverse:NO usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@", key, [db objectForKey:key]);
-	// B, C
-}];
-
-/* Key-Value Enumeration */
-[db enumerateKeysAndValuesUsingBlock:^(id key, id value BOOL *stop) {
-	NSLog(@"%@:%@", key, value);
-	// A:1, B:2, C:3, D:4
-}];
-
-[db enumerateKeysAndValuesInReverse:YES usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@: %@", key, [db objectForKey:key]);
-	// D:4, C:3, B:2, A:1
-}];
-
-// Enumeration in a given key-range [start, end)
-RocksDBIteratorKeyRange range = RocksDBMakeKeyRange(@"A", @"C");
-
-[db enumerateKeysAndValuesInRange:range reverse:YES usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@:%@", key, [db objectForKey:key]);
-	// B:2, C:3
-}];
-```
-
-## Prefix-Seek Iteration
-
-`RocksDBIterator` supports iterating inside a key-prefix by providing a `RocksDBPrefixExtractor`. One such extractor is built-in and it extracts a fixed-length prefix for each key:
-
-```objective-c
-RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
-	options.createIfMissing = YES;
-	options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];
-
-	options.keyType = RocksDBTypeNSString;
-	options.valueType = RocksDBTypeNSString;
-}];
-
-[db setObject:@"a" forKey:@"10.1"];
-[db setObject:@"b" forKey:@"10.2"];
-[db setObject:@"b" forKey:@"10.3"];
-[db setObject:@"c" forKey:@"11.1"];
-[db setObject:@"d" forKey:@"11.2"];
-[db setObject:@"d" forKey:@"11.3"];
-
-RocksDBIterator *iterator = [db iterator];
-
-// Enumeration starts with the key that is Greater-Than-Or-Equal to a key
-// with the given "prefix" parameter
-[iterator enumerateKeysWithPrefix:@"10" usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@", key);
-	// 10.1, 10.2, 10.3
-}];
-
-// .. so in this case the enumeration starts at key "10.2", even if "10.1" 
-// has the same prefix
-[iterator enumerateKeysWithPrefix:@"10.2" usingBlock:^(id key, BOOL *stop) {
-	NSLog(@"%@", key);
-	// 10.2, 10.3
-}];
-```
-
-You can also define your own Prefix Extractor:
-
-```objective-c
-RocksDBPrefixExtractor *extractor = [[RocksDBPrefixExtractor alloc] initWithName:@"custom_prefix"
-	transformBlock:^id (id key) {
-		// Apply your key transformation to extract the prefix part
-		id prefix = extractPrefixFromKey(key);
-		return prefix;
-	}
-	prefixCandidateBlock:^BOOL (id key) {
-		// You can filter out keys that are not viable candidates for
-		// your custom prefix format, e.g. key length is smaller than
-		// the target prefix length
-		BOOL isCandidate = canExtractPrefixFromKey(key);
-		return isCandidate;
-	}
-	validPrefixBlock:^BOOL (id prefix) {
-		// After a prefix is extracted you can perform extra
-		// checks here to verify that the prefix is valid
-		BOOL isValid = isExtractedPrefixValid(prefix);
-		return isValid;
-	}
-];
-```
-
 ## Snapshot
 
 A Snapshot provides consistent read-only view over the state of the key-value store. Do not forget to close the snapshot when it's no longer needed:
 
 ```objective-c
-[db setObject:@"Value 1" forKey:@"A"];
+[db setData:@"Value 1" forKey:@"A"];
 
 RocksDBSnapshot *snapshot = [db snapshot];
 // Alternatively, you can get a snapshot with specific read options
@@ -484,12 +474,12 @@ snapshot = [db snapshotWithReadOptions:^(RocksDBReadOptions *readOptions) {
 	// Read options here
 }];
 
-[db deleteObjectForKey:@"A"];
-[db setObject:@"Value 2" forKey:@"B"];
+[db deleteDataForKey:@"A"];
+[db setData:@"Value 2" forKey:@"B"];
 
-NSString *value1 = [snapshot objectForKey:@"A"];
+NSString *value1 = [snapshot dataForKey:@"A"];
 // value1 == @"Value 1"
-NSString *value2 = [snapshot objectForKey:@"B"];
+NSString *value2 = [snapshot dataForKey:@"B"];
 // value2 == nil
 ...
 [snapshot close];
@@ -500,8 +490,8 @@ NSString *value2 = [snapshot objectForKey:@"B"];
 A checkpoint is an openable Snapshot of a database at a point in time:
 
 ```objective-c
-[db setObject:@"Value 1" forKey:@"A"];
-[db setObject:@"Value 2" forKey:@"B"];
+[db setData:@"Value 1" forKey:@"A"];
+[db setData:@"Value 2" forKey:@"B"];
 
 RocksDBCheckpoint *checkpoint = [[RocksDBCheckpoint alloc] initWithDatabase:db];
 NSError *error = nil;
@@ -522,7 +512,7 @@ This behavior can be changed by supplying a custom Comparator when opening a dat
 Say you have `NSString` keys and you want them to be ordered using a case-insensitive, localized, comparison:
 
 ```objective-c
-RocksDBComparator *localizedKeys = [[RocksDBComparator alloc] initWithName:@"LocalizedKeys" andBlock:^int (id key1, id key2) {
+RocksDBComparator *localizedKeys = [[RocksDBComparator alloc] initWithName:@"LocalizedKeys" andBlock:^int (NSData *key1, NSData *key2) {
 	return [key1 localizedCaseInsensitiveCompare:key2];
 ];
 	
@@ -546,10 +536,10 @@ RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOption
 * `RocksDBComparatorBytewiseAscending:` orders the keys lexicographically in ascending order. 
 	* This is the default behavior if none is specified.
 * `RocksDBComparatorBytewiseDescending` orders the keys lexicographically ins descending order.
-* `RocksDBComparatorStringCompareAscending` orders NSString keys in ascending order via the `compare` selector.
-* `RocksDBComparatorStringCompareDescending` orders NSString keys in descending order via the `compare` selector.
-* `RocksDBComparatorNumberAscending` orders NSNumber keys in ascending order via the `compare` selector.
-* `RocksDBComparatorNumberDescending` orders NSNumber keys in descending order via the `compare` selector.
+* `RocksDBComparatorStringCompareAscending` orders `NSString` keys in ascending order via the `compare` selector.
+	* This comparator assumes `NSString` keys and does convert the associated `NSData` via `initWithData:encoding:` using UTF-8
+* `RocksDBComparatorStringCompareDescending` orders `NSString` keys in descending order via the `compare` selector.
+	* This comparator assumes `NSString` keys and does convert the associated `NSData` via `initWithData:encoding:` using UTF-8
 
 ## Merge Operator
 
@@ -567,7 +557,7 @@ You can use this Merge Operator when you have associative data:
 For example we can use a merge operator to append entries to an existing array, instead of reading it completely, updating it and writing it back:
 
 ```objective-c
-RocksDBMergeOperator *arrayAppend = [RocksDBMergeOperator operatorWithName:@"ArrayAppend" andBlock:^id (id key, id existingValue, id mergeValue) {
+RocksDBMergeOperator *arrayAppend = [RocksDBMergeOperator operatorWithName:@"ArrayAppend" andBlock:^id (NSData *key, NSData *existingValue, NSData *mergeValue) {
 	if (existingValue == nil) {
 		return mergeValue;
 	} else {
@@ -578,16 +568,15 @@ RocksDBMergeOperator *arrayAppend = [RocksDBMergeOperator operatorWithName:@"Arr
 
 RocksDB *db = [RocksDB databaseAtPath:@"path/to/db" andDBOptions:^(RocksDBOptions *options) {
 	options.mergeOperator = arrayAppend;
-	options.keyType = RocksDBTypeNSString;
-	options.valueType = RocksDBTypeNSJSONSerializable;
 }];
 
 NSMutableArray *letters = [NSMutableArray arrayWithObjects:@"A", @"B", nil];
-[db setObject:letters forKey:@"Key"];
-[db mergeObject:@[@"C", @"D"] forKey:@"Key"];
-[db mergeObject:@[@"E"] forKey:@"Key"];
 
-NSMutableArray *merged = [db objectForKey:@"Key"];
+[db setData:letters forKey:@"Key"];
+[db mergeData:@[@"C", @"D"] forKey:@"Key"];
+[db mergeData:@[@"E"] forKey:@"Key"];
+
+NSMutableArray *merged = [db dataForKey:@"Key"];
 // merged = @[@"A", @"B", @"C", @"D", @"E"];
 ```
 
@@ -605,7 +594,7 @@ ObjectiveRocks has a new `mergeOperation` method for use with a generic Merge Op
 
 ```objective-c
 RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operator"
-	partialMergeBlock:^id(id key, NSString *leftOperand, NSString *rightOperand) {
+	partialMergeBlock:^id(NSData *key, NSData *leftOperand, NSData *rightOperand) {
 		NSString *left = [leftOperand componentsSeparatedByString:@":"][0];
 		NSString *right = [rightOperand componentsSeparatedByString:@":"][0];
 		if ([left isEqualToString:right]) {
@@ -629,9 +618,6 @@ RocksDBMergeOperator *mergeOp = [RocksDBMergeOperator operatorWithName:@"operato
 RocksDB *db = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
 	options.createIfMissing = YES;
 	options.mergeOperator = mergeOp;
-
-	options.keyType = RocksDBTypeNSString;
-	options.valueType = RocksDBTypeNSJSONSerializable;
 }];
 
 NSDictionary *object = @{@"Key 1" : @"Value 1",
@@ -640,12 +626,12 @@ NSDictionary *object = @{@"Key 1" : @"Value 1",
 
 [db setObject:object forKey:@"Dict Key"];
 
-[db mergeOperation:@"Key 1:UPDATE:Value X" forKey:@"Dict Key"];
-[db mergeOperation:@"Key 4:INSERT:Value 4" forKey:@"Dict Key"];
-[db mergeOperation:@"Key 2:DELETE" forKey:@"Dict Key"];
-[db mergeOperation:@"Key 1:UPDATE:Value 1 New" forKey:@"Dict Key"];
+[db mergeData:@"Key 1:UPDATE:Value X" forKey:@"Dict Key"];
+[db mergeData:@"Key 4:INSERT:Value 4" forKey:@"Dict Key"];
+[db mergeData:@"Key 2:DELETE" forKey:@"Dict Key"];
+[db mergeData:@"Key 1:UPDATE:Value 1 New" forKey:@"Dict Key"];
 
-id result = [db objectForKey:@"Dict Key"];
+id result = [db dataForKey:@"Dict Key"];
 /**
 result = @{@"Key 1" : @"Value 1 New",
 		   @"Key 3" : @"Value 3",
@@ -669,8 +655,6 @@ NSArray *threads = dbEnv.threadList;
 // "threads" array contains objects of type RocksDBThreadStatus
 RocksDBThreadStatus *status = threads[0];
 ```
-
-> Thread Status API is currently a WIP.
 
 ## Backup & Restore
 
@@ -710,13 +694,13 @@ RocksDB *db = ...
 
 RocksDBBackupEngine *backupEngine = [[RocksDBBackupEngine alloc] initWithPath:@"path/to/backup"];
 
-[db setObject:@"Value 1" forKey:@"A"];
+[db setData:@"Value 1" forKey:@"A"];
 [backupEngine createBackupForDatabase:db error:nil];
 
-[db setObject:@"Value 2" forKey:@"B"];
+[db setData:@"Value 2" forKey:@"B"];
 [backupEngine createBackupForDatabase:db error:nil];
 
-[db setObject:@"Value 3" forKey:@"C"];
+[db setData:@"Value 3" forKey:@"C"];
 [backupEngine createBackupForDatabase:db error:nil];
 
 // An array containing RocksDBBackupInfo objects
@@ -763,7 +747,82 @@ uint64_t sizeActiveMemTable = [db valueForIntProperty:RocksDBIntPropertyCurSizeA
 
 # Configuration <a name="configuration"></a>
 
-TBD
+Currently only a subset of all RocksDB's available options are wrapped/provided.
+
+> Further options will be added in later versions (mostly when I get the time to experiment with them and figure out what they do)
+
+## ObjectiveRocks DB Options
+
+| Option                      | Description                                                          | Default Value                      |
+|-----------------------------|----------------------------------------------------------------------|------------------------------------|
+| createIfMissing             | The database will be created if it is missing                        | false                              |
+| createMissingColumnFamilies | Missing column families will be automatically created                | false                              |
+| errorIfExists               | An error is raised if the database already exists                    | false                              |
+| paranoidChecks              | RocksDB will aggressively check consistency of the data              | true                               |
+| infoLogLevel                | Log level                                                            | INFO                               |
+| maxOpenFiles                | Number of open files that can be used by the DB                      | 5000                               |
+| maxWriteAheadLogSize        | Max size of write-ahead logs before force-flushing                   | 0 (= dynamically chosen)           |
+| statistics                  | If non-nil, metrics about database operations will be collected      | nil                                |
+| disableDataSync             | Contents of manifest and data files wont be synced to stable storage | false                              |
+| useFSync                    | Every store to stable storage will issue a fsync                     | false                              |
+| maxLogFileSize              | Max size of the info log file, will rotate when exceeded             | 0 (= all logs written to one file) |
+| logFileTimeToRoll           | Time for the info log file to roll (in seconds)                      | 0 (disabled)                       |
+| keepLogFileNum              | Maximal info log files to be kept                                    | 1000                               |
+| bytesPerSync                | Incrementally sync files to disk while they are being written        | 0 (disabled)                       |
+
+## ObjectiveRocks Column Family Options
+
+| Option                      | Description                                                          | Default Value                                  |
+|-----------------------------|----------------------------------------------------------------------|------------------------------------------------|
+| comparator                  | Used to define the order of keys in the table                        | Lexicographic byte-wise ordering               |
+| mergeOperator               | Must be provided for merge operations                                | `nil`                                          |
+| writeBufferSize             | Amount of data to build up in memory before writing to disk          | 4 * 1048576 (4MB)                              |
+| maxWriteBufferNumber        | The maximum number of write buffers that are built up in memory      | 2                                              |
+| minWriteBufferNumberToMerge | The minimum number of write buffers that will be merged together before writing to storage | 1                        |
+| compressionType             | Compress blocks using the specified compression algorithm            | Snappy Compression                             |
+| prefixExtractor             | If non-nil, the specified function to determine the prefixes for keys will be used | `nil`                            |
+| numLevels                   | Number of levels for the DB                                          | 7                                              |
+| level0FileNumCompactionTrigger | Compress blocks using the specified compression algorithm         | 4                                              |
+| level0SlowdownWritesTrigger | Soft limit on number of level-0 files                                | 20                                             |
+| level0StopWritesTrigger     | Maximum number of level-0 files                                      | 24                                             |
+| targetFileSizeBase          | Target file size for compaction                                      | 2 * 1048576 (2MB)                              |
+| targetFileSizeMultiplier    | Multiplier for sizes of files in different levels                    | 1 (files in different levels will have similar size) |
+| maxBytesForLevelBase        | Control maximum total data size for a level                          | 10 * 1048576 (10MB)                            |
+| maxBytesForLevelMultiplier  | Multiplier for file size per level                                   | 10                                             |
+| expandedCompactionFactor    | Maximum number of bytes in all compacted files                       | 25                                             |
+| sourceCompactionFactor      | Maximum number of bytes in all source files to be compacted in a single compaction run               | 1              |
+| maxGrandparentOverlapFactor | Control maximum bytes of overlaps in grandparent (i.e., level+2)                                     | 10             |
+| softRateLimit               | Puts are delayed 0-1 ms when any level has a compaction score that exceeds this limit                | 0 (disabled)   |
+| hardRateLimit               | Puts are delayed 1ms at a time when any level has a compaction score that exceeds this limit         | 0 (disabled)   |
+| arenaBlockSize              | Size of one block in arena memory allocation                                                         | 0              |
+| disableAutoCompactions      | Disable automatic compactions                                                                        | false          |
+| purgeRedundantKvsWhileFlush | Purge duplicate/deleted keys when a memtable is flushed to storage                                   | true           |
+| verifyChecksumsInCompaction | If true, compaction will verify checksum on every read that happens as part of compaction            | true           |
+| filterDeletes               | Use KeyMayExist API to filter deletes when this is true                                              | false          |
+| maxSequentialSkipInIterations | An iteration->Next() sequentially skips over keys with the same user-key unless this option is set | 8              |
+| memTableRepFactory          | A factory that provides MemTableRep objects                                                          | `nil`. Internallty RocksDB will use a factory that provides a skip-list-based implementation of `MemTableRep` |
+| tableFacotry                | A factory that provides TableFactory objects                                                         | `nil`. Internallty RocksDB will use a block-based table factory that provides a default implementation of TableBuilder and TableReader with default `BlockBasedTableOptions` |
+| memtablePrefixBloomBits     | If prefixExtractor is set and bloom_bits is not 0, create prefix bloom for memtable                  | 0              |
+| memtablePrefixBloomProbes   | Number of hash probes per key                                                                        | 6              |
+| memtablePrefixBloomHugePageTlbSize |  Page size for huge page TLB for bloom in memtable                                            | 0              |
+| bloomLocality               |  Control locality of bloom filter probes to improve cache miss rate                                  | 0              |
+| maxSuccessiveMerges         | Maximum number of successive merge operations on a key in the memtable                               | 0              |
+| minPartialMergeOperands     | The number of partial merge operands to accumulate before partial merge will be performed            | 2              |
+
+## Read Options
+
+| Option                      | Description                                                          | Default Value                      |
+|-----------------------------|----------------------------------------------------------------------|------------------------------------|
+| verifyChecksums             | Data read will be verified against corresponding checksums           | true                               |
+| fillCache                   | whether the read for this iteration be cached in memory              | true                               |
+
+## Write Options
+
+| Option                      | Description                                                          | Default Value                      |
+|-----------------------------|----------------------------------------------------------------------|------------------------------------|
+| syncWrites                  | Writes will be flushed from buffer before being considered complete  | false                              |
+| disableWriteAheadLog        | Writes will not first go to the write ahead log                      | true                               |
+| ignoreMissingColumnFamilies | Ignore writes to non-existing column families                        | false                              |
 
 ## Table Formats
 
@@ -780,44 +839,3 @@ TBD
 * `Cuckoo`: creates a cuckoo-hashing based mem-table representation. Cuckoo-hash is a closed-hash strategy, in which all key/value pairs are stored in the bucket array itself intead of in some data structures external to the bucket array
 
 For more details visit the wiki [Hash based memtable implementations](https://github.com/facebook/rocksdb/wiki/Hash-based-memtable-implementations)
-
-## ObjectiveRocks DBOptions
-
-Currently only a subset of all RocksDB's available options are wrapped/provided.
-
-> Further options will be added in later versions (mostly when I get the time to experiment with them and figure out what they do)
-
-| Option                      | Description                                                          | Default Value                      |
-|-----------------------------|----------------------------------------------------------------------|------------------------------------|
-| createIfMissing             | The database will be created if it is missing                        | false                              |
-| createMissingColumnFamilies | Missing column families will be automatically created                | false                              |
-| errorIfExists               | An error is raised if the database already exists                    | false                              |
-| paranoidChecks              | RocksDB will aggressively check consistency of the data              | true                               |
-| infoLogLevel                | Log level                                                            | INFO                               |
-| maxOpenFiles                | Number of open files that can be used by the DB                      | 5000                               |
-| maxWriteAheadLogSize        | Max size of write-ahead logs before force-flushing                   | 0 (= dynamically chosen)           |
-| disableDataSync             | Contents of manifest and data files wont be synced to stable storage | false                              |
-| useFSync                    | Every store to stable storage will issue a fsync                     | false                              |
-| maxLogFileSize              | Max size of the info log file, will rotate when exceeded             | 0 (= all logs written to one file) |
-| logFileTimeToRoll           | Time for the info log file to roll (in seconds)                      | 0 (disabled)                       |
-| keepLogFileNum              | Maximal info log files to be kept                                    | 1000                               |
-| bytesPerSync                | Incrementally sync files to disk while they are being written        | 0 (disabled)                       |
-| writeBufferSize             | Amount of data to build up in memory before writing to disk          | 4MB                                |
-| maxWriteBufferNumber        | The maximum number of write buffers that are built up in memory      | 2                                  | 
-| compressionType             | Compress blocks using the specified compression algorithm            | Snappy Compression                 |
-
-## Read Options
-
-| Option                      | Description                                                          | Default Value                      |
-|-----------------------------|----------------------------------------------------------------------|------------------------------------|
-| verifyChecksums             | Data read will be verified against corresponding checksums           | true                               |
-| fillCache                   | whether the read for this iteration be cached in memory              | true                               |
-
-## Write Options
-
-| Option                      | Description                                                          | Default Value                      |
-|-----------------------------|----------------------------------------------------------------------|------------------------------------|
-| syncWrites                  | Writes will be flushed from buffer before being considered complete  | false                              |
-| disableWriteAheadLog        | Writes will not first go to the write ahead log                      | true                               |
-| timeoutHint                 | Timeout hint for write operation                                     | 0 (no timeout)                     |
-| ignoreMissingColumnFamilies | Ignore writes to non-existing column families                        | false                              |

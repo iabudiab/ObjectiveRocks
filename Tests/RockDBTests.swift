@@ -10,11 +10,35 @@ import Foundation
 import XCTest
 import ObjectiveRocks
 
-public func AssertThrows(message: String = "Expression did not throw",
+// MARK:- Extension
+
+extension Data: ExpressibleByStringLiteral {
+	public init(stringLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+
+	public init(extendedGraphemeClusterLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+
+	public init(unicodeScalarLiteral value: String) {
+		self = value.data(using: .utf8)!
+	}
+}
+
+extension String {
+	var data: Data {
+		return self.data(using: .utf8)!
+	}
+}
+
+// MARK:- Util
+
+public func AssertThrows(_ message: String = "Expression did not throw",
                          _ function: String = #function,
-                           _ file: StaticString = #file,
-                             _ line: UInt = #line,
-                               expression: () throws -> Void)
+                         _ file: StaticString = #file,
+                         _ line: UInt = #line,
+                         expression: () throws -> Void)
 {
 	var thrown: NSError? = nil
 	do {
@@ -27,35 +51,7 @@ public func AssertThrows(message: String = "Expression did not throw",
 	XCTAssertNotNil(thrown, completeMessage, file: file, line: line)
 }
 
-public func Data(x: String) -> NSData {
-	return x.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
-}
-
-public func Str(x: NSData) -> NSString {
-	return NSString(data: x, encoding: NSUTF8StringEncoding)!
-}
-
-public func NumData(x: UInt64) -> NSData {
-	var val = x
-	return NSData(bytes: &val, length: sizeof(UInt64))
-}
-
-public func NumData(x: Float) -> NSData {
-	var val = x
-	return NSData(bytes: &val, length: sizeof(UInt64))
-}
-
-public func Val(data: NSData) -> UInt64 {
-	var val: UInt64 = 0
-	data.getBytes(&val, length: sizeof(UInt64))
-	return val
-}
-
-public func Val(data: NSData) -> Float {
-	var val: Float = 0
-	data.getBytes(&val, length: sizeof(Float))
-	return val
-}
+// MARK:- Base
 
 class RocksDBTests : XCTestCase {
 
@@ -69,12 +65,12 @@ class RocksDBTests : XCTestCase {
 
 	override func setUp() {
 		super.setUp()
-		let bundle = NSBundle(forClass: self.dynamicType)
-		path = (bundle.bundlePath as NSString).stringByAppendingPathComponent("ObjectiveRocks")
-		backupPath = path.stringByAppendingString("Backup")
-		restorePath = path.stringByAppendingString("Restore")
-		checkpointPath1 = path.stringByAppendingString("Snapshot1")
-		checkpointPath2 = path.stringByAppendingString("Snapshot2")
+		let bundle = Bundle(for: type(of: self))
+		path = (bundle.bundlePath as NSString).appendingPathComponent("ObjectiveRocks")
+		backupPath = path + "Backup"
+		restorePath = path + "Restore"
+		checkpointPath1 = path + "Snapshot1"
+		checkpointPath2 = path + "Snapshot2"
 		
 		cleanupDatabase()
 	}
@@ -89,11 +85,11 @@ class RocksDBTests : XCTestCase {
 
 	func cleanupDatabase() {
 		do {
-			try NSFileManager.defaultManager().removeItemAtPath(path)
-			try NSFileManager.defaultManager().removeItemAtPath(backupPath)
-			try NSFileManager.defaultManager().removeItemAtPath(restorePath)
-			try NSFileManager.defaultManager().removeItemAtPath(checkpointPath1)
-			try NSFileManager.defaultManager().removeItemAtPath(checkpointPath2)
+			try FileManager.default.removeItem(atPath: path)
+			try FileManager.default.removeItem(atPath: backupPath)
+			try FileManager.default.removeItem(atPath: restorePath)
+			try FileManager.default.removeItem(atPath: checkpointPath1)
+			try FileManager.default.removeItem(atPath: checkpointPath2)
 		} catch {}
 	}
 }

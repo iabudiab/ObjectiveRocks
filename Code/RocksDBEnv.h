@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#if ROCKSDB_USING_THREAD_STATUS
+#import "RocksDBThreadStatus.h"
+#endif
+
 NS_ASSUME_NONNULL_BEGIN
 
 /**
@@ -39,7 +43,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @warning This method is not available in RocksDB Lite.
  */
-- (NSArray *)threadList;
+- (NSArray<RocksDBThreadStatus *> *)threadList;
 #endif
 
 @end

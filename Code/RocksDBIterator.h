@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "RocksDBEncodingOptions.h"
 #import "RocksDBRange.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -46,7 +45,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @param aKey The key to position the tartaritartor at.
  */
-- (void)seekToKey:(id)aKey;
+- (void)seekToKey:(NSData *)aKey;
 
 /** 
  Moves to the next entry in the source. After this call, `isValid` is
@@ -66,7 +65,7 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return The key at the current position.
  */
-- (id)key;
+- (NSData *)key;
 
 /** 
  Returns the value for the current entry. The underlying storage for the returned 
@@ -74,14 +73,14 @@ NS_ASSUME_NONNULL_BEGIN
 
  @return The value for the key at the current position.
  */
-- (id)value;
+- (NSData *)value;
 
 /**
  Executes a given block for each key in the iterator.
 
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysUsingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysUsingBlock:(void (^)(NSData *key, BOOL *stop))block;
 
 /**
  Executes a given block for each key in the iterator in reverse order.
@@ -89,7 +88,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param reverse BOOL indicating whether to enumerate in the reverse order.
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysInReverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInReverse:(BOOL)reverse
+					usingBlock:(void (^)(NSData *key, BOOL *stop))block;
 
 /**
  Executes a given block for each key in the iterator in the given key range.
@@ -100,14 +100,16 @@ NS_ASSUME_NONNULL_BEGIN
 
  @see RocksDBIteratorKeyRange
  */
-- (void)enumerateKeysInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysInRange:(RocksDBKeyRange *)range
+					 reverse:(BOOL)reverse
+				  usingBlock:(void (^)(NSData *key, BOOL *stop))block;
 
 /**
  Executes a given block for each key-value pair in the iterator.
 
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysAndValuesUsingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesUsingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block;
 
 /**
  Executes a given block for each key-value pair in the iterator in reverse order.
@@ -115,7 +117,8 @@ NS_ASSUME_NONNULL_BEGIN
  @param reverse BOOL indicating whether to enumerate in the reverse order.
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysAndValuesInReverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesInReverse:(BOOL)reverse
+							 usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block;
 
 /**
  Executes a given block for each key-value pair in the iterator in the given key range.
@@ -124,21 +127,25 @@ NS_ASSUME_NONNULL_BEGIN
  @parame reverse BOOL indicating whether to enumerate in the reverse order.
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysAndValuesInRange:(RocksDBKeyRange *)range reverse:(BOOL)reverse usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesInRange:(RocksDBKeyRange *)range
+							  reverse:(BOOL)reverse
+						   usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block;
 
 /**
  Executes a given block for each key with the given prefix in the iterator.
 
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysWithPrefix:(id)prefix usingBlock:(void (^)(id key, BOOL *stop))block;
+- (void)enumerateKeysWithPrefix:(NSData *)prefix
+					 usingBlock:(void (^)(NSData *key, BOOL *stop))block;
 
 /**
  Executes a given block for each key-value pair with the given prefix in the iterator.
 
  @param block The block to apply to elements.
  */
-- (void)enumerateKeysAndValuesWithPrefix:(id)prefix usingBlock:(void (^)(id key, id value, BOOL *stop))block;
+- (void)enumerateKeysAndValuesWithPrefix:(NSData *)prefix
+							  usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block;
 
 @end
 

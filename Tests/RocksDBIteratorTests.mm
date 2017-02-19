@@ -20,14 +20,14 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
 	for ([iterator seekToFirst]; [iterator isValid]; [iterator next]) {
-		[actual addObject:Str([iterator key])];
+		[actual addObject:[[NSString alloc] initWithData:iterator.key]];
 	}
 
 	NSArray *expected = @[ @"key 1", @"key 2", @"key 3" ];
@@ -42,22 +42,22 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
 
 	RocksDBIterator *iterator = [_rocks iterator];
 
 	[iterator seekToFirst];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
-	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+	XCTAssertEqualObjects(iterator.key, @"key 1".data);
+	XCTAssertEqualObjects(iterator.value, @"value 1".data);
 
 	[iterator next];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
-	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
+	XCTAssertEqualObjects(iterator.key, @"key 2".data);
+	XCTAssertEqualObjects(iterator.value, @"value 2".data);
 
 	[iterator next];
 
@@ -67,15 +67,15 @@
 	[iterator previous];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, Data(@"key 1"));
-	XCTAssertEqualObjects(iterator.value, Data(@"value 1"));
+	XCTAssertEqualObjects(iterator.key, @"key 1".data);
+	XCTAssertEqualObjects(iterator.value, @"value 1".data);
 
 	[iterator seekToFirst];
 	[iterator seekToLast];
 
 	XCTAssertTrue(iterator.isValid);
-	XCTAssertEqualObjects(iterator.key, Data(@"key 2"));
-	XCTAssertEqualObjects(iterator.value, Data(@"value 2"));
+	XCTAssertEqualObjects(iterator.key, @"key 2".data);
+	XCTAssertEqualObjects(iterator.value, @"value 2".data);
 
 	[iterator close];
 }
@@ -86,14 +86,14 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
 	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"key 1", @"key 2", @"key 3" ];
@@ -108,14 +108,14 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInReverse:YES usingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysInReverse:YES usingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"key 3", @"key 2", @"key 1" ];
@@ -130,15 +130,15 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(Data(@"key 2"), nil) reverse:NO usingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(@"key 2".data, nil) reverse:NO usingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"key 2", @"key 3", @"key 4" ];
@@ -153,15 +153,15 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(nil, Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(nil, @"key 4".data) reverse:NO usingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"key 1", @"key 2", @"key 3" ];
@@ -176,42 +176,18 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(Data(@"key 2"), Data(@"key 4")) reverse:NO usingBlock:^(id key, BOOL *stop) {
-		[actual addObject:Str(key)];
+	[iterator enumerateKeysInRange:RocksDBMakeKeyRange(@"key 2".data, @"key 4".data) reverse:NO usingBlock:^(NSData *key, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
 	}];
 
 	NSArray *expected = @[ @"key 2", @"key 3" ];
-	XCTAssertEqualObjects(actual, expected);
-
-	[iterator close];
-}
-
-- (void)testDB_Iterator_EnumerateKeys_Encoded
-{
-	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSString;
-	}];
-
-	[_rocks setObject:@"value 1" forKey:@"Key 1" error:nil];
-	[_rocks setObject:@"value 2" forKey:@"Key 2" error:nil];
-	[_rocks setObject:@"value 3" forKey:@"Key 3" error:nil];
-
-	NSMutableArray *actual = [NSMutableArray array];
-	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysUsingBlock:^(id key, BOOL *stop) {
-		[actual addObject:key];
-	}];
-
-	NSArray *expected = @[ @"Key 1", @"Key 2", @"Key 3" ];
 	XCTAssertEqualObjects(actual, expected);
 
 	[iterator close];
@@ -223,15 +199,15 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesUsingBlock:^(id key, id value, BOOL *stop) {
-		[actual addObject:Str(key)];
-		[actual addObject:Str(value)];
+	[iterator enumerateKeysAndValuesUsingBlock:^(NSData *key, NSData *value, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
+		[actual addObject:[[NSString alloc] initWithData:value]];
 	}];
 
 	NSArray *expected = @[ @"key 1", @"value 1", @"key 2", @"value 2", @"key 3", @"value 3" ];
@@ -246,15 +222,15 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesInReverse:YES usingBlock:^(id key, id value, BOOL *stop) {
-		[actual addObject:Str(key)];
-		[actual addObject:Str(value)];
+	[iterator enumerateKeysAndValuesInReverse:YES usingBlock:^(NSData *key, NSData *value, BOOL *stop) {
+		[actual addObject:[[NSString alloc] initWithData:key]];
+		[actual addObject:[[NSString alloc] initWithData:value]];
 	}];
 
 	NSArray *expected = @[ @"key 3", @"value 3", @"key 2", @"value 2", @"key 1", @"value 1" ];
@@ -269,18 +245,18 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(Data(@"key 2"), nil)
+	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(@"key 2".data, nil)
 									reverse:NO
-								 usingBlock:^(id key, id value, BOOL *stop) {
-									 [actual addObject:Str(key)];
-									 [actual addObject:Str(value)];
+								 usingBlock:^(NSData *key, NSData *value, BOOL *stop) {
+									 [actual addObject:[[NSString alloc] initWithData:key]];
+									 [actual addObject:[[NSString alloc] initWithData:value]];
 								 }];
 	
 	NSArray *expected = @[ @"key 2", @"value 2", @"key 3", @"value 3", @"key 4", @"value 4" ];
@@ -295,18 +271,18 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(nil, Data(@"key 4"))
+	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(nil, @"key 4".data)
 									reverse:NO
-								 usingBlock:^(id key, id value, BOOL *stop) {
-									 [actual addObject:Str(key)];
-									 [actual addObject:Str(value)];
+								 usingBlock:^(NSData *key, NSData *value, BOOL *stop) {
+									 [actual addObject:[[NSString alloc] initWithData:key]];
+									 [actual addObject:[[NSString alloc] initWithData:value]];
 								 }];
 	
 	NSArray *expected = @[ @"key 1", @"value 1", @"key 2", @"value 2", @"key 3", @"value 3" ];
@@ -321,49 +297,24 @@
 		options.createIfMissing = YES;
 	}];
 
-	[_rocks setData:Data(@"value 1") forKey:Data(@"key 1") error:nil];
-	[_rocks setData:Data(@"value 2") forKey:Data(@"key 2") error:nil];
-	[_rocks setData:Data(@"value 3") forKey:Data(@"key 3") error:nil];
-	[_rocks setData:Data(@"value 4") forKey:Data(@"key 4") error:nil];
+	[_rocks setData:@"value 1".data forKey:@"key 1".data error:nil];
+	[_rocks setData:@"value 2".data forKey:@"key 2".data error:nil];
+	[_rocks setData:@"value 3".data forKey:@"key 3".data error:nil];
+	[_rocks setData:@"value 4".data forKey:@"key 4".data error:nil];
 
 	NSMutableArray *actual = [NSMutableArray array];
 	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(Data(@"key 2"), Data(@"key 4"))
+	[iterator enumerateKeysAndValuesInRange:RocksDBMakeKeyRange(@"key 2".data, @"key 4".data)
 									reverse:NO
-								 usingBlock:^(id key, id value, BOOL *stop) {
-									 [actual addObject:Str(key)];
-									 [actual addObject:Str(value)];
+								 usingBlock:^(NSData *key, NSData *value, BOOL *stop) {
+									 [actual addObject:[[NSString alloc] initWithData:key]];
+									 [actual addObject:[[NSString alloc] initWithData:value]];
 								 }];
 
 
 	NSArray *expected = @[ @"key 2", @"value 2", @"key 3", @"value 3" ];
 	XCTAssertEqualObjects(actual, expected);
 
-	[iterator close];
-}
-
-- (void)testDB_Iterator_EnumerateKeysAndValues_Encoded
-{
-	_rocks = [RocksDB databaseAtPath:_path andDBOptions:^(RocksDBOptions *options) {
-		options.createIfMissing = YES;
-		options.keyType = RocksDBTypeNSString;
-		options.valueType = RocksDBTypeNSString;
-	}];
-
-	[_rocks setObject:@"value 1" forKey:@"Key 1" error:nil];
-	[_rocks setObject:@"value 2" forKey:@"Key 2" error:nil];
-	[_rocks setObject:@"value 3" forKey:@"Key 3" error:nil];
-
-	NSMutableArray *actual = [NSMutableArray array];
-	RocksDBIterator *iterator = [_rocks iterator];
-	[iterator enumerateKeysAndValuesUsingBlock:^(id key, id value, BOOL *stop) {
-		[actual addObject:key];
-		[actual addObject:value];
-	}];
-
-	NSArray *expected = @[ @"Key 1", @"value 1", @"Key 2", @"value 2", @"Key 3", @"value 3" ];
-	XCTAssertEqualObjects(actual, expected);
-	
 	[iterator close];
 }
 

@@ -38,25 +38,25 @@
 		options.createIfMissing = YES;
 	}];
 	XCTAssertNotNil(_rocks);
-	[_rocks setData:Data(@"data") forKey:Data(@"key") error:nil];
+	[_rocks setData:@"data".data forKey:@"key".data error:nil];
 	[_rocks close];
 
 	_rocks = [RocksDB databaseForReadOnlyAtPath:_path andDBOptions:nil];
 
 	NSError *error = nil;
-	[_rocks dataForKey:Data(@"key") error:&error];
+	[_rocks dataForKey:@"key".data error:&error];
 	XCTAssertNil(error);
 
 	error = nil;
-	[_rocks setData:Data(@"data") forKey:Data(@"key") error:&error];
+	[_rocks setData:@"data".data forKey:@"key".data error:&error];
 	XCTAssertNotNil(error);
 
 	error = nil;
-	[_rocks deleteDataForKey:Data(@"key") error:&error];
+	[_rocks deleteDataForKey:@"key".data error:&error];
 	XCTAssertNotNil(error);
 
 	error = nil;
-	[_rocks mergeData:Data(@"data") forKey:Data(@"key") error:&error];
+	[_rocks mergeData:@"data".data forKey:@"key".data error:&error];
 	XCTAssertNotNil(error);
 }
 

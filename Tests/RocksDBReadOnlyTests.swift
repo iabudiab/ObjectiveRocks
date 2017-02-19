@@ -12,43 +12,43 @@ import ObjectiveRocks
 class RocksDBReadOnlyTests : RocksDBTests {
 
 	func testDB_Open_ReadOnly_NilIfMissing() {
-		rocks = RocksDB.databaseForReadOnlyAtPath(path, andDBOptions:nil)
+		rocks = RocksDB.databaseForReadOnly(atPath: path, andDBOptions:nil)
 		XCTAssertNil(rocks);
 	}
 
 	func testDB_Open_ReadOnly() {
-		rocks = RocksDB.databaseAtPath(path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true;
 		});
 		XCTAssertNotNil(rocks);
 		rocks.close()
 
-		rocks = RocksDB.databaseForReadOnlyAtPath(path, andDBOptions:nil)
+		rocks = RocksDB.databaseForReadOnly(atPath: path, andDBOptions:nil)
 		XCTAssertNotNil(rocks);
 	}
 
 	func testDB_ReadOnly_NotWritable() {
-		rocks = RocksDB.databaseAtPath(path, andDBOptions: { (options) -> Void in
+		rocks = RocksDB.database(atPath: path, andDBOptions: { (options) -> Void in
 			options.createIfMissing = true;
 		});
 		XCTAssertNotNil(rocks);
-		try! rocks.setData(Data("data"), forKey: Data("key"))
+		try! rocks.setData("data", forKey: "key")
 		rocks.close()
 
-		rocks = RocksDB.databaseForReadOnlyAtPath(path, andDBOptions:nil)
+		rocks = RocksDB.databaseForReadOnly(atPath: path, andDBOptions:nil)
 
-		try! rocks.dataForKey(Data("key"))
+		try! rocks.data(forKey: "key")
 
 		AssertThrows {
-			try self.rocks.setData(Data("data"), forKey:Data("key"))
+			try self.rocks.setData("data", forKey:"key")
 		}
 
 		AssertThrows {
-			try self.rocks.deleteDataForKey(Data("key"))
+			try self.rocks.deleteData(forKey: "key")
 		}
 
 		AssertThrows {
-			try self.rocks.mergeData(Data("data"), forKey:Data("key"))
+			try self.rocks.merge("data", forKey:"key")
 		}
 	}
 

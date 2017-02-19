@@ -26,7 +26,6 @@
 @interface RocksDBWriteBatchIterator ()
 {
 	rocksdb::WBWIIterator *_iterator;
-	RocksDBEncodingOptions *_options;
 }
 @end
 
@@ -35,12 +34,10 @@
 #pragma mark - Lifecycle
 
 - (instancetype)initWithWriteBatchIterator:(rocksdb::WBWIIterator *)iterator
-						andEncodingOptions:(RocksDBEncodingOptions *)options
 {
 	self = [super init];
 	if (self) {
 		_iterator = iterator;
-		_options = options;
 	}
 	return self;
 }
@@ -77,10 +74,10 @@
 	_iterator->SeekToLast();
 }
 
-- (void)seekToKey:(id)aKey
+- (void)seekToKey:(NSData *)aKey
 {
 	if (aKey != nil) {
-		_iterator->Seek(SliceFromKey(aKey, _options, nil));
+		_iterator->Seek(SliceFromData(aKey));
 	}
 }
 
@@ -99,8 +96,8 @@
 	rocksdb::WriteEntry nativeEntry = _iterator->Entry();
 	RocksDBWriteBatchEntry *writeEntry = [RocksDBWriteBatchEntry new];
 	writeEntry.type = (RocksDBWriteBatchEntryType)nativeEntry.type;
-	writeEntry.key = DecodeKeySlice(nativeEntry.key, _options, nil);
-	writeEntry.value = DecodeKeySlice(nativeEntry.value, _options, nil);
+	writeEntry.key = DataFromSlice(nativeEntry.key);
+	writeEntry.value = DataFromSlice(nativeEntry.value);
 	return writeEntry;
 }
 

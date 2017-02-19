@@ -10,6 +10,8 @@
 #import "RocksDBCache.h"
 #import "RocksDBFilterPolicy.h"
 
+NS_ASSUME_NONNULL_BEGIN
+
 typedef NS_ENUM(char, BlockBasedTableIndexType)
 {
 
@@ -81,7 +83,7 @@ typedef NS_ENUM(char, BlockBasedTableChecksumType) {
  
  @see RocksDBCache
  */
-@property (nonatomic, strong) RocksDBCache *blockCache;
+@property (nonatomic, strong, nullable) RocksDBCache *blockCache;
 
 /**
  @brief
@@ -89,7 +91,7 @@ typedef NS_ENUM(char, BlockBasedTableChecksumType) {
 
  @see RocksDBCache
  */
-@property (nonatomic, strong) RocksDBCache *blockCacheCompressed;
+@property (nonatomic, strong, nullable) RocksDBCache *blockCacheCompressed;
 
 /**
  @brief
@@ -123,7 +125,7 @@ typedef NS_ENUM(char, BlockBasedTableChecksumType) {
 
  @see RocksDBFilterPolicy
  */
-@property (nonatomic, strong) RocksDBFilterPolicy *filterPolicy;
+@property (nonatomic, strong, nullable) RocksDBFilterPolicy *filterPolicy;
 
 /**
  @brief
@@ -133,3 +135,5 @@ typedef NS_ENUM(char, BlockBasedTableChecksumType) {
 @property (nonatomic, assign) BOOL wholeKeyFiltering;
 
 @end
+
+NS_ASSUME_NONNULL_END

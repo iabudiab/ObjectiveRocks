@@ -1,5 +1,59 @@
 # Change Log
 
+## [0.7.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.7.0)
+
+Released on 2017.02.19
+
+- RocksDB Version: `4.6.1`: [facebook/rocksdb@8d7926a](https://github.com/facebook/rocksdb/commit/8d7926a766f2ab9bd6e7aa8cba80b5d3ff26c52b)
+
+### Added
+
+- Missing nullability annotations and light-weight generics throughout code base
+- New playground content
+
+### Updated
+
+- Project for Xcode 8
+- Swift tests for Swift 3
+- Playground contents and syntax for Swift 3
+- Travis config for iOS 10.2, macOS 10.12
+- Deployment targets to macOS 10.10, iOS 9.0
+
+### Removed
+
+- Removed the deprecated `timeoutHint` option
+- Removed the deprecated `maxMemCompactionLevel` option
+
+### Breaking Changes
+
+The built-in encoding/decoding of keys and values via the encoding options is completelty removed from this release. The API is completely `NSData`-based now.
+
+- Removed built-it Key/Value `Encoders` and `Decoders`
+	- The conversions of custom types to/from `NSData` is the responsibility of the caller
+- Removed `EncodingOptions`
+- Removed all methods depending on `EncodingOptions` and the built-in key/value `encoding` and all of the their variants:
+	- `setObject:forKey:`
+	- `deleteObjectForKey:`
+	- `objectForKey:`
+	- `mergeObject:forKey:`
+	- `mergeOperation:forKey:`
+- Refactored all `Iterator`, `Key Comparator` and `Merge Operator` methods accordingly
+- Removed `NSNumber` Key-Comparators
+- Rename method for setting up default read & write options from `setDefaultReadOptions:andWriteOptions:` to `setDefaultReadOptions:writeOptions:`
+	- The custom Swift equivalent is `setDefault(readOptions:writeOptions:)`
+
+
+## [0.6.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.6.0)
+
+Released on 2016.06.12
+
+- RocksDB Version: `4.6.1`: [facebook/rocksdb@8d7926a](https://github.com/facebook/rocksdb/commit/8d7926a766f2ab9bd6e7aa8cba80b5d3ff26c52b)
+
+### Hotfix
+
+- Removed Cocoapods badges from README
+
+
 ## [0.6.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.6.0)
 
 Released on 2016.06.12
@@ -12,7 +66,7 @@ Released on 2016.06.12
 - Support for `Write Batch with Index` and `Write Batch Iterator`
 - Support for `Range Compaction` operations
 - Nullability annotations
-	- Better compatibility with Swift
+  - Better compatibility with Swift
 - New statistics and counters
 - Cocoapods Podspec
 - Travis integration
@@ -21,13 +75,13 @@ Released on 2016.06.12
 
 - RocksDB initializers were changed to class instead of instance methods
 - Removed RocksDB methods without error parameter
-	- Better compatibility with Swift's error-handling model
+  - Better compatibility with Swift's error-handling model
 - Refactored all RocksDB methods so that the error parameter is the last
-	- Better compatibility with Swift's error-handling model
+  - Better compatibility with Swift's error-handling model
 - Removed `Column Family Metadata` from iOS target
 - `RocksDBIteratorKeyRange` is refactored to `RocksDBKeyRange`
-	- Key ranges are used not only for iterations but also for compaction jobs
-	- Empty-range constant is refactored to open-range, since it represents a range containing all the keys
+  - Key ranges are used not only for iterations but also for compaction jobs
+  - Empty-range constant is refactored to open-range, since it represents a range containing all the keys
 - ObjectiveRocks builds frameworks now instead of static libraries
 
 ## [0.5.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.5.0)
@@ -43,7 +97,7 @@ Released on 2016.07.30
 ### Removed
 
 - Removed `+ (instancetype)LRUCacheWithCapacity:numShardsBits:removeScanCountLimit:` RocksDB Cache initializer
-	- No longer available since: [facebook/rocksdb@c88ff4c](https://github.com/facebook/rocksdb/commit/c88ff4ca76a6a24632cbdd834f621952a251d7a1)
+  - No longer available since: [facebook/rocksdb@c88ff4c](https://github.com/facebook/rocksdb/commit/c88ff4ca76a6a24632cbdd834f621952a251d7a1)
 
 ## [0.4.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.4.0)
 
@@ -70,7 +124,7 @@ All headers are refactored in this release to provide a pure Objective-C interfa
 ### Changed
 
 - Updated `Thread Status` API
-	- Adapted according to the changes introduces in: [facebook/rocksdb@bf287b7](https://github.com/facebook/rocksdb/commit/bf287b76e0e7b5998de49e3ceaa2b34d1f3c13ae)
+  - Adapted according to the changes introduces in: [facebook/rocksdb@bf287b7](https://github.com/facebook/rocksdb/commit/bf287b76e0e7b5998de49e3ceaa2b34d1f3c13ae)
 
 ## [0.3.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.3.0)
 

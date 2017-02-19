@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /** Options that control read operations. */
 @interface RocksDBReadOptions : NSObject <NSCopying> 
 
@@ -25,3 +27,5 @@
 @property (nonatomic, assign) BOOL fillCache;
 
 @end
+
+NS_ASSUME_NONNULL_END

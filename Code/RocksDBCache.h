@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+NS_ASSUME_NONNULL_BEGIN
+
 /**
  RocksDB cache.
  */
@@ -34,3 +36,5 @@
 + (instancetype)LRUCacheWithCapacity:(size_t)capacity numShardsBits:(int)numShardBits;
 
 @end
+
+NS_ASSUME_NONNULL_END
