@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'ObjectiveRocks'
-  s.version           = '0.6.0'
+  s.version           = '0.7.0'
   s.summary           = 'Objective-C wrapper of RocksDB - A Persistent Key-Value Store for Flash and RAM Storage.'
   s.license           = 'MIT'
   s.homepage          = 'https://github.com/iabudiab/ObjectiveRocks'
@@ -8,7 +8,7 @@ Pod::Spec.new do |s|
   s.social_media_url  = 'https://twitter.com/_iabudiab'
   s.source            = { :git => 'https://github.com/iabudiab/ObjectiveRocks.git', :tag => s.version, :submodules => true }
 
-  s.ios.deployment_target = '8.0'
+  s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
 
   s.requires_arc = true
