@@ -55,12 +55,12 @@
 
 #pragma mark - Accessor
 
-- (uint64_t)countForTicker:(RocksDBTickerType)ticker
+- (uint64_t)countForTicker:(RocksDBTicker)ticker
 {
 	return _statistics->getTickerCount(ticker);
 }
 
-- (RocksDBStatisticsHistogram *)histogramDataForType:(RocksDBHistogramType)ticker
+- (RocksDBStatisticsHistogram *)histogramDataForType:(RocksDBHistogram)ticker
 {
 	rocksdb::HistogramData *data = new rocksdb::HistogramData;
 	_statistics->histogramData(ticker, data);
