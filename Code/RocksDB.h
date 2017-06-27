@@ -19,7 +19,7 @@
 #import "RocksDBIterator.h"
 
 #if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
-#import "RocksDBColumnFamilyMetaData.h"
+#import "RocksDBColumnFamilyMetadata.h"
 #import "RocksDBIndexedWriteBatch.h"
 #import "RocksDBProperties.h"
 #endif

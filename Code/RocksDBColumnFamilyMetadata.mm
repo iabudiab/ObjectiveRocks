@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 BrainCookie. All rights reserved.
 //
 
-#import "RocksDBColumnFamilyMetaData.h"
+#import "RocksDBColumnFamilyMetadata.h"
 #import "RocksDBColumnFamilyMetaData+Private.h"
 
 #import <rocksdb/metadata.h>
