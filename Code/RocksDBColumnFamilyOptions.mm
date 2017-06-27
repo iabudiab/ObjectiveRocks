@@ -221,36 +221,6 @@
 	return _options.max_bytes_for_level_multiplier;
 }
 
-- (void)setExpandedCompactionFactor:(int)expandedCompactionFactor
-{
-	_options.expanded_compaction_factor = expandedCompactionFactor;
-}
-
-- (int)expandedCompactionFactor
-{
-	return _options.expanded_compaction_factor;
-}
-
-- (void)setSourceCompactionFactor:(int)sourceCompactionFactor
-{
-	_options.source_compaction_factor = sourceCompactionFactor;
-}
-
-- (int)sourceCompactionFactor
-{
-	return _options.source_compaction_factor;
-}
-
-- (void)setMaxGrandparentOverlapFactor:(int)maxGrandparentOverlapFactor
-{
-	_options.max_grandparent_overlap_factor = maxGrandparentOverlapFactor;
-}
-
-- (int)maxGrandparentOverlapFactor
-{
-	return _options.max_grandparent_overlap_factor;
-}
-
 - (void)setSoftRateLimit:(double)softRateLimit
 {
 	_options.soft_rate_limit = softRateLimit;
@@ -301,26 +271,6 @@
 	return _options.purge_redundant_kvs_while_flush;
 }
 
-- (void)setVerifyChecksumsInCompaction:(BOOL)verifyChecksumsInCompaction
-{
-	_options.verify_checksums_in_compaction = verifyChecksumsInCompaction;
-}
-
-- (BOOL)verifyChecksumsInCompaction
-{
-	return _options.verify_checksums_in_compaction;
-}
-
-- (void)setFilterDeletes:(BOOL)filterDeletes
-{
-	_options.filter_deletes = filterDeletes;
-}
-
-- (BOOL)filterDeletes
-{
-	return _options.filter_deletes;
-}
-
 - (void)setMaxSequentialSkipInIterations:(uint64_t)maxSequentialSkipInIterations
 {
 	_options.max_sequential_skip_in_iterations = maxSequentialSkipInIterations;
@@ -353,34 +303,24 @@
 	return _tableFactoryWrapper;
 }
 
-- (void)setMemtablePrefixBloomBits:(uint32_t)memtablePrefixBloomBits
+- (void)setMemtablePrefixBloomSizeRatio:(double)memtablePrefixBloomSizeRatio
 {
-	_options.memtable_prefix_bloom_bits = memtablePrefixBloomBits;
+	_options.memtable_prefix_bloom_size_ratio = memtablePrefixBloomSizeRatio;
 }
 
-- (uint32_t)memtablePrefixBloomBits
+- (double)memtablePrefixBloomSizeRatio
 {
-	return _options.memtable_prefix_bloom_bits;
+	return _options.memtable_prefix_bloom_size_ratio;
 }
 
-- (void)setMemtablePrefixBloomProbes:(uint32_t)memtablePrefixBloomProbes
+- (void)setMemtableHugePageTlbSize:(size_t)memtableHugePageTlbSize
 {
-	_options.memtable_prefix_bloom_probes = memtablePrefixBloomProbes;
+	_options.memtable_huge_page_size = memtableHugePageTlbSize;
 }
 
-- (uint32_t)memtablePrefixBloomProbes
+- (size_t)memtableHugePageTlbSize
 {
-	return _options.memtable_prefix_bloom_probes;
-}
-
-- (void)setMemtablePrefixBloomHugePageTlbSize:(size_t)memtablePrefixBloomHugePageTlbSize
-{
-	_options.memtable_prefix_bloom_huge_page_tlb_size = memtablePrefixBloomHugePageTlbSize;
-}
-
-- (size_t)memtablePrefixBloomHugePageTlbSize
-{
-	return _options.memtable_prefix_bloom_huge_page_tlb_size;
+	return _options.memtable_huge_page_size;
 }
 
 - (void)setBloomLocality:(uint32_t)bloomLocality
@@ -401,16 +341,6 @@
 - (size_t)maxSuccessiveMerges
 {
 	return _options.max_successive_merges;
-}
-
-- (void)setMinPartialMergeOperands:(uint32_t)minPartialMergeOperands
-{
-	_options.min_partial_merge_operands = minPartialMergeOperands;
-}
-
-- (uint32_t)minPartialMergeOperands
-{
-	return _options.min_partial_merge_operands;
 }
 
 @end

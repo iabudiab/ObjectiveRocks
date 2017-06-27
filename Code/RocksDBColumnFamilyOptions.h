@@ -108,16 +108,6 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 /** @brief Default: 10 */
 @property (nonatomic, assign) int maxBytesForLevelMultiplier;
 
-/** @brief  Maximum number of bytes in all compacted files. */
-@property (nonatomic, assign) int expandedCompactionFactor;
-
-/** @brief Maximum number of bytes in all source files to be compacted in a
- single compaction run. */
-@property (nonatomic, assign) int sourceCompactionFactor;
-
-/** @brief Control maximum bytes of overlaps in grandparent (i.e., level+2) */
-@property (nonatomic, assign) int maxGrandparentOverlapFactor;
-
 /** @brief Puts are delayed 0-1 ms when any level has a compaction score that
  exceeds this limit.
  Default: 0 (disabled)
@@ -142,17 +132,6 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 /** @brief Purge duplicate/deleted keys when a memtable is flushed to storage. */
 @property (nonatomic, assign) BOOL purgeRedundantKvsWhileFlush;
 
-/** @brief If true, compaction will verify checksum on every read that happens
- as part of compaction.
- Default: true
- */
-@property (nonatomic, assign) BOOL verifyChecksumsInCompaction;
-
-/** @brief Use KeyMayExist API to filter deletes when this is true.
- Default: false
- */
-@property (nonatomic, assign) BOOL filterDeletes;
-
 /** @brief An iteration->Next() sequentially skips over keys with the same
  user-key unless this option is set.
  Default: 0
@@ -176,17 +155,14 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, strong, nullable) RocksDBTableFactory *tableFacotry;
 
 /** @brief If prefixExtractor is set and bloom_bits is not 0, create prefix bloom
- for memtable.
+ for memtable. If it is larger than 0.25, it is santinized to 0.25.
 
  @see RocksDBPrefixExtractor
  */
-@property (nonatomic, assign) uint32_t memtablePrefixBloomBits;
-
-/** @brief Number of hash probes per key. */
-@property (nonatomic, assign) uint32_t memtablePrefixBloomProbes;
+@property (nonatomic, assign) double memtablePrefixBloomSizeRatio;
 
 /** @brief Page size for huge page TLB for bloom in memtable. */
-@property (nonatomic, assign) size_t memtablePrefixBloomHugePageTlbSize;
+@property (nonatomic, assign) size_t memtableHugePageTlbSize;
 
 /** @brief Control locality of bloom filter probes to improve cache miss rate.
  Default: 0
@@ -197,12 +173,6 @@ typedef NS_ENUM(char, RocksDBCompressionType)
  Default: 0 (disabled)
  */
 @property (nonatomic, assign) size_t maxSuccessiveMerges;
-
-/** @brief The number of partial merge operands to accumulate before partial
- merge will be performed.
- Default: 2
- */
-@property (nonatomic, assign) uint32_t minPartialMergeOperands;
 
 @end
 
