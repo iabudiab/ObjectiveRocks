@@ -1943,9 +1943,6 @@
 				6232B7371A1E860700B14535 /* RocksDBReadOptions.mm */,
 				6273A50C1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.h */,
 				6273A50D1D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm */,
-				623147581A5AE1720019D14A /* Env */,
-				62F3ED521A57176200EBFEBF /* Table */,
-				625F8F261A59D78E007796BA /* Mem Table */,
 			);
 			name = Options;
 			sourceTree = "<group>";
@@ -2851,6 +2848,9 @@
 				62685CBA1A2E8257009401B1 /* Write Batch */,
 				620494841A32809400A0E950 /* Comparator */,
 				62269EE21A200CD9005A58D3 /* Options */,
+				623147581A5AE1720019D14A /* Env */,
+				62F3ED521A57176200EBFEBF /* Table */,
+				625F8F261A59D78E007796BA /* Mem Table */,
 				621897E01E3D7AD10019C64E /* Properties */,
 				623DC2541A335B9300B61B18 /* Snapshot */,
 				62EEC4B41A34FEC500624DA2 /* Merge Operator */,
