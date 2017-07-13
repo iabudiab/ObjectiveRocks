@@ -77,9 +77,6 @@
 		options.comparator = cmp;
 		options.prefixExtractor = [RocksDBPrefixExtractor prefixExtractorWithType:RocksDBPrefixFixedLength length:2];
 
-		options.memtablePrefixBloomBits = 100000000;
-		options.memtablePrefixBloomProbes = 6;
-
 		options.tableFacotry = [RocksDBTableFactory blockBasedTableFactoryWithOptions:^(RocksDBBlockBasedTableOptions *options) {
 			options.filterPolicy = [RocksDBFilterPolicy bloomFilterPolicyWithBitsPerKey:10 useBlockBasedBuilder:YES];
 		}];

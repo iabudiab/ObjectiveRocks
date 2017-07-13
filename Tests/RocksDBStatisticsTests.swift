@@ -34,12 +34,12 @@ class RocksDBStatisticsTests : RocksDBTests {
 
 		try! rocks.setData("abcd", forKey: "abcd")
 
-		XCTAssertEqual(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
-		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesWritten), 0 as UInt64);
+		XCTAssertEqual(statistics.count(for: RocksDBTicker.bytesRead), UInt64(0));
+		XCTAssertGreaterThan(statistics.count(for: RocksDBTicker.bytesWritten), UInt64(0));
 
 		try! rocks.data(forKey: "abcd")
 
-		XCTAssertGreaterThan(statistics.count(for: RocksDBTickerType.bytesRead), 0 as UInt64);
+		XCTAssertGreaterThan(statistics.count(for: RocksDBTicker.bytesRead), UInt64(0));
 	}
 
 	func testSwift_Statistics_Histogram() {
@@ -57,10 +57,9 @@ class RocksDBStatisticsTests : RocksDBTests {
 
 		try! rocks.data(forKey: "a42")
 
-		let dbGetHistogram = statistics.histogramData(for: RocksDBHistogramType.dbGet)
+		let dbGetHistogram = statistics.histogramData(forType: RocksDBHistogram.dbGet)
 
 		XCTAssertNotNil(dbGetHistogram);
 		XCTAssertGreaterThan(dbGetHistogram.median, 0.0);
 	}
 }
-

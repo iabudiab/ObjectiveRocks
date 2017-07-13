@@ -123,16 +123,6 @@
 	_options.statistics = _statisticsWrapper.statistics;
 }
 
-- (BOOL)disableDataSync
-{
-	return _options.disableDataSync;
-}
-
-- (void)setDisableDataSync:(BOOL)disableDataSync
-{
-	_options.disableDataSync = disableDataSync;
-}
-
 - (BOOL)useFSync
 {
 	return _options.use_fsync;

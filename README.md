@@ -4,10 +4,17 @@ ObjectiveRocks is an Objective-C wrapper of Facebook's [RocksDB](https://github.
 
 [![Build Status](https://travis-ci.org/iabudiab/ObjectiveRocks.svg?branch=master)](https://travis-ci.org/iabudiab/ObjectiveRocks)
 [![Carthage Compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
+[![License MIT](https://img.shields.io/badge/license-MIT-4481C7.svg?style=flat)](https://opensource.org/licenses/MIT)
+
 <!-- [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/ObjectiveRocks.svg?style=flat)](https://cocoapods.org/pods/ObjectiveRocks)
 [![CocoaDocs](https://img.shields.io/cocoapods/metrics/doc-percent/ObjectiveRocks.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks)
 [![Platform](https://img.shields.io/cocoapods/p/ObjectiveRocks.svg?style=flat)](http://cocoadocs.org/docsets/ObjectiveRocks) -->
-[![License MIT](https://img.shields.io/badge/license-MIT-4481C7.svg?style=flat)](https://opensource.org/licenses/MIT)
+
+---
+
+Current RocksDB Version: [v5.4.6](https://github.com/facebook/rocksdb/releases/tag/v5.4.6)
+
+---
 
 - [Quick Overview](#overview)
 - [Installation](#installation)

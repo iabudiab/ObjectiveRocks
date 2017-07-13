@@ -12,7 +12,7 @@
 #import "RocksDBCallbackMergeOperator.h"
 
 #import <rocksdb/slice.h>
-#import <Rocksdb/env.h>
+#import <rocksdb/env.h>
 
 #pragma mark - Extension
 

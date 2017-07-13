@@ -68,11 +68,6 @@ typedef NS_ENUM(unsigned char, RocksDBLogLevel)
  */
 @property (nonatomic, strong, nullable) RocksDBStatistics *statistics;
 
-/** @brief If true, then the contents of manifest and data files are not
- synced to stable storage.
- The default is false. */
-@property (nonatomic, assign) BOOL disableDataSync;
-
 /** @brief If true, then every store to stable storage will issue a fsync.
  The default is false. */
 @property (nonatomic, assign) BOOL useFSync;
