@@ -1,5 +1,31 @@
 # Change Log
 
+## [0.8.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.8.0)
+
+Released on 2017.07.13
+
+- RocksDB Version: `5.4.6`: [facebook/rocksdb@6e05979](https://github.com/facebook/rocksdb/commit/6e0597951e51e8dd3b28104d31e52962e00c101f)
+
+### Updated
+
+- Updated Column Family options:
+	- `uint32_t memtablePrefixBloomProbes` ~> `double memtablePrefixBloomSizeRatio`
+	- `size_t memtablePrefixBloomHugePageTlbSize` ~> `size_t memtableHugePageTlbSize`
+- Updated Statistics tickers and histograms
+
+### Removed
+
+- Removed obsolete DB options:
+	- `BOOL disableDataSync`
+- Removed obsolete Column Family options:
+	- `int expandedCompactionFactor`
+	- `int sourceCompactionFactor`
+	- `int maxGrandparentOverlapFactor`
+	- `BOOL verifyChecksumsInCompaction`
+	- `BOOL filterDeletes`
+	- `uint32_t memtablePrefixBloomBits`
+	- `uint32_t minPartialMergeOperands`
+
 ## [0.7.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.7.0)
 
 Released on 2017.02.19

@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'ObjectiveRocks'
-  s.version           = '0.7.0'
+  s.version           = '0.8.0'
   s.summary           = 'Objective-C wrapper of RocksDB - A Persistent Key-Value Store for Flash and RAM Storage.'
   s.license           = 'MIT'
   s.homepage          = 'https://github.com/iabudiab/ObjectiveRocks'
@@ -81,17 +81,17 @@ Pod::Spec.new do |s|
     'Code/RocksDBError.h',
     'Code/RocksDBSlice.h'
 
-  s.xcconfig = {
+  s.pod_target_xcconfig = {
     'GCC_PREPROCESSOR_DEFINITIONS' => 'NDEBUG=1 OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1',
     'HEADER_SEARCH_PATHS' => '"${PODS_ROOT}/ObjectiveRocks/rocksdb" "${PODS_ROOT}/ObjectiveRocks/rocksdb/include"',
     'GCC_INPUT_FILETYPE' => 'sourcecode.cpp.objcpp'
   }
 
-  s.osx.xcconfig = {
+  s.osx.pod_target_xcconfig = {
     'GCC_PREPROCESSOR_DEFINITIONS' => 'ROCKSDB_USING_THREAD_STATUS=1'
   }
 
-  s.ios.xcconfig = { 
+  s.ios.pod_target_xcconfig = { 
     'GCC_PREPROCESSOR_DEFINITIONS' => 'ROCKSDB_LITE=1 IOS_CROSS_COMPILE=1 NROCKSDB_THREAD_STATUS=1'
   }
 
