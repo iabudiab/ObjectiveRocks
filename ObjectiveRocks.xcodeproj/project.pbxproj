@@ -18,8 +18,6 @@
 		621897DD1E3D4D240019C64E /* RocksDBComparatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62102D411A643A13007E63F0 /* RocksDBComparatorTests.swift */; };
 		621897DE1E3D4E220019C64E /* RocksDBMergeOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62456CBA1A66FE0500329F11 /* RocksDBMergeOperatorTests.swift */; };
 		621897DF1E3D4E230019C64E /* RocksDBMergeOperatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 62456CBA1A66FE0500329F11 /* RocksDBMergeOperatorTests.swift */; };
-		621C6D971BEE4A4600044CB1 /* RocksDBStatistics.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A8B0631A58DD7D0069B4C8 /* RocksDBStatistics.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		621C6D981BEE4A4600044CB1 /* RocksDBStatisticsHistogram.h in Headers */ = {isa = PBXBuildFile; fileRef = 62A8B0671A58E4B60069B4C8 /* RocksDBStatisticsHistogram.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6236E25C1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6236E25B1A4E19A300A81ED6 /* RocksDBPrefixExtractorTests.mm */; };
 		62385EB41A2FCFB100493F18 /* RocksDBIteratorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB31A2FCFB100493F18 /* RocksDBIteratorTests.mm */; };
 		62385EB61A2FD05500493F18 /* RocksDBComparatorTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62385EB51A2FD05500493F18 /* RocksDBComparatorTests.mm */; };
@@ -3471,8 +3469,6 @@
 				623DD28E1F02ED92008CC574 /* write_buffer_manager.h in Headers */,
 				623DD21C1F02ED91008CC574 /* merge_operator.h in Headers */,
 				623DD4451F02EDD8008CC574 /* version_builder.h in Headers */,
-				621C6D971BEE4A4600044CB1 /* RocksDBStatistics.h in Headers */,
-				621C6D981BEE4A4600044CB1 /* RocksDBStatisticsHistogram.h in Headers */,
 				623DD5651F02EE68008CC574 /* block_based_table_reader.h in Headers */,
 				623DD4C71F02EE42008CC574 /* port_posix.h in Headers */,
 				623DD8401F02EE8A008CC574 /* block_cache_tier_file_buffer.h in Headers */,
