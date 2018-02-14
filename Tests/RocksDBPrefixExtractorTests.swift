@@ -64,8 +64,8 @@ class RocksDBPrefixExtractorTests : RocksDBTests {
 			let str1 = String(data: key1, encoding: .utf8)!
 			let str2 = String(data: key2, encoding: .utf8)!
 
-			let sub1 = str1.substring(from: str1.index(str1.startIndex, offsetBy: 1))
-			let sub2 = str2.substring(from: str2.index(str2.startIndex, offsetBy: 1))
+			let sub1 = str1[str1.index(str1.startIndex, offsetBy: 1)...]
+			let sub2 = str2[str2.index(str2.startIndex, offsetBy: 1)...]
 
 			let res = sub1.compare(sub2)
 			switch res {
