@@ -1,5 +1,5 @@
 language: objective-c
-osx_image: xcode8.3
+osx_image: xcode9
 
 branches:
   except:
@@ -15,21 +15,17 @@ env:
     - WORKSPACE=ObjectiveRocks.xcworkspace
     - IOS_FRAMEWORK_SCHEME=ObjectiveRocks-iOS
     - MACOS_FRAMEWORK_SCHEME=ObjectiveRocks
-    - IOS_SDK=iphonesimulator10.3
-    - MACOS_SDK=macosx10.12
+    - IOS_SDK=iphonesimulator11.0
+    - MACOS_SDK=macosx10.13
   matrix:
-    - DESTINATION="arch=x86_64"                              SIMULATOR=""                                   SCHEME="$MACOS_FRAMEWORK_SCHEME"    SDK="$MACOS_SDK"
-    - DESTINATION="OS=9.0,name=iPhone 6"                     SIMULATOR="iPhone 6 (9.0)"                     SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"
-    - DESTINATION="OS=9.1,name=iPhone 6 Plus"                SIMULATOR="iPhone 6 Plus (9.1)"                SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"
-    - DESTINATION="OS=9.2,name=iPhone 6S"                    SIMULATOR="iPhone 6S (9.2)"                    SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"
-    - DESTINATION="OS=9.3,name=iPhone 6S Plus"               SIMULATOR="iPhone 6S Plus (9.3)"               SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"
-    - DESTINATION="OS=10.3.1,name=iPhone 7 Plus"             SIMULATOR="iPhone 7 Plus (10.3.1)"             SCHEME="$IOS_FRAMEWORK_SCHEME"      SDK="$IOS_SDK"
+    - DESTINATION="arch=x86_64"                                SCHEME="$MACOS_FRAMEWORK_SCHEME"      SDK="$MACOS_SDK"
+    - DESTINATION="OS=9.3,name=iPhone 6s Plus"                 SCHEME="$IOS_FRAMEWORK_SCHEME"        SDK="$IOS_SDK"
+    - DESTINATION="OS=10.3.1,name=iPhone 7 Plus"               SCHEME="$IOS_FRAMEWORK_SCHEME"        SDK="$IOS_SDK"
+    - DESTINATION="OS=11.0,name=iPhone X"                      SCHEME="$IOS_FRAMEWORK_SCHEME"        SDK="$IOS_SDK"
 
 script:
   - set -o pipefail
   - xcodebuild -version
   - xcodebuild -showsdks
-  - SIMULATOR_ID=$(xcrun instruments -s devices | grep -io "$SIMULATOR \[.*\]" | grep -o "\[.*\]" | sed "s/^\[\(.*\)\]$/\1/")
-  - open -b com.apple.iphonesimulator --args -CurrentDeviceUDID $SIMULATOR_ID
   - travis_retry xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO clean build | xcpretty -c
   - travis_retry xcodebuild -workspace "$WORKSPACE" -scheme "$SCHEME" -sdk "$SDK" -destination "$DESTINATION" -configuration Debug ONLY_ACTIVE_ARCH=NO test | xcpretty -c;
