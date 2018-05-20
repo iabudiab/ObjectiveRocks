@@ -77,6 +77,7 @@ NS_ASSUME_NONNULL_BEGIN
  The default is 0. */
 @property (nonatomic, assign) uint64_t maxWriteAheadLogSize;
 
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 /** @brief If non-nil, metrics about database operations will be collected.
  Statistics objects should not be shared between DB instances. 
  The default is nil. 
@@ -84,6 +85,7 @@ NS_ASSUME_NONNULL_BEGIN
  @see RocksDBStatistics
  */
 @property (nonatomic, strong, nullable) RocksDBStatistics *statistics;
+#endif
 
 /** @brief If true, then the contents of manifest and data files are not 
  synced to stable storage.

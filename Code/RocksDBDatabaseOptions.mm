@@ -9,19 +9,22 @@
 #import "RocksDBDatabaseOptions.h"
 
 #import "RocksDBEnv.h"
-#import "RocksDBStatistics.h"
-
 #import <rocksdb/options.h>
 
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
+#import "RocksDBStatistics.h"
 @interface RocksDBStatistics ()
 @property (nonatomic, assign) std::shared_ptr<rocksdb::Statistics> statistics;
 @end
+#endif
 
 @interface RocksDBDatabaseOptions ()
 {
 	rocksdb::DBOptions _options;
 
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 	RocksDBStatistics *_statisticsWrapper;
+#endif
 }
 @property (nonatomic, assign) const rocksdb::DBOptions options;
 @end
@@ -112,6 +115,7 @@
 	_options.max_total_wal_size	= maxWriteAheadLogSize;
 }
 
+#if !(defined(ROCKSDB_LITE) && defined(TARGET_OS_IPHONE))
 - (RocksDBStatistics *)statistics
 {
 	return _statisticsWrapper;
@@ -122,6 +126,7 @@
 	_statisticsWrapper = statistics;
 	_options.statistics = _statisticsWrapper.statistics;
 }
+#endif
 
 - (BOOL)useFSync
 {
