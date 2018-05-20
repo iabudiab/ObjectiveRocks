@@ -48,12 +48,16 @@ Pod::Spec.new do |s|
     'Code/*.{h,mm,cpp}'
 
   s.exclude_files = 
+    'rocksdb/db/c.cc',
+    'rocksdb/include/rocksdb/c.h',
     'rocksdb/port/dirent.h',
     'rocksdb/port/win/**',
     'rocksdb/examples/**',
     'rocksdb/hdfs/**',
     'rocksdb/java/**',
     'rocksdb/tools/**',
+    'rocksdb/utilities/cassandra/**',
+    'rocksdb/util/*ppc*',
     'rocksdb/**/*rados*',
     'rocksdb/**/*bench*',
     'rocksdb/**/*mock*',
