@@ -27,7 +27,7 @@ Pod::Spec.new do |s|
       #include "build_version.h"
       const char* rocksdb_build_git_sha = "rocksdb_build_git_sha:${GIT_SHA}";
       const char* rocksdb_build_git_datetime = "rocksdb_build_git_datetime:$(date)";
-      const char* rocksdb_build_compile_date = "$(date)";
+      const char* rocksdb_build_compile_date = "$(date)"; 
     EOF
   CMD
 
@@ -70,6 +70,8 @@ Pod::Spec.new do |s|
     'Code/RocksDBProperties*.{h,mm}',
     'Code/RocksDBThreadStatus*.{h,mm}',
     'Code/RocksDBWriteBatchIterator*.{h,mm}'
+
+  s.public_header_files = 'Code/*.h'
 
   s.private_header_files =
     'rocksdb/cache/*.h',
