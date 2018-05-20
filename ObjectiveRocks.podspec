@@ -32,9 +32,13 @@ Pod::Spec.new do |s|
   CMD
 
   s.source_files =
+    'rocksdb/cache/*.{h,cc}',
     'rocksdb/db/*.{h,cc}',
+    'rocksdb/env/*.{h,cc}',
     'rocksdb/include/**/*.h',
     'rocksdb/memtable/*.{h,cc}',
+    'rocksdb/monitoring/*.{h,cc}',
+    'rocksdb/options/*.{h,cc}',
     'rocksdb/port/*.{h,cc}',
     'rocksdb/table/*.{h,cc}',
     'rocksdb/third-party/fbson/*.{h,cc}',
@@ -46,9 +50,11 @@ Pod::Spec.new do |s|
   s.exclude_files = 
     'rocksdb/port/dirent.h',
     'rocksdb/port/win/**',
+    'rocksdb/examples/**',
     'rocksdb/hdfs/**',
     'rocksdb/java/**',
     'rocksdb/tools/**',
+    'rocksdb/**/*rados*',
     'rocksdb/**/*bench*',
     'rocksdb/**/*mock*',
     'rocksdb/**/*test*'
@@ -66,16 +72,19 @@ Pod::Spec.new do |s|
     'Code/RocksDBWriteBatchIterator*.{h,mm}'
 
   s.private_header_files =
+    'rocksdb/cache/*.h',
     'rocksdb/db/*.h',
+    'rocksdb/env/*.h',
     'rocksdb/include/**/*.h',
     'rocksdb/memtable/*.h',
+    'rocksdb/monitoring/*.h',
+    'rocksdb/options/*.h',
     'rocksdb/port/*.h',
     'rocksdb/table/*.h',
     'rocksdb/third-party/fbson/*.h',
     'rocksdb/third-party/flashcache/*.h',
     'rocksdb/util/*.h',
     'rocksdb/utilities/**/*.h',
-    'rocksdb/include/**/*.h',
     'Code/*Callback*.h',
     'Code/*Private*.h',
     'Code/RocksDBError.h',
