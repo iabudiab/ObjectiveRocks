@@ -64,16 +64,18 @@ Pod::Spec.new do |s|
     'rocksdb/**/*test*'
 
   s.ios.exclude_files = 
-    'Code/RocksDBBackupEngine*.{h,mm}',
-    'Code/RocksDBBackupInfo*.{h,mm}',
-    'Code/RocksDBCheckpoint*.{h,mm}',
     'Code/RocksDBColumnFamilyMetadata*.{h,mm}',
-    'Code/RocksDBCuckooTableOptions*.{h,mm}',
     'Code/RocksDBIndexedWriteBatch*.{h,mm}',
-    'Code/RocksDBPlainTableOptions*.{h,mm}',
-    'Code/RocksDBProperties*.{h,mm}',
+    'Code/RocksDBWriteBatchIterator*.{h,mm}',
     'Code/RocksDBThreadStatus*.{h,mm}',
-    'Code/RocksDBWriteBatchIterator*.{h,mm}'
+    'Code/RocksDBPlainTableOptions*.{h,mm}',
+    'Code/RocksDBCuckooTableOptions*.{h,mm}',
+    'Code/RocksDBProperties*.{h,mm}',
+    'Code/RocksDBCheckpoint*.{h,mm}',
+    'Code/RocksDBStatistics*.{h,mm}',
+    'Code/RocksDBStatisticsHistogram*.{h,mm}',
+    'Code/RocksDBBackupEngine*.{h,mm}',
+    'Code/RocksDBBackupInfo*.{h,mm}'
 
   s.public_header_files = 'Code/*.h'
 
