@@ -45,7 +45,7 @@
 	if (self) {
 		_path = [path copy];
 		rocksdb::Status status = rocksdb::BackupEngine::Open(rocksdb::Env::Default(),
-															 rocksdb::BackupableDBOptions::BackupableDBOptions(_path.UTF8String),
+															 rocksdb::BackupableDBOptions(_path.UTF8String),
 															 &_backupEngine);
 		if (!status.ok()) {
 			NSLog(@"Error opening database backup: %@", [RocksDBError errorWithRocksStatus:status]);
