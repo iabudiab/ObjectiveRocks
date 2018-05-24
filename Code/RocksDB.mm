@@ -178,6 +178,10 @@
 	}
 }
 
+- (BOOL)isClosed {
+    return _db == nullptr;
+}
+
 #pragma mark - Open
 
 - (BOOL)openDatabaseReadOnly:(BOOL)readOnly
