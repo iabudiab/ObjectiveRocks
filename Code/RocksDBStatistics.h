@@ -24,7 +24,7 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerBlockCacheAdd,
 
 	/** @brief Number of failures when adding blocks to block cache. */
-	RocksDBTickerBlockCacheAddFailure,
+	RocksDBTickerBlockCacheAddFailures,
 
 	/** @brief  # of times cache miss when accessing index block 
 	 from block cache. */
@@ -90,10 +90,10 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerPersistentCacheMiss,
 
 	/** @brief # total simulation block cache hits */
-	RocksDBTickerSimCacheHit,
+	RocksDBTickerSimBlockCacheHit,
 
 	/** @brief # total simulation block cache misses */
-	RocksDBTickerSimCacheMiss,
+	RocksDBTickerSimBlockCacheMiss,
 
 	/** @brief # of memtable hits. */
 	RocksDBTickerMemtableHit,
@@ -127,6 +127,12 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 
 	/** @brief Reason for key drop during compaction: all keys in range were deleted. */
 	RocksDBTickerCompactionRangeDelDropObsolete,
+
+	/** @brief Deletions obsoleted before bottom level due to file gap optimization. */
+	RocksDBTickerCompactionOptimizedDelDropObsolete,
+
+	/** @brief If a compaction was cancelled in sfm to prevent ENOSPC. */
+	RocksDBTickerCompactionCancelled,
 
 	/** @brief Number of keys written to the database via the Put and 
 	 Write call's. */
@@ -176,17 +182,17 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerNoFileErrors,
 
 	/** @brief Time system had to wait to do LO-L1 compactions
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStall_L0SlowdownMicros,
 
 	/** @brief Time system had to wait to move memtable to L1.
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStallMemtableCompactionMicros,
 
 	/** @brief Write throttle because of too many files in L0
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStall_L0NumFilesMicros,
 
@@ -244,7 +250,7 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerBlockCacheCompressedAdd,
 
 	/** @brief Number of failures when adding blocks to compressed block cache. */
-	RocksDBTickerBlockCacheCompressedAddFailure,
+	RocksDBTickerBlockCacheCompressedAddFailures,
 
 	/** @brief Number of times WAL sync is done. */
 	RocksDBTickerWalFileSynced,
@@ -315,7 +321,112 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerReadAmpTotalReadBytes,
 
 	/** @brief Number of refill intervals where rate limiter's bytes are fully consumed. */
-	RocksDBTickerNumberRateLimiterDrains
+	RocksDBTickerNumberRateLimiterDrains,
+
+	/** @brief Number of internal keys skipped by Iterator. **/
+	RocksDBTickerNumberIterSkip,
+
+	/** @brief # of Put/PutTTL/PutUntil to BlobDB. **/
+	RocksDBTickerBlobDBNumPut,
+
+	/** @brief # of Write to BlobDB. **/
+	RocksDBTickerBlobDBNumWrite,
+
+	/** @brief # of Get to BlobDB. **/
+	RocksDBTickerBlobDBNumGet,
+
+	/** @brief # of Multiget to BlobDB. **/
+	RocksDBTickerBlobDBNumMultiget,
+
+	/** @brief # of Seek/SeekToFirst/SeekToLast/SeekForPrev to BlobDB iterator. **/
+	RocksDBTickerBlobDBNumSeek,
+
+	/** @brief # of Next to BlobDB iterator. **/
+	RocksDBTickerBlobDBNumNext,
+
+	/** @brief # of Prev to BlobDB iterator. **/
+	RocksDBTickerBlobDBNumPrev,
+
+	/** @brief # of keys written to BlobDB. **/
+	RocksDBTickerBlobDBNumKeysWritten,
+
+	/** @brief # of keys read from BlobDB. **/
+	RocksDBTickerBlobDBNumKeysRead,
+
+	/** @brief # of bytes (key + value) written to BlobDB. **/
+	RocksDBTickerBlobDBBytesWritten,
+
+	/** @brief # of bytes (keys + value) read from BlobDB. **/
+	RocksDBTickerBlobDBBytesRead,
+
+	/** @brief # of keys written by BlobDB as non-TTL inlined value. **/
+	RocksDBTickerBlobDBWriteInlined,
+
+	/** @brief # of keys written by BlobDB as TTL inlined value. **/
+	RocksDBTickerBlobDBWriteInlinedTTL,
+
+	/** @brief # of keys written by BlobDB as non-TTL blob value. **/
+	RocksDBTickerBlobDBWriteBlob,
+
+	/** @brief # of keys written by BlobDB as TTL blob value. **/
+	RocksDBTickerBlobDBWriteBlobTTL,
+
+	/** @brief # of bytes written to blob file. **/
+	RocksDBTickerBlobDBBlobFileBytesWritten,
+
+	/** @brief # of bytes read from blob file. **/
+	RocksDBTickerBlobDBBlobFileBytesRead,
+
+	/** @brief # of times a blob files being synced. **/
+	RocksDBTickerBlobDBBlobFileSynced,
+
+	/** @brief  # of blob index evicted from base DB by BlobDB compaction filter because of expiration. */
+	RocksDBTickerBlobDBBlobIndexExpiredCount,
+
+	/** @brief Size of blob index evicted from base DB by BlobDB compaction filter because of expiration. */
+	RocksDBTickerBlobDBBlobIndexExpiredSize,
+
+	/** @brief # of blob index evicted from base DB by BlobDB compaction filter because of corresponding file deleted. */
+	RocksDBTickerBlobDBBlobIndexEvictedCount,
+
+	/** @brief Size of blob index evicted from base DB by BlobDB compaction filter because of corresponding file deleted. */
+	RocksDBTickerBlobDBBlobIndexEvictedSize,
+
+	/** @brief # of blob files being garbage collected. **/
+	RocksDBTickerBlobDBGCNumFiles,
+
+	/** @brief # of blob files generated by garbage collection. **/
+	RocksDBTickerBlobDBGCNumNewFiles,
+
+	/** @brief # of BlobDB garbage collection failures. **/
+	RocksDBTickerBlobDBGCFailures,
+
+	/** @brief # of keys drop by BlobDB garbage collection because they had been overwritten. **/
+	RocksDBTickerBlobDBGCNumKeysOverwritten,
+
+	/** @brief # of keys drop by BlobDB garbage collection because of expiration. **/
+	RocksDBTickerBlobDBGCNumKeysExpired,
+
+	/** @brief # of keys relocated to new blob file by garbage collection. **/
+	RocksDBTickerBlobDBGCNumKeysRelocated,
+
+	/** @brief # of bytes drop by BlobDB garbage collection because they had been overwritten. **/
+	RocksDBTickerBlobDBGCBytesOverwritten,
+
+	/** @brief # of bytes drop by BlobDB garbage collection because of expiration. **/
+	RocksDBTickerBlobDBGCBytesExpired,
+
+	/** @brief # of bytes relocated to new blob file by garbage collection. **/
+	RocksDBTickerBlobDBGCBytesRelocated,
+
+	/** @brief # of blob files evicted because of BlobDB is full. **/
+	RocksDBTickerBlobDBFifoNumFilesEvicted,
+
+	/** @brief # of keys in the blob files evicted because of BlobDB is full. **/
+	RocksDBTickerBlobDBFifoNumKeysEvicted,
+
+	/** @brief # of bytes in the blob files evicted because of BlobDB is full. **/
+	RocksDBTickerBlobDBFifoBytesEvicted
 };
 
 /** @brief An enum for the Histogram Types. */
@@ -360,31 +471,31 @@ typedef NS_ENUM(uint32_t, RocksDBHistogram)
 	/** @brief Time spend during write raw blocks. */
 	RocksDBHistogramWriteRawBlockMicros,
 
-	/** @brief  */
+	/** @brief The number of stalls in L0 slowdowns. */
 	RocksDBHistogramStall_L0SlowdownCount,
 
-	/** @brief  */
+	/** @brief The number of stalls in memtable compations */
 	RocksDBHistogramStallMemtableCompactionCount,
 
-	/** @brief  */
+	/** @brief The number of stalls in L0 files. */
 	RocksDBHistogramStall_L0NumFilesCount,
 
-	/** @brief  */
+	/** @brief The count of delays in hard rate limiting. */
 	RocksDBHistogramHardRateLimitDelayCount,
 
-	/** @brief  */
+	/** @brief The count of delays in soft rate limiting. */
 	RocksDBHistogramSoftRateLimitDelayCount,
 
-	/** @brief  */
+	/** @brief The number of files in a single compaction. */
 	RocksDBHistogramNumFilesInSingleCompaction,
 
-	/** @brief  */
+	/** @brief Time Spent in Seek() calls. */
 	RocksDBHistogramDBSeek,
 
-	/** @brief  */
+	/** @brief Time spent in Write Stall. */
 	RocksDBHistogramWriteStall,
 
-	/** @brief  */
+	/** @brief  Time spent in SST Read. */
 	RocksDBHistogramSSTReadMicros,
 
 	/** @brief The number of subcompactions actually scheduled during a compaction. */
@@ -409,8 +520,55 @@ typedef NS_ENUM(uint32_t, RocksDBHistogram)
 	RocksDBHistogramCompressionTimeNanos,
 
 	/** @brief Decompression time. */
-	RocksDBHistogramDecompressionTimeNanos
+	RocksDBHistogramDecompressionTimeNanos,
 
+	/** @brief Number of merge operands passed to the merge operator in user read requests. **/
+	RocksDBHistogramReadNumMergeOperands,
+
+	/** @brief Size of keys written to BlobDB. **/
+	RocksDBHistogramBlobDbKeySize,
+
+	/** @brief Size of values written to BlobDB. **/
+	RocksDBHistogramBlobDbValueSize,
+
+	/** @brief BlobDB Put/PutWithTTL/PutUntil/Write latency. **/
+	RocksDBHistogramBlobDbWriteMicros,
+
+	/** @brief BlobDB Get lagency. **/
+	RocksDBHistogramBlobDbGetMicros,
+
+	/** @brief BlobDB MultiGet lagency. **/
+	RocksDBHistogramBlobDbMultigetMicros,
+
+	/** @brief BlobDB Seek/SeekToFirst/SeekToLast/SeekForPrev latency. **/
+	RocksDBHistogramBlobDbSeekMicros,
+
+	/** @brief BlobDB Next latency. **/
+	RocksDBHistogramBlobDbNextMicros,
+
+	/** @brief BlobDB Prev latency. **/
+	RocksDBHistogramBlobDbPrevMicros,
+
+	/** @brief Blob file write latency. **/
+	RocksDBHistogramBlobDbBlobFileWriteMicros,
+
+	/** @brief Blob file read latency. **/
+	RocksDBHistogramBlobDbBlobFileReadMicros,
+
+	/** @brief Blob file sync latency. **/
+	RocksDBHistogramBlobDbBlobFileSyncMicros,
+
+	/** @brief BlobDB garbage collection time. **/
+	RocksDBHistogramBlobDbGcMicros,
+
+	/** @brief BlobDB compression time. **/
+	RocksDBHistogramBlobDbCompressionMicros,
+
+	/** @brief BlobDB decompression time. **/
+	RocksDBHistogramBlobDbDecompressionMicros,
+
+	/** @brief Time spent flushing memtable to disk. **/
+	RocksDBHistogramFlushTime
 };
 
 /**

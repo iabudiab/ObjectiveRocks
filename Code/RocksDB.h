@@ -146,6 +146,9 @@ NS_ASSUME_NONNULL_BEGIN
 /** @brief Closes the database instance */
 - (void)close;
 
+/** @brief Whether or not the database instance is closed */
+- (BOOL)isClosed;
+
 /**
  Sets the default read & write options for all database operations.
 
@@ -272,8 +275,6 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  Stores the given key-object pair into the DB.
-
- @discussion
 
  @param anObject The object for key.
  @param aKey The key for object.

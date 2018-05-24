@@ -178,6 +178,12 @@
 	}
 }
 
+- (BOOL)isClosed {
+	@synchronized(self) {
+    	return _db == nullptr;
+	}
+}
+
 #pragma mark - Open
 
 - (BOOL)openDatabaseReadOnly:(BOOL)readOnly

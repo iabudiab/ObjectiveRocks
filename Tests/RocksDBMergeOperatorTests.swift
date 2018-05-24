@@ -101,7 +101,7 @@ class RocksDBMergeOperatorTests : RocksDBTests {
 
 		let data = try! rocks.data(forKey: "key 1")
 		let res = Double(data: data)!
-		XCTAssertEqualWithAccuracy(res, Double(300.666), accuracy: Double(0.0001))
+		XCTAssertEqual(res, Double(300.666), accuracy: Double(0.0001))
 	}
 
 	func testSwift_AssociativeMergeOperator_DictionaryPut() {

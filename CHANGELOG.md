@@ -1,5 +1,25 @@
 # Change Log
 
+## [0.9.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.9.0)
+
+Released on 2017.05.25
+
+- RocksDB Version: `5.13.1`: [facebook/rocksdb@c60df9d](https://github.com/facebook/rocksdb/commit/c60df9d9e7629fe208a9b848293a5599f83d5e77)
+
+### Added
+
+- CocoaPods integration
+	- Spec & Scripts by @rob-keepsafe in #9
+
+- RocksDB `isClosed` method to check if the database instance is still open.
+	- Added by @rob-keepsafe in #11
+
+### Updated
+
+- Project settings to Xcode9
+- Tests to Swift4 syntax
+
+
 ## [0.8.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.8.0)
 
 Released on 2017.07.13

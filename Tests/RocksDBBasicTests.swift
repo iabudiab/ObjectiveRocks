@@ -23,6 +23,15 @@ class RocksDBBasicTests : RocksDBTests {
 
 		XCTAssertNil(db)
 	}
+    
+    func testSwift_DB_IsClosed() {
+        rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
+            options.createIfMissing = true
+        })
+        XCTAssertFalse(rocks.isClosed())
+        rocks.close()
+        XCTAssertTrue(rocks.isClosed())
+    }
 
 	func testSwift_DB_CRUD() {
 		rocks = RocksDB.database(atPath: self.path, andDBOptions: { (options) -> Void in
