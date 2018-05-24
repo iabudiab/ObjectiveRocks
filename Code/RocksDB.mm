@@ -179,7 +179,9 @@
 }
 
 - (BOOL)isClosed {
-    return _db == nullptr;
+	@synchronized(self) {
+    	return _db == nullptr;
+	}
 }
 
 #pragma mark - Open
