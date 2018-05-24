@@ -179,17 +179,17 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	RocksDBTickerNoFileErrors,
 
 	/** @brief Time system had to wait to do LO-L1 compactions
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStall_L0SlowdownMicros,
 
 	/** @brief Time system had to wait to move memtable to L1.
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStallMemtableCompactionMicros,
 
 	/** @brief Write throttle because of too many files in L0
-		@deprecated
+		@deprecated Deprecated in rocksdb `9132e52ea4fd60886616cbec6c412f88117333fa`
 	 */
 	RocksDBTickerStall_L0NumFilesMicros,
 
@@ -459,31 +459,31 @@ typedef NS_ENUM(uint32_t, RocksDBHistogram)
 	/** @brief Time spend during write raw blocks. */
 	RocksDBHistogramWriteRawBlockMicros,
 
-	/** @brief  */
+	/** @brief The number of stalls in L0 slowdowns. */
 	RocksDBHistogramStall_L0SlowdownCount,
 
-	/** @brief  */
+	/** @brief The number of stalls in memtable compations */
 	RocksDBHistogramStallMemtableCompactionCount,
 
-	/** @brief  */
+	/** @brief The number of stalls in L0 files. */
 	RocksDBHistogramStall_L0NumFilesCount,
 
-	/** @brief  */
+	/** @brief The count of delays in hard rate limiting. */
 	RocksDBHistogramHardRateLimitDelayCount,
 
-	/** @brief  */
+	/** @brief The count of delays in soft rate limiting. */
 	RocksDBHistogramSoftRateLimitDelayCount,
 
-	/** @brief  */
+	/** @brief The number of files in a single compaction. */
 	RocksDBHistogramNumFilesInSingleCompaction,
 
-	/** @brief  */
+	/** @brief Time Spent in Seek() calls. */
 	RocksDBHistogramDBSeek,
 
-	/** @brief  */
+	/** @brief Time spent in Write Stall. */
 	RocksDBHistogramWriteStall,
 
-	/** @brief  */
+	/** @brief  Time spent in SST Read. */
 	RocksDBHistogramSSTReadMicros,
 
 	/** @brief The number of subcompactions actually scheduled during a compaction. */

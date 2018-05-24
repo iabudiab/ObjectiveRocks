@@ -273,8 +273,6 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Stores the given key-object pair into the DB.
 
- @discussion
-
  @param anObject The object for key.
  @param aKey The key for object.
  @param error If an error occurs, upon return contains an `NSError` object that describes the problem.

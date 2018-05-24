@@ -67,7 +67,6 @@ NS_ASSUME_NONNULL_BEGIN
 /**
  Deletes the object for the given key in the given Column Family from this Write Batch.
 
- @param data The data for key.
  @param aKey The key for object.
  @param columnFamily The column family from which the data should be deleted.
  */
