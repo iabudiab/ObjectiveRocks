@@ -131,6 +131,9 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	/** @brief Deletions obsoleted before bottom level due to file gap optimization. */
 	RocksDBTickerCompactionOptimizedDelDropObsolete,
 
+	/** @brief If a compaction was cancelled in sfm to prevent ENOSPC. */
+	RocksDBTickerCompactionCancelled,
+
 	/** @brief Number of keys written to the database via the Put and 
 	 Write call's. */
 	RocksDBTickerNumberKeysWritten,
@@ -377,8 +380,17 @@ typedef NS_ENUM(uint32_t, RocksDBTicker)
 	/** @brief # of times a blob files being synced. **/
 	RocksDBTickerBlobDBBlobFileSynced,
 
-	/** @brief # of blob index evicted from base DB by BlobDB compaction filter because of expiration. **/
-	RocksDBTickerBlobDBBlobIndexExpired,
+	/** @brief  # of blob index evicted from base DB by BlobDB compaction filter because of expiration. */
+	RocksDBTickerBlobDBBlobIndexExpiredCount,
+
+	/** @brief Size of blob index evicted from base DB by BlobDB compaction filter because of expiration. */
+	RocksDBTickerBlobDBBlobIndexExpiredSize,
+
+	/** @brief # of blob index evicted from base DB by BlobDB compaction filter because of corresponding file deleted. */
+	RocksDBTickerBlobDBBlobIndexEvictedCount,
+
+	/** @brief Size of blob index evicted from base DB by BlobDB compaction filter because of corresponding file deleted. */
+	RocksDBTickerBlobDBBlobIndexEvictedSize,
 
 	/** @brief # of blob files being garbage collected. **/
 	RocksDBTickerBlobDBGCNumFiles,
