@@ -7,28 +7,28 @@ Pod::Spec.new do |s|
   s.author            = 'iabudiab'
   s.social_media_url  = 'https://twitter.com/_iabudiab'
   s.source            = { :git => 'https://github.com/iabudiab/ObjectiveRocks.git', :tag => s.version, :submodules => true }
-  
+
   s.ios.deployment_target = '9.0'
   s.osx.deployment_target = '10.10'
-  
+
   s.requires_arc = true
   s.preserve_paths = 'rocksdb_src/rocksdb/**/*'
-  
+
   #### CLEAN SOURCE
-  
+
   # After downloading the pod, This generates 
   # a rocksdb_src directory from the original 
   # source submodule, purges all extraneaous 
   # files, and then deletes the original source.
-  
+
   s.prepare_command = 'sh clean_rocksdb_source.sh'
-  
+
   #### SHARED SOURCE FILES
 
   s.source_files =
     'rocksdb_src/rocksdb/**/*',
     'Code/*.{h,mm,cpp}'
-  
+
   # All headers not specifically scoped to `public` or `private`
   # will default to being in the `project_header_files` section.
    
@@ -37,9 +37,9 @@ Pod::Spec.new do |s|
     'Code/*Private*.h',
     'Code/RocksDBError.h',
     'Code/RocksDBSlice.h'
-    
+
   #### macOS HEADERS
-  
+
   s.osx.public_header_files = 
     'Code/RocksDB.h',
     'Code/RocksDBBackupEngine.h',
@@ -76,12 +76,12 @@ Pod::Spec.new do |s|
     'Code/RocksDBWriteBatch.h',
     'Code/RocksDBWriteBatchIterator.h',
     'Code/RocksDBWriteOptions.h'
-    
+
   s.osx.exclude_files = 
     'rocksdb_src/rocksdb/tools/sst_dump_tool*'
-    
+
   #### iOS SOURCE & HEADERS
-    
+
   s.ios.exclude_files = 
     'Code/RocksDBColumnFamilyMetadata*.{h,mm}',
     'Code/RocksDBIndexedWriteBatch*.{h,mm}',
@@ -95,7 +95,7 @@ Pod::Spec.new do |s|
     'Code/RocksDBStatisticsHistogram*.{h,mm}',
     'Code/RocksDBBackupEngine*.{h,mm}',
     'Code/RocksDBBackupInfo*.{h,mm}'
-  
+
   s.ios.public_header_files = 
     'Code/RocksDB.h',
     'Code/RocksDBBlockBasedTableOptions.h',
@@ -120,7 +120,7 @@ Pod::Spec.new do |s|
     'Code/RocksDBTableFactory.h',
     'Code/RocksDBWriteBatch.h',
     'Code/RocksDBWriteOptions.h'
-  
+
   #### CONFIGS
 
   shared_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => 'NDEBUG=1 OS_MACOSX=1 ROCKSDB_PLATFORM_POSIX=1 ROCKSDB_LIB_IO_POSIX=1' }
