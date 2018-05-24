@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name              = 'ObjectiveRocks'
-  s.version           = '0.8.0'
+  s.version           = '0.9.0'
   s.summary           = 'Objective-C wrapper of RocksDB - A Persistent Key-Value Store for Flash and RAM Storage.'
   s.license           = 'MIT'
   s.homepage          = 'https://github.com/iabudiab/ObjectiveRocks'
