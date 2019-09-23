@@ -299,8 +299,6 @@
 		6297675620B7610300DEBF89 /* write_controller.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668120B760E100DEBF89 /* write_controller.h */; };
 		6297675720B7610300DEBF89 /* version_edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668220B760E200DEBF89 /* version_edit.h */; };
 		6297675820B7610300DEBF89 /* version_edit.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668220B760E200DEBF89 /* version_edit.h */; };
-		6297675920B7610300DEBF89 /* managed_iterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668320B760E200DEBF89 /* managed_iterator.h */; };
-		6297675A20B7610300DEBF89 /* managed_iterator.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668320B760E200DEBF89 /* managed_iterator.h */; };
 		6297675B20B7610300DEBF89 /* write_batch_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6297668420B760E200DEBF89 /* write_batch_base.cc */; };
 		6297675C20B7610300DEBF89 /* write_batch_base.cc in Sources */ = {isa = PBXBuildFile; fileRef = 6297668420B760E200DEBF89 /* write_batch_base.cc */; };
 		6297675D20B7610300DEBF89 /* compaction_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 6297668520B760E200DEBF89 /* compaction_job.h */; };
@@ -335,8 +333,6 @@
 		6297679620B7610300DEBF89 /* external_sst_file_ingestion_job.h in Headers */ = {isa = PBXBuildFile; fileRef = 629766A120B760EA00DEBF89 /* external_sst_file_ingestion_job.h */; };
 		6297679720B7610300DEBF89 /* job_context.h in Headers */ = {isa = PBXBuildFile; fileRef = 629766A220B760EA00DEBF89 /* job_context.h */; };
 		6297679820B7610300DEBF89 /* job_context.h in Headers */ = {isa = PBXBuildFile; fileRef = 629766A220B760EA00DEBF89 /* job_context.h */; };
-		6297679920B7610300DEBF89 /* managed_iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 629766A320B760EA00DEBF89 /* managed_iterator.cc */; };
-		6297679A20B7610300DEBF89 /* managed_iterator.cc in Sources */ = {isa = PBXBuildFile; fileRef = 629766A320B760EA00DEBF89 /* managed_iterator.cc */; };
 		6297679B20B7610300DEBF89 /* memtable_list.cc in Sources */ = {isa = PBXBuildFile; fileRef = 629766A420B760EA00DEBF89 /* memtable_list.cc */; };
 		6297679C20B7610300DEBF89 /* memtable_list.cc in Sources */ = {isa = PBXBuildFile; fileRef = 629766A420B760EA00DEBF89 /* memtable_list.cc */; };
 		6297679D20B7610300DEBF89 /* event_helpers.h in Headers */ = {isa = PBXBuildFile; fileRef = 629766A520B760EB00DEBF89 /* event_helpers.h */; };
@@ -897,8 +893,6 @@
 		62976BA920B7626300DEBF89 /* filename.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976B2A20B7625000DEBF89 /* filename.cc */; };
 		62976BAA20B7626300DEBF89 /* log_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976B2B20B7625000DEBF89 /* log_buffer.h */; };
 		62976BAB20B7626300DEBF89 /* log_buffer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976B2B20B7625000DEBF89 /* log_buffer.h */; };
-		62976BAC20B7626300DEBF89 /* status_message.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976B2C20B7625100DEBF89 /* status_message.cc */; };
-		62976BAD20B7626300DEBF89 /* status_message.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976B2C20B7625100DEBF89 /* status_message.cc */; };
 		62976BAE20B7626300DEBF89 /* stderr_logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976B2E20B7625100DEBF89 /* stderr_logger.h */; };
 		62976BAF20B7626300DEBF89 /* stderr_logger.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976B2E20B7625100DEBF89 /* stderr_logger.h */; };
 		62976BB020B7626300DEBF89 /* kv_map.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976B2F20B7625100DEBF89 /* kv_map.h */; };
@@ -1119,8 +1113,6 @@
 		62976D9C20B762AC00DEBF89 /* blob_log_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976C9A20B762A500DEBF89 /* blob_log_writer.cc */; };
 		62976D9D20B762AC00DEBF89 /* blob_log_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976C9B20B762A500DEBF89 /* blob_log_writer.h */; };
 		62976D9E20B762AC00DEBF89 /* blob_log_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 62976C9B20B762A500DEBF89 /* blob_log_writer.h */; };
-		62976D9F20B762AC00DEBF89 /* ttl_extractor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976C9C20B762A500DEBF89 /* ttl_extractor.cc */; };
-		62976DA020B762AC00DEBF89 /* ttl_extractor.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976C9C20B762A500DEBF89 /* ttl_extractor.cc */; };
 		62976DA120B762AC00DEBF89 /* backupable_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976C9E20B762A600DEBF89 /* backupable_db.cc */; };
 		62976DA220B762AC00DEBF89 /* backupable_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976C9E20B762A600DEBF89 /* backupable_db.cc */; };
 		62976DA520B762AC00DEBF89 /* column_aware_encoding_exp.cc in Sources */ = {isa = PBXBuildFile; fileRef = 62976CA020B762A600DEBF89 /* column_aware_encoding_exp.cc */; };
@@ -1226,6 +1218,48 @@
 		62A8B06B1A5900540069B4C8 /* RocksDBStatisticsTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62A8B06A1A5900540069B4C8 /* RocksDBStatisticsTests.mm */; };
 		62F4AA801A6AAFE500489D6C /* RocksDBColumnFamilyMetadataTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 627FBE761A61E0AA0038696A /* RocksDBColumnFamilyMetadataTests.mm */; };
 		62FC8B471A565B19003DF5C6 /* RocksDBBackupTests.mm in Sources */ = {isa = PBXBuildFile; fileRef = 62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */; };
+		8575C67C2339475A009BAC2B /* error_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C67A2339475A009BAC2B /* error_handler.h */; };
+		8575C67D2339475A009BAC2B /* error_handler.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C67A2339475A009BAC2B /* error_handler.h */; };
+		8575C67E2339475A009BAC2B /* error_handler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C67B2339475A009BAC2B /* error_handler.cc */; };
+		8575C67F2339475A009BAC2B /* error_handler.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C67B2339475A009BAC2B /* error_handler.cc */; };
+		8575C68223394795009BAC2B /* sync_point_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C68023394795009BAC2B /* sync_point_impl.cc */; };
+		8575C68323394795009BAC2B /* sync_point_impl.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C68023394795009BAC2B /* sync_point_impl.cc */; };
+		8575C68423394795009BAC2B /* sync_point_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C68123394795009BAC2B /* sync_point_impl.h */; };
+		8575C68523394795009BAC2B /* sync_point_impl.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C68123394795009BAC2B /* sync_point_impl.h */; };
+		8575C688233947CA009BAC2B /* data_block_hash_index.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C686233947CA009BAC2B /* data_block_hash_index.cc */; };
+		8575C689233947CA009BAC2B /* data_block_hash_index.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C686233947CA009BAC2B /* data_block_hash_index.cc */; };
+		8575C68A233947CA009BAC2B /* data_block_hash_index.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C687233947CA009BAC2B /* data_block_hash_index.h */; };
+		8575C68B233947CA009BAC2B /* data_block_hash_index.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C687233947CA009BAC2B /* data_block_hash_index.h */; };
+		8575C68E23394802009BAC2B /* logs_with_prep_tracker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C68C23394801009BAC2B /* logs_with_prep_tracker.cc */; };
+		8575C68F23394802009BAC2B /* logs_with_prep_tracker.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C68C23394801009BAC2B /* logs_with_prep_tracker.cc */; };
+		8575C69023394802009BAC2B /* logs_with_prep_tracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C68D23394802009BAC2B /* logs_with_prep_tracker.h */; };
+		8575C69123394802009BAC2B /* logs_with_prep_tracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C68D23394802009BAC2B /* logs_with_prep_tracker.h */; };
+		8575C6942339481F009BAC2B /* compression_context_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6922339481E009BAC2B /* compression_context_cache.cc */; };
+		8575C6952339481F009BAC2B /* compression_context_cache.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6922339481E009BAC2B /* compression_context_cache.cc */; };
+		8575C6962339481F009BAC2B /* compression_context_cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6932339481E009BAC2B /* compression_context_cache.h */; };
+		8575C6972339481F009BAC2B /* compression_context_cache.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6932339481E009BAC2B /* compression_context_cache.h */; };
+		8575C69A233948B9009BAC2B /* trace_replay.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C698233948B9009BAC2B /* trace_replay.cc */; };
+		8575C69B233948B9009BAC2B /* trace_replay.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C698233948B9009BAC2B /* trace_replay.cc */; };
+		8575C69C233948B9009BAC2B /* trace_replay.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C699233948B9009BAC2B /* trace_replay.h */; };
+		8575C69D233948B9009BAC2B /* trace_replay.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C699233948B9009BAC2B /* trace_replay.h */; };
+		8575C6A2233948F9009BAC2B /* file_trace_reader_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6A0233948F9009BAC2B /* file_trace_reader_writer.cc */; };
+		8575C6A3233948F9009BAC2B /* file_trace_reader_writer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6A0233948F9009BAC2B /* file_trace_reader_writer.cc */; };
+		8575C6A4233948F9009BAC2B /* file_trace_reader_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6A1233948F9009BAC2B /* file_trace_reader_writer.h */; };
+		8575C6A5233948F9009BAC2B /* file_trace_reader_writer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6A1233948F9009BAC2B /* file_trace_reader_writer.h */; };
+		8575C6A723394929009BAC2B /* blob_db_impl_filesnapshot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6A623394928009BAC2B /* blob_db_impl_filesnapshot.cc */; };
+		8575C6A823394929009BAC2B /* blob_db_impl_filesnapshot.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6A623394928009BAC2B /* blob_db_impl_filesnapshot.cc */; };
+		8575C6AB2339495E009BAC2B /* data_block_footer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6A92339495E009BAC2B /* data_block_footer.h */; };
+		8575C6AC2339495E009BAC2B /* data_block_footer.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6A92339495E009BAC2B /* data_block_footer.h */; };
+		8575C6AD2339495E009BAC2B /* data_block_footer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6AA2339495E009BAC2B /* data_block_footer.cc */; };
+		8575C6AE2339495E009BAC2B /* data_block_footer.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6AA2339495E009BAC2B /* data_block_footer.cc */; };
+		8575C6B32339499F009BAC2B /* write_unprepared_txn.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6AF2339499E009BAC2B /* write_unprepared_txn.cc */; };
+		8575C6B42339499F009BAC2B /* write_unprepared_txn.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6AF2339499E009BAC2B /* write_unprepared_txn.cc */; };
+		8575C6B52339499F009BAC2B /* write_unprepared_txn_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6B02339499E009BAC2B /* write_unprepared_txn_db.cc */; };
+		8575C6B62339499F009BAC2B /* write_unprepared_txn_db.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6B02339499E009BAC2B /* write_unprepared_txn_db.cc */; };
+		8575C6B72339499F009BAC2B /* write_unprepared_txn_db.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */; };
+		8575C6B82339499F009BAC2B /* write_unprepared_txn_db.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */; };
+		8575C6B92339499F009BAC2B /* write_unprepared_txn.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B22339499F009BAC2B /* write_unprepared_txn.h */; };
+		8575C6BA2339499F009BAC2B /* write_unprepared_txn.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B22339499F009BAC2B /* write_unprepared_txn.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1382,7 +1416,6 @@
 		6297668020B760E100DEBF89 /* compaction_picker_universal.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compaction_picker_universal.cc; sourceTree = "<group>"; };
 		6297668120B760E100DEBF89 /* write_controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_controller.h; sourceTree = "<group>"; };
 		6297668220B760E200DEBF89 /* version_edit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version_edit.h; sourceTree = "<group>"; };
-		6297668320B760E200DEBF89 /* managed_iterator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = managed_iterator.h; sourceTree = "<group>"; };
 		6297668420B760E200DEBF89 /* write_batch_base.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = write_batch_base.cc; sourceTree = "<group>"; };
 		6297668520B760E200DEBF89 /* compaction_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compaction_job.h; sourceTree = "<group>"; };
 		6297668820B760E300DEBF89 /* db_info_dumper.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = db_info_dumper.cc; sourceTree = "<group>"; };
@@ -1400,7 +1433,6 @@
 		6297669F20B760E900DEBF89 /* file_indexer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_indexer.h; sourceTree = "<group>"; };
 		629766A120B760EA00DEBF89 /* external_sst_file_ingestion_job.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = external_sst_file_ingestion_job.h; sourceTree = "<group>"; };
 		629766A220B760EA00DEBF89 /* job_context.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = job_context.h; sourceTree = "<group>"; };
-		629766A320B760EA00DEBF89 /* managed_iterator.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = managed_iterator.cc; sourceTree = "<group>"; };
 		629766A420B760EA00DEBF89 /* memtable_list.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = memtable_list.cc; sourceTree = "<group>"; };
 		629766A520B760EB00DEBF89 /* event_helpers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = event_helpers.h; sourceTree = "<group>"; };
 		629766A720B760EB00DEBF89 /* db_iter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = db_iter.h; sourceTree = "<group>"; };
@@ -1681,7 +1713,6 @@
 		62976B2820B7624F00DEBF89 /* coding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = coding.h; sourceTree = "<group>"; };
 		62976B2A20B7625000DEBF89 /* filename.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = filename.cc; sourceTree = "<group>"; };
 		62976B2B20B7625000DEBF89 /* log_buffer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = log_buffer.h; sourceTree = "<group>"; };
-		62976B2C20B7625100DEBF89 /* status_message.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = status_message.cc; sourceTree = "<group>"; };
 		62976B2E20B7625100DEBF89 /* stderr_logger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = stderr_logger.h; sourceTree = "<group>"; };
 		62976B2F20B7625100DEBF89 /* kv_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = kv_map.h; sourceTree = "<group>"; };
 		62976B3020B7625200DEBF89 /* threadpool_imp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = threadpool_imp.cc; sourceTree = "<group>"; };
@@ -1792,7 +1823,6 @@
 		62976C9920B762A500DEBF89 /* blob_log_reader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blob_log_reader.h; sourceTree = "<group>"; };
 		62976C9A20B762A500DEBF89 /* blob_log_writer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blob_log_writer.cc; sourceTree = "<group>"; };
 		62976C9B20B762A500DEBF89 /* blob_log_writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = blob_log_writer.h; sourceTree = "<group>"; };
-		62976C9C20B762A500DEBF89 /* ttl_extractor.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ttl_extractor.cc; sourceTree = "<group>"; };
 		62976C9E20B762A600DEBF89 /* backupable_db.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = backupable_db.cc; sourceTree = "<group>"; };
 		62976CA020B762A600DEBF89 /* column_aware_encoding_exp.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = column_aware_encoding_exp.cc; sourceTree = "<group>"; };
 		62976CA320B762A600DEBF89 /* geodb_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = geodb_impl.cc; sourceTree = "<group>"; };
@@ -1882,6 +1912,27 @@
 		62F9D8A11B86A74900C65860 /* RocksDBWriteBatchIterator+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBWriteBatchIterator+Private.h"; sourceTree = "<group>"; };
 		62F9D8A51B86AE8900C65860 /* RocksDBOptions+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RocksDBOptions+Private.h"; sourceTree = "<group>"; };
 		62FC8B461A565B19003DF5C6 /* RocksDBBackupTests.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = RocksDBBackupTests.mm; sourceTree = "<group>"; };
+		8575C67A2339475A009BAC2B /* error_handler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = error_handler.h; sourceTree = "<group>"; };
+		8575C67B2339475A009BAC2B /* error_handler.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = error_handler.cc; sourceTree = "<group>"; };
+		8575C68023394795009BAC2B /* sync_point_impl.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sync_point_impl.cc; sourceTree = "<group>"; };
+		8575C68123394795009BAC2B /* sync_point_impl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sync_point_impl.h; sourceTree = "<group>"; };
+		8575C686233947CA009BAC2B /* data_block_hash_index.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = data_block_hash_index.cc; sourceTree = "<group>"; };
+		8575C687233947CA009BAC2B /* data_block_hash_index.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_block_hash_index.h; sourceTree = "<group>"; };
+		8575C68C23394801009BAC2B /* logs_with_prep_tracker.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = logs_with_prep_tracker.cc; sourceTree = "<group>"; };
+		8575C68D23394802009BAC2B /* logs_with_prep_tracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = logs_with_prep_tracker.h; sourceTree = "<group>"; };
+		8575C6922339481E009BAC2B /* compression_context_cache.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compression_context_cache.cc; sourceTree = "<group>"; };
+		8575C6932339481E009BAC2B /* compression_context_cache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compression_context_cache.h; sourceTree = "<group>"; };
+		8575C698233948B9009BAC2B /* trace_replay.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = trace_replay.cc; sourceTree = "<group>"; };
+		8575C699233948B9009BAC2B /* trace_replay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = trace_replay.h; sourceTree = "<group>"; };
+		8575C6A0233948F9009BAC2B /* file_trace_reader_writer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = file_trace_reader_writer.cc; sourceTree = "<group>"; };
+		8575C6A1233948F9009BAC2B /* file_trace_reader_writer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = file_trace_reader_writer.h; sourceTree = "<group>"; };
+		8575C6A623394928009BAC2B /* blob_db_impl_filesnapshot.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = blob_db_impl_filesnapshot.cc; sourceTree = "<group>"; };
+		8575C6A92339495E009BAC2B /* data_block_footer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = data_block_footer.h; sourceTree = "<group>"; };
+		8575C6AA2339495E009BAC2B /* data_block_footer.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = data_block_footer.cc; sourceTree = "<group>"; };
+		8575C6AF2339499E009BAC2B /* write_unprepared_txn.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = write_unprepared_txn.cc; sourceTree = "<group>"; };
+		8575C6B02339499E009BAC2B /* write_unprepared_txn_db.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = write_unprepared_txn_db.cc; sourceTree = "<group>"; };
+		8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_unprepared_txn_db.h; sourceTree = "<group>"; };
+		8575C6B22339499F009BAC2B /* write_unprepared_txn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_unprepared_txn.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2171,6 +2222,8 @@
 				629766A720B760EB00DEBF89 /* db_iter.h */,
 				6297667F20B760E100DEBF89 /* dbformat.cc */,
 				6297666820B760DB00DEBF89 /* dbformat.h */,
+				8575C67B2339475A009BAC2B /* error_handler.cc */,
+				8575C67A2339475A009BAC2B /* error_handler.h */,
 				6297667620B760DE00DEBF89 /* event_helpers.cc */,
 				629766A520B760EB00DEBF89 /* event_helpers.h */,
 				629766DB20B760F900DEBF89 /* experimental.cc */,
@@ -2190,12 +2243,12 @@
 				6297666A20B760DB00DEBF89 /* log_format.h */,
 				629766DC20B760F900DEBF89 /* log_reader.cc */,
 				6297669C20B760E800DEBF89 /* log_reader.h */,
+				8575C68C23394801009BAC2B /* logs_with_prep_tracker.cc */,
+				8575C68D23394802009BAC2B /* logs_with_prep_tracker.h */,
 				629766AB20B760EC00DEBF89 /* log_writer.cc */,
 				6297667820B760DF00DEBF89 /* log_writer.h */,
 				629766EC20B760FD00DEBF89 /* malloc_stats.cc */,
 				629766AE20B760ED00DEBF89 /* malloc_stats.h */,
-				629766A320B760EA00DEBF89 /* managed_iterator.cc */,
-				6297668320B760E200DEBF89 /* managed_iterator.h */,
 				629766A420B760EA00DEBF89 /* memtable_list.cc */,
 				629766C620B760F300DEBF89 /* memtable_list.h */,
 				6297667920B760DF00DEBF89 /* memtable.cc */,
@@ -2305,6 +2358,10 @@
 				62976A4320B7622C00DEBF89 /* cuckoo_table_factory.h */,
 				62976A2020B7622500DEBF89 /* cuckoo_table_reader.cc */,
 				62976A3320B7622800DEBF89 /* cuckoo_table_reader.h */,
+				8575C6AA2339495E009BAC2B /* data_block_footer.cc */,
+				8575C6A92339495E009BAC2B /* data_block_footer.h */,
+				8575C686233947CA009BAC2B /* data_block_hash_index.cc */,
+				8575C687233947CA009BAC2B /* data_block_hash_index.h */,
 				62976A2B20B7622700DEBF89 /* filter_block.h */,
 				62976A3A20B7622900DEBF89 /* flush_block_policy.cc */,
 				62976A3920B7622900DEBF89 /* format.cc */,
@@ -2393,6 +2450,8 @@
 				62976B3C20B7625400DEBF89 /* compaction_job_stats_impl.cc */,
 				62976B4820B7625800DEBF89 /* comparator.cc */,
 				62976B5420B7625B00DEBF89 /* compression.h */,
+				8575C6922339481E009BAC2B /* compression_context_cache.cc */,
+				8575C6932339481E009BAC2B /* compression_context_cache.h */,
 				62976B4620B7625700DEBF89 /* concurrent_arena.cc */,
 				62976B2720B7624F00DEBF89 /* concurrent_arena.h */,
 				62976B5920B7625C00DEBF89 /* core_local.h */,
@@ -2433,7 +2492,6 @@
 				62976B2320B7624E00DEBF89 /* slice.cc */,
 				62976B0820B7624A00DEBF89 /* sst_file_manager_impl.cc */,
 				62976B5620B7625B00DEBF89 /* sst_file_manager_impl.h */,
-				62976B2C20B7625100DEBF89 /* status_message.cc */,
 				62976B6620B7625F00DEBF89 /* status.cc */,
 				62976B2E20B7625100DEBF89 /* stderr_logger.h */,
 				62976B6C20B7626200DEBF89 /* stop_watch.h */,
@@ -2441,12 +2499,16 @@
 				62976B6820B7625F00DEBF89 /* string_util.h */,
 				62976B1620B7624C00DEBF89 /* sync_point.cc */,
 				62976B1320B7624B00DEBF89 /* sync_point.h */,
+				8575C68023394795009BAC2B /* sync_point_impl.cc */,
+				8575C68123394795009BAC2B /* sync_point_impl.h */,
 				62976B4120B7625500DEBF89 /* thread_local.cc */,
 				62976B5820B7625B00DEBF89 /* thread_local.h */,
 				62976B5F20B7625D00DEBF89 /* thread_operation.h */,
 				62976B3020B7625200DEBF89 /* threadpool_imp.cc */,
 				62976B4020B7625500DEBF89 /* threadpool_imp.h */,
 				62976B2120B7624E00DEBF89 /* timer_queue.h */,
+				8575C698233948B9009BAC2B /* trace_replay.cc */,
+				8575C699233948B9009BAC2B /* trace_replay.h */,
 				62976B1A20B7624C00DEBF89 /* xxhash.cc */,
 				62976B4E20B7625900DEBF89 /* xxhash.h */,
 			);
@@ -2486,6 +2548,7 @@
 				62976CE020B762AB00DEBF89 /* simulator_cache */,
 				62976CB620B762A900DEBF89 /* spatialdb */,
 				62976C7520B762A300DEBF89 /* table_properties_collectors */,
+				8575C69F233948F9009BAC2B /* trace */,
 				62976CBF20B762AA00DEBF89 /* transactions */,
 				62976CBB20B762AA00DEBF89 /* ttl */,
 				62976C6D20B762A200DEBF89 /* write_batch_with_index */,
@@ -2796,6 +2859,7 @@
 				62976C8920B762A500DEBF89 /* blob_compaction_filter.h */,
 				62976C8A20B762A500DEBF89 /* blob_db.cc */,
 				62976C8B20B762A500DEBF89 /* blob_db.h */,
+				8575C6A623394928009BAC2B /* blob_db_impl_filesnapshot.cc */,
 				62976C8C20B762A500DEBF89 /* blob_db_impl.cc */,
 				62976C8D20B762A500DEBF89 /* blob_db_impl.h */,
 				62976C8E20B762A500DEBF89 /* blob_db_iterator.h */,
@@ -2811,7 +2875,6 @@
 				62976C9920B762A500DEBF89 /* blob_log_reader.h */,
 				62976C9A20B762A500DEBF89 /* blob_log_writer.cc */,
 				62976C9B20B762A500DEBF89 /* blob_log_writer.h */,
-				62976C9C20B762A500DEBF89 /* ttl_extractor.cc */,
 			);
 			path = blob_db;
 			sourceTree = "<group>";
@@ -2895,6 +2958,10 @@
 				62976CD620B762AA00DEBF89 /* write_prepared_txn.h */,
 				62976CD720B762AA00DEBF89 /* write_prepared_txn_db.cc */,
 				62976CD820B762AA00DEBF89 /* write_prepared_txn_db.h */,
+				8575C6B02339499E009BAC2B /* write_unprepared_txn_db.cc */,
+				8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */,
+				8575C6AF2339499E009BAC2B /* write_unprepared_txn.cc */,
+				8575C6B22339499F009BAC2B /* write_unprepared_txn.h */,
 			);
 			path = transactions;
 			sourceTree = "<group>";
@@ -3051,6 +3118,16 @@
 			name = Table;
 			sourceTree = "<group>";
 		};
+		8575C69F233948F9009BAC2B /* trace */ = {
+			isa = PBXGroup;
+			children = (
+				8575C6A0233948F9009BAC2B /* file_trace_reader_writer.cc */,
+				8575C6A1233948F9009BAC2B /* file_trace_reader_writer.h */,
+			);
+			name = trace;
+			path = rocksdb/utilities/trace;
+			sourceTree = SOURCE_ROOT;
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -3084,6 +3161,7 @@
 				629769E620B761B500DEBF89 /* histogram_windowing.h in Headers */,
 				62976B8420B7626300DEBF89 /* sync_point.h in Headers */,
 				624203CC1BED64F70043DD6F /* RocksDBProperties.h in Headers */,
+				8575C6962339481F009BAC2B /* compression_context_cache.h in Headers */,
 				62976D8120B762AC00DEBF89 /* blob_db_impl.h in Headers */,
 				629767F520B7610300DEBF89 /* snapshot_checker.h in Headers */,
 				62976AA020B7623600DEBF89 /* internal_iterator.h in Headers */,
@@ -3128,7 +3206,6 @@
 				62976BC020B7626300DEBF89 /* mutexlock.h in Headers */,
 				628CEBBB1D0CF4630096AA64 /* RocksDBIndexedWriteBatch+Private.h in Headers */,
 				62976D2D20B762AC00DEBF89 /* block_cache_tier_file_buffer.h in Headers */,
-				6297675920B7610300DEBF89 /* managed_iterator.h in Headers */,
 				62976D7920B762AC00DEBF89 /* blob_compaction_filter.h in Headers */,
 				624203D41BED64F80043DD6F /* RocksDBWriteBatch.h in Headers */,
 				629769FD20B761BC00DEBF89 /* options_parser.h in Headers */,
@@ -3137,6 +3214,7 @@
 				624203D51BED64F80043DD6F /* RocksDBIndexedWriteBatch.h in Headers */,
 				629768FD20B7618000DEBF89 /* persistent_cache.h in Headers */,
 				6297696320B7618000DEBF89 /* perf_level.h in Headers */,
+				8575C6B92339499F009BAC2B /* write_unprepared_txn.h in Headers */,
 				629768E520B7617F00DEBF89 /* iterator.h in Headers */,
 				62976C2C20B7626300DEBF89 /* heap.h in Headers */,
 				624203D61BED64F80043DD6F /* RocksDBWriteBatchIterator.h in Headers */,
@@ -3193,12 +3271,14 @@
 				62976A8220B7623600DEBF89 /* adaptive_table_factory.h in Headers */,
 				624203DA1BED64F80043DD6F /* RocksDBDatabaseOptions.h in Headers */,
 				624203DB1BED64F80043DD6F /* RocksDBColumnFamilyOptions.h in Headers */,
+				8575C68423394795009BAC2B /* sync_point_impl.h in Headers */,
 				623DD4CE1F02EE43008CC574 /* sys_time.h in Headers */,
 				62976A9220B7623600DEBF89 /* filter_block.h in Headers */,
 				62976C1E20B7626300DEBF89 /* string_util.h in Headers */,
 				6297699820B761AB00DEBF89 /* hash_linklist_rep.h in Headers */,
 				6297695720B7618000DEBF89 /* write_batch_with_index.h in Headers */,
 				62976BAE20B7626300DEBF89 /* stderr_logger.h in Headers */,
+				8575C69C233948B9009BAC2B /* trace_replay.h in Headers */,
 				62976ACC20B7623600DEBF89 /* full_filter_bits_builder.h in Headers */,
 				6297677B20B7610300DEBF89 /* flush_scheduler.h in Headers */,
 				629769EA20B761B500DEBF89 /* perf_context_imp.h in Headers */,
@@ -3245,6 +3325,7 @@
 				62976BD420B7626300DEBF89 /* arena.h in Headers */,
 				62976A7420B7623600DEBF89 /* two_level_iterator.h in Headers */,
 				629768F920B7618000DEBF89 /* write_batch_base.h in Headers */,
+				8575C6AB2339495E009BAC2B /* data_block_footer.h in Headers */,
 				629769DC20B761B500DEBF89 /* thread_status_util.h in Headers */,
 				624203E11BED64F80043DD6F /* RocksDBBlockBasedTableOptions.h in Headers */,
 				6297693F20B7618000DEBF89 /* object_registry.h in Headers */,
@@ -3274,6 +3355,7 @@
 				6297694F20B7618000DEBF89 /* transaction.h in Headers */,
 				6297691120B7618000DEBF89 /* db_dump_tool.h in Headers */,
 				623DD5F21F02EE69008CC574 /* FbsonWriter.h in Headers */,
+				8575C6A4233948F9009BAC2B /* file_trace_reader_writer.h in Headers */,
 				624203E71BED64F90043DD6F /* RocksDBSnapshot.h in Headers */,
 				6297690520B7618000DEBF89 /* metadata.h in Headers */,
 				62976A8020B7623600DEBF89 /* cuckoo_table_builder.h in Headers */,
@@ -3285,6 +3367,7 @@
 				62976CE720B762AC00DEBF89 /* col_buf_decoder.h in Headers */,
 				6297693520B7618000DEBF89 /* leveldb_options.h in Headers */,
 				624203E91BED64F90043DD6F /* RocksDBCheckpoint.h in Headers */,
+				8575C69023394802009BAC2B /* logs_with_prep_tracker.h in Headers */,
 				6297693320B7618000DEBF89 /* ldb_cmd_execute_result.h in Headers */,
 				6297698220B761AB00DEBF89 /* inlineskiplist.h in Headers */,
 				6297693920B7618000DEBF89 /* rocks_lua_custom_library.h in Headers */,
@@ -3299,6 +3382,7 @@
 				629769E020B761B500DEBF89 /* histogram.h in Headers */,
 				62976BB020B7626300DEBF89 /* kv_map.h in Headers */,
 				629767B920B7610300DEBF89 /* wal_manager.h in Headers */,
+				8575C67C2339475A009BAC2B /* error_handler.h in Headers */,
 				6297695B20B7618000DEBF89 /* types.h in Headers */,
 				625EF4971D0C3A960058ACDA /* RocksDBRange.h in Headers */,
 				62976D8F20B762AC00DEBF89 /* blob_file.h in Headers */,
@@ -3306,6 +3390,7 @@
 				624203EB1BED64F90043DD6F /* RocksDBStatistics.h in Headers */,
 				62976BE620B7626300DEBF89 /* hash_map.h in Headers */,
 				629767C120B7610300DEBF89 /* forward_iterator.h in Headers */,
+				8575C68A233947CA009BAC2B /* data_block_hash_index.h in Headers */,
 				62976E1D20B762AC00DEBF89 /* date_tiered_db_impl.h in Headers */,
 				62976BDC20B7626300DEBF89 /* rate_limiter.h in Headers */,
 				629768E320B7617F00DEBF89 /* filter_policy.h in Headers */,
@@ -3328,6 +3413,7 @@
 				62976AC220B7623600DEBF89 /* cuckoo_table_factory.h in Headers */,
 				62976D9520B762AC00DEBF89 /* blob_log_format.h in Headers */,
 				62976BB820B7626300DEBF89 /* memory_usage.h in Headers */,
+				8575C6B72339499F009BAC2B /* write_unprepared_txn_db.h in Headers */,
 				6297692F20B7618000DEBF89 /* json_document.h in Headers */,
 				629767A120B7610300DEBF89 /* db_iter.h in Headers */,
 				6297670720B7610300DEBF89 /* compaction_picker.h in Headers */,
@@ -3414,6 +3500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				62976AE920B7623600DEBF89 /* plain_table_builder.h in Headers */,
+				8575C6BA2339499F009BAC2B /* write_unprepared_txn.h in Headers */,
 				62976BFB20B7626300DEBF89 /* sst_file_manager_impl.h in Headers */,
 				6297687420B7611D00DEBF89 /* io_posix.h in Headers */,
 				62976B9B20B7626300DEBF89 /* timer_queue.h in Headers */,
@@ -3486,11 +3573,13 @@
 				629768FC20B7618000DEBF89 /* env_encryption.h in Headers */,
 				624F5DAE1BEE41F600497FEF /* RocksDBOptions.h in Headers */,
 				6297691220B7618000DEBF89 /* db_dump_tool.h in Headers */,
+				8575C6B82339499F009BAC2B /* write_unprepared_txn_db.h in Headers */,
 				6297692220B7618000DEBF89 /* db_ttl.h in Headers */,
 				629768D020B7617F00DEBF89 /* sst_file_manager.h in Headers */,
 				6297679820B7610300DEBF89 /* job_context.h in Headers */,
 				629768D220B7617F00DEBF89 /* comparator.h in Headers */,
 				62976D6020B762AC00DEBF89 /* compact_on_deletion_collector.h in Headers */,
+				8575C68523394795009BAC2B /* sync_point_impl.h in Headers */,
 				62976A9120B7623600DEBF89 /* table_properties_internal.h in Headers */,
 				6297694020B7618000DEBF89 /* object_registry.h in Headers */,
 				625EF4981D0C3A960058ACDA /* RocksDBRange.h in Headers */,
@@ -3537,6 +3626,7 @@
 				62976DCA20B762AC00DEBF89 /* merge_operators.h in Headers */,
 				62976BAB20B7626300DEBF89 /* log_buffer.h in Headers */,
 				6297693820B7618000DEBF89 /* rocks_lua_compaction_filter.h in Headers */,
+				8575C6A5233948F9009BAC2B /* file_trace_reader_writer.h in Headers */,
 				62976DB620B762AC00DEBF89 /* redis_list_exception.h in Headers */,
 				629769E320B761B500DEBF89 /* thread_status_updater.h in Headers */,
 				62976D1220B762AC00DEBF89 /* stringappend.h in Headers */,
@@ -3555,6 +3645,7 @@
 				62976C0B20B7626300DEBF89 /* hash.h in Headers */,
 				62976AC520B7623600DEBF89 /* block.h in Headers */,
 				6297691E20B7618000DEBF89 /* convenience.h in Headers */,
+				8575C69123394802009BAC2B /* logs_with_prep_tracker.h in Headers */,
 				62976A7920B7623600DEBF89 /* table_reader.h in Headers */,
 				62976DB820B762AC00DEBF89 /* redis_list_iterator.h in Headers */,
 				62976A8520B7623600DEBF89 /* block_based_table_builder.h in Headers */,
@@ -3599,6 +3690,7 @@
 				624F5DBE1BEE41F700497FEF /* RocksDBSnapshotUnavailable.h in Headers */,
 				6297679E20B7610300DEBF89 /* event_helpers.h in Headers */,
 				6297694C20B7618000DEBF89 /* stackable_db.h in Headers */,
+				8575C67D2339475A009BAC2B /* error_handler.h in Headers */,
 				62976BAF20B7626300DEBF89 /* stderr_logger.h in Headers */,
 				629769E920B761B500DEBF89 /* perf_step_timer.h in Headers */,
 				62976BC320B7626300DEBF89 /* random.h in Headers */,
@@ -3635,6 +3727,7 @@
 				62976DD620B762AC00DEBF89 /* db_ttl_impl.h in Headers */,
 				62976C1F20B7626300DEBF89 /* string_util.h in Headers */,
 				62976BCF20B7626300DEBF89 /* threadpool_imp.h in Headers */,
+				8575C68B233947CA009BAC2B /* data_block_hash_index.h in Headers */,
 				62976BF320B7626300DEBF89 /* channel.h in Headers */,
 				62976AFF20B7623600DEBF89 /* persistent_cache_options.h in Headers */,
 				629768F420B7618000DEBF89 /* cleanable.h in Headers */,
@@ -3662,6 +3755,7 @@
 				6297682420B7610300DEBF89 /* write_batch_internal.h in Headers */,
 				62976B0320B7623600DEBF89 /* plain_table_key_coding.h in Headers */,
 				6297681C20B7610300DEBF89 /* db_impl_readonly.h in Headers */,
+				8575C69D233948B9009BAC2B /* trace_replay.h in Headers */,
 				62976BEF20B7626300DEBF89 /* aligned_buffer.h in Headers */,
 				6297699920B761AB00DEBF89 /* hash_linklist_rep.h in Headers */,
 				624F5EE01BEE456200497FEF /* RocksDBSnapshot+Private.h in Headers */,
@@ -3683,7 +3777,6 @@
 				624F5EE11BEE456200497FEF /* RocksDBCallbackComparator.h in Headers */,
 				624F5EE21BEE456200497FEF /* RocksDBCallbackAssociativeMergeOperator.h in Headers */,
 				62976AEB20B7623600DEBF89 /* table_builder.h in Headers */,
-				6297675A20B7610300DEBF89 /* managed_iterator.h in Headers */,
 				6297671820B7610300DEBF89 /* flush_job.h in Headers */,
 				62976C2F20B7626300DEBF89 /* dynamic_bloom.h in Headers */,
 				624F5EE31BEE456200497FEF /* RocksDBCallbackMergeOperator.h in Headers */,
@@ -3704,8 +3797,10 @@
 				62976C2D20B7626300DEBF89 /* heap.h in Headers */,
 				62976A6920B7623600DEBF89 /* iterator_wrapper.h in Headers */,
 				629768EE20B7618000DEBF89 /* db.h in Headers */,
+				8575C6972339481F009BAC2B /* compression_context_cache.h in Headers */,
 				6297699520B761AB00DEBF89 /* hash_cuckoo_rep.h in Headers */,
 				623DD5EB1F02EE69008CC574 /* FbsonDocument.h in Headers */,
+				8575C6AC2339495E009BAC2B /* data_block_footer.h in Headers */,
 				6297690A20B7618000DEBF89 /* version.h in Headers */,
 				623DD5F31F02EE69008CC574 /* FbsonWriter.h in Headers */,
 				62976BEB20B7626300DEBF89 /* xxhash.h in Headers */,
@@ -3857,6 +3952,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 			);
 			mainGroup = 6299F8001A17B28200123F56;
@@ -3951,16 +4047,19 @@
 				62976DD320B762AC00DEBF89 /* db_ttl_impl.cc in Sources */,
 				62976DA520B762AC00DEBF89 /* column_aware_encoding_exp.cc in Sources */,
 				624203FC1BED65250043DD6F /* RocksDB.mm in Sources */,
+				8575C6A723394929009BAC2B /* blob_db_impl_filesnapshot.cc in Sources */,
 				629769C820B761B500DEBF89 /* instrumented_mutex.cc in Sources */,
 				6297678520B7610300DEBF89 /* snapshot_impl.cc in Sources */,
 				62976A7E20B7623600DEBF89 /* plain_table_key_coding.cc in Sources */,
 				6297678120B7610300DEBF89 /* transaction_log_impl.cc in Sources */,
+				8575C68E23394802009BAC2B /* logs_with_prep_tracker.cc in Sources */,
 				62976B0020B7623600DEBF89 /* bloom_block.cc in Sources */,
 				62976AAC20B7623600DEBF89 /* merging_iterator.cc in Sources */,
 				6297675120B7610300DEBF89 /* dbformat.cc in Sources */,
 				6297673F20B7610300DEBF89 /* event_helpers.cc in Sources */,
 				62976D2520B762AC00DEBF89 /* block_cache_tier.cc in Sources */,
 				624203FD1BED65250043DD6F /* RocksDBProperties.mm in Sources */,
+				8575C6942339481F009BAC2B /* compression_context_cache.cc in Sources */,
 				6297678F20B7610300DEBF89 /* repair.cc in Sources */,
 				62976ADA20B7623600DEBF89 /* block_based_table_factory.cc in Sources */,
 				6297687920B7611D00DEBF89 /* env_encryption.cc in Sources */,
@@ -3968,10 +4067,8 @@
 				624203FE1BED65250043DD6F /* RocksDBError.mm in Sources */,
 				62976B8C20B7626300DEBF89 /* auto_roll_logger.cc in Sources */,
 				62976D4F20B762AC00DEBF89 /* write_batch_with_index.cc in Sources */,
-				6297679920B7610300DEBF89 /* managed_iterator.cc in Sources */,
 				62976A6E20B7623600DEBF89 /* partitioned_filter_block.cc in Sources */,
 				624203FF1BED65250043DD6F /* RocksDBColumnFamily.mm in Sources */,
-				62976BAC20B7626300DEBF89 /* status_message.cc in Sources */,
 				6297698620B761AB00DEBF89 /* vectorrep.cc in Sources */,
 				62976A8A20B7623600DEBF89 /* sst_file_writer.cc in Sources */,
 				62976A0720B761BC00DEBF89 /* cf_options.cc in Sources */,
@@ -3999,6 +4096,7 @@
 				629767FF20B7610300DEBF89 /* db_impl.cc in Sources */,
 				62976BFC20B7626300DEBF89 /* coding.cc in Sources */,
 				62976AB020B7623600DEBF89 /* flush_block_policy.cc in Sources */,
+				8575C6A2233948F9009BAC2B /* file_trace_reader_writer.cc in Sources */,
 				62976A0520B761BC00DEBF89 /* options_parser.cc in Sources */,
 				6297682B20B7610300DEBF89 /* malloc_stats.cc in Sources */,
 				62976D0B20B762AC00DEBF89 /* max.cc in Sources */,
@@ -4049,6 +4147,7 @@
 				624204071BED65250043DD6F /* RocksDBComparator.mm in Sources */,
 				62976DAF20B762AC00DEBF89 /* option_change_migration.cc in Sources */,
 				62976D0F20B762AC00DEBF89 /* stringappend.cc in Sources */,
+				8575C6B52339499F009BAC2B /* write_unprepared_txn_db.cc in Sources */,
 				629767D120B7610300DEBF89 /* db_impl_files.cc in Sources */,
 				62976D2920B762AC00DEBF89 /* block_cache_tier_file.cc in Sources */,
 				62976DE320B762AC00DEBF89 /* pessimistic_transaction.cc in Sources */,
@@ -4078,6 +4177,7 @@
 				6297677F20B7610300DEBF89 /* write_controller.cc in Sources */,
 				62976DA920B762AC00DEBF89 /* geodb_impl.cc in Sources */,
 				6297686720B7611D00DEBF89 /* env_posix.cc in Sources */,
+				8575C68223394795009BAC2B /* sync_point_impl.cc in Sources */,
 				62976DDD20B762AC00DEBF89 /* optimistic_transaction_db_impl.cc in Sources */,
 				629769C020B761B500DEBF89 /* histogram.cc in Sources */,
 				6297686520B7611D00DEBF89 /* env.cc in Sources */,
@@ -4085,7 +4185,6 @@
 				62976A7C20B7623600DEBF89 /* cuckoo_table_reader.cc in Sources */,
 				629769DA20B761B500DEBF89 /* thread_status_updater.cc in Sources */,
 				6242040F1BED65250043DD6F /* RocksDBThreadStatus.mm in Sources */,
-				62976D9F20B762AC00DEBF89 /* ttl_extractor.cc in Sources */,
 				625EF4991D0C3A960058ACDA /* RocksDBRange.mm in Sources */,
 				62976AB620B7623600DEBF89 /* plain_table_builder.cc in Sources */,
 				6297670F20B7610300DEBF89 /* db_impl_readonly.cc in Sources */,
@@ -4097,6 +4196,7 @@
 				62976DFD20B762AC00DEBF89 /* transaction_util.cc in Sources */,
 				62976AC620B7623600DEBF89 /* cuckoo_table_builder.cc in Sources */,
 				624204101BED65250043DD6F /* RocksDBTableFactory.mm in Sources */,
+				8575C69A233948B9009BAC2B /* trace_replay.cc in Sources */,
 				6297672520B7610300DEBF89 /* file_indexer.cc in Sources */,
 				62976D7F20B762AC00DEBF89 /* blob_db_impl.cc in Sources */,
 				6297683520B7610300DEBF89 /* db_filesnapshot.cc in Sources */,
@@ -4125,6 +4225,7 @@
 				62976AD420B7623600DEBF89 /* block.cc in Sources */,
 				6297673920B7610300DEBF89 /* wal_manager.cc in Sources */,
 				623DD4C41F02EE42008CC574 /* port_posix.cc in Sources */,
+				8575C67E2339475A009BAC2B /* error_handler.cc in Sources */,
 				62976ABA20B7623600DEBF89 /* table_properties.cc in Sources */,
 				629769CA20B761B500DEBF89 /* perf_level.cc in Sources */,
 				6297676320B7610300DEBF89 /* db_info_dumper.cc in Sources */,
@@ -4133,6 +4234,7 @@
 				62976AE620B7623600DEBF89 /* meta_blocks.cc in Sources */,
 				62976BC620B7626300DEBF89 /* compaction_job_stats_impl.cc in Sources */,
 				62976D6B20B762AC00DEBF89 /* options_util.cc in Sources */,
+				8575C6AD2339495E009BAC2B /* data_block_footer.cc in Sources */,
 				624204131BED65250043DD6F /* RocksDBCuckooTableOptions.mm in Sources */,
 				624204141BED65250043DD6F /* RocksDBCache.mm in Sources */,
 				624204151BED65250043DD6F /* RocksDBFilterPolicy.mm in Sources */,
@@ -4150,6 +4252,7 @@
 				6297674520B7610300DEBF89 /* memtable.cc in Sources */,
 				6242041A1BED65250043DD6F /* RocksDBStatistics.mm in Sources */,
 				6242041B1BED65250043DD6F /* RocksDBStatisticsHistogram.mm in Sources */,
+				8575C6B32339499F009BAC2B /* write_unprepared_txn.cc in Sources */,
 				6242041C1BED65250043DD6F /* RocksDBBackupEngine.mm in Sources */,
 				62976BA820B7626300DEBF89 /* filename.cc in Sources */,
 				629767ED20B7610300DEBF89 /* internal_stats.cc in Sources */,
@@ -4185,6 +4288,7 @@
 				62976B9220B7626300DEBF89 /* crc32c.cc in Sources */,
 				629769BA20B761B500DEBF89 /* iostats_context.cc in Sources */,
 				62976D1320B762AC00DEBF89 /* stringappend2.cc in Sources */,
+				8575C688233947CA009BAC2B /* data_block_hash_index.cc in Sources */,
 				6297672D20B7610300DEBF89 /* compaction_job.cc in Sources */,
 				6242042F1BED65540043DD6F /* RocksDBCallbackMergeOperator.cpp in Sources */,
 				629767D920B7610300DEBF89 /* version_edit.cc in Sources */,
@@ -4210,6 +4314,7 @@
 				62976DAA20B762AC00DEBF89 /* geodb_impl.cc in Sources */,
 				624F5DC61BEE437C00497FEF /* RocksDB.mm in Sources */,
 				62976DD220B762AC00DEBF89 /* debug.cc in Sources */,
+				8575C6B62339499F009BAC2B /* write_unprepared_txn_db.cc in Sources */,
 				62976B8F20B7626300DEBF89 /* xxhash.cc in Sources */,
 				62976C0320B7626300DEBF89 /* log_buffer.cc in Sources */,
 				624F5DC91BEE437C00497FEF /* RocksDBError.mm in Sources */,
@@ -4257,6 +4362,7 @@
 				62976D5020B762AC00DEBF89 /* write_batch_with_index.cc in Sources */,
 				624F5DCE1BEE437C00497FEF /* RocksDBPrefixExtractor.mm in Sources */,
 				62976D2020B762AC00DEBF89 /* checkpoint_impl.cc in Sources */,
+				8575C68F23394802009BAC2B /* logs_with_prep_tracker.cc in Sources */,
 				6297687A20B7611D00DEBF89 /* env_encryption.cc in Sources */,
 				624F5DCF1BEE437C00497FEF /* RocksDBWriteBatch.mm in Sources */,
 				6297673220B7610300DEBF89 /* external_sst_file_ingestion_job.cc in Sources */,
@@ -4264,6 +4370,7 @@
 				6297671E20B7610300DEBF89 /* table_properties_collector.cc in Sources */,
 				62976B0120B7623600DEBF89 /* bloom_block.cc in Sources */,
 				629767DA20B7610300DEBF89 /* version_edit.cc in Sources */,
+				8575C68323394795009BAC2B /* sync_point_impl.cc in Sources */,
 				629767BC20B7610300DEBF89 /* flush_scheduler.cc in Sources */,
 				629767AA20B7610300DEBF89 /* log_writer.cc in Sources */,
 				6273A5111D0C646C00CF8BF1 /* RocksDBCompactRangeOptions.mm in Sources */,
@@ -4280,18 +4387,19 @@
 				62976AFD20B7623600DEBF89 /* adaptive_table_factory.cc in Sources */,
 				629767D820B7610300DEBF89 /* db_impl_open.cc in Sources */,
 				62976C1B20B7626300DEBF89 /* status.cc in Sources */,
+				8575C689233947CA009BAC2B /* data_block_hash_index.cc in Sources */,
+				8575C6A823394929009BAC2B /* blob_db_impl_filesnapshot.cc in Sources */,
 				62976AC120B7623600DEBF89 /* plain_table_reader.cc in Sources */,
 				629769C120B761B500DEBF89 /* histogram.cc in Sources */,
 				6297684A20B7610300DEBF89 /* flush_job.cc in Sources */,
-				6297679A20B7610300DEBF89 /* managed_iterator.cc in Sources */,
 				6297673C20B7610300DEBF89 /* table_cache.cc in Sources */,
 				623DD4CB1F02EE43008CC574 /* stack_trace.cc in Sources */,
+				8575C67F2339475A009BAC2B /* error_handler.cc in Sources */,
 				629767EE20B7610300DEBF89 /* internal_stats.cc in Sources */,
 				62976BD120B7626300DEBF89 /* thread_local.cc in Sources */,
 				6297699720B761AB00DEBF89 /* hash_linklist_rep.cc in Sources */,
 				6297686820B7611D00DEBF89 /* env_posix.cc in Sources */,
 				62976D4420B762AC00DEBF89 /* persistent_cache_tier.cc in Sources */,
-				62976BAD20B7626300DEBF89 /* status_message.cc in Sources */,
 				6297675C20B7610300DEBF89 /* write_batch_base.cc in Sources */,
 				62976AC920B7623600DEBF89 /* block_based_filter_block.cc in Sources */,
 				629767D220B7610300DEBF89 /* db_impl_files.cc in Sources */,
@@ -4304,6 +4412,7 @@
 				62976E1820B762AC00DEBF89 /* sim_cache.cc in Sources */,
 				62976A1020B761BC00DEBF89 /* options_helper.cc in Sources */,
 				629769E520B761B500DEBF89 /* thread_status_util_debug.cc in Sources */,
+				8575C6B42339499F009BAC2B /* write_unprepared_txn.cc in Sources */,
 				62976DBA20B762AC00DEBF89 /* redis_lists.cc in Sources */,
 				6297698120B761AB00DEBF89 /* hash_skiplist_rep.cc in Sources */,
 				62976D7220B762AC00DEBF89 /* column_aware_encoding_util.cc in Sources */,
@@ -4325,7 +4434,6 @@
 				6297683820B7610300DEBF89 /* version_set.cc in Sources */,
 				624F5DD51BEE437C00497FEF /* RocksDBDatabaseOptions.mm in Sources */,
 				624F5DD61BEE437C00497FEF /* RocksDBColumnFamilyOptions.mm in Sources */,
-				62976DA020B762AC00DEBF89 /* ttl_extractor.cc in Sources */,
 				624F5DD71BEE437C00497FEF /* RocksDBWriteOptions.mm in Sources */,
 				62976A0620B761BC00DEBF89 /* options_parser.cc in Sources */,
 				62976AAF20B7623600DEBF89 /* format.cc in Sources */,
@@ -4342,11 +4450,13 @@
 				62976DA620B762AC00DEBF89 /* column_aware_encoding_exp.cc in Sources */,
 				624F5DD81BEE437C00497FEF /* RocksDBReadOptions.mm in Sources */,
 				62976E0820B762AC00DEBF89 /* write_prepared_txn_db.cc in Sources */,
+				8575C6952339481F009BAC2B /* compression_context_cache.cc in Sources */,
 				62976A1220B761BC00DEBF89 /* options_sanity_check.cc in Sources */,
 				62976D0E20B762AC00DEBF89 /* put.cc in Sources */,
 				62976BD720B7626300DEBF89 /* bloom.cc in Sources */,
 				623DD4C51F02EE42008CC574 /* port_posix.cc in Sources */,
 				62976AE520B7623600DEBF89 /* full_filter_block.cc in Sources */,
+				8575C69B233948B9009BAC2B /* trace_replay.cc in Sources */,
 				62976A9D20B7623600DEBF89 /* iterator.cc in Sources */,
 				62976D8E20B762AC00DEBF89 /* blob_file.cc in Sources */,
 				624F5DD91BEE437C00497FEF /* RocksDBEnv.mm in Sources */,
@@ -4386,7 +4496,9 @@
 				629769ED20B761B500DEBF89 /* thread_status_impl.cc in Sources */,
 				62976B7320B7626300DEBF89 /* sst_file_manager_impl.cc in Sources */,
 				623DD8E91F02F78C008CC574 /* clock_cache.cc in Sources */,
+				8575C6AE2339495E009BAC2B /* data_block_footer.cc in Sources */,
 				62976BCD20B7626300DEBF89 /* event_logger.cc in Sources */,
+				8575C6A3233948F9009BAC2B /* file_trace_reader_writer.cc in Sources */,
 				62976C1520B7626300DEBF89 /* file_util.cc in Sources */,
 				62976A1420B761BC00DEBF89 /* options.cc in Sources */,
 				629769C920B761B500DEBF89 /* instrumented_mutex.cc in Sources */,
