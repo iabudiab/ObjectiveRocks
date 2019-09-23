@@ -1260,6 +1260,14 @@
 		8575C6B82339499F009BAC2B /* write_unprepared_txn_db.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */; };
 		8575C6B92339499F009BAC2B /* write_unprepared_txn.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B22339499F009BAC2B /* write_unprepared_txn.h */; };
 		8575C6BA2339499F009BAC2B /* write_unprepared_txn.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6B22339499F009BAC2B /* write_unprepared_txn.h */; };
+		8575C6BD23394C7F009BAC2B /* range_tombstone_fragmenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6BB23394C7E009BAC2B /* range_tombstone_fragmenter.h */; };
+		8575C6BE23394C7F009BAC2B /* range_tombstone_fragmenter.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6BB23394C7E009BAC2B /* range_tombstone_fragmenter.h */; };
+		8575C6BF23394C7F009BAC2B /* range_tombstone_fragmenter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6BC23394C7F009BAC2B /* range_tombstone_fragmenter.cc */; };
+		8575C6C023394C7F009BAC2B /* range_tombstone_fragmenter.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6BC23394C7F009BAC2B /* range_tombstone_fragmenter.cc */; };
+		8575C6C323394CB2009BAC2B /* compaction_picker_fifo.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6C123394CB1009BAC2B /* compaction_picker_fifo.cc */; };
+		8575C6C423394CB2009BAC2B /* compaction_picker_fifo.cc in Sources */ = {isa = PBXBuildFile; fileRef = 8575C6C123394CB1009BAC2B /* compaction_picker_fifo.cc */; };
+		8575C6C523394CB2009BAC2B /* compaction_picker_fifo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6C223394CB2009BAC2B /* compaction_picker_fifo.h */; };
+		8575C6C623394CB2009BAC2B /* compaction_picker_fifo.h in Headers */ = {isa = PBXBuildFile; fileRef = 8575C6C223394CB2009BAC2B /* compaction_picker_fifo.h */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1933,6 +1941,10 @@
 		8575C6B02339499E009BAC2B /* write_unprepared_txn_db.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = write_unprepared_txn_db.cc; sourceTree = "<group>"; };
 		8575C6B12339499E009BAC2B /* write_unprepared_txn_db.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_unprepared_txn_db.h; sourceTree = "<group>"; };
 		8575C6B22339499F009BAC2B /* write_unprepared_txn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = write_unprepared_txn.h; sourceTree = "<group>"; };
+		8575C6BB23394C7E009BAC2B /* range_tombstone_fragmenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = range_tombstone_fragmenter.h; sourceTree = "<group>"; };
+		8575C6BC23394C7F009BAC2B /* range_tombstone_fragmenter.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = range_tombstone_fragmenter.cc; sourceTree = "<group>"; };
+		8575C6C123394CB1009BAC2B /* compaction_picker_fifo.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = compaction_picker_fifo.cc; sourceTree = "<group>"; };
+		8575C6C223394CB2009BAC2B /* compaction_picker_fifo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = compaction_picker_fifo.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2198,6 +2210,8 @@
 				6297668920B760E300DEBF89 /* compaction_iterator.h */,
 				6297666D20B760DC00DEBF89 /* compaction_job.cc */,
 				6297668520B760E200DEBF89 /* compaction_job.h */,
+				8575C6C123394CB1009BAC2B /* compaction_picker_fifo.cc */,
+				8575C6C223394CB2009BAC2B /* compaction_picker_fifo.h */,
 				6297668020B760E100DEBF89 /* compaction_picker_universal.cc */,
 				6297668C20B760E400DEBF89 /* compaction_picker_universal.h */,
 				629766C120B760F200DEBF89 /* compaction_picker.cc */,
@@ -2270,6 +2284,8 @@
 				6297665F20B760D900DEBF89 /* table_cache.h */,
 				6297666520B760DB00DEBF89 /* table_properties_collector.cc */,
 				629766F720B7610000DEBF89 /* table_properties_collector.h */,
+				8575C6BC23394C7F009BAC2B /* range_tombstone_fragmenter.cc */,
+				8575C6BB23394C7E009BAC2B /* range_tombstone_fragmenter.h */,
 				6297669720B760E700DEBF89 /* transaction_log_impl.cc */,
 				629766DF20B760FA00DEBF89 /* transaction_log_impl.h */,
 				629766FC20B7610200DEBF89 /* version_builder.cc */,
@@ -3137,6 +3153,7 @@
 			files = (
 				624203CA1BED64F70043DD6F /* ObjectiveRocks.h in Headers */,
 				629768D520B7617F00DEBF89 /* threadpool.h in Headers */,
+				8575C6C523394CB2009BAC2B /* compaction_picker_fifo.h in Headers */,
 				62976AB220B7623600DEBF89 /* full_filter_block.h in Headers */,
 				6297673D20B7610300DEBF89 /* write_thread.h in Headers */,
 				6297696120B7618000DEBF89 /* sst_dump_tool.h in Headers */,
@@ -3412,6 +3429,7 @@
 				629768CF20B7617F00DEBF89 /* sst_file_manager.h in Headers */,
 				62976AC220B7623600DEBF89 /* cuckoo_table_factory.h in Headers */,
 				62976D9520B762AC00DEBF89 /* blob_log_format.h in Headers */,
+				8575C6BD23394C7F009BAC2B /* range_tombstone_fragmenter.h in Headers */,
 				62976BB820B7626300DEBF89 /* memory_usage.h in Headers */,
 				8575C6B72339499F009BAC2B /* write_unprepared_txn_db.h in Headers */,
 				6297692F20B7618000DEBF89 /* json_document.h in Headers */,
@@ -3502,6 +3520,7 @@
 				62976AE920B7623600DEBF89 /* plain_table_builder.h in Headers */,
 				8575C6BA2339499F009BAC2B /* write_unprepared_txn.h in Headers */,
 				62976BFB20B7626300DEBF89 /* sst_file_manager_impl.h in Headers */,
+				8575C6C623394CB2009BAC2B /* compaction_picker_fifo.h in Headers */,
 				6297687420B7611D00DEBF89 /* io_posix.h in Headers */,
 				62976B9B20B7626300DEBF89 /* timer_queue.h in Headers */,
 				62976ACF20B7623600DEBF89 /* block_based_table_reader.h in Headers */,
@@ -3704,6 +3723,7 @@
 				629769FC20B761BC00DEBF89 /* db_options.h in Headers */,
 				6297692A20B7618000DEBF89 /* env_mirror.h in Headers */,
 				6297683A20B7610300DEBF89 /* internal_stats.h in Headers */,
+				8575C6BE23394C7F009BAC2B /* range_tombstone_fragmenter.h in Headers */,
 				629767DC20B7610300DEBF89 /* merge_context.h in Headers */,
 				623DD4D11F02EE43008CC574 /* util_logger.h in Headers */,
 				62976BF720B7626300DEBF89 /* compression.h in Headers */,
@@ -4179,6 +4199,7 @@
 				6297686720B7611D00DEBF89 /* env_posix.cc in Sources */,
 				8575C68223394795009BAC2B /* sync_point_impl.cc in Sources */,
 				62976DDD20B762AC00DEBF89 /* optimistic_transaction_db_impl.cc in Sources */,
+				8575C6BF23394C7F009BAC2B /* range_tombstone_fragmenter.cc in Sources */,
 				629769C020B761B500DEBF89 /* histogram.cc in Sources */,
 				6297686520B7611D00DEBF89 /* env.cc in Sources */,
 				62976D7120B762AC00DEBF89 /* column_aware_encoding_util.cc in Sources */,
@@ -4265,6 +4286,7 @@
 				62976AFC20B7623600DEBF89 /* adaptive_table_factory.cc in Sources */,
 				62976D4320B762AC00DEBF89 /* persistent_cache_tier.cc in Sources */,
 				6297673120B7610300DEBF89 /* external_sst_file_ingestion_job.cc in Sources */,
+				8575C6C323394CB2009BAC2B /* compaction_picker_fifo.cc in Sources */,
 				62976D6320B762AC00DEBF89 /* remove_emptyvalue_compactionfilter.cc in Sources */,
 				6297684B20B7610300DEBF89 /* version_builder.cc in Sources */,
 				62976D1920B762AC00DEBF89 /* uint64add.cc in Sources */,
@@ -4351,6 +4373,7 @@
 				6297687820B7611D00DEBF89 /* env_chroot.cc in Sources */,
 				62976D7020B762AC00DEBF89 /* col_buf_decoder.cc in Sources */,
 				62976D1420B762AC00DEBF89 /* stringappend2.cc in Sources */,
+				8575C6C423394CB2009BAC2B /* compaction_picker_fifo.cc in Sources */,
 				6297698720B761AB00DEBF89 /* vectorrep.cc in Sources */,
 				62976B8920B7626300DEBF89 /* sync_point.cc in Sources */,
 				62976D0820B762AC00DEBF89 /* bytesxor.cc in Sources */,
@@ -4537,6 +4560,7 @@
 				6297678220B7610300DEBF89 /* transaction_log_impl.cc in Sources */,
 				62976ABF20B7623600DEBF89 /* persistent_cache_helper.cc in Sources */,
 				62976C2920B7626300DEBF89 /* build_version.cc in Sources */,
+				8575C6C023394C7F009BAC2B /* range_tombstone_fragmenter.cc in Sources */,
 				629769DB20B761B500DEBF89 /* thread_status_updater.cc in Sources */,
 				6297681A20B7610300DEBF89 /* db_iter.cc in Sources */,
 				623DD8F31F02F78C008CC574 /* sharded_cache.cc in Sources */,
