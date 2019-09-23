@@ -42,11 +42,6 @@
 	return [[self alloc] initWithNativeMemTableRepFactory:rocksdb::NewHashLinkListRepFactory()];
 }
 
-+ (instancetype)hashCuckooRepFactoryWithWriteBufferSize:(size_t)writeBufferSize
-{
-	return [[self alloc] initWithNativeMemTableRepFactory:rocksdb::NewHashCuckooRepFactory(writeBufferSize)];
-}
-
 #endif
 
 - (instancetype)initWithNativeMemTableRepFactory:(rocksdb::MemTableRepFactory *)factory

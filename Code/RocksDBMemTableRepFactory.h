@@ -45,15 +45,6 @@ NS_ASSUME_NONNULL_BEGIN
  */
 + (instancetype)hashLinkListRepFactory;
 
-/**
- Creates cuckoo-hashing based MemTableRep. Cuckoo-hash is a closed-hash 
- strategy, in which all key/value pairs are stored in the bucket array 
- itself intead of in some data structures external to the bucket array.
- 
- @param writeBufferSize The write buffer size in bytes.
- */
-+ (instancetype)hashCuckooRepFactoryWithWriteBufferSize:(size_t)writeBufferSize;
-
 #endif
 
 @end
