@@ -43,7 +43,8 @@ find $SRC_COPY -not -name '*.cc' -type f -not -name '*.cpp' -type f -not -name '
 
 # Delete any test files
 find $SRC_COPY -name '*test*' -type f -delete
-find $SRC_COPY -name '*mock*' -type f -delete
+find $SRC_COPY -name '*mock_env*' -type f -delete
+find $SRC_COPY -name '*mock_table*' -type f -delete
 
 # Delete any additional files we don't need
 rm -f $SRC_COPY/db/c.cc
