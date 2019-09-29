@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, RocksDBBottommostLevelCompaction)
 	RocksDBBottommostLevelCompactionSkip,
 	RocksDBBottommostLevelCompactionIfHaveCompactionFilter,
 	RocksDBBottommostLevelCompactionForce,
+	RocksDBBottommostLevelCompactionForceOptimized
 };
 
 /**
