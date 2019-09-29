@@ -1,5 +1,14 @@
 # Change Log
 
+
+## [0.10.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.10.0)
+
+Released on 2019.09.29
+
+- Updated to RocksDB `6.2.4`
+  - Thanks to @jurmous in PR #18
+
+
 ## [0.9.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.9.0)
 
 Released on 2017.05.25
