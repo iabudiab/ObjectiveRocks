@@ -12,7 +12,7 @@ ObjectiveRocks is an Objective-C wrapper of Facebook's [RocksDB](https://github.
 
 ---
 
-Current RocksDB Version: [v5.13.1](https://github.com/facebook/rocksdb/releases/tag/v5.13.1)
+Current RocksDB Version: [v6.2.4](https://github.com/facebook/rocksdb/releases/tag/v6.2.4)
 
 ---
 
