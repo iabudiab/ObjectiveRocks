@@ -1,4 +1,4 @@
-name: HTMLKit CI
+name: ObjectiveRocks CI
 
 on: [push]
 
@@ -17,5 +17,8 @@ jobs:
     runs-on: macOS-latest
     needs: [macOS]
     steps:
-      - name: lint
+      - uses: actions/checkout@v1   
+        with:
+          submodules: recursive 
+      - name: Pod Lint
         run: pod lib lint --skip-import-validation --allow-warnings
