@@ -31,6 +31,16 @@
 
 #pragma mark - Options
 
+- (BOOL)exclusiveManualCompaction
+{
+	return _options.exclusive_manual_compaction;
+}
+
+- (void)setExclusiveManualCompaction:(BOOL)exclusiveManualCompaction
+{
+	_options.exclusive_manual_compaction = exclusiveManualCompaction;
+}
+
 - (BOOL)changeLevel
 {
 	return _options.change_level;
@@ -49,6 +59,16 @@
 - (void)setTargetLevel:(int)targetLevel
 {
 	_options.target_level = targetLevel;
+}
+
+- (uint32_t)targetPathId
+{
+	return _options.target_path_id;
+}
+
+- (void)setTargetPathId:(uint32_t)targetPathId
+{
+	_options.target_path_id = targetPathId;
 }
 
 - (RocksDBBottommostLevelCompaction)bottommostLevelCompaction
@@ -81,6 +101,26 @@
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kForceOptimized;
 			break;
 	}
+}
+
+- (BOOL)allowWriteStall
+{
+	return _options.allow_write_stall;
+}
+
+- (void)setAllowWriteStall:(BOOL)allowWriteStall
+{
+	_options.allow_write_stall = allowWriteStall;
+}
+
+- (uint32_t)maxSubcompactions
+{
+	return _options.max_subcompactions;
+}
+
+- (void)setMaxSubcompactions:(uint32_t)maxSubcompactions
+{
+	_options.max_subcompactions = maxSubcompactions;
 }
 
 @end
