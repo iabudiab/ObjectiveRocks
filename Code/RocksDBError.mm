@@ -20,10 +20,10 @@ NSString * const RocksDBSubcodeKey = @"rocksdb.subcode";
 	NSString *reason = [NSString stringWithUTF8String:status.ToString().c_str()];
 
 	NSDictionary *userInfo = @{
-							   NSLocalizedDescriptionKey : @"Operation couldn't be completed",
-							   NSLocalizedFailureReasonErrorKey : reason,
-                               RocksDBSubcodeKey: @(status.subcode())
-							   };
+								NSLocalizedDescriptionKey : @"Operation couldn't be completed",
+								NSLocalizedFailureReasonErrorKey : reason,
+								RocksDBSubcodeKey: @(status.subcode())
+								};
 
 	return [NSError errorWithDomain:RocksDBErrorDomain code:status.code() userInfo:userInfo];
 }

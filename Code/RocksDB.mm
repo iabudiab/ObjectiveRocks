@@ -180,7 +180,7 @@
 
 - (BOOL)isClosed {
 	@synchronized(self) {
-    	return _db == nullptr;
+		return _db == nullptr;
 	}
 }
 

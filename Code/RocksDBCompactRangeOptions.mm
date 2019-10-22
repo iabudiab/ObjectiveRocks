@@ -62,7 +62,7 @@
 			return RocksDBBottommostLevelCompactionForce;
 		case rocksdb::BottommostLevelCompaction::kForceOptimized:
 			return RocksDBBottommostLevelCompactionForceOptimized;
-    }
+	}
 }
 
 - (void)setBottommostLevelCompaction:(RocksDBBottommostLevelCompaction)bottommostLevelCompaction
@@ -80,7 +80,7 @@
 		case RocksDBBottommostLevelCompactionForceOptimized:
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kForceOptimized;
 			break;
-    }
+	}
 }
 
 @end
