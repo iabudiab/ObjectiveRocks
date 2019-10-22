@@ -135,6 +135,16 @@
 	_options.compression = (rocksdb::CompressionType)compressionType;
 }
 
+- (void)setCompactionStyle:(RocksDBCompactionStyle)compactionStyle
+{
+	_options.compaction_style = (rocksdb::CompactionStyle)compactionStyle;
+}
+
+- (RocksDBCompactionStyle)compactionStyle
+{
+	return (RocksDBCompactionStyle)_options.compaction_style;
+}
+
 - (void)setPrefixExtractor:(RocksDBPrefixExtractor *)prefixExtractor
 {
 	_prefixExtractorWrapper = prefixExtractor;
@@ -159,6 +169,11 @@
 - (void)setLevel0FileNumCompactionTrigger:(int)level0FileNumCompactionTrigger
 {
 	_options.level0_file_num_compaction_trigger = level0FileNumCompactionTrigger;
+}
+
+- (int)level0FileNumCompactionTrigger
+{
+	return _options.level0_file_num_compaction_trigger;
 }
 
 - (void)setLevel0SlowdownWritesTrigger:(int)level0SlowdownWritesTrigger
@@ -211,12 +226,12 @@
 	return _options.max_bytes_for_level_base;
 }
 
-- (void)setMaxBytesForLevelMultiplier:(int)maxBytesForLevelMultiplier
+- (void)setMaxBytesForLevelMultiplier:(double)maxBytesForLevelMultiplier
 {
 	_options.max_bytes_for_level_multiplier = maxBytesForLevelMultiplier;
 }
 
-- (int)maxBytesForLevelMultiplier
+- (double)maxBytesForLevelMultiplier
 {
 	return _options.max_bytes_for_level_multiplier;
 }
