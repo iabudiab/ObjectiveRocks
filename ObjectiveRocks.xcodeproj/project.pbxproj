@@ -2830,6 +2830,7 @@
 				6299F80A1A17B28200123F56 /* Products */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 1;
 		};
 		6299F80A1A17B28200123F56 /* Products */ = {
 			isa = PBXGroup;
