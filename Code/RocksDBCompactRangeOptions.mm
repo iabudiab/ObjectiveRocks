@@ -70,12 +70,16 @@
 	switch (bottommostLevelCompaction) {
 		case RocksDBBottommostLevelCompactionSkip:
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kSkip;
+			break;
 		case RocksDBBottommostLevelCompactionIfHaveCompactionFilter:
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kIfHaveCompactionFilter;
+			break;
 		case RocksDBBottommostLevelCompactionForce:
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kForce;
+			break;
 		case RocksDBBottommostLevelCompactionForceOptimized:
 			_options.bottommost_level_compaction = rocksdb::BottommostLevelCompaction::kForceOptimized;
+			break;
 	}
 }
 

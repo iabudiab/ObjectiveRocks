@@ -17,6 +17,15 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /** The DB compression type. */
+typedef NS_ENUM(char, RocksDBCompactionStyle)
+{
+	RocksDBCompressionStyleLevel = 0x0,
+	RocksDBCompressionStyleUniversal = 0x1,
+	RocksDBCompressionStyleFifo = 0x2,
+	RocksDBCompressionStyleNone = 0x3
+};
+
+/** The DB compression type. */
 typedef NS_ENUM(char, RocksDBCompressionType)
 {
 	RocksDBCompressionNone = 0x0,
@@ -70,6 +79,11 @@ typedef NS_ENUM(char, RocksDBCompressionType)
  */
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
 
+/** @brief Set compaction style for DB.
+ Default: RocksDBCompactionStyleLevel
+ */
+@property (nonatomic, assign) RocksDBCompactionStyle compactionStyle;
+
 /** @brief If non-nil, the specified function to determine the
  prefixes for keys will be used. These prefixes will be placed in the filter.
 
@@ -106,7 +120,7 @@ typedef NS_ENUM(char, RocksDBCompressionType)
 @property (nonatomic, assign) uint64_t maxBytesForLevelBase;
 
 /** @brief Default: 10 */
-@property (nonatomic, assign) int maxBytesForLevelMultiplier;
+@property (nonatomic, assign) double maxBytesForLevelMultiplier;
 
 /** @brief Puts are delayed 0-1 ms when any level has a compaction score that
  exceeds this limit.

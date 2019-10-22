@@ -43,9 +43,18 @@ NS_ASSUME_NONNULL_BEGIN
  The iterator `isValid` after this call if the source contains an entry that comes at
  or past the given key.
 
- @param aKey The key to position the tartaritartor at.
+ @param aKey The key to position the iterator at.
  */
 - (void)seekToKey:(NSData *)aKey;
+
+/**
+ Positions the iterator at the last key in the source at or before the given key.
+ The iterator `isValid` after this call if the source contains an entry that comes at
+ or past the given key.
+
+ @param aKey The key to position the iterator at.
+ */
+- (void)seekForPrev:(NSData *)aKey;
 
 /** 
  Moves to the next entry in the source. After this call, `isValid` is
@@ -74,6 +83,15 @@ NS_ASSUME_NONNULL_BEGIN
  @return The value for the key at the current position.
  */
 - (NSData *)value;
+
+/**
+ If an error has occurred, throw it.  Else just continue
+ If non-blocking IO is requested and this operation cannot be
+ satisfied without doing some IO, then this throws Error with Status::Incomplete.
+
+ @param error RocksDBError  if error happens in underlying native library.
+ */
+- (void)status:(NSError * __autoreleasing *)error;
 
 /**
  Executes a given block for each key in the iterator.
