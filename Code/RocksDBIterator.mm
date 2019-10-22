@@ -8,6 +8,7 @@
 
 #import "RocksDBIterator.h"
 #import "RocksDBSlice.h"
+#import "RocksDBError.h"
 
 #import <rocksdb/iterator.h>
 
@@ -71,6 +72,13 @@
 	}
 }
 
+- (void)seekForPrev:(NSData *)aKey
+{
+	if (aKey != nil) {
+		_iterator->SeekForPrev(SliceFromData(aKey));
+	}
+}
+
 - (void)next
 {
 	_iterator->Next();
@@ -93,6 +101,18 @@
 	rocksdb::Slice valueSlice = _iterator->value();
 	NSData *value = DataFromSlice(valueSlice);
 	return value;
+}
+
+- (void)status:(NSError * __autoreleasing *)error
+{
+    rocksdb::Status status = _iterator->status();
+
+    if (!status.ok()) {
+        NSError *temp = [RocksDBError errorWithRocksStatus:status];
+        if (error && *error == nil) {
+            *error = temp;
+        }
+    }
 }
 
 #pragma mark - Enumerate Keys
