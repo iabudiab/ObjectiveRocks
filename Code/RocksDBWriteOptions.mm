@@ -61,6 +61,26 @@
 	_options.ignore_missing_column_families = ignoreMissingColumnFamilies;
 }
 
+- (BOOL)noSlowdown
+{
+	return _options.no_slowdown;
+}
+
+- (void)setNoSlowdown:(BOOL)noSlowdown
+{
+	_options.no_slowdown = noSlowdown;
+}
+
+- (BOOL)lowPriority
+{
+	return _options.low_pri;
+}
+
+- (void)setLowPriority:(BOOL)lowPriority
+{
+	_options.low_pri = lowPriority;
+}
+
 #pragma mark - NSCopying
 
 - (id)copyWithZone:(NSZone *)zone
