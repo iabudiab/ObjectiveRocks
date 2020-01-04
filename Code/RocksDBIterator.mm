@@ -158,33 +158,35 @@
 							  reverse:(BOOL)reverse
 						   usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block
 {
-	BOOL stop = NO;
+	@autoreleasepool {
+		BOOL stop = NO;
 
-	if (range.start != nil) {
-		[self seekToKey:range.start];
-	} else {
-		reverse ? _iterator->SeekToLast(): _iterator->SeekToFirst();
-	}
+		if (range.start != nil) {
+			[self seekToKey:range.start];
+		} else {
+			reverse ? _iterator->SeekToLast(): _iterator->SeekToFirst();
+		}
 
-	rocksdb::Slice limitSlice;
-	if (range.end != nil) {
-		limitSlice = SliceFromData(range.end);
-	}
+		rocksdb::Slice limitSlice;
+		if (range.end != nil) {
+			limitSlice = SliceFromData(range.end);
+		}
 
-	BOOL (^ checkLimit)(BOOL, rocksdb::Slice) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
-		if (limitSlice.size() == 0) return YES;
+		BOOL (^ checkLimit)(BOOL, rocksdb::Slice) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
+			if (limitSlice.size() == 0) return YES;
 
-		if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
-		if (!reverse && key.ToString() >= limitSlice.ToString()) return NO;
+			if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
+			if (!reverse && key.ToString() >= limitSlice.ToString()) return NO;
 
-		return YES;
-	};
+			return YES;
+		};
 
-	while (_iterator->Valid() && checkLimit(reverse, _iterator->key())) {
-		if (block) block(self.key, self.value, &stop);
-		if (stop == YES) break;
+		while (_iterator->Valid() && checkLimit(reverse, _iterator->key())) {
+			if (block) block(self.key, self.value, &stop);
+			if (stop == YES) break;
 
-		reverse ? _iterator->Prev(): _iterator->Next();
+			reverse ? _iterator->Prev(): _iterator->Next();
+		}
 	}
 }
 
@@ -200,13 +202,15 @@
 - (void)enumerateKeysAndValuesWithPrefix:(NSData *)prefix
 							  usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block
 {
-	BOOL stop = NO;
-	rocksdb::Slice prefixSlice = SliceFromData(prefix);
+	@autoreleasepool {
+		BOOL stop = NO;
+		rocksdb::Slice prefixSlice = SliceFromData(prefix);
 
-	for (_iterator->Seek(prefixSlice); _iterator->Valid(); _iterator->Next()) {
-		if (_iterator->key().starts_with(prefixSlice) == false) continue;
-		if (block) block(self.key, self.value, &stop);
-		if (stop == YES) break;
+		for (_iterator->Seek(prefixSlice); _iterator->Valid(); _iterator->Next()) {
+			if (_iterator->key().starts_with(prefixSlice) == false) continue;
+			if (block) block(self.key, self.value, &stop);
+			if (stop == YES) break;
+		}
 	}
 }
 
