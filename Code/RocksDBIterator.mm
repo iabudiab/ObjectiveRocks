@@ -92,14 +92,18 @@
 - (NSData *)key
 {
 	rocksdb::Slice keySlice = _iterator->key();
-	NSData *key = DataFromSlice(keySlice);
+	NSData *key = [NSData dataWithBytesNoCopy:(void*)keySlice.data()
+					   length:keySlice.size()
+				     freeWhenDone:NO];
 	return key;
 }
 
 - (NSData *)value
 {
 	rocksdb::Slice valueSlice = _iterator->value();
-	NSData *value = DataFromSlice(valueSlice);
+	NSData *value = [NSData dataWithBytesNoCopy:(void*)valueSlice.data()
+					     length:valueSlice.size()
+				       freeWhenDone:NO];
 	return value;
 }
 
