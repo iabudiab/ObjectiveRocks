@@ -8,6 +8,7 @@
 
 #import "RocksDBIterator.h"
 #import "RocksDBSlice.h"
+#import "RocksDBError.h"
 
 #import <rocksdb/iterator.h>
 
@@ -71,6 +72,13 @@
 	}
 }
 
+- (void)seekForPrev:(NSData *)aKey
+{
+	if (aKey != nil) {
+		_iterator->SeekForPrev(SliceFromData(aKey));
+	}
+}
+
 - (void)next
 {
 	_iterator->Next();
@@ -84,15 +92,31 @@
 - (NSData *)key
 {
 	rocksdb::Slice keySlice = _iterator->key();
-	NSData *key = DataFromSlice(keySlice);
+	NSData *key = [NSData dataWithBytesNoCopy:(void*)keySlice.data()
+					   length:keySlice.size()
+				     freeWhenDone:NO];
 	return key;
 }
 
 - (NSData *)value
 {
 	rocksdb::Slice valueSlice = _iterator->value();
-	NSData *value = DataFromSlice(valueSlice);
+	NSData *value = [NSData dataWithBytesNoCopy:(void*)valueSlice.data()
+					     length:valueSlice.size()
+				       freeWhenDone:NO];
 	return value;
+}
+
+- (void)status:(NSError * __autoreleasing *)error
+{
+    rocksdb::Status status = _iterator->status();
+
+    if (!status.ok()) {
+        NSError *temp = [RocksDBError errorWithRocksStatus:status];
+        if (error && *error == nil) {
+            *error = temp;
+        }
+    }
 }
 
 #pragma mark - Enumerate Keys
@@ -138,33 +162,35 @@
 							  reverse:(BOOL)reverse
 						   usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block
 {
-	BOOL stop = NO;
+	@autoreleasepool {
+		BOOL stop = NO;
 
-	if (range.start != nil) {
-		[self seekToKey:range.start];
-	} else {
-		reverse ? _iterator->SeekToLast(): _iterator->SeekToFirst();
-	}
+		if (range.start != nil) {
+			[self seekToKey:range.start];
+		} else {
+			reverse ? _iterator->SeekToLast(): _iterator->SeekToFirst();
+		}
 
-	rocksdb::Slice limitSlice;
-	if (range.end != nil) {
-		limitSlice = SliceFromData(range.end);
-	}
+		rocksdb::Slice limitSlice;
+		if (range.end != nil) {
+			limitSlice = SliceFromData(range.end);
+		}
 
-	BOOL (^ checkLimit)(BOOL, rocksdb::Slice) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
-		if (limitSlice.size() == 0) return YES;
+		BOOL (^ checkLimit)(BOOL, rocksdb::Slice) = ^ BOOL (BOOL reverse, rocksdb::Slice key) {
+			if (limitSlice.size() == 0) return YES;
 
-		if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
-		if (!reverse && key.ToString() >= limitSlice.ToString()) return NO;
+			if (reverse && key.ToString() <= limitSlice.ToString()) return NO;
+			if (!reverse && key.ToString() >= limitSlice.ToString()) return NO;
 
-		return YES;
-	};
+			return YES;
+		};
 
-	while (_iterator->Valid() && checkLimit(reverse, _iterator->key())) {
-		if (block) block(self.key, self.value, &stop);
-		if (stop == YES) break;
+		while (_iterator->Valid() && checkLimit(reverse, _iterator->key())) {
+			if (block) block(self.key, self.value, &stop);
+			if (stop == YES) break;
 
-		reverse ? _iterator->Prev(): _iterator->Next();
+			reverse ? _iterator->Prev(): _iterator->Next();
+		}
 	}
 }
 
@@ -180,13 +206,15 @@
 - (void)enumerateKeysAndValuesWithPrefix:(NSData *)prefix
 							  usingBlock:(void (^)(NSData *key, NSData *value, BOOL *stop))block
 {
-	BOOL stop = NO;
-	rocksdb::Slice prefixSlice = SliceFromData(prefix);
+	@autoreleasepool {
+		BOOL stop = NO;
+		rocksdb::Slice prefixSlice = SliceFromData(prefix);
 
-	for (_iterator->Seek(prefixSlice); _iterator->Valid(); _iterator->Next()) {
-		if (_iterator->key().starts_with(prefixSlice) == false) continue;
-		if (block) block(self.key, self.value, &stop);
-		if (stop == YES) break;
+		for (_iterator->Seek(prefixSlice); _iterator->Valid(); _iterator->Next()) {
+			if (_iterator->key().starts_with(prefixSlice) == false) continue;
+			if (block) block(self.key, self.value, &stop);
+			if (stop == YES) break;
+		}
 	}
 }
 

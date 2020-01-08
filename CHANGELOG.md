@@ -1,5 +1,25 @@
 # Change Log
 
+## [0.11.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.11.0)
+
+Released on 2020.01.08
+
+- Improve `ColumnFamilyOptions` by @jurmous in PR #19
+  - Add `compactionStyle` setting
+  - Change `maxBytesForLevelMultiplier` to a double to match internal type
+  - Add missing `level0FileNumCompactionTrigger` implementation
+- Expand `WriteOptions` with `noSlowdown` and `lowPriority` options by @jurmous in PR #21
+- Expand `RocksDBIterator` with `seekForPrev` and `status` methods by @jurmous in PR #22
+- Expand `CompactRangeOptions` by @jurmous in PR #25
+  - `allowWriteStall`, `maxSubcompactions`, `targetPathId`, `exclusiveManualCompaction`
+- Removed redundant mem-copy in Iterator and improved release semantics in `enumerate` methods by @myeyesareblind in PRs #27 & #28
+- Fix `bottommostLevelCompaction` switch statement by @jurmous in PR #20
+
+
+### Updated
+
+- Project settings to Xcode11
+
 
 ## [0.10.0](https://github.com/iabudiab/ObjectiveRocks/releases/tag/0.10.0)
 

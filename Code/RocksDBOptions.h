@@ -165,6 +165,11 @@ NS_ASSUME_NONNULL_BEGIN
  */
 @property (nonatomic, assign) RocksDBCompressionType compressionType;
 
+/** @brief Set compaction style for DB.
+ Default: RocksDBCompactionStyleLevel
+ */
+@property (nonatomic, assign) RocksDBCompactionStyle compactionStyle;
+
 /** @brief If non-nil, the specified function to determine the
  prefixes for keys will be used. These prefixes will be placed in the filter.
 
@@ -205,7 +210,7 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, assign) uint64_t maxBytesForLevelBase;
 
 /** @brief Default: 10 */
-@property (nonatomic, assign) int maxBytesForLevelMultiplier;
+@property (nonatomic, assign) double maxBytesForLevelMultiplier;
 
 /** @brief  Maximum number of bytes in all compacted files. */
 @property (nonatomic, assign) int expandedCompactionFactor;
